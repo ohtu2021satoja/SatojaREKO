@@ -1,0 +1,23 @@
+{
+    "extends": [
+      "react-app",
+      "airbnb",
+      "prettier",
+      "prettier/react"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      //no semicolons at the end of every statement
+      "semi": 0,
+      //allow both file extensions
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "prettier/prettier": [
+        "error", {
+          "semi": false,
+          "singleQuote": true
+        }
+      ]
+    }
+  }
