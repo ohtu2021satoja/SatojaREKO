@@ -1,5 +1,6 @@
 import "./App.css";
-import { Container, Row } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import LoginForm from "./LoginForm";
 
 const App = () => {
