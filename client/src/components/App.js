@@ -2,6 +2,7 @@ import "./App.css";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import LoginForm from "./LoginForm";
+import NavigationBar from "./NavigationBar";
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Row>
         <LoginForm />
       </Row>
+      <NavigationBar />
     </Container>
   );
 };
