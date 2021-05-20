@@ -1,7 +1,6 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Link from "react-router-dom/Link";
-import Routes from "./Routes"
+import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
@@ -77,7 +76,6 @@ const NavigationBar = () => {
           </svg>
         </Nav.Link>
       </Navbar>
-      <Routes />
     </div>
   );
 };
