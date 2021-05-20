@@ -10,4 +10,6 @@ USER appuser
 
 EXPOSE 3003
 
+EXPOSE 5432
+
 CMD ["node", "index.js"]
