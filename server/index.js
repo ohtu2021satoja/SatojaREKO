@@ -21,12 +21,7 @@ const pool = new pg.Pool({
 })
 
 pool.connect(function(err, client, done) {
-  if(err) console.log(err)
-   client.query('SELECT * FROM your_table', function(err, result) {
-      done();
-      if(err) return console.error(err);
-      console.log(result.rows);
-   });
+  console.log(err, client, done)
 });
 
 pool.end()
