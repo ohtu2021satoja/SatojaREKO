@@ -17,6 +17,7 @@ var connectionString = process.env.DATABASE_URL
 
 const pool = new pg.Pool({
   connectionString: connectionString,
+  ssl: true
 })
 
 pool.connect(function(err, client, done) {
