@@ -8,4 +8,6 @@ RUN npm install --production && adduser -D appuser
 
 USER appuser
 
+EXPOSE 3003
+
 CMD ["node", "index.js"]
