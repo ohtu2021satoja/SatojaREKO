@@ -2,7 +2,7 @@ const config = require('./utils/config')
 const middleware = require('./utils/middleware')
 const express = require('express')
 const server = express()
-const test = require("./repositories/test")
+const pg = require("pg")
 
 server.use(express.json())
 
@@ -13,7 +13,23 @@ server.get('/', (req, res) => {
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
 
+var connectionString = process.env.DATABASE_URL
+
+const pool = new pg.Pool({
+  connectionString: connectionString,
+})
+
+pool.connect(function(err, client, done) {
+  if(err) console.log(err)
+   client.query('SELECT * FROM your_table', function(err, result) {
+      done();
+      if(err) return console.error(err);
+      console.log(result.rows);
+   });
+});
+
+pool.end()
+
 server.listen(config.PORT, () => {
-  test.now()
   console.log(`Server running on port ${config.PORT}`)
 })
