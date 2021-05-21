@@ -11,7 +11,9 @@ console.log(connectionString)
 
 const pool = new pg.Pool({
   connectionString: connectionString,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 
 server.get('/', (req, res) => {
