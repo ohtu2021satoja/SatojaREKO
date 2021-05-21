@@ -22,4 +22,3 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "satoja-reko"
           heroku_email: "satojareko@gmail.com"
-          
