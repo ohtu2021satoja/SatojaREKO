@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // import userAPI from "../services/users";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import NavigationBar from "./navigation/NavigationBar";
 import Routes from "./navigation/Routes";
+import LoginPage from "./LoginPage";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -15,15 +16,15 @@ const App = () => {
     const allUsers = [
       {
         id: 1,
-        email: 'user1@a.com',
-        password: 'pw1',
-        products: [ "milk", "bread"]
+        email: "user1@a.com",
+        password: "pw1",
+        products: ["milk", "bread"],
       },
       {
         id: 2,
-        email: 'user2@a.com',
-        password: 'pw2',
-        products: [ "blueberries", "mushroome"]
+        email: "user2@a.com",
+        password: "pw2",
+        products: ["blueberries", "mushroome"],
       },
     ];
 
@@ -32,19 +33,26 @@ const App = () => {
 
   const getCurrentUser = (email, password) => {
     const currentUser = users.find(
-      user => user.email === email && user.password === password
-    )
+      (user) => user.email === email && user.password === password
+    );
 
     setUser(currentUser);
-  }
+  };
+
+  const logOut = () => {
+    setUser({});
+  };
 
   return (
-    <Container style={{ backgroundColor: "red" }} fluid>
-      <NavigationBar />
-      <Routes
-        user={user}
-        handleLogin={getCurrentUser}
-      />
+    <Container fluid>
+      {Object.keys(user).length === 0 ? (
+        <LoginPage handleLogin={getCurrentUser} />
+      ) : (
+        <div>
+          <NavigationBar />
+          <Routes user={user} logOut={logOut} />
+        </div>
+      )}
     </Container>
   );
 };

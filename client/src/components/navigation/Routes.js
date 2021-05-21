@@ -1,14 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "../HomePage";
-import LoginPage from "../LoginPage";
 import ProfilePageBuyer from "../ProfilePageBuyer";
 import Products from "../Products";
 
-const Routes = ({ user, handleLogin }) => (
+const Routes = ({ user, logOut }) => (
   <Switch>
     <Route exact path="/">
-      {user ? <HomePage /> : <LoginPage handleLogin={handleLogin} />} 
+      <HomePage logOut={logOut} />
     </Route>
     <Route path="/add">Add</Route>
     <Route path="/products">
