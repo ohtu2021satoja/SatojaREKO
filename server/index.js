@@ -3,8 +3,11 @@ const middleware = require('./utils/middleware')
 const express = require('express')
 const server = express()
 const pg = require("pg")
+const path = require("path")
 
 server.use(express.json())
+
+server.use(express.static(path.join(__dirname, "build")))
 
 const connectionString = process.env.DATABASE_URL
 console.log(connectionString)
@@ -16,7 +19,7 @@ const pool = new pg.Pool({
   }
 })
 
-server.get('/', (req, res) => {
+server.get('/hello', (req, res) => {
   res.send("hello world")
 })
 
