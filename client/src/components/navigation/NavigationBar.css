@@ -1,0 +1,10 @@
+.menuicon {
+  transform: scale(2);
+  width: 9vw;
+  fill: rgb(22, 22, 22);
+}
+
+.menuicon:hover {
+  fill: grey;
+}
+
