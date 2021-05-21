@@ -3,15 +3,23 @@ const middleware = require('./utils/middleware')
 const express = require('express')
 const server = express()
 const pg = require("pg")
+const path = require("path")
 
 server.use(express.json())
 
+server.use(express.static(path.join(__dirname, "build")))
+
+const connectionString = process.env.DATABASE_URL
+console.log(connectionString)
+
 const pool = new pg.Pool({
   connectionString: connectionString,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 
-server.get('/', (req, res) => {
+server.get('/hello', (req, res) => {
   res.send("hello world")
 })
 
@@ -20,7 +28,7 @@ server.get("/db", async (req, res) => {
     const client = await pool.connect()
     const result = await client.query("SELECT * FROM test_table")
     const results = {" results": (result) ? result.rows : null}
-    res.render("pages/db", results)
+    res.json(results) //this works locally
     client.release()
   } catch(err) {
     console.error(err)
@@ -31,7 +39,7 @@ server.get("/db", async (req, res) => {
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
 
-var connectionString = process.env.DATABASE_URL
+
 
 
 
