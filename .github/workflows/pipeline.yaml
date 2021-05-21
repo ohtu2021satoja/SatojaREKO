@@ -1,0 +1,27 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  deployment_pipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '15.x'
+      - name: deploy
+        uses: gonuit/heroku-docker-deploy@v1.3.2 
+        with:
+          email: "satojareko@gmail.com"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "satoja-reko"
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          process_type: web
