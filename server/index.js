@@ -6,6 +6,9 @@ const pg = require("pg")
 
 server.use(express.json())
 
+const connectionString = process.env.DATABASE_URL
+console.log(connectionString)
+
 const pool = new pg.Pool({
   connectionString: connectionString,
   ssl: true
@@ -31,7 +34,7 @@ server.get("/db", async (req, res) => {
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
 
-var connectionString = process.env.DATABASE_URL
+
 
 
 
