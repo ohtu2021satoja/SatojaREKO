@@ -1,10 +1,24 @@
+import { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const LoginForm = () => {
+const LoginForm = ({ handleLogin }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    handleLogin(email, password);
+
+    setEmail('');
+    setPassword('');
+  }
+
   return (
     <Form
+      onSubmit={handleSubmit}
       as={Col}
       xs={12}
       sm={{ span: 10, offset: 1 }}
@@ -17,6 +31,8 @@ const LoginForm = () => {
       </Form.Label>
       <Form.Group>
         <Form.Control
+          value={email}
+          onChange={event => setEmail(event.target.value)}
           size="lg"
           type="email"
           placeholder="Sähköposti"
@@ -24,6 +40,8 @@ const LoginForm = () => {
         />
 
         <Form.Control
+          value={password}
+          onChange={event => setPassword(event.target.value)}
           size="lg"
           type="password"
           placeholder="Salasana"
