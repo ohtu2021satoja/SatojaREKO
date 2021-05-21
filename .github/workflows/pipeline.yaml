@@ -17,11 +17,9 @@ jobs:
         with:
           node-version: '15.x'
       - name: deploy
-        uses: gonuit/heroku-docker-deploy@v1.3.2 
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          email: "satojareko@gmail.com"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "satoja-reko"
-          dockerfile_directory: ./
-          dockerfile_name: Dockerfile
-          process_type: web
+          heroku_email: "satojareko@gmail.com"
+          
