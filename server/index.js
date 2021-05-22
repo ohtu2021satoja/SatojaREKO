@@ -6,6 +6,7 @@ const pg = require("pg")
 const path = require("path")
 
 const usersRoute = require('./controllers/users')
+const productsRoute = require('./controllers/products')
 
 server.use(express.json())
 
@@ -35,6 +36,7 @@ server.get("/db", async (req, res) => {
 })
 
 server.use('/users', usersRoute)
+server.use('/products', productsRoute)
 
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
