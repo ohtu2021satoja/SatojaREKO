@@ -5,6 +5,8 @@ const server = express()
 const pg = require("pg")
 const path = require("path")
 
+const usersRoute = require('./controllers/users')
+
 server.use(express.json())
 
 server.use(express.static(path.join(__dirname, "build")))
@@ -19,10 +21,6 @@ const pool = new pg.Pool({
   }
 })
 
-server.get('/hello', (req, res) => {
-  res.send("hello world")
-})
-
 server.get("/db", async (req, res) => {
   try {
     const client = await pool.connect()
@@ -35,6 +33,8 @@ server.get("/db", async (req, res) => {
     res.send("Error" + err)
   }
 })
+
+server.use('/users', usersRoute)
 
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
