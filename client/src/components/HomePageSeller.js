@@ -1,7 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const HomePageSeller = ({ logOut, setSellerView }) => (
+const HomePageSeller = () => (
   <div>
     <Row style={{ paddingTop: 70, paddingBottom: 70 }}>
       <Col

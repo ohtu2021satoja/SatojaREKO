@@ -45,7 +45,6 @@ const App = () => {
   };
 
   const logOut = () => {
-    console.log("logging out");
     setUser({});
   };
 
@@ -53,11 +52,14 @@ const App = () => {
     setSellerView(value);
   };
 
+  const userIsEmpty = () => {
+    return Object.keys(user).length === 0;
+  };
+
   return (
     <Container fluid>
       {(() => {
-        if (Object.keys(user).length === 0)
-          return <LoginPage handleLogin={getCurrentUser} />;
+        if (userIsEmpty()) return <LoginPage handleLogin={getCurrentUser} />;
         if (sellerView === null)
           return <HomePage setSellerView={handleViewChange} logOut={logOut} />;
         if (sellerView === true)
@@ -72,7 +74,7 @@ const App = () => {
               <Redirect to="/home" />
             </div>
           );
-        else
+        if (sellerView === false)
           return (
             <div>
               <NavigationBarBuyer setSellerView={handleViewChange} />
