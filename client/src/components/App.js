@@ -8,6 +8,7 @@ import RoutesBuyer from "./navigation/RoutesBuyer";
 import RoutesSeller from "./navigation/RoutesSeller";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
+import { Redirect } from "react-router-dom";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -44,6 +45,7 @@ const App = () => {
   };
 
   const logOut = () => {
+    console.log("logging out");
     setUser({});
   };
 
@@ -57,7 +59,7 @@ const App = () => {
         if (Object.keys(user).length === 0)
           return <LoginPage handleLogin={getCurrentUser} />;
         if (sellerView === null)
-          return <HomePage setSellerView={handleViewChange} />;
+          return <HomePage setSellerView={handleViewChange} logOut={logOut} />;
         if (sellerView === true)
           return (
             <div>
@@ -67,6 +69,7 @@ const App = () => {
                 logOut={logOut}
                 setSellerView={handleViewChange}
               />
+              <Redirect to="/home" />
             </div>
           );
         else
@@ -78,6 +81,7 @@ const App = () => {
                 logOut={logOut}
                 setSellerView={handleViewChange}
               />
+              <Redirect to="/events" />
             </div>
           );
       })()}

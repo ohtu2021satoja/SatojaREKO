@@ -16,7 +16,7 @@ const HomePage = ({ logOut, setSellerView }) => (
           <Col xs={12} className="mb-4 text-center">
             <Button
               onClick={() => setSellerView(false)}
-              variant="light"
+              variant="primary"
               size="lg"
               type="submit"
             >
@@ -28,7 +28,7 @@ const HomePage = ({ logOut, setSellerView }) => (
           <Col xs={12} className="mb-4 text-center">
             <Button
               onClick={() => setSellerView(true)}
-              variant="light"
+              variant="primary"
               size="lg"
               type="submit"
             >
