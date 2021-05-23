@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 // import userAPI from "../services/users";
 import "./App.css";
 import Container from "react-bootstrap/Container";
-import NavigationBar from "./navigation/NavigationBar";
-import Routes from "./navigation/Routes";
+import NavigationBarSeller from "./navigation/NavigationBarSeller";
+import NavigationBarBuyer from "./navigation/NavigationBarBuyer";
+import RoutesBuyer from "./navigation/RoutesBuyer";
+import RoutesSeller from "./navigation/RoutesSeller";
 import LoginPage from "./LoginPage";
+import HomePage from "./HomePage";
 
 const App = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
+  const [sellerView, setSellerView] = useState(null);
 
   useEffect(() => {
     // Get users form API
@@ -36,23 +40,47 @@ const App = () => {
       (user) => user.email === email && user.password === password
     );
 
-    setUser(currentUser);
+    setUser(currentUser === undefined ? {} : currentUser);
   };
 
   const logOut = () => {
     setUser({});
   };
 
+  const handleViewChange = (value) => {
+    setSellerView(value);
+  };
+
   return (
     <Container fluid>
-      {Object.keys(user).length === 0 ? (
-        <LoginPage handleLogin={getCurrentUser} />
-      ) : (
-        <div>
-          <NavigationBar />
-          <Routes user={user} logOut={logOut} />
-        </div>
-      )}
+      {(() => {
+        if (Object.keys(user).length === 0)
+          return <LoginPage handleLogin={getCurrentUser} />;
+        if (sellerView === null)
+          return <HomePage setSellerView={handleViewChange} />;
+        if (sellerView === true)
+          return (
+            <div>
+              <NavigationBarSeller setSellerView={handleViewChange} />
+              <RoutesSeller
+                user={user}
+                logOut={logOut}
+                setSellerView={handleViewChange}
+              />
+            </div>
+          );
+        else
+          return (
+            <div>
+              <NavigationBarBuyer setSellerView={handleViewChange} />
+              <RoutesBuyer
+                user={user}
+                logOut={logOut}
+                setSellerView={handleViewChange}
+              />
+            </div>
+          );
+      })()}
     </Container>
   );
 };
