@@ -1,13 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "../HomePage";
-import ProfilePageBuyer from "../ProfilePageBuyer";
+import ProfilePageSeller from "../ProfilePageSeller";
 import Products from "../Products";
 
-const Routes = ({ user, logOut }) => (
+const RoutesSeller = ({ user, logOut, setSellerView }) => (
   <Switch>
     <Route exact path="/">
-      <HomePage logOut={logOut} />
+      <HomePage logOut={logOut} setSellerView={setSellerView} />
     </Route>
     <Route path="/add">Add</Route>
     <Route path="/products">
@@ -15,10 +15,10 @@ const Routes = ({ user, logOut }) => (
     </Route>
     <Route path="/orders">Orders</Route>
     <Route path="/profile">
-      <ProfilePageBuyer user={user} />
+      <ProfilePageSeller user={user} />
     </Route>
     <Route>Not found</Route>
   </Switch>
 );
 
-export default Routes;
+export default RoutesSeller;
