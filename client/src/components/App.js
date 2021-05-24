@@ -45,7 +45,6 @@ const App = () => {
   };
 
   const logOut = () => {
-    console.log("logging out");
     setUser({});
   };
 
