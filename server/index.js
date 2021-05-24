@@ -7,9 +7,16 @@ const path = require("path")
 const usersRoute = require('./controllers/users')
 const productsRoute = require('./controllers/products')
 
-server.use(express.json())
-
 server.use(express.static(path.join(__dirname, "build")))
+
+// add endpoint here if refreshing problems
+server.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/products"], function(req, res) {
+  res.sendFile(path.join(__dirname, "/build", "index.html"), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 server.use('/users', usersRoute)
 server.use('/products', productsRoute)
