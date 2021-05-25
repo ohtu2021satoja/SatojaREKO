@@ -1,5 +1,5 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 
 const HomePageSeller = () => (
   <div>
@@ -19,5 +19,5 @@ const HomePageSeller = () => (
       </Col>
     </Row>
   </div>
-);
-export default HomePageSeller;
+)
+export default HomePageSeller
