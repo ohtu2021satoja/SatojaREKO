@@ -5,7 +5,7 @@ on:
     branches:
       - main
   pull_request:
-    branches: [main, lint-config]
+    branches: [main, new-lint-config]
     types: [opened, synchronize]
 
 jobs:
