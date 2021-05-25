@@ -1,6 +1,6 @@
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 
 const HomePage = ({ logOut, setSellerView }) => (
   <div>
@@ -53,5 +53,5 @@ const HomePage = ({ logOut, setSellerView }) => (
       </Col>
     </Row>
   </div>
-);
-export default HomePage;
+)
+export default HomePage

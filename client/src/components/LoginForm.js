@@ -1,20 +1,20 @@
-import { useState } from "react";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { useState } from "react"
+import Col from "react-bootstrap/Col"
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
 
 const LoginForm = ({ handleLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    handleLogin(email, password);
+    handleLogin(email, password)
 
-    setEmail("");
-    setPassword("");
-  };
+    setEmail("")
+    setPassword("")
+  }
 
   return (
     <Col
@@ -48,12 +48,7 @@ const LoginForm = ({ handleLogin }) => {
         </Form.Group>
         <Form.Row className="mb-3">
           <Col>
-            <Button
-              style={{ width: "100%" }}
-              variant="success"
-              size="lg"
-              type="submit"
-            >
+            <Button style={{ width: "100%" }} variant="success" size="lg" type="submit">
               Kirjaudu sisään
             </Button>
           </Col>
@@ -63,7 +58,7 @@ const LoginForm = ({ handleLogin }) => {
         </div>
       </Form>
     </Col>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

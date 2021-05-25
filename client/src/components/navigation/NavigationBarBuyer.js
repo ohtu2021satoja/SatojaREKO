@@ -1,17 +1,12 @@
-import "./NavigationBar.css";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
+import "./NavigationBar.css"
+import Navbar from "react-bootstrap/Navbar"
+import Nav from "react-bootstrap/Nav"
+import { Link } from "react-router-dom"
 
 const NavigationBarBuyer = ({ setSellerView }) => {
   return (
     <div>
-      <Navbar
-        className="justify-content-center"
-        bg="light"
-        expand="lg"
-        fixed="bottom"
-      >
+      <Navbar className="justify-content-center" bg="light" expand="lg" fixed="bottom">
         <Nav.Link as={Link} to="/" onClick={() => setSellerView(null)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +79,7 @@ const NavigationBarBuyer = ({ setSellerView }) => {
         </Nav.Link>
       </Navbar>
     </div>
-  );
-};
+  )
+}
 
-export default NavigationBarBuyer;
+export default NavigationBarBuyer
