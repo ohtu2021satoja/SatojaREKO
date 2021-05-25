@@ -26,6 +26,12 @@
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
+    "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -44,11 +50,8 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.0"
