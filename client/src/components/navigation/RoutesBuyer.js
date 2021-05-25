@@ -4,16 +4,17 @@ import HomePage from "../HomePage";
 import ProfilePageBuyer from "../ProfilePageBuyer";
 import Products from "../Products";
 
-const Routes = ({ user, logOut }) => (
+const RoutesBuyer = ({ user, logOut, setSellerView }) => (
   <Switch>
     <Route exact path="/">
-      <HomePage logOut={logOut} />
+      <HomePage logOut={logOut} setSellerView={setSellerView} />
     </Route>
-    <Route path="/add">Add</Route>
+    <Route path="/orders">Orders</Route>
     <Route path="/products">
       <Products products={user.products} />
     </Route>
-    <Route path="/orders">Orders</Route>
+    <Route path="/events">Events</Route>
+    <Route path="/cart">Shopping cart</Route>
     <Route path="/profile">
       <ProfilePageBuyer user={user} />
     </Route>
@@ -21,4 +22,4 @@ const Routes = ({ user, logOut }) => (
   </Switch>
 );
 
-export default Routes;
+export default RoutesBuyer;
