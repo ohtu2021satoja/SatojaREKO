@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - new-lint-config
+      - new-new-lint-config
   pull_request:
     branches: [main, new-lint-config]
     types: [opened, synchronize]
