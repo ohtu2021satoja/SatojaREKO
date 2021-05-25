@@ -5,7 +5,14 @@
   "scripts": {
     "test": "cd client && npm run test",
     "build": "cd client && npm run build && cp -r build ../server",
-    "install": "cd server && npm install && cd ../client && npm install",
+    "install": "npm install && cd server && npm install && cd ../client && npm install",
     "start": "node server/index.js"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0"
   }
 }
