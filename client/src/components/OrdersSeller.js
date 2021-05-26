@@ -32,69 +32,20 @@ const OrdersSeller = () => {
   ]
 
   const renderOrders = (product, index) => {
-    console.log(product.name, "index", index)
-    if (index === 0) {
-      return (
-        <Row>
-          <Col
-            xs={8}
-            sm={{ span: 10, offset: 1 }}
-            md={{ span: 8, offset: 2 }}
-            lg={{ span: 6, offset: 3 }}
-            xl={{ span: 4, offset: 4 }}
-          >
-            <Accordion defaultActiveKey="1">
-              <Card key={index} as={Col}>
-                <Row className="justify-content-md-center">
-                  <Nav variant="pills" defaultActiveKey="#Tuotteet">
-                    <Nav.Item>
-                      <Nav.Link href="#Tuotteet">Tuotteet</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link href="#Tilaajat">Tilaajat</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                </Row>
-                <Accordion.Toggle as={Button} variant="text" eventKey="0">
-                  <Row>
-                    <Col>
-                      <Card.Img src={product.image} alt="Generic placeholder" />
-                    </Col>
-                    <Col xs={8} className="text-left">
-                      <Card.Title>{product.name}</Card.Title>
-                      <Card.Text>tilattu {product.sold}kpl</Card.Text>
-                    </Col>
-                  </Row>
-                  <Accordion.Collapse eventKey="0">
-                    <Col>
-                      <p>
-                        asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd
-                        asd asd asd asd asd
-                      </p>
-                    </Col>
-                  </Accordion.Collapse>
-                </Accordion.Toggle>
-              </Card>
-            </Accordion>
-          </Col>
-        </Row>
-      )
-    }
     return (
-      <Row>
+      <Row key={index}>
         <Col
-          xs={8}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
-          xl={{ span: 4, offset: 4 }}
-        >
+        xs={8}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+        xl={{ span: 4, offset: 4 }}>
           <Accordion defaultActiveKey="1">
-            <Card key={index} as={Col}>
+            <Card as={Col}>
               <Accordion.Toggle as={Button} variant="text" eventKey="0">
                 <Row>
                   <Col>
-                    <Card.Img src={product.image} alt="Generic placeholder" />
+                    <Card.Img src={product.image} alt="Generic placeholder"/>
                   </Col>
                   <Col xs={8} className="text-left">
                     <Card.Title>{product.name}</Card.Title>
@@ -121,6 +72,16 @@ const OrdersSeller = () => {
     <div>
       <Row className="justify-content-md-center">
         <h1>Tilaukset</h1>
+      </Row>
+      <Row className="justify-content-md-center">
+        <Nav variant="pills" defaultActiveKey="#Tuotteet">
+          <Nav.Item>
+            <Nav.Link href="#Tuotteet">Tuotteet</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+            <Nav.Link href="#Tilaajat">Tilaajat</Nav.Link>
+          </Nav.Item>
+        </Nav>
       </Row>
       {orders.map(renderOrders)}
     </div>
