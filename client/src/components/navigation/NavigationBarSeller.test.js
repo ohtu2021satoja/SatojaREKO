@@ -1,14 +1,8 @@
 import React from "react";
-import "@testing-library/jest-dom/extend-expect";
 import NavigationBarSeller from "./NavigationBarSeller";
 import { Link } from "react-router-dom";
 import { mount } from "enzyme";
 import { BrowserRouter } from "react-router-dom";
-import Enzyme from "enzyme";
-
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const requiredURLs = ["/", "/add", "/products", "/orders", "/profile"];
 
@@ -39,8 +33,8 @@ describe("Navigation bar for Seller", () => {
   });
 
   test("clicking on homepage link sets sellerView to null", () => {
-    const link = wrapper.find("#home").first();
-    link.simulate("click");
+    const homepageLink = wrapper.find("#home").first();
+    homepageLink.simulate("click");
     expect(sellerView).toBe(null);
   });
 });
