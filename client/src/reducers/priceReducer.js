@@ -1,6 +1,6 @@
 const reducer = (state = "00,00€", action) => {
   switch (action.type) {
-    case 'CHANGE':
+    case 'CHANGEPRICE':
       return action.newprice
     default:
       return state
@@ -11,7 +11,7 @@ const reducer = (state = "00,00€", action) => {
 
 export const changePrice = (newprice) => {
   return async dispatch => {
-    dispatch({type: 'CHANGE', newprice})
+    dispatch({type: 'CHANGEPRICE', newprice})
   }
   
 }
