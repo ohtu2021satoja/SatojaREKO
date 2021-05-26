@@ -6,9 +6,10 @@ import Col from "react-bootstrap/Col"
 import { Checkbox } from 'react-bootstrap'
 import { useSelector, useDispatch } from "react-redux"
 import { changePrice } from "../reducers/priceReducer"
-import { changeQuantity, addQuantity } from "../reducers/quantitiesReducer"
+import { changeQuantity, addQuantity, changeSize } from "../reducers/productSizesReducer"
 import { Image } from "cloudinary-react"
 import axios from "axios"
+import productService from "../services/products"
 
 const Alv = () => {
   const [alv, setAlv] = useState("24%")
@@ -86,20 +87,22 @@ const PackagePrices = ({packageQuantity, setPackageQuantity}) => {
 
 const ProductRow = ({index}) => {
   const dispatch = useDispatch()
-  const [unitSize, setUnitSize ] = useState("0,0")
-  const [storageQuantity, setStorageQuantity] = useState(0)
+  const state = useSelector(state => state.productSizes)[index]
+  const storageQuantity = state.quantity
+  const unitSize = state.size
   const handleQuantityChange = (quantity) => {
-    setStorageQuantity(quantity)
     dispatch(changeQuantity(quantity, index))
   }
   const price = useSelector(state => state.price)
-  const priceFloat = parseFloat(price.substring(0,price.length-1).replace(",","."))
+  const priceFloat = parseFloat(price.substring(0,price.length).replace(",","."))
   const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
+  console.log(unitSizeFloat)
+  console.log(priceFloat)
   return(
     <div>
           <Form.Control
             value={unitSize}
-            onChange={(event) => setUnitSize(event.target.value)}
+            onChange={(event) => dispatch(changeSize(event.target.value,index))}
             type="text"
             placeholder="0,0"
           />
@@ -109,7 +112,7 @@ const ProductRow = ({index}) => {
             type="number"
             placeholder="0"
           />
-      {index} {unitSizeFloat*priceFloat} {storageQuantity}
+      {unitSize} {unitSizeFloat*priceFloat} {storageQuantity}
     </div> 
   )
 }
@@ -149,8 +152,10 @@ const AddProducts = () => {
     event.preventDefault()
     setPreview(true)
   }
-  const quantities = useSelector(state => state.quantities)
+  const productSizes = useSelector(state => state.productSizes)
+  const quantities = isPackage ? packageQuantity : productSizes.reduce((a, b) => a + b.quantity, 0)
   console.log(quantities)
+  console.log(productSizes)
   const handleImage = async (image) => {
     const formData = new FormData()
     formData.append("file", image)
@@ -160,6 +165,20 @@ const AddProducts = () => {
       formData
     )
     setImageID(response.data.public_id)
+  }
+  const PublishProduct= () => {
+    const batch_quantity = isPackage ? packageQuantity : productSizes.map(size => size.quantity) 
+    const product = {
+      name: title,
+      organic,
+      sellers_id: 1,
+      type: "pc",
+      batch_quantity,
+      description,
+      imageURL: imageID,
+      category
+    }
+    productService.addProduct(product)
   }
   if(preview){
     return(
@@ -176,7 +195,7 @@ const AddProducts = () => {
         <p>{description}</p>
         {isPackage ? <h4>{price}/kpl</h4> : null}
         {isPackage ? <p>Varastoarvo: {packageQuantity}</p> : null}
-        <Button style={{ width: "100%" }} variant="success" size="lg" onClick={() =>setPreview(true)}>
+        <Button style={{ width: "100%" }} variant="success" size="lg" onClick={PublishProduct}>
               Julkaise
         </Button>
       </div>
