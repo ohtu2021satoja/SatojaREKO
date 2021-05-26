@@ -4,11 +4,11 @@
 
 - Käytetään MIT-lisenssiä 
 
-- Käytetän Cloudinary-palvelua kuvien tallentamiseen (cloudinary.com)
+- Käytetään [Cloudinary-palvelua](https://cloudinary.com/) kuvien tallentamiseen (cloudinary.com)
 
-- Lähdetään rakentamaan Facebook-kirjautumisominasuutta näin alkuun ja jätetään sähköpostikirjatuminen myöhemmälle
+- Lähdetään rakentamaan kirjautumista Facebookin kautta näin alkuun ja jätetään kirjautuminen sähköpostilla myöhemmälle
 
-- Lähdetään rakentamaan tuotevalikoimahakua keskittymällä aluksi tuottajiin. Myöhemmin lisättäväksi haku tuotekategorian tai sanan pohjalta
+- Lähdetään rakentamaan tuotevalikoimahakua keskittymällä aluksi tuottajiin. Myöhemmin lisättäväksi haku tuotekategorialla tai sanalla
 
 - Mietittiin, mikä on paras käytäntö (tietokannan rakenteen pohjalta) näyttää tuottajalle kaikki noudettavaksi merkityt tuotteet tilaisuuskohtaisesti. 
 
