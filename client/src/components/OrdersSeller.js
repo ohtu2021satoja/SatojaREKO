@@ -35,17 +35,18 @@ const OrdersSeller = () => {
     return (
       <Row key={index}>
         <Col
-        xs={8}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 8, offset: 2 }}
-        lg={{ span: 6, offset: 3 }}
-        xl={{ span: 4, offset: 4 }}>
+          xs={8}
+          sm={{ span: 10, offset: 1 }}
+          md={{ span: 8, offset: 2 }}
+          lg={{ span: 6, offset: 3 }}
+          xl={{ span: 4, offset: 4 }}
+        >
           <Accordion defaultActiveKey="1">
             <Card as={Col}>
               <Accordion.Toggle as={Button} variant="text" eventKey="0">
                 <Row>
                   <Col>
-                    <Card.Img src={product.image} alt="Generic placeholder"/>
+                    <Card.Img src={product.image} alt="Generic placeholder" />
                   </Col>
                   <Col xs={8} className="text-left">
                     <Card.Title>{product.name}</Card.Title>
@@ -77,8 +78,8 @@ const OrdersSeller = () => {
         <Nav variant="pills" defaultActiveKey="#Tuotteet">
           <Nav.Item>
             <Nav.Link href="#Tuotteet">Tuotteet</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
+          </Nav.Item>
+          <Nav.Item>
             <Nav.Link href="#Tilaajat">Tilaajat</Nav.Link>
           </Nav.Item>
         </Nav>
