@@ -25,11 +25,7 @@ server.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/p
   })
 })
 
-<<<<<<< HEAD
-server.use('/users', usersRoute)
-=======
 server.use('/api/users', usersRoute)
->>>>>>> 9de1cd15846ab1dd5e4d4a911203c21709e31200
 server.use('/api/products', productsRoute)
 
 server.use(middleware.unknownEndpoint)
