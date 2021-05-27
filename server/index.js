@@ -18,8 +18,8 @@ server.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/p
   })
 })
 
-server.use('/users', usersRoute)
-server.use('/products', productsRoute)
+server.use('/api/users', usersRoute)
+server.use('/api/products', productsRoute)
 
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
