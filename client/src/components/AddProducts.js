@@ -141,6 +141,9 @@ const Event = ({event}) => {
   const startTime = new Date(event.start)
   const startHour = startTime.getHours()
   const startMinute = startTime.getMinutes()
+  const endTime = new Date(event.endtime)
+  const endHour = endTime.getHours()
+  const endMinute = endTime.getHours()
   return(
     <div>
       <p>{event.name} (REKO)</p>
