@@ -45,9 +45,8 @@ const App = () => {
   }
 
   const logOut = () => {
-    console.log("logging out")
-    setUser({})
-  }
+    setUser({});
+  };
 
   const handleViewChange = (value) => {
     setSellerView(value)
