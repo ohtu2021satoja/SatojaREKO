@@ -25,8 +25,14 @@ productsRouter.get('/:id', async (req, res) => {
 
 productsRouter.post('/:id', async (req, res) => {
   const { id } = req.params
-  const dbParams = [req.body.name, req.body.organic, req.body.sellers_id, req.body.type, req.body.batch_quantity, req.body.description, req.body.imageURL, req.body.category]
-  await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, DEFAULT, $6, $7, $8)", dbParams)
+  console.log(req.body)
+  const product = req.body.product
+  const dbParams = [product.name, product.organic, product.sellers_id, product.type, product.batch_quantity, product.description, product.imageURL, product.category]
+  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, DEFAULT, $6, $7, $8) RETURNING id", dbParams)
+  const product_id = result[0].id
+  req.body.eventChoices.forEach(eventChoice => {
+    db.query("INSERT INTO products_events VALUES ($1,$2)", [product_id, eventChoice])
+  });
 })
 
 
