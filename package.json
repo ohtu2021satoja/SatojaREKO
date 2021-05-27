@@ -4,7 +4,6 @@
   "description": "",
   "scripts": {
     "test": "cd client && npm run test",
-    "build": "cd client && npm install && npm run fixlint && npm run build && cp -r build ../server",
     "install": "cd server && npm install && cd ../client && npm install",
     "start": "node server/index.js"
   }
