@@ -23,5 +23,11 @@ productsRouter.get('/:id', async (req, res) => {
   }
 })
 
+productsRouter.post('/:id', async (req, res) => {
+  const { id } = req.params
+  const dbParams = [req.body.name, req.body.organic, req.body.sellers_id, req.body.type, req.body.batch_quantity, req.body.description, req.body.imageURL, req.body.category]
+  await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, DEFAULT, $6, $7, $8)", dbParams)
+})
+
 
 module.exports = productsRouter
