@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col"
 import { useSelector, useDispatch } from "react-redux"
 import { changePrice } from "../reducers/priceReducer"
 import { changeQuantity, addQuantity, changeSize } from "../reducers/productSizesReducer"
+import { addID, deleteID } from "../reducers/eventChoicesReducer"
 import { Image } from "cloudinary-react"
 import axios from "axios"
 import productService from "../services/products"
@@ -130,18 +131,18 @@ const UnitPrices = () => {
   )
 }
 
-const Event = ({ event, setEventChoices, eventChoices, isChoice }) => {
+const Event = ({ event, isChoice }) => {
+  const dispatch = useDispatch()
+  const eventChoices = useSelector((state) => state.eventChoices)
+  if (eventChoices.includes(event.id)) {
+    console.log("checked")
+  }
   const addEvent = (id) => {
-    let newEventChoices = eventChoices
-    if (newEventChoices.includes(id)) {
-      console.log("includes", newEventChoices)
-      newEventChoices = newEventChoices.filter((eventID) => {
-        return eventID != id
-      })
+    if (eventChoices.includes(id)) {
+      dispatch(deleteID(id))
     } else {
-      newEventChoices.push(id)
+      dispatch(addID(id))
     }
-    setEventChoices(newEventChoices)
   }
   const startTime = new Date(event.start)
   const startHour = startTime.getHours()
@@ -166,10 +167,11 @@ const Event = ({ event, setEventChoices, eventChoices, isChoice }) => {
           type="switch"
           id="event-switch"
           label="label"
-          checked={eventChoices.includes(event.id)}
           onChange={() => addEvent(event.id)}
+          checked={eventChoices.includes(event.id)}
         />
       ) : null}
+      {eventChoices}
     </div>
   )
 }
@@ -210,7 +212,7 @@ const AddProducts = () => {
       sellerimageurl: "johnimage",
     },
   ])
-  const [eventChoices, setEventChoices] = useState([])
+  const eventChoices = useSelector((state) => state.eventChoices)
   const price = useSelector((state) => state.price)
   const [organic, setOrganic] = useState(false)
   const [title, setTitle] = useState("")
@@ -283,12 +285,7 @@ const AddProducts = () => {
         <p>{description}</p>
         {isPackage ? <h4>{price}/kpl</h4> : null}
         {isPackage ? <p>Varastoarvo: {packageQuantity}</p> : null}
-        <Events
-          events={previewEvents}
-          eventChoices={eventChoices}
-          setEventChoices={setEventChoices}
-          isChoice={false}
-        />
+        <Events events={previewEvents} isChoice={false} />
         <Button
           style={{ width: "100%" }}
           variant="success"
@@ -374,14 +371,7 @@ const AddProducts = () => {
             onChange={() => setIsPackage(!isPackage)}
           />
           {prices}
-          {events ? (
-            <Events
-              events={events}
-              eventChoices={eventChoices}
-              setEventChoices={setEventChoices}
-              isChoice={true}
-            />
-          ) : null}
+          {events ? <Events events={events} isChoice={true} /> : null}
         </Form.Group>
         <Form.Row className="mb-3">
           <Col>
