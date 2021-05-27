@@ -5,7 +5,7 @@
   "scripts": {
     "test": "cd client && npm run test",
     "install": "cd server && npm install && cd ../client && npm install",
-    "build": "cd client && npm install && rm .eslintignore && rm .eslintrc && rm .prettierrc npm run build && cp -r build ../server",
+    "build": "cd client && npm install && rm .eslintignore && rm .eslintrc && rm .prettierrc && npm run build && cp -r build ../server",
     "start": "node server/index.js",
     "fixlint": "cd client && npm run fixlint"
   }
