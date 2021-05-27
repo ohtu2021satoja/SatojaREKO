@@ -8,7 +8,7 @@ const server = express()
 const usersRoute = require('./controllers/users')
 const productsRoute = require('./controllers/products')
 
-server.use(cors)
+server.use(cors())
 server.use(express.json())
 server.use(express.urlencoded({ extended:true }));
 
