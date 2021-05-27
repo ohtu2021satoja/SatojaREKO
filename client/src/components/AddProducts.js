@@ -1,15 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Dropdown from "react-bootstrap/Dropdown"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
-import { Checkbox } from 'react-bootstrap'
 import { useSelector, useDispatch } from "react-redux"
 import { changePrice } from "../reducers/priceReducer"
 import { changeQuantity, addQuantity, changeSize } from "../reducers/productSizesReducer"
 import { Image } from "cloudinary-react"
 import axios from "axios"
 import productService from "../services/products"
+import eventService from "../services/events"
 
 const Alv = () => {
   const [alv, setAlv] = useState("24%")
@@ -137,7 +137,50 @@ const UnitPrices = () => {
   )
 }
 
+const Event = ({event}) => {
+  const startTime = new Date(event.start)
+  const startHour = startTime.getHours()
+  const startMinute = startTime.getMinutes()
+  return(
+    <div>
+      <p>{event.name} (REKO)</p>
+      <p>{event.address}</p>
+      <p>{startHour}:{startMinute}-{endHour}:{endMinute}</p>
+    </div>
+  )
+}
+
+const Events =  ({events}) => {
+  const displayEvents = events.map(event => <Event key ={event.id} event={event}/>)
+  return(
+    <div>
+      {displayEvents}
+    </div>
+  )
+}
+
 const AddProducts = () => {
+  const [events, setEvents ] = useState([
+    {
+    id: 1,
+    market_id: 1,
+    start: "2021-05-26T13:11:47.683Z",
+    endtime: "2021-05-26T13:11:47.683Z",
+    area: "Etelä-Savo",
+    address: "Mannerheimintie 1",
+    type: "reko_market",
+    areas_id: 1,
+    name: "Ristiina",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "00100",
+    county: "Uusimaa",
+    salesreport_check: true,
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit ipsum, adipisci delectus amet commodi ex!",
+    sellerimageurl: "johnimage"
+    }
+    ])
   const price = useSelector(state => state.price)
   const [organic, setOrganic] = useState(false)
   const [title, setTitle] = useState("")
@@ -266,6 +309,7 @@ const AddProducts = () => {
             onChange={() => setIsPackage(!isPackage)}
           />
           {prices}
+          {events ? <Events events={events}/>: null}
         </Form.Group>
         <Form.Row className="mb-3">
           <Col>

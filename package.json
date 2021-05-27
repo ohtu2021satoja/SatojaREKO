@@ -8,5 +8,8 @@
     "install": "cd server && npm install && cd ../client && npm install",
     "start": "node server/index.js",
     "lint": "eslint ."
+  },
+  "dependencies": {
+    "redux-devtools-extension": "^2.13.9"
   }
 }
