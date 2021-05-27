@@ -11,7 +11,7 @@ const eventsRoute = require('./controllers/events')
 
 server.use(cors())
 server.use(express.json())
-server.use(express.urlencoded({ extended:true }));
+
 
 
 server.use(express.static(path.join(__dirname, "build")))

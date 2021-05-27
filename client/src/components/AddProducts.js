@@ -249,6 +249,9 @@ const AddProducts = () => {
     )
     setImageID(response.data.public_id)
   }
+  const previewEvents = events.filter((event) => {
+    return eventChoices.includes(event.id)
+  })
   const PublishProduct = () => {
     const batch_quantity = isPackage
       ? packageQuantity
@@ -263,12 +266,9 @@ const AddProducts = () => {
       imageURL: imageID,
       category,
     }
-    productService.addProduct(product)
+    productService.addProduct({ product, eventChoices })
   }
   if (preview) {
-    const previewEvents = events.filter((event) => {
-      return eventChoices.includes(event.id)
-    })
     return (
       <div>
         <h2>Esikatselu</h2>

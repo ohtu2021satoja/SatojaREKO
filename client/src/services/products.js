@@ -12,8 +12,11 @@ const getProducts = () => {
   return request.then((response) => response.data)
 }
 
-const addProduct = async (product) => {
-  const response = await axios.post(`${apiUrl}/${product.sellers_id}`, product)
+const addProduct = async (productObject) => {
+  const response = await axios.post(
+    `${apiUrl}/${productObject.product.sellers_id}`,
+    productObject
+  )
   return response
 }
 
