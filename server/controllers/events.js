@@ -1,5 +1,4 @@
 const eventsRouter = require('express').Router()
-const db = require("../services/db")
 
 
 eventsRouter.get('/seller/:id', async (req, res) => {
