@@ -30,6 +30,11 @@ export const getProducts = () => {
   return products
 }
 
+const getUserProducts = (id) => {
+  const request = axios.get(`${apiUrl}/${id}`)
+  return request.then((response) => response.data)
+}
+
 const addProduct = async (productObject) => {
   const response = await axios.post(
     `${apiUrl}/${productObject.product.sellers_id}`,
