@@ -1,10 +1,10 @@
 import React from "react";
-import NavigationBarBuyer from "./NavigationBarBuyer";
+import NavigationBarSeller from "./NavigationBarSeller";
 import { Link } from "react-router-dom";
 import { mount } from "enzyme";
 import { BrowserRouter } from "react-router-dom";
 
-const requiredURLs = ["/", "/orders", "/cart", "/events", "/profile"];
+const requiredURLs = ["/", "/add", "/products", "/orders", "/profile"];
 
 let sellerView = true;
 
@@ -12,10 +12,10 @@ const setSellerView = (value) => {
   sellerView = value;
 };
 
-describe("Navigation bar for Buyer", () => {
+describe("Navigation bar for Seller", () => {
   const wrapper = mount(
     <BrowserRouter>
-      <NavigationBarBuyer setSellerView={setSellerView} />
+      <NavigationBarSeller setSellerView={setSellerView} />
     </BrowserRouter>
   );
 

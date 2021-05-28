@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-      - lint-config-full-stack
   pull_request:
-    branches: [main, new-lint-config]
+    branches: [main]
     types: [opened, synchronize]
 
 jobs:
@@ -25,8 +24,8 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-      - name: build
-        run: npm run build
+      - name: lint
+        run: npm run fixlint
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12

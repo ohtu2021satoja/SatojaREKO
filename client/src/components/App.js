@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-// import userAPI from "../services/users";
+import { connect } from "react-redux"
+import { handleInitialData } from "../actions/shared"
 import "./App.css"
 import Container from "react-bootstrap/Container"
 import NavigationBarSeller from "./navigation/NavigationBarSeller"
@@ -10,31 +11,16 @@ import LoginPage from "./LoginPage"
 import HomePage from "./HomePage"
 import { Redirect } from "react-router-dom"
 
-const App = () => {
-  const [users, setUsers] = useState([])
+const App = (props) => {
   const [user, setUser] = useState({})
   const [sellerView, setSellerView] = useState(null)
 
-  useEffect(() => {
-    // Get users form API
-    // const allUsers = userAPI.getAll()
-    const allUsers = [
-      {
-        id: 1,
-        email: "user1@a.com",
-        password: "pw1",
-        products: ["milk", "bread"],
-      },
-      {
-        id: 2,
-        email: "user2@a.com",
-        password: "pw2",
-        products: ["blueberries", "mushroome"],
-      },
-    ]
+  const { /*authedUser,*/ products, users } = props
 
-    setUsers(allUsers)
-  }, [])
+  useEffect(() => {
+    // Get data form API
+    props.handleInitialData()
+  }, [props])
 
   const getCurrentUser = (email, password) => {
     const currentUser = users.find(
@@ -67,6 +53,7 @@ const App = () => {
             <div>
               <NavigationBarSeller setSellerView={handleViewChange} />
               <RoutesSeller
+                products={products}
                 user={user}
                 logOut={logOut}
                 setSellerView={handleViewChange}
@@ -78,7 +65,12 @@ const App = () => {
           return (
             <div>
               <NavigationBarBuyer setSellerView={handleViewChange} />
-              <RoutesBuyer user={user} logOut={logOut} setSellerView={handleViewChange} />
+              <RoutesBuyer
+                products={products}
+                user={user}
+                logOut={logOut}
+                setSellerView={handleViewChange}
+              />
               <Redirect to="/events" />
             </div>
           )
@@ -87,4 +79,12 @@ const App = () => {
   )
 }
 
-export default App
+const mapStateToProps = ({ authedUser, products, users }) => {
+  return {
+    authedUser,
+    products,
+    users,
+  }
+}
+
+export default connect(mapStateToProps, { handleInitialData })(App)
