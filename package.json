@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "test": "cd client && npm run test && cd ../server && npm run test",
-    "build": "cd client && npm install && npm run fixlint && npm run build && cp -r build ../server",
     "install": "cd server && npm install && cd ../client && npm install",
-    "start": "node server/index.js"
+    "build": "cd client && npm install && rm .eslintignore && rm .eslintrc && rm .prettierrc && npm run build && cp -r build ../server",
+    "start": "node server/index.js",
+    "fixlint": "cd client && npm run fixlint"
   }
 }
