@@ -1,0 +1,8 @@
+POST http://localhost:3003/api/products/1
+CONTENT-Type: application/application/json
+{
+  "product":{
+
+  },
+  "eventChoices": [1]
+}
