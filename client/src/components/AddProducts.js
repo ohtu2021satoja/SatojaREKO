@@ -15,6 +15,7 @@ import Preview from "./Preview"
 
 const AddProducts = () => {
   const [events, setEvents] = useState([])
+  const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(0)
   useEffect(async () => {
     const events = await eventService.getSellersUpcomingEvents(1)
     setEvents(events)
@@ -98,6 +99,7 @@ const AddProducts = () => {
             type="switch"
             id="custom-switch"
             label={isPackage ? "Kiinteä hinta" : "Eri kokoja & hintoja"}
+            checked={!isPackage}
             onChange={() => setIsPackage(!isPackage)}
           />
           {isPackage ? null : (
@@ -107,6 +109,11 @@ const AddProducts = () => {
             />
           )}
           {prices}
+          <input
+            type="range"
+            value={deleteBeforeEvent}
+            onChange={(event) => setDeleteBeforeEvent(event.target.value)}
+          />
           {events ? <Events events={events} isChoice={true} /> : null}
         </Form.Group>
         <Form.Row className="mb-3">
