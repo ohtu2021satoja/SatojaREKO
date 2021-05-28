@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
 import { useSelector, useDispatch } from "react-redux"
 import { Image } from "cloudinary-react"
-import axios from "axios"
+import imageService from "../services/images"
 import eventService from "../services/events"
 import ChooseCategory from "./ChooseCategory"
 import ChooseProductType from "./ChooseProductType"
@@ -42,13 +42,7 @@ const AddProducts = () => {
     setPreview(true)
   }
   const handleImage = async (image) => {
-    const formData = new FormData()
-    formData.append("file", image)
-    formData.append("upload_preset", "ml_default")
-    const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dpk81nwou/image/upload",
-      formData
-    )
+    const response = await imageService.addImage(image)
     setImageID(response.data.public_id)
   }
   if (preview) {
