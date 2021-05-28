@@ -6,12 +6,23 @@ import { useSelector } from "react-redux"
 import productService from "../services/products"
 
 const PreviewSize = ({ size }) => {
-  return <div>Hello</div>
+  return (
+    <div>
+      <p>Koko: {size.unit} </p>
+      <p>Hinta: {size.price}</p>
+      <p>Määrä: {size.quantity}</p>
+    </div>
+  )
 }
 
 const PreviewSizes = ({ sizes }) => {
   const displaySizes = sizes.map((size) => <PreviewSize key={size.unit} size={size} />)
-  return <div>{displaySizes}</div>
+  return (
+    <div>
+      <h4>Koot</h4>
+      {displaySizes}
+    </div>
+  )
 }
 
 const Preview = ({
@@ -40,7 +51,7 @@ const Preview = ({
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
 
   const sizes = isPackage
-    ? [{ price: priceFloat, quantity: packageQuantity.toExponential, unit: 1 }]
+    ? [{ price: priceFloat, quantity: packageQuantity, unit: 1 }]
     : productSizes.map((unitSize) => {
         const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
         console.log(unitSizeFloat)
@@ -107,7 +118,7 @@ const Preview = ({
         </h4>
       )}
       <p>Varastoarvo {batch_quantity}</p>
-      <PreviewSizes sizes={sizes} />
+      {isPackage ? null : <PreviewSizes sizes={sizes} />}
       <Events events={previewEvents} isChoice={false} />
       <Button
         style={{ width: "100%" }}
