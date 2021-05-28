@@ -25,6 +25,8 @@ const products = [
       }
 ]
 
+const mockSizes = []
+
 const getAllProducts = () => {
   return(products)
 }
@@ -41,4 +43,14 @@ const addProduct = (product) => {
   return(product.id)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct }
+const addProductSizes = async (product_id, sizes) => {
+  sizes.forEach(size  => {
+    mockSizes.push((product_id, size.price, size.quantity, size.unit, mockSizes.length+1))
+  })
+}
+
+const getSizes = () => {
+  return(mockSizes)
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getSizes }

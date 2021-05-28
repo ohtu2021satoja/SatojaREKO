@@ -3,6 +3,7 @@ const mockProductRepository = require("./mocks/mockProductRepository")
 const mockEventRepository = require("./mocks/mockEventRepository")
 
 const mockProducts = mockProductRepository.getAllProducts()
+const mockSizes = mockProductRepository.getSizes()
 
 describe("get all products", () => {
   test("returns all products", async () => {
@@ -32,11 +33,25 @@ describe("adding product", () => {
       imageURL: "Testimansikkakuva",
       category: "Marjat ja hedelmät"
     }
-    const lengthBefore = mockProducts.length
+    const sizes = [{
+      "price": 5,
+      "quantity": 5,
+      "unit": 1
+    },
+    {
+    price: 3,
+    quantity: 2,
+    unit: 4
+    }]
+
+    const productsLengthBefore = mockProducts.length
+    const sizesLengthBefore = mockSizes.length
     const events = [1,2]
-    await productsService.addProduct(product, events, mockProductRepository, mockEventRepository)
+    await productsService.addProduct(product, events, sizes, mockProductRepository, mockEventRepository)
     const newMockProducts = mockProductRepository.getAllProducts()
-    expect(newMockProducts.length).toBe(lengthBefore+1)
+    const newMockSizes = mockProductRepository.getSizes()
+    expect(newMockProducts.length).toBe(productsLengthBefore+1)
+    expect(newMockSizes.length).toBe(sizesLengthBefore+2)
     expect(mockEventRepository.getProductEventTable()).toStrictEqual([(5,1), (5,2)])
   })
 })
