@@ -1,6 +1,7 @@
 const productsRouter = require("express").Router();
 const productService = require("../services/products")
 const productsRepository = require("../repositories/products")
+const eventsRepository = require("../repositories/events")
 productsRouter.get("/", async (req, res) => {
   try {
     const products = await productService.getAllProducts(productsRepository)
@@ -18,7 +19,7 @@ productsRouter.get('/:id', async (req, res) => {
     return res.status(404).send({ error: 'Sellers products not found' });
   }
   try {
-    res.status(200).json(products)
+    res.send(200).json(products)
   } catch (err) {
     next(err)
   }
@@ -27,8 +28,9 @@ productsRouter.get('/:id', async (req, res) => {
 productsRouter.post('/:id', async (req, res) => {
   try{
     await productService.addProduct(req.body.product, req.body.eventChoices, productsRepository, eventsRepository)
-    res.send(200).end()
+    res.sendStatus(200).end()
   } catch(error){
+    console.log(error)
     next(error)
   }
 

@@ -1,8 +1,16 @@
 POST http://localhost:3003/api/products/1
-CONTENT-Type: application/application/json
+Content-Type: application/json
+
 {
   "product":{
-
+    "name": "restTest",
+    "organic": true,
+    "sellers_id": 1,
+    "type": "pc",
+    "batch_quantity": 5,
+    "description": "Tuotekuvaus",
+    "imageURL": "kuvalinkki",
+    "category": "Hedelmät & marjat"
   },
   "eventChoices": [1]
 }
