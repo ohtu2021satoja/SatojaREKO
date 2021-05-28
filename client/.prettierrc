@@ -1,0 +1,13 @@
+{
+    "trailingComma": "es5",
+    "printWidth": 90,
+    "semi": false,
+    "overrides": [
+      {
+        "files": "*.test.js",
+        "options": {
+          "semi": true
+        }
+      }
+    ]
+  }

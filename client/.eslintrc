@@ -17,5 +17,14 @@
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        // gets rid of CRLF error
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
