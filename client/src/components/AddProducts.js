@@ -14,6 +14,8 @@ import UnitPrices from "./UnitPrices"
 import Preview from "./Preview"
 
 const AddProducts = () => {
+  const state = useSelector((state) => state)
+  console.log(state)
   const [events, setEvents] = useState([])
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(0)
   useEffect(async () => {
