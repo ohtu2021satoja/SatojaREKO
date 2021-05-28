@@ -14,8 +14,7 @@ const ProductRow = ({ index }) => {
   const price = useSelector((state) => state.price)
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
   const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
-  console.log(unitSizeFloat)
-  console.log(priceFloat)
+  console.log(priceFloat, unitSizeFloat)
   return (
     <div>
       <Form.Control
@@ -30,6 +29,7 @@ const ProductRow = ({ index }) => {
         type="number"
         placeholder="0"
       />
+      <p>Hinta: {priceFloat * unitSizeFloat}€</p>
     </div>
   )
 }

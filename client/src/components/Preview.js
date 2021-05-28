@@ -71,8 +71,6 @@ const Preview = ({
       imageURL: imageID,
       category,
     }
-    console.log(type)
-    console.log(sizes)
     productService.addProduct({ product, eventChoices, sizes })
   }
   return (
@@ -89,7 +87,13 @@ const Preview = ({
       </Button>
       <h3>{title}</h3>
       <p>{description}</p>
-      {isPackage ? <h4>{price}/kpl</h4> : null}
+      {isPackage ? (
+        <h4>{price}/kpl</h4>
+      ) : (
+        <h4>
+          {price}/{parseType(productType)}
+        </h4>
+      )}
       {isPackage ? <p>Varastoarvo: {packageQuantity}</p> : null}
       <Events events={previewEvents} isChoice={false} />
       <Button
