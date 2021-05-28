@@ -9,15 +9,13 @@ import { addQuantity } from "../reducers/productSizesReducer"
 const UnitPrices = () => {
   const dispatch = useDispatch()
   const price = useSelector((state) => state.price)
-  console.log(price)
-  const [productrows, setProductRows] = useState([<ProductRow key={0} index={0} />])
+  const productSizes = useSelector((state) => state.productSizes)
+  const productrows = []
+  for (const i in productSizes) {
+    productrows.push(<ProductRow key={i} index={i} />)
+  }
   const addProductRow = () => {
     dispatch(addQuantity())
-    setProductRows(
-      productrows.concat(
-        <ProductRow key={productrows.length} index={productrows.length} />
-      )
-    )
   }
   return (
     <div>

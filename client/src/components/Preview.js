@@ -5,6 +5,15 @@ import Events from "./Events"
 import { useSelector } from "react-redux"
 import productService from "../services/products"
 
+const PreviewSize = ({ size }) => {
+  return <div>Hello</div>
+}
+
+const PreviewSizes = ({ sizes }) => {
+  const displaySizes = sizes.map((size) => <PreviewSize key={size.unit} size={size} />)
+  return <div>{displaySizes}</div>
+}
+
 const Preview = ({
   setPreview,
   imageID,
@@ -23,6 +32,26 @@ const Preview = ({
   })
   const productSizes = useSelector((state) => state.productSizes)
   const price = useSelector((state) => state.price)
+
+  const batch_quantity = isPackage
+    ? packageQuantity
+    : productSizes.reduce((a, b) => a + b.quantity, 0)
+
+  const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
+
+  const sizes = isPackage
+    ? [{ price: priceFloat, quantity: packageQuantity.toExponential, unit: 1 }]
+    : productSizes.map((unitSize) => {
+        const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
+        console.log(unitSizeFloat)
+        console.log(priceFloat)
+        const resFloat = priceFloat * unitSizeFloat
+        return {
+          price: resFloat,
+          quantity: unitSize.quantity,
+          unit: unitSize.size,
+        }
+      })
 
   const parseType = (productType) => {
     if (productType === "Kg") {
@@ -43,23 +72,6 @@ const Preview = ({
   }
 
   const PublishProduct = () => {
-    const batch_quantity = isPackage
-      ? packageQuantity
-      : productSizes.reduce((a, b) => a + b.quantity, 0)
-    const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
-    const sizes = isPackage
-      ? [{ price: priceFloat, quantity: packageQuantity.toExponential, unit: 1 }]
-      : productSizes.map((unitSize) => {
-          const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
-          console.log(unitSizeFloat)
-          console.log(priceFloat)
-          const resFloat = priceFloat * unitSizeFloat
-          return {
-            price: resFloat,
-            quantity: unitSize.quantity,
-            unit: unitSize.size,
-          }
-        })
     const type = isPackage ? "pc" : parseType(productType)
     const product = {
       name: title,
@@ -94,7 +106,8 @@ const Preview = ({
           {price}/{parseType(productType)}
         </h4>
       )}
-      {isPackage ? <p>Varastoarvo: {packageQuantity}</p> : null}
+      <p>Varastoarvo {batch_quantity}</p>
+      <PreviewSizes sizes={sizes} />
       <Events events={previewEvents} isChoice={false} />
       <Button
         style={{ width: "100%" }}
