@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
-import { Link } from "react-router-dom"
+import { Link, Route } from "react-router-dom"
 
 
 const OrdersSellerEvents = () => {
@@ -64,6 +64,8 @@ const OrdersSellerEvents = () => {
     const renderEvents = (tapahtuma, index) => {
       var date = new Date(tapahtuma.date)
       return(
+        <Route
+        key={index}>
         <Link to="/orderproducts">
           <Card
           as={Col}
@@ -72,7 +74,7 @@ const OrdersSellerEvents = () => {
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
           xl={{ span: 4, offset: 4 }}
-          key={index}>
+          >
             
             <div>
               tapahtuma {tapahtuma.name}
@@ -84,6 +86,7 @@ const OrdersSellerEvents = () => {
             </div>
           </Card>
           </Link>
+          </Route>
       )
     }
 
@@ -113,6 +116,7 @@ const OrdersSellerEvents = () => {
         </div>
       )
     }
+    
   return(
       <div>
         <Row className="justify-content-md-center"
