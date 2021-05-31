@@ -9,8 +9,9 @@ Content-Type: application/json
     "type": "pc",
     "batch_quantity": 5,
     "description": "Tuotekuvaudfgds",
-    "imageURL": "kuvalinsfdffkki",
-    "category": "Hedelmät & marjat"
+    "imageURL": "kuvalinsfdfffsdfdsfkki",
+    "category": "Hedelmät & marjat",
+    "deleteBeforeEvent": 2
   },
   "eventChoices": [1],
   "sizes": [{

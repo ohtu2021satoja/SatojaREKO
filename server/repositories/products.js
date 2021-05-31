@@ -11,8 +11,8 @@ const getSellersProducts = async (id) => {
 }
 
 const addProduct = async (product) => {
-  const dbParams = [product.name, product.organic, product.sellers_id, product.type, product.batch_quantity, product.description, product.imageURL, product.category]
-  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, DEFAULT, $6, $7, $8) RETURNING id", dbParams)
+  const dbParams = [product.name, product.organic, product.sellers_id, product.type, product.batch_quantity, product.description, product.imageURL, product.category, product.deleteBeforeEvent]
+  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, DEFAULT, $6, $7, $8, $9) RETURNING id", dbParams)
   return(result[0].id)
 }
 

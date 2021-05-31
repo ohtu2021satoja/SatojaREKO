@@ -1,0 +1,6 @@
+PUT http://localhost:3003/api/buyers/1/newsletter_check
+Content-Type: application/json
+
+{
+  "check": true
+}
