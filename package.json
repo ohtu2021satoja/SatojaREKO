@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "cd client && npm run test",
+    "test": "cd client && npm run test && cd ../server && npm run test",
     "install": "cd server && npm install && cd ../client && npm install",
     "build": "cd client && npm install && rm .eslintignore && rm .eslintrc && rm .prettierrc && npm run build && cp -r build ../server",
     "start": "node server/index.js",
