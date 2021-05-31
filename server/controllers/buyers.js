@@ -9,4 +9,11 @@ buyersRouter.put('/:id/newsletter_check', async (req, res) => {
   return res.sendStatus(200).end()
 })
 
+buyersRouter.put('/:id/cancel_notification_check', async (req, res) => {
+  const { id } = req.params
+  const check = req.body.check
+  await  buyersService.updateCancelNotificationCheck(id, check, buyersRepository)
+  return res.sendStatus(200).end()
+})
+
 module.exports = buyersRouter

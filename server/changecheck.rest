@@ -1,6 +1,6 @@
-PUT http://localhost:3003/api/buyers/1/newsletter_check
+PUT http://localhost:3003/api/buyers/1/cancel_notification_check
 Content-Type: application/json
 
 {
-  "check": true
+  "check": false
 }
