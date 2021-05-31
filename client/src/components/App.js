@@ -18,8 +18,7 @@ const App = (props) => {
 
   useEffect(() => {
     // Get data form API
-    props.handleInitialData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    props.handleInitialData()    
   }, [])
 
   const loginWithFacebook = (id) => props.setAuthedUser(id)
