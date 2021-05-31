@@ -30,6 +30,20 @@ export const getProducts = () => {
   return products
 }
 
+const getUserProducts = (id) => {
+  const request = axios.get(`${apiUrl}/${id}`)
+  return request.then((response) => response.data)
+}
+
+const addProduct = async (productObject) => {
+  const response = await axios.post(
+    `${apiUrl}/${productObject.product.sellers_id}`,
+    productObject
+  )
+  return response
+}
+
+export default { getUserProducts, getProducts, addProduct }
 /*
 export const getProducts = async () => {
   const response = await axios.get(apiUrl)

@@ -8,9 +8,14 @@ Content-Type: application/json
     "sellers_id": 1,
     "type": "pc",
     "batch_quantity": 5,
-    "description": "Tuotekuvaus",
-    "imageURL": "kuvalinkki",
+    "description": "Tuotekuvaudfgds",
+    "imageURL": "kuvalinsfdffkki",
     "category": "Hedelmät & marjat"
   },
-  "eventChoices": [1]
+  "eventChoices": [1],
+  "sizes": [{
+    "price": 5,
+    "quantity": 5,
+    "unit": 1
+  }]
 }

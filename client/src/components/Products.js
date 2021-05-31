@@ -40,19 +40,20 @@ const Products = () => {
         md={{ span: 8, offset: 2 }}
         lg={{ span: 6, offset: 3 }}
         xl={{ span: 4, offset: 4 }}
-        key={index}>
+        key={index}
+      >
         <Accordion.Toggle as={Button} variant="text" eventKey="0">
           <Card>
             <Card.Header>
               <h4>{product.name}</h4>
             </Card.Header>
-            <Card.Img variant="top" src={product.image}/>
+            <Card.Img variant="top" src={product.image} />
             <Accordion.Collapse eventKey="0">
               <Card.Body>
                 <Row className="justify-content-md-center">
                   myyty {product.sold}/{product.soldlimit}
                 </Row>
-                  Hinta {product.price}€
+                Hinta {product.price}€
               </Card.Body>
             </Accordion.Collapse>
           </Card>

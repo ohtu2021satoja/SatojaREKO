@@ -16,4 +16,11 @@ const addProduct = async (product) => {
   return(result[0].id)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct }
+const addProductSizes = async (product_id, sizes) => {
+  sizes.forEach(size => {
+    db.query("INSERT INTO sizes VALUES($1, $2, $3, $4, DEFAULT)", [product_id, size.price, size.quantity, size.unit])
+  });
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes }
+

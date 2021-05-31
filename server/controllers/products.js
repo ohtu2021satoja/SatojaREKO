@@ -27,7 +27,7 @@ productsRouter.get('/:id', async (req, res) => {
 
 productsRouter.post('/:id', async (req, res) => {
   try{
-    await productService.addProduct(req.body.product, req.body.eventChoices, productsRepository, eventsRepository)
+    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository)
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)

@@ -8,9 +8,9 @@ const getSellersProducts = async (id, productsRepository) => {
   return(products)
 }
 
-const addProduct = async (product, eventChoices, productsRepository, eventsRepository) => {
+const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository) => {
   const product_id  = await productsRepository.addProduct(product)
-  
+  await productsRepository.addProductSizes(product_id, sizes)
   await eventsRepository.addProductToEvents(product_id, eventChoices)
 }
 
