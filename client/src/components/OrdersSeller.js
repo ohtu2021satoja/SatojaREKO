@@ -33,7 +33,7 @@ const OrdersSeller = () => {
 
   const renderOrders = (product, index) => {
     return (
-      <Accordion className="mb-2" key={index} flush>
+      <Accordion className="mb-2" key={index}>
         <Card>
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
             <Row>

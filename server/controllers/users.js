@@ -1,11 +1,10 @@
 const usersRouter = require('express').Router()
-const db = require("../services/db")
-
+const usersService = require("../services/users")
+const usersRepository = require("../repositories/users")
 
 usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params
-  const user = await  db.query("SELECT * from users WHERE id=$1",[id]);
-  console.log(user)
+  const user = await  usersService.getUser(id, usersRepository)
   if (!user) {
     return res.status(404).send({ error: 'User not found' });
   }
