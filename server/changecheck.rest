@@ -1,4 +1,4 @@
-PUT http://localhost:3003/api/buyers/1/cancel_notification_check
+PUT http://localhost:3003/api/sellers/1/salesreport_check
 Content-Type: application/json
 
 {
