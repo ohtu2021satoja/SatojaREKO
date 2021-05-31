@@ -6,33 +6,62 @@ import Accordion from "react-bootstrap/Accordion"
 import Nav from "react-bootstrap/Nav"
 import { Link } from "react-router-dom"
 
-const OrdersSellerProducts = () => {
+const OrdersSellerBuyers = () => {
   // example products
   const orders = [
     {
-      name: "mansikka 5kg laatikko",
-      sold: 5,
+      name: "John Dillinger",
+      id: 189226,
       soldlimit: 10,
       price: 52,
-      image: "https://www.satotukku.fi//i/t/mansikka.8ee8a02c75.jpg",
     },
     {
-      name: "herne 1 litra",
-      sold: 3,
+      name: "Bonnie Parker",
+      id: 367979,
       soldlimit: 15,
       price: 23,
-      image: "http://www.hankkija.fi/Liitetiedostot/Pics/herneetw900.jpg",
+    },
+    {
+      name: "Clyde Barrow",
+      id: 2235235,
+      soldlimit: 4,
+      price: 66,
+    },
+  ]
+  const products = [
+    {
+      name: "mansikka 5kg",
+      sold: 5,
+      price: 52,
+    },
+    {
+      name: "herne 1L",
+      sold: 3,
+      price: 23,
     },
     {
       name: "naudan sisäfile",
       sold: 2,
-      soldlimit: 4,
       price: 66,
-      image: "https://www.wotkins.fi/wp-content/uploads/2016/05/naudan_sisafilee.jpg",
     },
   ]
+  const renderProducts = (product, index) => {
+      return(
+        <Row key={index}>
+        <Col>
+           <p>{product.name}</p>
+        </Col>
+        <Col>
+            <p>{product.sold}</p>
+        </Col>
+        <Col>
+            <p>{product.price * product.sold}€</p>
+        </Col>
+        </Row>
+      )
+  }
 
-  const renderOrders = (product, index) => {
+  const renderOrders = (buyer, index) => {
     return (
       <Row key={index}>
         <Col
@@ -45,20 +74,21 @@ const OrdersSellerProducts = () => {
             <Card as={Col}>
               <Accordion.Toggle as={Button} variant="text" eventKey="0">
                 <Row>
-                  <Col>
-                    <Card.Img src={product.image} alt="Generic placeholder"/>
-                  </Col>
+                  
                   <Col xs={8} className="text-left">
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>tilattu {product.sold}kpl</Card.Text>
+                    <Card.Title>
+                      {buyer.name} <div></div> {buyer.id}
+                    </Card.Title>
                   </Col>
                 </Row>
                 <Accordion.Collapse eventKey="0">
                   <Col>
-                    <p>
-                      asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd
-                      asd asd asd asd
-                    </p>
+                    <Row>
+                      <Col>Tuote</Col>
+                      <Col>Määrä</Col>
+                      <Col>Hinta</Col>
+                    </Row>
+                    {products.map(renderProducts)}
                   </Col>
                 </Accordion.Collapse>
               </Accordion.Toggle>
@@ -87,7 +117,7 @@ const OrdersSellerProducts = () => {
           <h6>generic ADDRESS</h6>
       </Row>
       <Row className="justify-content-md-center">
-        <Nav variant="pills" defaultActiveKey="1">
+        <Nav variant="pills" defaultActiveKey="2">
           <Nav.Item>
             <Nav.Link as={Link} eventKey="1" to="/orderproducts" >Tuotteet</Nav.Link>
             </Nav.Item>
@@ -101,4 +131,4 @@ const OrdersSellerProducts = () => {
   )
 }
 
-export default OrdersSellerProducts
+export default OrdersSellerBuyers
