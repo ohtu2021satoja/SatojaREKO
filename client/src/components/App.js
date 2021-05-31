@@ -19,7 +19,7 @@ const App = (props) => {
   useEffect(() => {
     // Get data form API
     props.handleInitialData()    
-  }, [])
+  }, [props])
 
   const loginWithFacebook = (id) => props.setAuthedUser(id)
 
