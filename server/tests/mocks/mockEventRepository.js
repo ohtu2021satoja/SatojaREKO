@@ -1,6 +1,5 @@
 const productEventTable = []
 
-
 const events = [
   {
     id: 1,
@@ -22,6 +21,7 @@ const events = [
     sellerimageurl: "johnimage"
     }
   ]
+
 const getProductEventTable = () => {
   return(productEventTable)
 }
@@ -41,3 +41,4 @@ const getAllEvents = () => {
 }
 
 module.exports = { getProductEventTable, addProductToEvents, getSellersEvents, getAllEvents}
+

@@ -12,3 +12,4 @@ const getSellersEvents = async (seller_id) => {
 }
 
 module.exports = { addProductToEvents, getSellersEvents }
+

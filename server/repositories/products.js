@@ -23,3 +23,4 @@ const addProductSizes = async (product_id, sizes) => {
 }
 
 module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes }
+

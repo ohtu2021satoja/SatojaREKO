@@ -54,3 +54,4 @@ const getSizes = () => {
 }
 
 module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getSizes }
+
