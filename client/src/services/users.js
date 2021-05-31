@@ -1,8 +1,9 @@
-//import axios from "axios"
+/*
+import axios from "axios"
 
-// const apiUrl = "/api/users"
+const apiUrl = "/api/users"
 
-/*const getUsers = async () => {
+const getUsers = async () => {
   const response = await axios.get(apiUrl)
   return response.data
 }

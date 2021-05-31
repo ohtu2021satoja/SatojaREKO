@@ -1,6 +1,5 @@
 .menuicon {
   transform: scale(2);
-  width: 9vw;
   fill: rgb(22, 22, 22);
 }
 
@@ -8,3 +7,7 @@
   fill: grey;
 }
 
+.navbar {
+  max-width: 900px; 
+  margin: 0 auto; /* center */
+}
