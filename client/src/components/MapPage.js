@@ -1,85 +1,150 @@
 import "./MapPage.css"
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+import { useRef, useEffect, useState } from "react"
+import Button from "react-bootstrap/Button"
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from "react-leaflet"
+import MapBottomPanel from "./MapBottomPanel"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+
+const events = [
+  {
+    id: 1,
+    market_id: 1,
+    start: "2021-05-26T16:11:47.683Z",
+    endtime: "2021-05-26T16:11:47.683Z",
+    area: "Etelä-Savo",
+    address: "Brahentie 4",
+    type: "reko_market",
+    location: "fsdafda",
+    areas_id: 1,
+    name: "Ristiina",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "52300",
+    county: "Ristiina",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    coordinates: [61.512887475629874, 27.243930955869555],
+  },
+  {
+    id: 2,
+    market_id: 2,
+    start: "2021-05-26T16:11:47.683Z",
+    endtime: "2021-05-26T16:11:47.683Z",
+    area: "Etelä-Savo",
+    address: "Maaherrankatu 67",
+    type: "reko_market",
+    location: "fsdafda",
+    areas_id: 1,
+    name: "Mikkeli",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "50500",
+    county: "Mikkeli",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    coordinates: [61.695615176857764, 27.27694062704281],
+  },
+]
+
+const sellers = [
+  {
+    id: 1,
+    name: "Terpan tila",
+    homepage: "www.terpantila.fi",
+    address: "Tapsantaival 10",
+    zipcode: "50500 ",
+    county: "Mikkeli",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    location: "",
+    coordinates: [61.65292639523773, 27.230478898204453],
+    phonenumber: "050 123 4567",
+  },
+  {
+    id: 2,
+    name: "John's farm",
+    homepage: "www.john.fi",
+    address: "Valkolankuja 5",
+    zipcode: "52320",
+    county: "Ristiina",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    location: "",
+    coordinates: [61.56675718298595, 27.192670255872347],
+    phonenumber: "050 123 4567",
+  },
+]
+
+const MapInstance = ({ setVisibleEvents, setVisibleSellers }) => {
+  const map = useMap()
+
+  const [mapBounds, setMapBounds] = useState(map.getBounds())
+
+  useEffect(() => {
+    setVisibleEvents(events.filter((event) => mapBounds.contains(event.coordinates)))
+    setVisibleSellers(sellers.filter((seller) => mapBounds.contains(seller.coordinates)))
+  }, [])
+
+  const updateMapStatus = () => {
+    setMapBounds(map.getBounds())
+    setVisibleEvents(events.filter((event) => mapBounds.contains(event.coordinates)))
+    setVisibleSellers(sellers.filter((seller) => mapBounds.contains(seller.coordinates)))
+  }
+
+  const mapEvents = useMapEvents({
+    zoomend: () => {
+      updateMapStatus()
+    },
+    moveend: () => {
+      updateMapStatus()
+    },
+    load: () => {
+      updateMapStatus()
+    },
+    resize: () => {
+      updateMapStatus()
+    },
+  })
+
+  return null
+}
 
 const MapPage = () => {
-  const events = [
-    {
-      id: 1,
-      market_id: 1,
-      start: "2021-05-26T16:11:47.683Z",
-      endtime: "2021-05-26T16:11:47.683Z",
-      area: "Etelä-Savo",
-      address: "Brahentie 4",
-      type: "reko_market",
-      location: "fsdafda",
-      areas_id: 1,
-      name: "Ristiina",
-      seller_id: 1,
-      reko_area_id: 1,
-      homepage: "www.john.fi",
-      zipcode: "52300",
-      county: "Ristiina",
-      salesreport_check: false,
-      description: "I am john",
-      image_url: "profile-blank_or75kg",
-      coordinates: [61.512887475629874, 27.243930955869555],
-    },
-    {
-      id: 2,
-      market_id: 2,
-      start: "2021-05-26T16:11:47.683Z",
-      endtime: "2021-05-26T16:11:47.683Z",
-      area: "Etelä-Savo",
-      address: "Maaherrankatu 67",
-      type: "reko_market",
-      location: "fsdafda",
-      areas_id: 1,
-      name: "Mikkeli",
-      seller_id: 1,
-      reko_area_id: 1,
-      homepage: "www.john.fi",
-      zipcode: "50500",
-      county: "Mikkeli",
-      salesreport_check: false,
-      description: "I am john",
-      image_url: "profile-blank_or75kg",
-      coordinates: [61.695615176857764, 27.27694062704281],
-    },
-  ]
+  const [visibleEvents, setVisibleEvents] = useState([])
+  const [visibleSellers, setVisibleSellers] = useState([])
 
-  const sellers = [
-    {
-      id: 1,
-      name: "Terpan tila",
-      homepage: "www.terpantila.fi",
-      address: "Tapsantaival 10",
-      zipcode: "50500 ",
-      county: "Mikkeli",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      location: "",
-      coordinates: [61.65292639523773, 27.230478898204453],
-      phonenumber: "050 123 4567",
-    },
-    {
-      id: 2,
-      name: "John's farm",
-      homepage: "www.john.fi",
-      address: "Valkolankuja 5",
-      zipcode: "52320",
-      county: "Ristiina",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      location: "",
-      coordinates: [61.56675718298595, 27.192670255872347],
-      phonenumber: "050 123 4567",
-    },
-  ]
+  const handleEventsChange = (value) => {
+    setVisibleEvents(value)
+  }
+
+  const handleSellersChange = (value) => {
+    setVisibleSellers(value)
+  }
+
+  const bottomPanelRef = useRef(null)
+
+  const scrollIntoPanel = () => {
+    bottomPanelRef.current.scrollIntoView({
+      behavior: "smooth",
+    })
+  }
 
   const markEvents = events.map((event, index) => (
     <Marker position={event.coordinates} key={index}>
       <Popup>
-        Noutotilaisuus <br /> Brahentie 4
+        Noutotilaisuus <br /> {event.address}
       </Popup>
     </Marker>
   ))
@@ -96,16 +161,32 @@ const MapPage = () => {
     <div className="map-container">
       <MapContainer
         center={[61.57229896416896, 27.256461799773678]}
-        zoom={10}
         scrollWheelZoom={true}
+        zoom={10}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <MapInstance
+          setVisibleEvents={handleEventsChange}
+          setVisibleSellers={handleSellersChange}
+        />
         {markEvents}
         {markSellers}
       </MapContainer>
+      <Row className="mt-1 mx-2">
+        <Col xs={12} className="mb-4 text-center">
+          <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
+            Näytä lista
+          </Button>
+          <p>
+            Kartan alueelta löytyi {visibleEvents.length + visibleSellers.length}{" "}
+            noutopistettä
+          </p>
+          <MapBottomPanel ref={bottomPanelRef} visibleEvents={visibleEvents} />
+        </Col>
+      </Row>
     </div>
   )
 }
