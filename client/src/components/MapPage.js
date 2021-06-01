@@ -2,23 +2,111 @@ import "./MapPage.css"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 
 const MapPage = () => {
+  const events = [
+    {
+      id: 1,
+      market_id: 1,
+      start: "2021-05-26T16:11:47.683Z",
+      endtime: "2021-05-26T16:11:47.683Z",
+      area: "Etelä-Savo",
+      address: "Brahentie 4",
+      type: "reko_market",
+      location: "fsdafda",
+      areas_id: 1,
+      name: "Ristiina",
+      seller_id: 1,
+      reko_area_id: 1,
+      homepage: "www.john.fi",
+      zipcode: "52300",
+      county: "Ristiina",
+      salesreport_check: false,
+      description: "I am john",
+      image_url: "profile-blank_or75kg",
+      coordinates: [61.512887475629874, 27.243930955869555],
+    },
+    {
+      id: 2,
+      market_id: 2,
+      start: "2021-05-26T16:11:47.683Z",
+      endtime: "2021-05-26T16:11:47.683Z",
+      area: "Etelä-Savo",
+      address: "Maaherrankatu 67",
+      type: "reko_market",
+      location: "fsdafda",
+      areas_id: 1,
+      name: "Mikkeli",
+      seller_id: 1,
+      reko_area_id: 1,
+      homepage: "www.john.fi",
+      zipcode: "50500",
+      county: "Mikkeli",
+      salesreport_check: false,
+      description: "I am john",
+      image_url: "profile-blank_or75kg",
+      coordinates: [61.695615176857764, 27.27694062704281],
+    },
+  ]
+
+  const sellers = [
+    {
+      id: 1,
+      name: "Terpan tila",
+      homepage: "www.terpantila.fi",
+      address: "Tapsantaival 10",
+      zipcode: "50500 ",
+      county: "Mikkeli",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      location: "",
+      coordinates: [61.65292639523773, 27.230478898204453],
+      phonenumber: "050 123 4567",
+    },
+    {
+      id: 2,
+      name: "John's farm",
+      homepage: "www.john.fi",
+      address: "Valkolankuja 5",
+      zipcode: "52320",
+      county: "Ristiina",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      location: "",
+      coordinates: [61.56675718298595, 27.192670255872347],
+      phonenumber: "050 123 4567",
+    },
+  ]
+
+  const markEvents = events.map((event, index) => (
+    <Marker position={event.coordinates} key={index}>
+      <Popup>
+        Noutotilaisuus <br /> Brahentie 4
+      </Popup>
+    </Marker>
+  ))
+
+  const markSellers = sellers.map((seller, index) => (
+    <Marker position={seller.coordinates} key={index}>
+      <Popup>
+        {seller.name} <br /> {seller.address}
+      </Popup>
+    </Marker>
+  ))
+
   return (
-    // Ristiina 61.5073033227113, 27.25752603700839
-    <MapContainer
-      center={[61.5073033227113, 27.25752603700839]}
-      zoom={13}
-      scrollWheelZoom={true}
-    >
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[61.51291817903732, 27.243845125180133]}>
-        <Popup>
-          Noutotilaisuus <br /> Brahentie 4
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div className="map-container">
+      <MapContainer
+        center={[61.57229896416896, 27.256461799773678]}
+        zoom={10}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {markEvents}
+        {markSellers}
+      </MapContainer>
+    </div>
   )
 }
 
