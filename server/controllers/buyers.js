@@ -9,6 +9,12 @@ buyersRouter.put('/:id/newsletter_check', async (req, res) => {
   return res.sendStatus(200).end()
 })
 
+buyersRouter.delete('/:id/image', async (req, res) => {
+  const { id } = req.params
+  await buyersService.removeBuyerImage(id, buyersRepository)
+  return res.sendStatus(200).end()
+})
+
 buyersRouter.put('/:id/cancel_notification_check', async (req, res) => {
   const { id } = req.params
   const check = req.body.check
