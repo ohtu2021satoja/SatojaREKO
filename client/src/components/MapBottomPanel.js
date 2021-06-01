@@ -9,6 +9,7 @@ const MapBottomPanel = forwardRef((props, ref) => {
       {event.start} - {event.end}
     </div>
   ))
+
   return (
     <div className="bottom-panel" ref={ref} style={{ paddingBottom: 50 }}>
       {mapEvents}

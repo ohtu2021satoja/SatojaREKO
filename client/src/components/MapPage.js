@@ -87,30 +87,18 @@ const sellers = [
   },
 ]
 
-const MapInstance = ({ setVisibleEvents, setVisibleSellers, setVisibleAmount }) => {
+const MapInstance = ({ setMapBounds }) => {
   const map = useMap()
-
-  const updateMapStatus = () => {
-    const mapBounds = map.getBounds()
-
-    const visibleEvents = events.filter((event) => mapBounds.contains(event.coordinates))
-    const visibleSellers = sellers.filter((seller) =>
-      mapBounds.contains(seller.coordinates)
-    )
-    setVisibleAmount(visibleEvents.length + visibleSellers.length)
-    setVisibleEvents(visibleEvents)
-    setVisibleSellers(visibleSellers)
-  }
 
   const mapEvents = useMapEvents({
     load: () => {
-      updateMapStatus()
+      setMapBounds(map.getBounds())
     },
     zoomend: () => {
-      updateMapStatus()
+      setMapBounds(map.getBounds())
     },
     moveend: () => {
-      updateMapStatus()
+      setMapBounds(map.getBounds())
     },
   })
 
@@ -120,20 +108,34 @@ const MapInstance = ({ setVisibleEvents, setVisibleSellers, setVisibleAmount }) 
 const MapPage = () => {
   const [visibleEvents, setVisibleEvents] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
-  const [visibleAmount, setVisibleAmount] = useState(0)
+  const [mapBounds, setMapBounds] = useState(null)
 
-  const handleEventsChange = (value) => {
-    setVisibleEvents(value)
-  }
-
-  const handleSellersChange = (value) => {
-    setVisibleSellers(value)
-  }
-
-  const handleVisibleChange = (value) => {
-    setVisibleAmount(value)
-  }
+  const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+
+    const updateMapStatus = () => {
+      const visibleEvents = events.filter((event) =>
+        mapBounds.contains(event.coordinates)
+      )
+      const visibleSellers = sellers.filter((seller) =>
+        mapBounds.contains(seller.coordinates)
+      )
+      setVisibleEvents(visibleEvents)
+      setVisibleSellers(visibleSellers)
+    }
+
+    updateMapStatus()
+  }, [mapBounds])
+
+  const handleBoundsChange = (value) => {
+    setMapBounds(value)
+  }
 
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
@@ -163,19 +165,15 @@ const MapPage = () => {
         center={[61.57229896416896, 27.256461799773678]}
         scrollWheelZoom={true}
         zoom={10}
-        whenReady={(map) => {
-          console.log(map)
+        whenCreated={(map) => {
+          setMapBounds(map.getBounds())
         }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapInstance
-          setVisibleEvents={handleEventsChange}
-          setVisibleSellers={handleSellersChange}
-          setVisibleAmount={handleVisibleChange}
-        />
+        <MapInstance setMapBounds={handleBoundsChange} />
         {markEvents}
         {markSellers}
       </MapContainer>
@@ -184,7 +182,10 @@ const MapPage = () => {
           <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
             Näytä lista
           </Button>
-          <p>Kartan alueelta löytyi {visibleAmount} noutopistettä</p>
+          <p>
+            Kartan alueelta löytyi {visibleEvents.length + visibleSellers.length}{" "}
+            noutopistettä
+          </p>
           <MapBottomPanel ref={bottomPanelRef} visibleEvents={visibleEvents} />
         </Col>
       </Row>
