@@ -108,6 +108,7 @@ const MapInstance = ({ setMapBounds }) => {
 const MapPage = () => {
   const [visibleEvents, setVisibleEvents] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
+  const [totalVisible, setTotalVisible] = useState(0)
   const [mapBounds, setMapBounds] = useState(null)
 
   const firstRender = useRef(true)
@@ -126,6 +127,7 @@ const MapPage = () => {
       const visibleSellers = sellers.filter((seller) =>
         mapBounds.contains(seller.coordinates)
       )
+      setTotalVisible(visibleEvents.length + visibleSellers.length)
       setVisibleEvents(visibleEvents)
       setVisibleSellers(visibleSellers)
     }
@@ -182,10 +184,7 @@ const MapPage = () => {
           <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
             Näytä lista
           </Button>
-          <p>
-            Kartan alueelta löytyi {visibleEvents.length + visibleSellers.length}{" "}
-            noutopistettä
-          </p>
+          <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
           <MapBottomPanel ref={bottomPanelRef} visibleEvents={visibleEvents} />
         </Col>
       </Row>
