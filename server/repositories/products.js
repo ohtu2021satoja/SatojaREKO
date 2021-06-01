@@ -1,12 +1,22 @@
 const db = require("../db")
 
 const getAllProducts = async () => {
-  const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
+  const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
   return(products)
 }
-const query = "SELECT *, reko_areas.name FROM events INNER JOIN markets ON markets.id = events.market_id INNER JOIN reko_markets ON markets.id = reko_markets.market_id INNER JOIN reko_areas ON reko_markets.areas_id=reko_areas.id INNER JOIN sellers_reko ON sellers_reko.reko_area_id=reko_areas.id INNER JOIN sellers ON sellers.id = sellers_reko.seller_id WHERE sellers.id=$1"
+
 const getSellersProducts = async (id) => {
   const products = await  db.query("SELECT * FROM products WHERE sellers_id=$1",[id])
+  return(products)
+}
+
+const getSellersProductsFilteredByCategory = async (id, category) => {
+  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id WHERE products.sellers_id=$1 AND products.category=$2  GROUP BY products.id",[id, category])
+  return(products)
+}
+
+const getProductsFilteredByCategory = async (category) => {
+  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id WHERE products.category=$1 GROUP BY products.id ",[category])
   return(products)
 }
 
@@ -22,5 +32,5 @@ const addProductSizes = async (product_id, sizes) => {
   });
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes }
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getSellersProductsFilteredByCategory, getProductsFilteredByCategory }
 

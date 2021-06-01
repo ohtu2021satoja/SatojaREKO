@@ -10,7 +10,7 @@ Content-Type: application/json
     "batch_quantity": 5,
     "description": "Tuotekuvaudfgds",
     "imageURL": "kuvasdfsdfalinsfdfffsdtrertertfdsfkki",
-    "category": "Hedelmät & marjat",
+    "category": "ABC",
     "deleteBeforeEvent": 2,
     "unit_price": 10,
     "vat": 24
