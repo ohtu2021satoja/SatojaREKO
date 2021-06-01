@@ -87,33 +87,29 @@ const sellers = [
   },
 ]
 
-const MapInstance = ({ setVisibleEvents, setVisibleSellers }) => {
+const MapInstance = ({ setVisibleEvents, setVisibleSellers, setVisibleAmount }) => {
   const map = useMap()
 
-  const [mapBounds, setMapBounds] = useState(map.getBounds())
-
-  useEffect(() => {
-    setVisibleEvents(events.filter((event) => mapBounds.contains(event.coordinates)))
-    setVisibleSellers(sellers.filter((seller) => mapBounds.contains(seller.coordinates)))
-  }, [])
-
   const updateMapStatus = () => {
-    setMapBounds(map.getBounds())
-    setVisibleEvents(events.filter((event) => mapBounds.contains(event.coordinates)))
-    setVisibleSellers(sellers.filter((seller) => mapBounds.contains(seller.coordinates)))
+    const mapBounds = map.getBounds()
+
+    const visibleEvents = events.filter((event) => mapBounds.contains(event.coordinates))
+    const visibleSellers = sellers.filter((seller) =>
+      mapBounds.contains(seller.coordinates)
+    )
+    setVisibleAmount(visibleEvents.length + visibleSellers.length)
+    setVisibleEvents(visibleEvents)
+    setVisibleSellers(visibleSellers)
   }
 
   const mapEvents = useMapEvents({
+    load: () => {
+      updateMapStatus()
+    },
     zoomend: () => {
       updateMapStatus()
     },
     moveend: () => {
-      updateMapStatus()
-    },
-    load: () => {
-      updateMapStatus()
-    },
-    resize: () => {
       updateMapStatus()
     },
   })
@@ -124,6 +120,7 @@ const MapInstance = ({ setVisibleEvents, setVisibleSellers }) => {
 const MapPage = () => {
   const [visibleEvents, setVisibleEvents] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
+  const [visibleAmount, setVisibleAmount] = useState(0)
 
   const handleEventsChange = (value) => {
     setVisibleEvents(value)
@@ -133,6 +130,9 @@ const MapPage = () => {
     setVisibleSellers(value)
   }
 
+  const handleVisibleChange = (value) => {
+    setVisibleAmount(value)
+  }
   const bottomPanelRef = useRef(null)
 
   const scrollIntoPanel = () => {
@@ -163,6 +163,9 @@ const MapPage = () => {
         center={[61.57229896416896, 27.256461799773678]}
         scrollWheelZoom={true}
         zoom={10}
+        whenReady={(map) => {
+          console.log(map)
+        }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -171,6 +174,7 @@ const MapPage = () => {
         <MapInstance
           setVisibleEvents={handleEventsChange}
           setVisibleSellers={handleSellersChange}
+          setVisibleAmount={handleVisibleChange}
         />
         {markEvents}
         {markSellers}
@@ -180,10 +184,7 @@ const MapPage = () => {
           <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
             Näytä lista
           </Button>
-          <p>
-            Kartan alueelta löytyi {visibleEvents.length + visibleSellers.length}{" "}
-            noutopistettä
-          </p>
+          <p>Kartan alueelta löytyi {visibleAmount} noutopistettä</p>
           <MapBottomPanel ref={bottomPanelRef} visibleEvents={visibleEvents} />
         </Col>
       </Row>
