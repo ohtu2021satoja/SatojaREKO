@@ -31,27 +31,30 @@ const Preview = ({
   organic,
   title,
   description,
-  isPackage,
   packageQuantity,
   eventChoices,
   events,
   category,
   productType,
+  deleteBeforeEvent
 }) => {
+  
   const previewEvents = events.filter((event) => {
     return eventChoices.includes(event.id)
   })
   const productSizes = useSelector((state) => state.productSizes)
+  const isPackage = productSizes.length === 1
   const price = useSelector((state) => state.price)
 
   const batch_quantity = isPackage
-    ? packageQuantity
+    ? productSizes[0].quantity
     : productSizes.reduce((a, b) => a + b.quantity, 0)
 
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
+  const priceInt = parseInt(100*priceFloat)
 
   const sizes = isPackage
-    ? [{ price: priceFloat, quantity: packageQuantity, unit: 1 }]
+    ? [{ price: priceFloat, quantity: packageQuantity, unit: productSizes[0].size }]
     : productSizes.map((unitSize) => {
         const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
         console.log(unitSizeFloat)
@@ -81,9 +84,8 @@ const Preview = ({
       return "gm"
     }
   }
-
   const PublishProduct = () => {
-    const type = isPackage ? "pc" : parseType(productType)
+    const type = parseType(productType)
     const product = {
       name: title,
       organic,
@@ -93,6 +95,8 @@ const Preview = ({
       description,
       imageURL: imageID,
       category,
+      deleteBeforeEvent,
+      priceInt
     }
     productService.addProduct({ product, eventChoices, sizes })
   }
@@ -118,6 +122,7 @@ const Preview = ({
         </h4>
       )}
       <p>Varastoarvo {batch_quantity}</p>
+      {isPackage ? <p>Hinta: {priceFloat*parseFloat(productSizes[0].size.replace(",", "."))}€</p> : null }
       {isPackage ? null : <PreviewSizes sizes={sizes} />}
       <Events events={previewEvents} isChoice={false} />
       <Button

@@ -17,7 +17,7 @@ const AddProducts = () => {
   const state = useSelector((state) => state)
   console.log(state)
   const [events, setEvents] = useState([])
-  const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(0)
+  const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
   useEffect(async () => {
     const events = await eventService.getSellersUpcomingEvents(1)
     setEvents(events)
@@ -28,18 +28,8 @@ const AddProducts = () => {
   const [title, setTitle] = useState("")
   const [category, setCategory] = useState("Valitse kategoria")
   const [description, setDescription] = useState("")
-  const [isPackage, setIsPackage] = useState(true)
-  const [packageQuantity, setPackageQuantity] = useState(0)
   const [preview, setPreview] = useState(false)
   const [imageID, setImageID] = useState(null)
-  const prices = isPackage ? (
-    <PackagePrices
-      packageQuantity={packageQuantity}
-      setPackageQuantity={setPackageQuantity}
-    />
-  ) : (
-    <UnitPrices />
-  )
   const handleSubmit = (event) => {
     event.preventDefault()
     setPreview(true)
@@ -56,12 +46,11 @@ const AddProducts = () => {
         organic={organic}
         title={title}
         description={description}
-        isPackage={isPackage}
-        packageQuantity={packageQuantity}
         eventChoices={eventChoices}
         events={events}
         category={category}
         productType={productType}
+        deleteBeforeEvent={deleteBeforeEvent}
       />
     )
   }
@@ -97,20 +86,11 @@ const AddProducts = () => {
             onChange={() => setOrganic(!organic)}
             checked={organic}
           />
-          <Form.Check
-            type="switch"
-            id="custom-switch"
-            label={isPackage ? "Kiinteä hinta" : "Eri kokoja & hintoja"}
-            checked={!isPackage}
-            onChange={() => setIsPackage(!isPackage)}
-          />
-          {isPackage ? null : (
-            <ChooseProductType
+          <ChooseProductType
               productType={productType}
               setProductType={setProductType}
-            />
-          )}
-          {prices}
+          />
+          <UnitPrices />
           <input
             type="range"
             value={deleteBeforeEvent}
