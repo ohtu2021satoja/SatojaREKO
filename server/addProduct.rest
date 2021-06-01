@@ -12,7 +12,8 @@ Content-Type: application/json
     "imageURL": "kuvasdfsdfalinsfdfffsdtrertertfdsfkki",
     "category": "Hedelmät & marjat",
     "deleteBeforeEvent": 2,
-    "unit_price": 10
+    "unit_price": 10,
+    "vat": 24
   },
   "eventChoices": [1],
   "sizes": [{
