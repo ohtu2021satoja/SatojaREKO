@@ -22,8 +22,8 @@ const UnitPrices = () => {
       <Alv />
       Aseta kilohinta (sis alv)
       <Price price={price} />
-      <Button onClick={addProductRow}>Lisää tuoterivi</Button>
       {productrows}
+      <Button onClick={addProductRow}>Lisää tuoterivi</Button>
     </div>
   )
 }
