@@ -24,7 +24,6 @@ const events = [
     area: "Etelä-Savo",
     address: "Brahentie 4",
     type: "reko_market",
-    location: "fsdafda",
     areas_id: 1,
     name: "Ristiina",
     seller_id: 1,
@@ -35,7 +34,7 @@ const events = [
     salesreport_check: false,
     description: "I am john",
     image_url: "profile-blank_or75kg",
-    coordinates: [61.512887475629874, 27.243930955869555],
+    location: [61.512887475629874, 27.243930955869555],
   },
   {
     id: 2,
@@ -45,7 +44,6 @@ const events = [
     area: "Etelä-Savo",
     address: "Maaherrankatu 67",
     type: "reko_market",
-    location: "fsdafda",
     areas_id: 1,
     name: "Mikkeli",
     seller_id: 1,
@@ -56,7 +54,7 @@ const events = [
     salesreport_check: false,
     description: "I am john",
     image_url: "profile-blank_or75kg",
-    coordinates: [61.695615176857764, 27.27694062704281],
+    location: [61.695615176857764, 27.27694062704281],
   },
 ]
 
@@ -70,8 +68,7 @@ const sellers = [
     county: "Mikkeli",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    location: "",
-    coordinates: [61.65292639523773, 27.230478898204453],
+    location: [61.65292639523773, 27.230478898204453],
     phonenumber: "050 123 4567",
   },
   {
@@ -83,8 +80,7 @@ const sellers = [
     county: "Ristiina",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    location: "",
-    coordinates: [61.56675718298595, 27.192670255872347],
+    location: [61.56675718298595, 27.192670255872347],
     phonenumber: "050 123 4567",
   },
 ]
@@ -128,11 +124,9 @@ const MapPage = () => {
     }
 
     const updateMapStatus = () => {
-      const visibleEvents = events.filter((event) =>
-        mapBounds.contains(event.coordinates)
-      )
+      const visibleEvents = events.filter((event) => mapBounds.contains(event.location))
       const visibleSellers = sellers.filter((seller) =>
-        mapBounds.contains(seller.coordinates)
+        mapBounds.contains(seller.location)
       )
       setTotalVisible(visibleEvents.length + visibleSellers.length)
       setVisibleEvents(visibleEvents)
@@ -166,34 +160,26 @@ const MapPage = () => {
 
   const markEvents = events.map((event, index) => (
     <Marker
-      position={event.coordinates}
+      position={event.location}
       key={index}
       eventHandlers={{
         click: (e) => {
           setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
         },
       }}
-    >
-      <Popup>
-        Noutotilaisuus <br /> {event.address}
-      </Popup>
-    </Marker>
+    ></Marker>
   ))
 
   const markSellers = sellers.map((seller, index) => (
     <Marker
-      position={seller.coordinates}
+      position={seller.location}
       key={index}
       eventHandlers={{
         click: (e) => {
           setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
         },
       }}
-    >
-      <Popup>
-        {seller.name} <br /> {seller.address}
-      </Popup>
-    </Marker>
+    ></Marker>
   ))
 
   return openedPage ? (
