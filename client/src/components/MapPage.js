@@ -1,6 +1,5 @@
 import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
-import Button from "react-bootstrap/Button"
 import {
   MapContainer,
   TileLayer,
@@ -12,6 +11,7 @@ import {
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 
 const events = [
   {
@@ -110,6 +110,7 @@ const MapPage = () => {
   const [visibleSellers, setVisibleSellers] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapBounds, setMapBounds] = useState(null)
+  const [openedPage, setOpenedPage] = useState(null)
 
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
