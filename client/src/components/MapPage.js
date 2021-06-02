@@ -1,13 +1,6 @@
 import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-  useMapEvents,
-} from "react-leaflet"
+import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
