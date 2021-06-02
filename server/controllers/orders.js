@@ -1,0 +1,17 @@
+const ordersRouter = require('express').Router()
+const ordersService = require("../services/orders")
+const ordersRepository = require("../repositories/orders")
+const productsRepository = require("../repositories/products")
+
+ordersRouter.post('/buyer/:id', async (req, res) => {
+  try{
+    const { id } = req.params
+    const orders = req.body.orders
+    await ordersService.addBuyersOrders(id, orders, ordersRepository, productsRepository)
+    res.sendStatus(200).end()
+  } catch(error){
+    console.log(error)
+  }
+})
+
+module.exports = ordersRouter

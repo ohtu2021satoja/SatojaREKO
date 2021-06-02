@@ -1,24 +1,16 @@
-POST http://localhost:3003/api/products/1
+POST http://localhost:3003/api/orders/buyer/1
 Content-Type: application/json
 
 {
-  "product":{
-    "name": "restTest",
-    "organic": true,
-    "sellers_id": 1,
-    "type": "pc",
-    "batch_quantity": 5,
-    "description": "Tuotekuvaudfgds",
-    "imageURL": "kuvasdfsdfalinsfdfffsdtrertertfdsfkki",
-    "category": "ABC",
-    "deleteBeforeEvent": 2,
-    "unit_price": 10,
-    "vat": 24
-  },
-  "eventChoices": [2],
-  "sizes": [{
-    "price": 5,
-    "quantity": 5,
-    "unit": 1
-  }]
+  "orders": [
+    {
+      "event_id": 1,
+      "batches": [
+        {
+          "size_id": 13,
+          "order_quantity": 2 
+        }
+      ]
+    }
+  ]
 }

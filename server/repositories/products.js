@@ -27,5 +27,14 @@ const getEventProducts = async (event_id) => {
   return(products)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts }
+const getSellersEventProducts = async (event_id, sellers_id) => {
+  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products_events INNER JOIN products ON products_events.id_product = products.id INNER JOIN sizes ON sizes.product_id = products.id WHERE products_events.id_event=$1 AND products.sellers_id=$2 GROUP BY products.id",[event_id, sellers_id])
+  return(products)
+}
+
+const updateSizeQuantity = async (size_id, order_quantity) => {
+  await db.query("UPDATE sizes SET quantity=quantity-$1 WHERE id=$2",[order_quantity,size_id])
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, updateSizeQuantity, getSellersEventProducts }
 

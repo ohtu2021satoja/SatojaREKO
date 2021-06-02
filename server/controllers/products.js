@@ -38,6 +38,19 @@ productsRouter.get("/events/:id", async (req, res) => {
   }
 })
 
+productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
+  const { event_id, seller_id } = req.params
+  const products = await productService.getSellersEventProducts(event_id, seller_id, productsRepository)
+  if (!products) {
+    return res.status(404).send({ error: 'Sellers products not found' });
+  }
+  try {
+    res.send(products)
+  } catch (err) {
+    next(err)
+  }
+})
+
 productsRouter.post('/:id', async (req, res) => {
   try{
     await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository)
