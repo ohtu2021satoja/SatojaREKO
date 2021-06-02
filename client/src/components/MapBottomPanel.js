@@ -1,5 +1,7 @@
 import "./MapPage.css"
 import { forwardRef } from "react"
+import Button from "react-bootstrap/Button"
+import EventPage from "./EventPage"
 
 const MapBottomPanel = forwardRef((props, ref) => {
   const mapEvents = props.visibleEvents.map((event, index) => (
@@ -7,6 +9,15 @@ const MapBottomPanel = forwardRef((props, ref) => {
       {event.name} <br />
       {event.address} <br />
       {event.start} - {event.end}
+      <Button
+        className="btn btn-primary btn-sm"
+        variant="success"
+        onClick={() =>
+          props.openPage(EventPage({ event: event, closePage: props.closePage }))
+        }
+      >
+        Siirry tilaisuuteen
+      </Button>
     </div>
   ))
 

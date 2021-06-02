@@ -12,6 +12,8 @@ import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
+import EventPage from "./EventPage"
+import SellerPage from "./SellerPage"
 
 const events = [
   {
@@ -87,18 +89,21 @@ const sellers = [
   },
 ]
 
-const MapInstance = ({ setMapBounds }) => {
+const MapInstance = ({ setMapBounds, setMapCenter }) => {
   const map = useMap()
 
   const mapEvents = useMapEvents({
     load: () => {
       setMapBounds(map.getBounds())
+      setMapCenter(map.getCenter())
     },
     zoomend: () => {
       setMapBounds(map.getBounds())
+      setMapCenter(map.getCenter())
     },
     moveend: () => {
       setMapBounds(map.getBounds())
+      setMapCenter(map.getCenter())
     },
   })
 
@@ -109,6 +114,7 @@ const MapPage = () => {
   const [visibleEvents, setVisibleEvents] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
+  const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
   const [openedPage, setOpenedPage] = useState(null)
 
@@ -140,6 +146,18 @@ const MapPage = () => {
     setMapBounds(value)
   }
 
+  const handleCenterChange = (value) => {
+    setMapCenter(value)
+  }
+
+  const handleClosePage = () => {
+    setOpenedPage(null)
+  }
+
+  const handleOpenPage = (page) => {
+    setOpenedPage(page)
+  }
+
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
       behavior: "smooth",
@@ -147,7 +165,15 @@ const MapPage = () => {
   }
 
   const markEvents = events.map((event, index) => (
-    <Marker position={event.coordinates} key={index}>
+    <Marker
+      position={event.coordinates}
+      key={index}
+      eventHandlers={{
+        click: (e) => {
+          setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+        },
+      }}
+    >
       <Popup>
         Noutotilaisuus <br /> {event.address}
       </Popup>
@@ -155,28 +181,42 @@ const MapPage = () => {
   ))
 
   const markSellers = sellers.map((seller, index) => (
-    <Marker position={seller.coordinates} key={index}>
+    <Marker
+      position={seller.coordinates}
+      key={index}
+      eventHandlers={{
+        click: (e) => {
+          setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
+        },
+      }}
+    >
       <Popup>
         {seller.name} <br /> {seller.address}
       </Popup>
     </Marker>
   ))
 
-  return (
+  return openedPage ? (
+    openedPage
+  ) : (
     <div className="map-container">
       <MapContainer
-        center={[61.57229896416896, 27.256461799773678]}
+        center={mapCenter}
         scrollWheelZoom={true}
         zoom={10}
         whenCreated={(map) => {
           setMapBounds(map.getBounds())
+          setMapCenter(map.getCenter())
         }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapInstance setMapBounds={handleBoundsChange} />
+        <MapInstance
+          setMapBounds={handleBoundsChange}
+          setMapCenter={handleCenterChange}
+        />
         {markEvents}
         {markSellers}
       </MapContainer>
@@ -186,7 +226,12 @@ const MapPage = () => {
             Näytä lista
           </Button>
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
-          <MapBottomPanel ref={bottomPanelRef} visibleEvents={visibleEvents} />
+          <MapBottomPanel
+            ref={bottomPanelRef}
+            visibleEvents={visibleEvents}
+            openPage={handleOpenPage}
+            closePage={handleClosePage}
+          />
         </Col>
       </Row>
     </div>
