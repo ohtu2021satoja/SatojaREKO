@@ -25,9 +25,9 @@ productsRouter.get('/:id', async (req, res) => {
   }
 })
 
-productsRouter.get('/seller/:category/:id', async (req, res) => {
-  const { category, id } = req.params
-  const products = await productService.getSellersProductsFilteredByCategory(id, category, productsRepository)
+productsRouter.get("/events/:id", async (req, res) => {
+  const { id } = req.params
+  const products = await productService.getEventProducts(id, productsRepository)
   if (!products) {
     return res.status(404).send({ error: 'Sellers products not found' });
   }
@@ -36,20 +36,6 @@ productsRouter.get('/seller/:category/:id', async (req, res) => {
   } catch (err) {
     next(err)
   }
-})
-
-productsRouter.get('/category/:category', async (req, res) => {
-  const { category } = req.params
-  const products = await productService.getProductsFilteredByCategory(category, productsRepository)
-  if (!products) {
-    return res.status(404).send({ error: 'Products not found' });
-  }
-  try {
-    res.send(products)
-  } catch (err) {
-    next(err)
-  }
-
 })
 
 productsRouter.post('/:id', async (req, res) => {

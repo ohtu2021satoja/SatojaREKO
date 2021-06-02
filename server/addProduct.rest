@@ -15,7 +15,7 @@ Content-Type: application/json
     "unit_price": 10,
     "vat": 24
   },
-  "eventChoices": [1],
+  "eventChoices": [2],
   "sizes": [{
     "price": 5,
     "quantity": 5,

@@ -8,20 +8,15 @@ const getSellersProducts = async (id, productsRepository) => {
   return(products)
 }
 
-const getSellersProductsFilteredByCategory = async (id, category, productsRepository) => {
-  const products = productsRepository.getSellersProductsFilteredByCategory(id, category)
-  return(products)
-}
-
-const getProductsFilteredByCategory = async (category, productsRepository) => {
-  const products = productsRepository.getProductsFilteredByCategory(category)
-  return(products)
-}
-
 const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository) => {
   const product_id  = await productsRepository.addProduct(product)
   await productsRepository.addProductSizes(product_id, sizes)
   await eventsRepository.addProductToEvents(product_id, eventChoices)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, getSellersProductsFilteredByCategory, getProductsFilteredByCategory }
+const getEventProducts = async (id, productsRepository) => {
+  const products = await productsRepository.getEventProducts(id)
+  return(products)
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts }
