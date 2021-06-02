@@ -1,20 +1,20 @@
 const unknownEndpoint = (req, res, next) => {
-  const error = new Error('Unknown endpoint');
-  error.status = 404;
-  next(error);
-};
+    const error = new Error('Unknown endpoint')
+    error.status = 404
+    next(error)
+}
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
-  res.status(err.status || 500);
-  res.send({
-      error: err.message
-  });
+    console.log(err)
+    res.status(err.status || 500)
+    res.send({
+        error: err.message
+    })
 
-  next(err);
-};
+    next(err)
+}
 
 module.exports = {
-  unknownEndpoint,
-  errorHandler
-};
+    unknownEndpoint,
+    errorHandler
+}
