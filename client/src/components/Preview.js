@@ -38,7 +38,9 @@ const Preview = ({
   productType,
   deleteBeforeEvent
 }) => {
-  
+  const alv = useSelector((state) => state.alv)
+  const vat = parseInt(alv.slice(0,-1))
+  console.log(vat)
   const previewEvents = events.filter((event) => {
     return eventChoices.includes(event.id)
   })
@@ -96,7 +98,8 @@ const Preview = ({
       imageURL: imageID,
       category,
       deleteBeforeEvent,
-      priceInt
+      priceInt,
+      vat
     }
     productService.addProduct({ product, eventChoices, sizes })
   }
@@ -114,13 +117,8 @@ const Preview = ({
       </Button>
       <h3>{title}</h3>
       <p>{description}</p>
-      {isPackage ? (
-        <h4>{price}/kpl</h4>
-      ) : (
-        <h4>
-          {price}/{parseType(productType)}
-        </h4>
-      )}
+      <h4>{price}/{parseType(productType)}</h4>
+      <p>Alv: {alv}</p>
       <p>Varastoarvo {batch_quantity}</p>
       {isPackage ? <p>Hinta: {priceFloat*parseFloat(productSizes[0].size.replace(",", "."))}€</p> : null }
       {isPackage ? null : <PreviewSizes sizes={sizes} />}

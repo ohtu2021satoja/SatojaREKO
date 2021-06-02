@@ -5,8 +5,10 @@ import { users } from "./users"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import alvReducer from "./alvReducer"
 
 export default combineReducers({
+  alv: alvReducer,
   price: priceReducer,
   productSizes: productSizesReducer,
   eventChoices: eventChoicesReducer,

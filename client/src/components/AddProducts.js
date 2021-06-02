@@ -11,16 +11,46 @@ import ChooseProductType from "./ChooseProductType"
 import Events from "./Events"
 import UnitPrices from "./UnitPrices"
 import Preview from "./Preview"
+import {Formik} from "formik"
+import * as yup from "yup"
+
+const validationSchema = yup.object().shape({
+  title: yup
+    .string()
+    .required("Vaadittu"),
+
+  description: yup
+    .string()
+    .required("Vaadittu"),
+
+  productType: yup
+    .string()
+    .notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
+
+  price: yup
+    .string()
+    .notOneOf(["00,00€"], "Aseta hinta"),
+
+  sizes: yup
+    .array().of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
+
+  quantities: yup
+    .array().of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
+
+  category: yup
+    .string()
+    .notOneOf(["Valitse kategoria"], "Valitse kategoria")
+})
 
 const AddProducts = () => {
-  const state = useSelector((state) => state)
-  console.log(state)
+  const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
   useEffect(async () => {
     const events = await eventService.getSellersUpcomingEvents(1)
     setEvents(events)
   }, [])
+  const productSizes = useSelector((state) => state.productSizes)
   const [productType, setProductType] = useState("Valitse yksikkö")
   const eventChoices = useSelector((state) => state.eventChoices)
   const [organic, setOrganic] = useState(false)
@@ -29,14 +59,19 @@ const AddProducts = () => {
   const [description, setDescription] = useState("")
   const [preview, setPreview] = useState(false)
   const [imageID, setImageID] = useState(null)
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setPreview(true)
-  }
   const handleImage = async (image) => {
     const response = await imageService.addImage(image)
     setImageID(response.data.public_id)
   }
+
+  const goToPreview = ({title, description, productType, category}) => {
+    setTitle(title)
+    setDescription(description)
+    setProductType(productType)
+    setCategory(category)
+    setPreview(true)
+  }
+
   if (preview) {
     return (
       <Preview
@@ -58,27 +93,49 @@ const AddProducts = () => {
       <Form.Label as="h3" className="my-4 text-center">
         Uusi ilmoitus
       </Form.Label>
+      <Formik initialValues={{ category: category, title: title, description: description, productType: productType, price: price, sizes: productSizes.map(size => parseFloat(size.size.replace(",","."))), quantities: productSizes.map(size => size.quantity)}}
+      onSubmit={goToPreview}
+      validationSchema = {validationSchema}>
+      {({
+        values,
+        handleChange,
+        handleSubmit,
+        handleBlur,
+        setFieldValue,
+        isValid,
+        validationSchema,
+        errors,
+        touched
+      }) => (
       <Form onSubmit={handleSubmit}>
-        <ChooseCategory category={category} setCategory={setCategory} />
+        <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
+        {touched.category && errors.category ? (<div>{errors.category}</div>) : null}
         <Form.Group>
           <Form.File
             id="exampleFormControlFile1"
             label="Lisää kuva"
             onChange={(event) => handleImage(event.currentTarget.files[0])}
           />
+          <div>{values.sizes}</div>
           {imageID ? <Image cloudName="dpk81nwou" publicId={imageID} /> : null}
           <Form.Control
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            id="title"
+            name="title"
+            value={values.title}
+            onChange={handleChange}
             type="text"
             placeholder="Otsikko"
           />
+          {touched.title && errors.title ? (<div>{errors.title}</div>) : null}
           <Form.Control
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            id="description"
+            name="description"
+            value={values.description}
+            onChange={handleChange}
             type="text"
             placeholder="Tuotekuvaus"
           />
+          {touched.description && errors.description ? (<div>{errors.description}</div>) : null}
           <Form.Check
             type="checkbox"
             label="Tuote on luomua"
@@ -86,10 +143,17 @@ const AddProducts = () => {
             checked={organic}
           />
           <ChooseProductType
-              productType={productType}
-              setProductType={setProductType}
+              productType={values.productType}
+              setFieldValue={setFieldValue}
           />
-          <UnitPrices />
+          {touched.productType && errors.productType ? (<div>{errors.productType}</div>) : null}
+          <UnitPrices 
+            setFieldValue={setFieldValue}
+            sizes={values.sizes}
+            quantities={values.quantities}
+            errors={errors}
+            touched={touched}
+          />
           <input
             type="range"
             value={deleteBeforeEvent}
@@ -103,13 +167,16 @@ const AddProducts = () => {
               style={{ width: "100%" }}
               variant="success"
               size="lg"
-              onClick={() => setPreview(true)}
+              type="submit"
             >
               Esikatselu
             </Button>
           </Col>
         </Form.Row>
       </Form>
+      )}
+      </Formik>
+
     </div>
   )
 }
