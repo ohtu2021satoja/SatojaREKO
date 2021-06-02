@@ -1,90 +1,81 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { handleInitialData } from "../actions/shared"
+import { setAuthedUser, logoutUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
-import NavigationBarSeller from "./navigation/NavigationBarSeller"
-import NavigationBarBuyer from "./navigation/NavigationBarBuyer"
-import RoutesBuyer from "./navigation/RoutesBuyer"
-import RoutesSeller from "./navigation/RoutesSeller"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import LoginPage from "./LoginPage"
 import HomePage from "./HomePage"
-import { Redirect } from "react-router-dom"
+import AppSeller from "./AppSeller"
+import AppBuyer from "./AppBuyer"
 
 const App = (props) => {
-  const [user, setUser] = useState({})
   const [sellerView, setSellerView] = useState(null)
 
-  const { /*authedUser,*/ products, users } = props
+  const { authedUser, products } = props
 
   useEffect(() => {
     // Get data form API
     props.handleInitialData()
   }, [props])
 
-  const getCurrentUser = (email, password) => {
-    const currentUser = users.find(
-      (user) => user.email === email && user.password === password
-    )
+  const loginWithFacebook = (id) => props.setAuthedUser(id)
 
-    setUser(currentUser === undefined ? {} : currentUser)
-  }
-
-  const logOut = () => {
-    setUser({})
-  }
+  const logOut = () => props.logoutUser()
 
   const handleViewChange = (value) => {
     setSellerView(value)
   }
 
-  const userIsEmpty = () => {
-    return Object.keys(user).length === 0
-  }
-
   return (
     <Container fluid>
-      {(() => {
-        if (userIsEmpty()) return <LoginPage handleLogin={getCurrentUser} />
-        if (sellerView === null)
-          return <HomePage setSellerView={handleViewChange} logOut={logOut} />
-        if (sellerView === true)
-          return (
-            <div>
-              <NavigationBarSeller setSellerView={handleViewChange} />
-              <RoutesSeller
-                products={products}
-                user={user}
-                logOut={logOut}
-                setSellerView={handleViewChange}
-              />
-              <Redirect to="/home" />
-            </div>
-          )
-        if (sellerView === false)
-          return (
-            <div>
-              <NavigationBarBuyer setSellerView={handleViewChange} />
-              <RoutesBuyer
-                products={products}
-                user={user}
-                logOut={logOut}
-                setSellerView={handleViewChange}
-              />
-              <Redirect to="/events" />
-            </div>
-          )
-      })()}
+      <Row className="vh-100">
+        <Col
+          xs={12}
+          sm={{ span: 8, offset: 2 }}
+          style={{ backgroundColor: "white", paddingBottom: 70 }}
+        >
+          {(() => {
+            if (!authedUser) return <LoginPage handleLogin={loginWithFacebook} />
+
+            if (sellerView === null)
+              return <HomePage setSellerView={handleViewChange} logOut={logOut} />
+
+            if (sellerView === true)
+              return (
+                <AppSeller
+                  products={products}
+                  user={authedUser}
+                  logOut={logOut}
+                  setSellerView={handleViewChange}
+                />
+              )
+
+            if (sellerView === false)
+              return (
+                <AppBuyer
+                  products={products}
+                  user={authedUser}
+                  logOut={logOut}
+                  setSellerView={handleViewChange}
+                />
+              )
+          })()}
+        </Col>
+      </Row>
     </Container>
   )
 }
 
-const mapStateToProps = ({ authedUser, products, users }) => {
+const mapStateToProps = ({ authedUser, products }) => {
   return {
     authedUser,
     products,
-    users,
   }
 }
 
-export default connect(mapStateToProps, { handleInitialData })(App)
+export default connect(mapStateToProps, { handleInitialData, setAuthedUser, logoutUser })(
+  App
+)

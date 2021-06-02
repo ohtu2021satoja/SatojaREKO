@@ -1,10 +1,14 @@
 import Row from "react-bootstrap/Row"
-import LoginForm from "./LoginForm"
+import Col from "react-bootstrap/Col"
+import LoginFormFacebook from "./LoginFormFacebook"
 
 const LoginPage = ({ handleLogin }) => {
   return (
-    <Row>
-      <LoginForm handleLogin={handleLogin} />
+    <Row className="d-flex align-items-end h-100 mx-4">
+      <LoginFormFacebook handleLogin={handleLogin} />
+      <Col xs={12} className="text-center">
+        <p>Terms</p>
+      </Col>
     </Row>
   )
 }
