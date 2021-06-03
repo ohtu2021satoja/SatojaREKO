@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
+import Card from "react-bootstrap/Card"
 import { useSelector, useDispatch } from "react-redux"
 import { Image } from "cloudinary-react"
 import imageService from "../services/images"
@@ -13,6 +14,7 @@ import UnitPrices from "./UnitPrices"
 import Preview from "./Preview"
 import {Formik} from "formik"
 import * as yup from "yup"
+import "./App.css"
 
 const validationSchema = yup.object().shape({
   title: yup
@@ -32,10 +34,10 @@ const validationSchema = yup.object().shape({
     .notOneOf(["00,00€"], "Aseta hinta"),
 
   sizes: yup
-    .array().of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
+    .array().required().of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
 
   quantities: yup
-    .array().of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
+    .array().required().of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
 
   category: yup
     .string()

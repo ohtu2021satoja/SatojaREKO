@@ -1,17 +1,33 @@
 import React from "react"
 import { Image } from "cloudinary-react"
 import Button from "react-bootstrap/Button"
+import Card from "react-bootstrap/Card"
+import Col from "react-bootstrap/Col"
 import Events from "./Events"
 import { useSelector } from "react-redux"
 import productService from "../services/products"
 
 const PreviewSize = ({ size }) => {
   return (
-    <div>
-      <p>Koko: {size.unit} </p>
-      <p>Hinta: {size.price}</p>
-      <p>Määrä: {size.quantity}</p>
-    </div>
+    <Card
+    as={Col}
+    xs={12}
+    sm={{ span: 10, offset: 1 }}
+    md={{ span: 8, offset: 2 }}
+    lg={{ span: 6, offset: 3 }}
+    xl={{ span: 4, offset: 4 }}
+    >
+
+      <div>
+        Koko: {size.unit}
+      </div>
+        Varastoarvo {size.quantity}
+      <div>
+        Hinta: {size.price}€
+      </div>
+      <div>
+      </div>
+    </Card>
   )
 }
 
@@ -56,7 +72,7 @@ const Preview = ({
   const priceInt = parseInt(100*priceFloat)
 
   const sizes = isPackage
-    ? [{ price: priceFloat, quantity: packageQuantity, unit: productSizes[0].size }]
+    ? [{ price: priceFloat, quantity: packageQuantity, unit: productSizes[0].size.replace(",", ".") }]
     : productSizes.map((unitSize) => {
         const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
         console.log(unitSizeFloat)
@@ -65,7 +81,7 @@ const Preview = ({
         return {
           price: resFloat,
           quantity: unitSize.quantity,
-          unit: unitSize.size,
+          unit: unitSizeFloat,
         }
       })
 
@@ -98,7 +114,7 @@ const Preview = ({
       imageURL: imageID,
       category,
       deleteBeforeEvent,
-      priceInt,
+      unit_price: priceInt,
       vat
     }
     productService.addProduct({ product, eventChoices, sizes })
@@ -122,7 +138,9 @@ const Preview = ({
       <p>Varastoarvo {batch_quantity}</p>
       {isPackage ? <p>Hinta: {priceFloat*parseFloat(productSizes[0].size.replace(",", "."))}€</p> : null }
       {isPackage ? null : <PreviewSizes sizes={sizes} />}
+      <h4>Noutotapahtumat</h4>
       <Events events={previewEvents} isChoice={false} />
+      <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
       <Button
         style={{ width: "100%" }}
         variant="success"

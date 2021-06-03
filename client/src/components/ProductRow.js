@@ -1,11 +1,14 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
 import { changeQuantity, changeSize } from "../reducers/productSizesReducer"
 
 const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }) => {
+  index = parseInt(index)
   const dispatch = useDispatch()
-  const state = useSelector((state) => state.productSizes)[index]
+  const productSizes = useSelector((state) => state.productSizes)
+  const state = productSizes[index]
   const storageQuantity = state.quantity
   const unitSize = state.size
   const handleQuantityChange = (quantity) => {
@@ -40,7 +43,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
         placeholder="0"
       />
       {storageQuantity<1 && errors.quantities && touched.quantities ? (<div>{errors.quantities}</div>): null }
-      <p>Hinta: {priceFloat * unitSizeFloat}€</p>
+      <p>Hinta: {priceFloat * unitSizeFloat}€</p> 
     </div>
   )
 }
