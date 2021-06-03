@@ -1,16 +1,23 @@
-POST http://localhost:3003/api/orders/buyer/4
+POST http://localhost:3003/api/products/1
 Content-Type: application/json
 
 {
-  "orders": [
-    {
-      "event_id": 1,
-      "batches": [
-        {
-          "size_id": 14,
-          "order_quantity": 2 
-        }
-      ]
-    }
+  "product": {
+    "name": "Porkkana",
+    "organic": true,
+    "sellers_id": 1,
+    "type": "kg",
+    "batch_quantity": 11,
+    "description": "Porkkanoita",
+    "imageURL": "porkkana_sveqsj",
+    "category": "Liha & kala",
+    "deleteBeforeEvent": 24,
+    "unit_price": 1000,
+    "vat": 14
+  },
+  "eventChoices": [ 1 ],
+  "sizes": [
+    { "price": 15, "quantity": 6, "unit": 1.5 },
+    { "price": 20, "quantity": 5, "unit": 2 }
   ]
 }
