@@ -3,12 +3,10 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
-import Nav from "react-bootstrap/Nav"
-import { Link } from "react-router-dom"
 
 const OrdersSellerBuyers = () => {
   // example products
-  const orders = [
+  const orderers = [
     {
       name: "John Dillinger",
       id: 189226,
@@ -60,8 +58,7 @@ const OrdersSellerBuyers = () => {
         </Row>
       )
   }
-
-  const renderOrders = (buyer, index) => {
+  const renderBuyers = (buyer, index) => {
     return (
       <Row key={index}>
         <Col
@@ -74,7 +71,6 @@ const OrdersSellerBuyers = () => {
             <Card as={Col}>
               <Accordion.Toggle as={Button} variant="text" eventKey="0">
                 <Row>
-                  
                   <Col xs={8} className="text-left">
                     <Card.Title>
                       {buyer.name} <div></div> {buyer.id}
@@ -101,32 +97,7 @@ const OrdersSellerBuyers = () => {
 
   return (
     <div>
-      <Row className="justify-content-md-center">
-        <h1>Tilaukset</h1>
-      </Row>
-      <Row className="justify-content-md-center">
-        <h6>generic (REKO)</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-        <h6>generic DATE</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-          <h6>generic TIME</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-          <h6>generic ADDRESS</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-        <Nav variant="pills" defaultActiveKey="2">
-          <Nav.Item>
-            <Nav.Link as={Link} eventKey="1" to="/orderproducts" >Tuotteet</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-            <Nav.Link as={Link} eventKey="2" to="/orderbuyers" >Tilaajat</Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Row>
-      {orders.map(renderOrders)}
+      {orderers.map(renderBuyers)}
     </div>
   )
 }

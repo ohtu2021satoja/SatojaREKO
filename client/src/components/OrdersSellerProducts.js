@@ -3,12 +3,11 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
-import Nav from "react-bootstrap/Nav"
-import { Link } from "react-router-dom"
+import OrdersSellerBuyers from "./OrdersSellerBuyers"
 
-const OrdersSellerProducts = () => {
+const OrdersSellerProducts = (props) => {
   // example products
-  const orders = [
+  const orderProducts = [
     {
       name: "mansikka 5kg laatikko",
       sold: 5,
@@ -31,6 +30,7 @@ const OrdersSellerProducts = () => {
       image: "https://www.wotkins.fi/wp-content/uploads/2016/05/naudan_sisafilee.jpg",
     },
   ]
+
 
   const renderOrders = (product, index) => {
     return (
@@ -67,38 +67,20 @@ const OrdersSellerProducts = () => {
         </Col>
       </Row>
     )
-  }
-
+  } 
+  if (props.ListView){
   return (
     <div>
-      <Row className="justify-content-md-center">
-        <h1>Tilaukset</h1>
-      </Row>
-      <Row className="justify-content-md-center">
-        <h6>generic (REKO)</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-        <h6>generic DATE</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-          <h6>generic TIME</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-          <h6>generic ADDRESS</h6>
-      </Row>
-      <Row className="justify-content-md-center">
-        <Nav variant="pills" defaultActiveKey="1">
-          <Nav.Item>
-            <Nav.Link as={Link} eventKey="1" to="/orderproducts" >Tuotteet</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-            <Nav.Link as={Link} eventKey="2" to="/orderbuyers" >Tilaajat</Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Row>
-      {orders.map(renderOrders)}
+      {orderProducts.map(renderOrders)}
     </div>
   )
+  } else {
+    return(
+      <div>
+        <OrdersSellerBuyers/>
+      </div>
+    )
+  }
 }
 
 export default OrdersSellerProducts
