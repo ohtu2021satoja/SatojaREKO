@@ -22,4 +22,14 @@ const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepos
   }
 }
 
-module.exports = { addBuyersOrders }
+const getSellersEventOrders = async (sellers_id, event_id, ordersRepository) => {
+  const orders = await ordersRepository.getSellersEventOrders(sellers_id, event_id)
+  return(orders)
+}
+
+const getBuyersEventOrders = async (buyers_id, event_id, ordersRepository) => {
+  const orders = await ordersRepository.getBuyersEventOrders(buyers_id, event_id)
+  return(orders)
+}
+
+module.exports = { addBuyersOrders, getSellersEventOrders, getBuyersEventOrders }

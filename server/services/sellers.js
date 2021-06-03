@@ -8,4 +8,9 @@ const removeSellerImage = async (id, sellersRepository) => {
   await sellersRepository.updateSellersImage(id, BLANK_IMAGE)
 }
 
-module.exports = { updateSalesReportCheck, removeSellerImage }
+getEventsSellerHasProducts = async (id, eventsRepository) => {
+  const events = await eventsRepository.getEventsSellerHasProducts(id)
+  return(events)
+} 
+
+module.exports = { updateSalesReportCheck, removeSellerImage, getEventsSellerHasProducts }

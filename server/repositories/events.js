@@ -12,5 +12,11 @@ const getSellersEvents = async (seller_id) => {
   return(sellerEvents)
 }
 
-module.exports = { addProductToEvents, getSellersEvents }
+const getEventsSellerHasProducts = async (seller_id) => {
+  const query = "SELECT DISTINCT events.id, events.start, events.endtime from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1"
+  const sellerEvents = await  db.query(query,[seller_id])
+  return(sellerEvents)
+}
+
+module.exports = { addProductToEvents, getSellersEvents, getEventsSellerHasProducts }
 
