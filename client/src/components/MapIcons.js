@@ -2,7 +2,7 @@ import eventSVG from "../media/map-marker-event.svg"
 import sellerSVG from "../media/map-marker-seller.svg"
 import L from "leaflet"
 
-const iconSize = new L.Point(30, 45)
+const iconSize = new L.Point(30, 50)
 
 const eventMarker = new L.Icon({
   iconUrl: eventSVG,
