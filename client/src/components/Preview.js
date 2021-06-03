@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Image } from "cloudinary-react"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
@@ -31,6 +31,16 @@ const PreviewSize = ({ size }) => {
   )
 }
 
+const PublishedHeader = ({Reset}) => {
+  return(
+    <div style={{backgroundColor: "green"}}>
+      <h2>Julkaistu</h2>
+      <h3>Kerro kavereille</h3>
+      <h3 onClick={() => Reset()}>Luo uusi ilmoitus</h3>
+    </div>
+  )
+}
+
 const PreviewSizes = ({ sizes }) => {
   const displaySizes = sizes.map((size) => <PreviewSize key={size.unit} size={size} />)
   return (
@@ -52,8 +62,10 @@ const Preview = ({
   events,
   category,
   productType,
-  deleteBeforeEvent
+  deleteBeforeEvent,
+  Reset
 }) => {
+  const [published, setPublished] = useState(false)
   const alv = useSelector((state) => state.alv)
   const vat = parseInt(alv.slice(0,-1))
   console.log(vat)
@@ -102,7 +114,7 @@ const Preview = ({
       return "gm"
     }
   }
-  const PublishProduct = () => {
+  const PublishProduct = async () => {
     const type = parseType(productType)
     const product = {
       name: title,
@@ -117,11 +129,12 @@ const Preview = ({
       unit_price: priceInt,
       vat
     }
-    productService.addProduct({ product, eventChoices, sizes })
+    await productService.addProduct({ product, eventChoices, sizes })
+    setPublished(true)
   }
   return (
     <div>
-      <h2>Esikatselu</h2>
+      {published ? <PublishedHeader Reset={Reset}/> : <h2>Esikatselu</h2> }
       <Button variant="primary" onClick={() => setPreview(false)}>
         Back
       </Button>
@@ -141,6 +154,7 @@ const Preview = ({
       <h4>Noutotapahtumat</h4>
       <Events events={previewEvents} isChoice={false} />
       <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
+      {published ? null :       
       <Button
         style={{ width: "100%" }}
         variant="success"
@@ -148,7 +162,8 @@ const Preview = ({
         onClick={PublishProduct}
       >
         Julkaise
-      </Button>
+      </Button>}
+      { published ? <p>Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.</p> :null }
     </div>
   )
 }

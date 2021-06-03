@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
-import Card from "react-bootstrap/Card"
 import { useSelector, useDispatch } from "react-redux"
+import { resetPrice } from "../reducers/priceReducer"
+import { setAlv } from "../reducers/alvReducer"
+import { resetProductSizes } from "../reducers/productSizesReducer"
 import { Image } from "cloudinary-react"
 import imageService from "../services/images"
 import eventService from "../services/events"
@@ -45,6 +47,7 @@ const validationSchema = yup.object().shape({
 })
 
 const AddProducts = () => {
+  const dispatch = useDispatch()
   const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
@@ -66,6 +69,18 @@ const AddProducts = () => {
     setImageID(response.data.public_id)
   }
 
+  const Reset = () => {
+    setTitle("")
+    setDescription("")
+    setOrganic(false)
+    setProductType("Valitse yksikkö")
+    setCategory("Valitse kategoria")
+    setPreview(false)
+    setImageID(null)
+    dispatch(resetPrice())
+    dispatch(setAlv("14%"))
+    dispatch(resetProductSizes())
+  }
   const goToPreview = ({title, description, productType, category}) => {
     setTitle(title)
     setDescription(description)
@@ -87,6 +102,7 @@ const AddProducts = () => {
         category={category}
         productType={productType}
         deleteBeforeEvent={deleteBeforeEvent}
+        Reset={Reset}
       />
     )
   }
