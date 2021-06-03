@@ -7,6 +7,8 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
+import L from "leaflet"
+import marker from "../media/map-marker-solid.svg"
 
 const events = [
   {
@@ -147,10 +149,31 @@ const MapPage = () => {
     })
   }
 
+  const mapMarker = new L.Icon({
+    iconUrl: marker,
+    iconRetinaUrl: marker,
+    iconAnchor: null,
+    popupAnchor: null,
+    shadowUrl: null,
+    shadowSize: null,
+    shadowAnchor: null,
+    iconSize: new L.Point(30, 45),
+    className: "leaflet-div-icon",
+  })
+
+  const icon = L.divIcon({
+    className: "marker-seller",
+    html: `<img src=${marker} />`,
+    iconSize: [40, 40],
+    iconAnchor: [12, 24],
+    popupAnchor: [7, -16],
+  })
+
   const markEvents = events.map((event, index) => (
     <Marker
       position={event.location}
       key={index}
+      icon={icon}
       eventHandlers={{
         click: (e) => {
           setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
