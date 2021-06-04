@@ -1,9 +1,10 @@
 import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
@@ -79,7 +80,7 @@ const sellers = [
   },
 ]
 
-const MapInstance = ({ setMapBounds, setMapCenter }) => {
+const MapInstance = ({ setMapBounds, setMapCenter, setMapInstance }) => {
   const map = useMapEvents({
     load: () => {
       setMapBounds(map.getBounds())
@@ -95,6 +96,8 @@ const MapInstance = ({ setMapBounds, setMapCenter }) => {
     },
   })
 
+  setMapInstance(map)
+
   return null
 }
 
@@ -103,6 +106,7 @@ const MapPage = () => {
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
+  const [mapInstance, setMapInstance] = useState(null)
   const [openedPage, setOpenedPage] = useState(null)
 
   const firstRender = useRef(true)
@@ -142,6 +146,10 @@ const MapPage = () => {
     setOpenedPage(page)
   }
 
+  const getMapInstance = (map) => {
+    setMapInstance(map)
+  }
+
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
       behavior: "smooth",
@@ -150,16 +158,33 @@ const MapPage = () => {
 
   const markEvents = events.map((event, index) => (
     <Marker
-      className="marker-event"
       position={event.location}
       key={index}
       icon={eventMarkerHTML}
       eventHandlers={{
         click: (e) => {
-          setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+          mapInstance.flyTo(e.latlng, mapInstance.getZoom())
         },
       }}
-    />
+    >
+      <Popup className="map-popup" autoPan={false}>
+        <Card className="text-center popup-card">
+          Noutotilaisuus (REKO) <br />
+          {event.address} <br />
+          10.7 <br />
+          18.00-18.30 <br />
+        </Card>
+        <Button
+          className="btn btn-primary btn-sm popup-button"
+          variant="success"
+          onClick={() =>
+            setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+          }
+        >
+          Siirry tilaisuuteen
+        </Button>
+      </Popup>
+    </Marker>
   ))
 
   const markSellers = sellers.map((seller, index) => (
@@ -169,10 +194,24 @@ const MapPage = () => {
       icon={sellerMarkerHTML}
       eventHandlers={{
         click: (e) => {
-          setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
+          mapInstance.flyTo(e.latlng, mapInstance.getZoom())
         },
       }}
-    />
+    >
+      <Popup autoPan={false}>
+        {seller.name} <br />
+        {seller.address} <br />
+        <Button
+          className="btn btn-primary btn-sm"
+          variant="success"
+          onClick={() =>
+            setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
+          }
+        >
+          Tuottajan sivulle
+        </Button>
+      </Popup>
+    </Marker>
   ))
 
   return openedPage ? (
@@ -195,6 +234,7 @@ const MapPage = () => {
         <MapInstance
           setMapBounds={handleBoundsChange}
           setMapCenter={handleCenterChange}
+          setMapInstance={getMapInstance}
         />
         {markEvents}
         {markSellers}

@@ -14,7 +14,7 @@
 }
 
 .marker-event {
-  color: rgb(0, 143, 0);
+  color: rgb(70, 143, 3);
 }
 
 .marker-event:hover,
@@ -29,4 +29,8 @@
 .marker-seller:hover,
 .marker-seller:active {
   color: rgb(154, 154, 230);
+}
+
+.popup-card {
+  border-width: 0;
 }

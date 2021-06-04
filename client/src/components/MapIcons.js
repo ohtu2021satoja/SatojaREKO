@@ -35,6 +35,7 @@ const sellerMarkerHTML = new L.divIcon({
   <text x="50%" y="45%" text-anchor="middle" fill="white" font-family="Arial" font-size="220px" dy=".3em">T</text>
 </svg>`,
   iconSize: iconSize,
+  popupAnchor: [-5, -10],
 })
 
 const eventMarkerHTML = new L.divIcon({
@@ -44,6 +45,7 @@ const eventMarkerHTML = new L.divIcon({
   <text x="50%" y="45%" text-anchor="middle" fill="white" font-family="Arial" font-size="220px" dy=".3em">R</text>
 </svg>`,
   iconSize: iconSize,
+  popupAnchor: [-5, -10],
 })
 
 export { eventMarker, sellerMarker, sellerMarkerHTML, eventMarkerHTML }
