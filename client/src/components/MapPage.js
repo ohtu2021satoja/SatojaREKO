@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
-import { eventMarker, sellerMarker } from "./MapIcons"
+import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
 
 const events = [
   {
@@ -150,28 +150,29 @@ const MapPage = () => {
 
   const markEvents = events.map((event, index) => (
     <Marker
+      className="marker-event"
       position={event.location}
       key={index}
-      icon={eventMarker}
+      icon={eventMarkerHTML}
       eventHandlers={{
         click: (e) => {
           setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
         },
       }}
-    ></Marker>
+    />
   ))
 
   const markSellers = sellers.map((seller, index) => (
     <Marker
       position={seller.location}
       key={index}
-      icon={sellerMarker}
+      icon={sellerMarkerHTML}
       eventHandlers={{
         click: (e) => {
           setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
         },
       }}
-    ></Marker>
+    />
   ))
 
   return openedPage ? (

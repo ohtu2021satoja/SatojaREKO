@@ -12,3 +12,21 @@
   padding-top: 10px;
   height: 100%;
 }
+
+.marker-event {
+  color: rgb(0, 143, 0);
+}
+
+.marker-event:hover,
+.marker-event:active {
+  color: rgb(124, 231, 124);
+}
+
+.marker-seller {
+  color: rgb(17, 17, 110);
+}
+
+.marker-seller:hover,
+.marker-seller:active {
+  color: rgb(154, 154, 230);
+}
