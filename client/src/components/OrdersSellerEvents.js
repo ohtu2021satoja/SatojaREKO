@@ -90,6 +90,10 @@ const OrdersSellerEvents = () => {
       setListView(true)
     }
 
+    const HandleBackButton = () => {
+      setEventId(null)
+    }
+
     const RenderEvents = (tapahtuma, index) => {
       var date = new Date(tapahtuma.date)
 
@@ -174,6 +178,7 @@ const OrdersSellerEvents = () => {
             <h6>{x.address}</h6>
         </Row>
         <Row className="justify-content-md-center">
+          <Button onClick={HandleBackButton}> takaisin</Button>
           <Button onClick={HandleBuyerButton}>Tuotteet</Button>
           <Button onClick={HandleOrderButton}>Tilaajat</Button>
         </Row>
