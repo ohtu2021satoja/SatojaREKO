@@ -10,7 +10,8 @@ const BuyerSchema = Yup.object().shape({
   name: Yup.string().required(),
   surname: Yup.string().required(),
   phone: Yup.string().required(),
-  emailSettings: Yup.array(),
+  newsletter: Yup.boolean(),
+  notification: Yup.boolean(),
 })
 
 const FormBuyer = (/*{ user }*/) => {
@@ -21,7 +22,8 @@ const FormBuyer = (/*{ user }*/) => {
           name: "",
           surname: "",
           phone: "",
-          emailSettings: [],
+          newsletter: false,
+          notification: false,
         }}
         validationSchema={BuyerSchema}
         handleSubmit={console.log}
