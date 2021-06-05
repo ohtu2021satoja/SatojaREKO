@@ -8,6 +8,7 @@ const server = express()
 const usersRoute = require('./controllers/users')
 const productsRoute = require('./controllers/products')
 const eventsRoute = require('./controllers/events')
+const marketsRoute = require('./controllers/markets')
 
 server.use(cors())
 server.use(express.json())
@@ -28,6 +29,7 @@ server.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/p
 server.use('/api/users', usersRoute)
 server.use('/api/products', productsRoute)
 server.use('/api/events', eventsRoute)
+server.use('/api/markets', marketsRoute)
 
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
