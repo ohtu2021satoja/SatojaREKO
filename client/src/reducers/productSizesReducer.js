@@ -24,6 +24,15 @@ const reducer = (state = [{ size: "0,0", quantity: 0 }], action) => {
         quantity: 0,
       }
       return state.concat(newSize)
+
+    case "REMOVELASTSIZE":
+      const newstate = state
+      newstate.pop()
+      return newstate
+
+    case "RESETPRODUCTSIZES":
+      return [{size: "0,0", quantity: 0}]
+
     default:
       return state
   }
@@ -44,6 +53,18 @@ export const changeSize = (newsize, index) => {
 export const addQuantity = () => {
   return async (dispatch) => {
     dispatch({ type: "ADDNEWSIZE" })
+  }
+}
+
+export const removeQuantity = () => {
+  return async (dispatch) => {
+    dispatch({ type: "REMOVELASTSIZE"})
+  }
+}
+
+export const resetProductSizes = () => {
+  return async (dispatch) => {
+    dispatch({ type: "RESETPRODUCTSIZES"})
   }
 }
 
