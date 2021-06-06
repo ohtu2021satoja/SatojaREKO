@@ -3,7 +3,8 @@ import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import { useState } from "react"
 import OrdersSellerProducts from "./OrdersSellerProducts"
-import Button from "react-bootstrap/Button"
+import Nav from "react-bootstrap/Nav"
+import Image from "react-bootstrap/esm/Image"
 
 const OrdersSellerEvents = () => {
 
@@ -86,7 +87,7 @@ const OrdersSellerEvents = () => {
       setListView(false)
     }
     
-    const HandleBuyerButton = () => {
+    const HandleProductButton = () => {
       setListView(true)
     }
 
@@ -136,8 +137,10 @@ const OrdersSellerEvents = () => {
       if (eventId === null){
         return (
           <div key={index}>
-            <Row className="justify-content-md-center">
-            {date1.getDate()}.{date1.getMonth()+1}.{date1.getFullYear()}
+            <Row>
+              <Col className="text-center">
+                {date1.getDate()}.{date1.getMonth()+1}.{date1.getFullYear()}
+              </Col>
             </Row>
             {tapahtumat.map(RenderEvents)}
           </div>
@@ -147,8 +150,10 @@ const OrdersSellerEvents = () => {
   if (eventId === null){
     return(
         <div>
-          <Row className="justify-content-md-center">
-            <h2>Tilaukset</h2>
+          <Row className="mt-5">
+            <Col xs={12} className="text-center mb-4">
+              <h2>Tilaukset</h2>
+            </Col>
           </Row>
           {uniqueDates.map(Paivamaarat)}
         </div>
@@ -161,34 +166,44 @@ const OrdersSellerEvents = () => {
     const month = helpDate[1]
     const day = helpDate[2]
     return(
-      <div>
-        <Row className="justify-content-md-center">
-            <h2>Tilaukset</h2>
-        </Row>
-        <Row className="justify-content-md-center">
+      <Row className="mt-5">
+        <Col xs={12} className="text-left">
+          <Image onClick={HandleBackButton} src="Back.Button.Image" rounded/>Back Button
+        </Col>
+        <Col xs={12} className="text-center mb-4">
+          <h2>Tilaukset</h2>
+        </Col>
+        <Col></Col>
+        <Col xs={12} className="text-center"> 
           <h6>{x.name}</h6>
-        </Row>
-        <Row className="justify-content-md-center">
+        </Col>
+        <Col xs={12} className="text-center">
           <h6>generic weekday {day}.{month}.</h6>
-        </Row>
-        <Row className="justify-content-md-center">
-            <h6>{hourMinuteSecond[0]}:{hourMinuteSecond[1]}-</h6>
-        </Row>
-        <Row className="justify-content-md-center">
-            <h6>{x.address}</h6>
-        </Row>
-        <Row className="justify-content-md-center">
-          <Button onClick={HandleBackButton}> takaisin</Button>
-          <Button onClick={HandleBuyerButton}>Tuotteet</Button>
-          <Button onClick={HandleOrderButton}>Tilaajat</Button>
-        </Row>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h6>{hourMinuteSecond[0]}:{hourMinuteSecond[1]}-</h6>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h6>{x.address}</h6>
+        </Col>
+        <Col xs={12}>
+          <Nav fill variant="tabs" defaultActiveKey="product">
+            <Nav.Item>
+              <Nav.Link onClick={HandleProductButton} eventKey={"product"}>Tuotteet</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={HandleOrderButton} eventKey={"order"}>Tilaajat</Nav.Link>
+            </Nav.Item>
+          </Nav>
           <OrdersSellerProducts
           Event={Events[eventId]}
           setEventId={setEventId}
           eventId={eventId}
+          setListView={setListView}
           ListView={ListView}
           />
-      </div>
+        </Col>
+      </Row>
     )  
   }
 }

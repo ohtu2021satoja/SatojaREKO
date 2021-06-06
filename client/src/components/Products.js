@@ -62,9 +62,9 @@ const Products = () => {
   }
   return (
     <div>
-      <Row className="justify-content-md-center">
-        <h1>Tuotteet</h1>
-      </Row>
+      <Col xs={12} className="text-center mb-4">
+          <h1>Tuotteet</h1>
+      </Col>
       {tuotteet.map(renderProducts)}
     </div>
   )

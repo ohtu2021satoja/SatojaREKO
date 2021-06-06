@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import OrdersSellerBuyers from "./OrdersSellerBuyers"
+import ListGroup from "react-bootstrap/esm/ListGroup"
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 
 const OrdersSellerProducts = (props) => {
   // example products
@@ -30,42 +32,43 @@ const OrdersSellerProducts = (props) => {
       image: "https://www.wotkins.fi/wp-content/uploads/2016/05/naudan_sisafilee.jpg",
     },
   ]
+  const HandleSingleBuyerButton = () => {
+    props.setListView(false)
+    console.log("buyer card opens")
+  }
 
 
   const renderOrders = (product, index) => {
     return (
-      <Row key={index}>
-        <Col
-        xs={8}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 8, offset: 2 }}
-        lg={{ span: 6, offset: 3 }}
-        xl={{ span: 4, offset: 4 }}>
-          <Accordion defaultActiveKey="1">
-            <Card as={Col}>
-              <Accordion.Toggle as={Button} variant="text" eventKey="0">
-                <Row>
-                  <Col>
-                    <Card.Img src={product.image} alt="Generic placeholder"/>
-                  </Col>
-                  <Col xs={8} className="text-left">
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>tilattu {product.sold}kpl</Card.Text>
-                  </Col>
-                </Row>
-                <Accordion.Collapse eventKey="0">
-                  <Col>
-                    <p>
-                      asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd
-                      asd asd asd asd
-                    </p>
-                  </Col>
-                </Accordion.Collapse>
-              </Accordion.Toggle>
-            </Card>
-          </Accordion>
-        </Col>
-      </Row>
+      <Accordion className="mb-2" key={index}>
+        <Card>
+          <Accordion.Toggle as={Button} variant="text" eventKey="0">
+            <Row>
+              <Col>
+                <Card.Img src={product.image} alt="Generic placeholder" />
+              </Col>
+              <Col xs={8} className="text-left">
+                <Card.Title>{product.name}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Myyty: {product.sold}/{product.soldlimit} kpl
+                </Card.Subtitle>
+              </Col>
+            </Row>
+            <Accordion.Collapse eventKey="0">
+              <ListGroup className="list-group-flush">
+                <ListGroupItem>
+                  <Row>
+                    <Col>tilaaja yksi</Col>
+                    <Col>
+                      <Card.Img onClick={HandleSingleBuyerButton} src="tilaajaan.jpg"/>tilaajaan
+                    </Col>
+                  </Row>
+                  </ListGroupItem>
+              </ListGroup>
+            </Accordion.Collapse>
+          </Accordion.Toggle>
+        </Card>
+      </Accordion>
     )
   } 
   if (props.ListView){

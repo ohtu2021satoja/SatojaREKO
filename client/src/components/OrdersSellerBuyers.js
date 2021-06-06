@@ -46,52 +46,60 @@ const OrdersSellerBuyers = () => {
   const renderProducts = (product, index) => {
       return(
         <Row key={index}>
-        <Col>
-           <p>{product.name}</p>
-        </Col>
-        <Col>
-            <p>{product.sold}</p>
-        </Col>
-        <Col>
-            <p>{product.price * product.sold}€</p>
-        </Col>
+          <Col>{product.name}</Col>
+          <Col>{product.sold}</Col>
+          <Col>{product.price * product.sold}€</Col>
+          <Col>
+            <Card.Img onClick={HandleDeleteButton} src="generic photo"/> Delete
+          </Col>
         </Row>
       )
   }
+
+  const HandleDeleteButton = () => {
+    console.log("deletes this product")
+  }
+
   const renderBuyers = (buyer, index) => {
     return (
-      <Row key={index}>
-        <Col
-        xs={8}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 8, offset: 2 }}
-        lg={{ span: 6, offset: 3 }}
-        xl={{ span: 4, offset: 4 }}>
-          <Accordion defaultActiveKey="1">
-            <Card as={Col}>
-              <Accordion.Toggle as={Button} variant="text" eventKey="0">
-                <Row>
-                  <Col xs={8} className="text-left">
-                    <Card.Title>
-                      {buyer.name} <div></div> {buyer.id}
-                    </Card.Title>
-                  </Col>
-                </Row>
-                <Accordion.Collapse eventKey="0">
-                  <Col>
-                    <Row>
-                      <Col>Tuote</Col>
-                      <Col>Määrä</Col>
-                      <Col>Hinta</Col>
-                    </Row>
-                    {products.map(renderProducts)}
-                  </Col>
-                </Accordion.Collapse>
-              </Accordion.Toggle>
-            </Card>
-          </Accordion>
-        </Col>
-      </Row>
+      <Accordion className="mb-2" key={index}>
+        <Card>
+          <Accordion.Toggle as={Button} variant="text" eventKey="0">
+            <Row>
+              <Col xs={8} className="text-left">
+                <Card.Title style={{textDecorationLine: "underline"}}>{buyer.name}
+                </Card.Title>
+                <Card.Title>{buyer.id}</Card.Title>
+              </Col>
+            </Row>
+            <Accordion.Collapse eventKey="0">
+              
+                <Col>
+                  <Row className="mt-5">
+                    <Col>Tuote</Col>
+                    <Col>Määrä</Col>
+                    <Col>Hinta</Col>
+                    <Col>     </Col>
+                  </Row>
+                  {products.map(renderProducts)}
+                  <Row className="mt-5">
+                    <Col>Yhteensä</Col>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col></Col>
+                  </Row>
+                  <Row>
+                    <Col>xxx,xx€</Col>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col></Col>
+                  </Row>
+                </Col>
+              
+            </Accordion.Collapse>
+          </Accordion.Toggle>
+        </Card>
+      </Accordion>
     )
   }
 
