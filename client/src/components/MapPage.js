@@ -1,6 +1,6 @@
 import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
-import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -79,9 +79,7 @@ const sellers = [
 ]
 
 const MapInstance = ({ setMapBounds, setMapCenter }) => {
-  const map = useMap()
-
-  const mapEvents = useMapEvents({
+  const map = useMapEvents({
     load: () => {
       setMapBounds(map.getBounds())
       setMapCenter(map.getCenter())
@@ -101,7 +99,6 @@ const MapInstance = ({ setMapBounds, setMapCenter }) => {
 
 const MapPage = () => {
   const [visibleEvents, setVisibleEvents] = useState([])
-  const [visibleSellers, setVisibleSellers] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
@@ -123,7 +120,6 @@ const MapPage = () => {
       )
       setTotalVisible(visibleEvents.length + visibleSellers.length)
       setVisibleEvents(visibleEvents)
-      setVisibleSellers(visibleSellers)
     }
 
     updateMapStatus()

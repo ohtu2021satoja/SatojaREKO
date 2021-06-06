@@ -1,8 +1,8 @@
 import React from "react"
 import { Switch, Route } from "react-router-dom"
 import HomePage from "../HomePage"
+import ProfilePageBuyer from "../profiles/ProfilePageBuyer"
 import MapPage from "../MapPage"
-import ProfilePageBuyer from "../ProfilePageBuyer"
 import Products from "../Products"
 
 const RoutesBuyer = ({ user, logOut, setSellerView }) => (

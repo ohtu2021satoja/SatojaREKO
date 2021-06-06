@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { /*useEffect,*/ useState } from "react"
 import { connect } from "react-redux"
-import { handleInitialData } from "../actions/shared"
+//import { handleInitialData } from "../actions/shared"
 import { setAuthedUser, logoutUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
@@ -16,10 +16,12 @@ const App = (props) => {
 
   const { authedUser, products } = props
 
+  /*
   useEffect(() => {
     // Get data form API
     props.handleInitialData()
   }, [props])
+  */
 
   const loginWithFacebook = (id) => props.setAuthedUser(id)
 
@@ -76,6 +78,7 @@ const mapStateToProps = ({ authedUser, products }) => {
   }
 }
 
-export default connect(mapStateToProps, { handleInitialData, setAuthedUser, logoutUser })(
-  App
-)
+export default connect(mapStateToProps, {
+  /*handleInitialData,*/ setAuthedUser,
+  logoutUser,
+})(App)
