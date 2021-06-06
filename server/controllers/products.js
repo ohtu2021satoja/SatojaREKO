@@ -2,6 +2,7 @@ const productsRouter = require("express").Router();
 const productService = require("../services/products")
 const productsRepository = require("../repositories/products")
 const eventsRepository = require("../repositories/events")
+const db = require("../db")
 productsRouter.get("/", async (req, res) => {
   try {
     const products = await productService.getAllProducts(productsRepository)
@@ -54,7 +55,7 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
 productsRouter.post('/:id', async (req, res) => {
   try{
     console.log(req.body)
-    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository)
+    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)
