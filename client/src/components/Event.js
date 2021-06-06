@@ -48,7 +48,7 @@ const Event = ({ event, isChoice }) => {
             {isChoice ? (
               <Form.Check
               type="switch"
-              id="event-switch"
+              id={`event-switch-${event.id}`}
               onChange={() => addEvent(event.id)}
               checked={eventChoices.includes(event.id)}
               />

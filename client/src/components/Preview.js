@@ -84,7 +84,7 @@ const Preview = ({
   const priceInt = parseInt(100*priceFloat)
 
   const sizes = isPackage
-    ? [{ price: priceFloat, quantity: packageQuantity, unit: productSizes[0].size.replace(",", ".") }]
+    ? [{ price: priceFloat, quantity: productSizes[0].quantity, unit: productSizes[0].size.replace(",", ".") }]
     : productSizes.map((unitSize) => {
         const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
         console.log(unitSizeFloat)
