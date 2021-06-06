@@ -32,28 +32,20 @@ const Products = () => {
 
   const renderProducts = (product, index) => {
     return (
-      <Accordion
-        defaultActiveKey="1"
-        as={Col}
-        xs={12}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 8, offset: 2 }}
-        lg={{ span: 6, offset: 3 }}
-        xl={{ span: 4, offset: 4 }}
-        key={index}
-      >
-        <Accordion.Toggle as={Button} variant="text" eventKey="0">
+      <Accordion className="mb-2" key={index}>
+        <Accordion.Toggle as={Button} className="p-0" variant="text" eventKey="0">
           <Card>
             <Card.Header>
-              <h4>{product.name}</h4>
+              <h3>{product.name}</h3>
             </Card.Header>
-            <Card.Img variant="top" src={product.image} />
+            <Card.Img src={product.image} />
             <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <Row className="justify-content-md-center">
+              <Card.Body className="text-center">
+                <Card.Text>
                   myyty {product.sold}/{product.soldlimit}
-                </Row>
-                Hinta {product.price}€
+                  <br />
+                  Hinta {product.price}€
+                </Card.Text>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -62,12 +54,12 @@ const Products = () => {
     )
   }
   return (
-    <div>
-      <Row className="justify-content-md-center">
-        <h1>Tuotteet</h1>
-      </Row>
-      {tuotteet.map(renderProducts)}
-    </div>
+    <Row className="mt-5">
+      <Col xs={12} className="text-center mb-4">
+        <h2>Tuotteet</h2>
+      </Col>
+      <Col xs={12}>{tuotteet.map(renderProducts)}</Col>
+    </Row>
   )
 }
 

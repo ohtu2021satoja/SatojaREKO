@@ -1,11 +1,11 @@
 import { getProducts } from "./products"
-import { getUsers } from "./users"
+// import { getEvents } from "./events"
 
 export const getInitialData = () => {
-  return Promise.all([getProducts(), getUsers()])
-    .then(([products, users]) => ({
+  return Promise.all([getProducts() /*, getEvents()*/])
+    .then(([products /*, events*/]) => ({
       products,
-      users,
+      // events,
     }))
     .catch((error) => {
       console.error(error.message)

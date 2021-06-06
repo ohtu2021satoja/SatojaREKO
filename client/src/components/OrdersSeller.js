@@ -1,8 +1,8 @@
-import Card from "react-bootstrap/Card"
-import Col from "react-bootstrap/Col"
-import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
+import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button"
 import Nav from "react-bootstrap/Nav"
 
 const OrdersSeller = () => {
@@ -33,49 +33,39 @@ const OrdersSeller = () => {
 
   const renderOrders = (product, index) => {
     return (
-      <Row key={index}>
-        <Col
-          xs={8}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
-          xl={{ span: 4, offset: 4 }}
-        >
-          <Accordion defaultActiveKey="1">
-            <Card as={Col}>
-              <Accordion.Toggle as={Button} variant="text" eventKey="0">
-                <Row>
-                  <Col>
-                    <Card.Img src={product.image} alt="Generic placeholder" />
-                  </Col>
-                  <Col xs={8} className="text-left">
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>tilattu {product.sold}kpl</Card.Text>
-                  </Col>
-                </Row>
-                <Accordion.Collapse eventKey="0">
-                  <Col>
-                    <p>
-                      asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd
-                      asd asd asd asd
-                    </p>
-                  </Col>
-                </Accordion.Collapse>
-              </Accordion.Toggle>
-            </Card>
-          </Accordion>
-        </Col>
-      </Row>
+      <Accordion className="mb-2" key={index}>
+        <Card>
+          <Accordion.Toggle as={Button} variant="text" eventKey="0">
+            <Row>
+              <Col>
+                <Card.Img src={product.image} alt="Generic placeholder" />
+              </Col>
+              <Col xs={8} className="text-left">
+                <Card.Title>{product.name}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  tilattu {product.sold}kpl
+                </Card.Subtitle>
+              </Col>
+            </Row>
+            <Accordion.Collapse eventKey="0">
+              <Card.Text className="pt-2">
+                asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd
+                asd asd asd
+              </Card.Text>
+            </Accordion.Collapse>
+          </Accordion.Toggle>
+        </Card>
+      </Accordion>
     )
   }
 
   return (
-    <div>
-      <Row className="justify-content-md-center">
-        <h1>Tilaukset</h1>
-      </Row>
-      <Row className="justify-content-md-center">
-        <Nav variant="pills" defaultActiveKey="#Tuotteet">
+    <Row className="mt-5">
+      <Col xs={12} className="text-center mb-4">
+        <h2>Tilaukset</h2>
+      </Col>
+      <Col xs={12}>
+        <Nav fill variant="tabs" defaultActiveKey="#Tuotteet">
           <Nav.Item>
             <Nav.Link href="#Tuotteet">Tuotteet</Nav.Link>
           </Nav.Item>
@@ -83,9 +73,10 @@ const OrdersSeller = () => {
             <Nav.Link href="#Tilaajat">Tilaajat</Nav.Link>
           </Nav.Item>
         </Nav>
-      </Row>
-      {orders.map(renderOrders)}
-    </div>
+
+        {orders.map(renderOrders)}
+      </Col>
+    </Row>
   )
 }
 
