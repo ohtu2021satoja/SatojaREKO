@@ -15,7 +15,9 @@ const Alv = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => dispatch(setAlv("Ei alv."))}>Ei alv.</Dropdown.Item>
+          <Dropdown.Item onClick={() => dispatch(setAlv("Ei alv."))}>
+            Ei alv.
+          </Dropdown.Item>
           <Dropdown.Item onClick={() => dispatch(setAlv("0%"))}>0%</Dropdown.Item>
           <Dropdown.Item onClick={() => dispatch(setAlv("14%"))}>14%</Dropdown.Item>
           <Dropdown.Item onClick={() => dispatch(setAlv("24%"))}>24%</Dropdown.Item>
@@ -26,4 +28,3 @@ const Alv = () => {
 }
 
 export default Alv
-

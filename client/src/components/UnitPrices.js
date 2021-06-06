@@ -12,12 +12,22 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
   const productSizes = useSelector((state) => state.productSizes)
   const productrows = []
   for (const i in productSizes) {
-    productrows.push(<ProductRow key={i} index={i} sizes={sizes} errors={errors} touched={touched} setFieldValue={setFieldValue} quantities={quantities}/>)
+    productrows.push(
+      <ProductRow
+        key={i}
+        index={i}
+        sizes={sizes}
+        errors={errors}
+        touched={touched}
+        setFieldValue={setFieldValue}
+        quantities={quantities}
+      />
+    )
   }
   const addProductRow = () => {
     const newsize = sizes.concat(0)
     const newquantities = quantities.concat(0)
-    setFieldValue("sizes",newsize)
+    setFieldValue("sizes", newsize)
     setFieldValue("quantities", newquantities)
     dispatch(addQuantity())
   }
@@ -36,9 +46,11 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
     <div>
       <Alv />
       Aseta kilohinta (sis alv)
-      <Price setFieldValue = {setFieldValue} errors={errors} touched={touched}/>
+      <Price setFieldValue={setFieldValue} errors={errors} touched={touched} />
       {productrows}
-      <Button onClick={deleteProductRow} variant="danger">Poista tuoterivi</Button>
+      <Button onClick={deleteProductRow} variant="danger">
+        Poista tuoterivi
+      </Button>
       <Button onClick={addProductRow}>Lisää tuoterivi</Button>
     </div>
   )

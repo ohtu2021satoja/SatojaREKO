@@ -11,7 +11,7 @@ const ChooseCategory = ({ category, setFieldValue }) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Vihannekset")}>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Vihannekset")}>
             {" "}
             Vihannekset{" "}
           </Dropdown.Item>
@@ -19,26 +19,38 @@ const ChooseCategory = ({ category, setFieldValue }) => {
             {" "}
             Liha & kala{" "}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Munat")}> Munat </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Hedelmät & marjat")}>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Munat")}>
+            {" "}
+            Munat{" "}
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Hedelmät & marjat")}>
             {" "}
             Hedelmät & marjat{" "}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Maitotuotteet")}>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Maitotuotteet")}>
             {" "}
             Maitotuotteet{" "}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Leivät & leivonta")}>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Leivät & leivonta")}>
             {" "}
             Leivät & leivonta{" "}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Yrtit & mausteet")}>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Yrtit & mausteet")}>
             {" "}
             Yrtit & mausteet{" "}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Ruokaa")}> Ruokaa </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Juomat")}> Juomat </Dropdown.Item>
-          <Dropdown.Item onClick={() => setFieldValue("category" ,"Muut")}> Muut </Dropdown.Item>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Ruokaa")}>
+            {" "}
+            Ruokaa{" "}
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Juomat")}>
+            {" "}
+            Juomat{" "}
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => setFieldValue("category", "Muut")}>
+            {" "}
+            Muut{" "}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </div>

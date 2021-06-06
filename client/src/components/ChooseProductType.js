@@ -9,11 +9,26 @@ const ChooseProductType = ({ productType, setFieldValue }) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => setFieldValue("productType", "Kg")}> Kg </Dropdown.Item>
-        <Dropdown.Item onClick={() => setFieldValue("productType", "Litra")}> Litra </Dropdown.Item>
-        <Dropdown.Item onClick={() => setFieldValue("productType", "Gramma")}> Gramma </Dropdown.Item>
-        <Dropdown.Item onClick={() => setFieldValue("productType", "Motti")}> Motti </Dropdown.Item>
-        <Dropdown.Item onClick={() => setFieldValue("productType", "Kuutio")}> Kuutio </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Kg")}>
+          {" "}
+          Kg{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Litra")}>
+          {" "}
+          Litra{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Gramma")}>
+          {" "}
+          Gramma{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Motti")}>
+          {" "}
+          Motti{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Kuutio")}>
+          {" "}
+          Kuutio{" "}
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )

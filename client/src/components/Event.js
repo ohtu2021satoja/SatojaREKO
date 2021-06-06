@@ -27,34 +27,33 @@ const Event = ({ event, isChoice }) => {
   const EventDate = startTime.getDate()
   return (
     <div>
-      <h4>{EventDate}.{Month}</h4>
+      <h4>
+        {EventDate}.{Month}
+      </h4>
       <Card
-          as={Col}
-          xs={12}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
-          xl={{ span: 4, offset: 4 }}
-          >
-
-            <div>
-              {event.name} (REKO)
-            </div>
-            {event.address}
-            <div>
-              {startHour}:{startMinute}-{endHour}:{endMinute}
-            </div>
-            <div>
-            {isChoice ? (
-              <Form.Check
+        as={Col}
+        xs={12}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+        xl={{ span: 4, offset: 4 }}
+      >
+        <div>{event.name} (REKO)</div>
+        {event.address}
+        <div>
+          {startHour}:{startMinute}-{endHour}:{endMinute}
+        </div>
+        <div>
+          {isChoice ? (
+            <Form.Check
               type="switch"
               id={`event-switch-${event.id}`}
               onChange={() => addEvent(event.id)}
               checked={eventChoices.includes(event.id)}
-              />
-              ) : null}
-            </div>
-          </Card>
+            />
+          ) : null}
+        </div>
+      </Card>
     </div>
   )
 }

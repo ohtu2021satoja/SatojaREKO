@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { Image } from "cloudinary-react"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
@@ -10,33 +10,27 @@ import productService from "../services/products"
 const PreviewSize = ({ size }) => {
   return (
     <Card
-    as={Col}
-    xs={12}
-    sm={{ span: 10, offset: 1 }}
-    md={{ span: 8, offset: 2 }}
-    lg={{ span: 6, offset: 3 }}
-    xl={{ span: 4, offset: 4 }}
+      as={Col}
+      xs={12}
+      sm={{ span: 10, offset: 1 }}
+      md={{ span: 8, offset: 2 }}
+      lg={{ span: 6, offset: 3 }}
+      xl={{ span: 4, offset: 4 }}
     >
-
-      <div>
-        Koko: {size.unit}
-      </div>
-        Varastoarvo {size.quantity}
-      <div>
-        Hinta: {size.price}€
-      </div>
-      <div>
-      </div>
+      <div>Koko: {size.unit}</div>
+      Varastoarvo {size.quantity}
+      <div>Hinta: {size.price}€</div>
+      <div></div>
     </Card>
   )
 }
 
-const PublishedHeader = ({Reset}) => {
-  return(
-    <div style={{backgroundColor: "green"}}>
+const PublishedHeader = ({ Reset }) => {
+  return (
+    <div style={{ backgroundColor: "green" }}>
       <h2>Julkaistu</h2>
       <h3>Kerro kavereille</h3>
-      <h3 onClick={() => Reset()}>Luo uusi ilmoitus</h3>
+      <Button onClick={() => Reset()}>Luo uusi ilmoitus</Button>
     </div>
   )
 }
@@ -63,11 +57,11 @@ const Preview = ({
   category,
   productType,
   deleteBeforeEvent,
-  Reset
+  Reset,
 }) => {
   const [published, setPublished] = useState(false)
   const alv = useSelector((state) => state.alv)
-  const vat = parseInt(alv.slice(0,-1))
+  const vat = parseInt(alv.slice(0, -1))
   console.log(vat)
   const previewEvents = events.filter((event) => {
     return eventChoices.includes(event.id)
@@ -81,10 +75,16 @@ const Preview = ({
     : productSizes.reduce((a, b) => a + b.quantity, 0)
 
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
-  const priceInt = parseInt(100*priceFloat)
+  const priceInt = parseInt(100 * priceFloat)
 
   const sizes = isPackage
-    ? [{ price: priceFloat, quantity: productSizes[0].quantity, unit: productSizes[0].size.replace(",", ".") }]
+    ? [
+        {
+          price: priceFloat,
+          quantity: productSizes[0].quantity,
+          unit: productSizes[0].size.replace(",", "."),
+        },
+      ]
     : productSizes.map((unitSize) => {
         const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
         console.log(unitSizeFloat)
@@ -127,14 +127,14 @@ const Preview = ({
       category,
       deleteBeforeEvent,
       unit_price: priceInt,
-      vat
+      vat,
     }
     await productService.addProduct({ product, eventChoices, sizes })
     setPublished(true)
   }
   return (
     <div>
-      {published ? <PublishedHeader Reset={Reset}/> : <h2>Esikatselu</h2> }
+      {published ? <PublishedHeader Reset={Reset} /> : <h2>Esikatselu</h2>}
       <Button variant="primary" onClick={() => setPreview(false)}>
         Back
       </Button>
@@ -146,24 +146,33 @@ const Preview = ({
       </Button>
       <h3>{title}</h3>
       <p>{description}</p>
-      <h4>{price}/{parseType(productType)}</h4>
+      <h4>
+        {price}/{parseType(productType)}
+      </h4>
       <p>Alv: {alv}</p>
       <p>Varastoarvo {batch_quantity}</p>
-      {isPackage ? <p>Hinta: {priceFloat*parseFloat(productSizes[0].size.replace(",", "."))}€</p> : null }
+      {isPackage ? (
+        <p>Hinta: {priceFloat * parseFloat(productSizes[0].size.replace(",", "."))}€</p>
+      ) : null}
       {isPackage ? null : <PreviewSizes sizes={sizes} />}
       <h4>Noutotapahtumat</h4>
       <Events events={previewEvents} isChoice={false} />
       <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
-      {published ? null :       
-      <Button
-        style={{ width: "100%" }}
-        variant="success"
-        size="lg"
-        onClick={PublishProduct}
-      >
-        Julkaise
-      </Button>}
-      { published ? <p>Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.</p> :null }
+      {published ? null : (
+        <Button
+          style={{ width: "100%" }}
+          variant="success"
+          size="lg"
+          onClick={PublishProduct}
+        >
+          Julkaise
+        </Button>
+      )}
+      {published ? (
+        <p>
+          Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
+        </p>
+      ) : null}
     </div>
   )
 }

@@ -1,51 +1,33 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
 import Form from "react-bootstrap/Form"
-import Button from "react-bootstrap/Button"
-import { changeQuantity, changeSize } from "../reducers/productSizesReducer"
+import { changePrice } from "../reducers/priceReducer"
+import { useSelector, useDispatch } from "react-redux"
 
-const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }) => {
-  index = parseInt(index)
-  const dispatch = useDispatch()
-  const productSizes = useSelector((state) => state.productSizes)
-  const state = productSizes[index]
-  const storageQuantity = state.quantity
-  const unitSize = state.size
-  const handleQuantityChange = (quantity) => {
-    const newquantities = quantities
-    newquantities[index] = quantity
-    setFieldValue("quantities", newquantities)
-    dispatch(changeQuantity(quantity, index))
-  }
+const Price = ({ setFieldValue, errors, touched }) => {
   const price = useSelector((state) => state.price)
-  const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
-  const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
+  const dispatch = useDispatch()
+  const handlePrice = (newPrice) => {
+    const lastchar = newPrice.slice(-1)
+    if (lastchar !== "€") {
+      newPrice = newPrice + "€"
+    }
+    dispatch(changePrice(newPrice))
+  }
   return (
     <div>
-      Pakettikoko
       <Form.Control
-        value={unitSize}
+        value={price}
         onChange={(event) => {
-          const newsizes = sizes
-          newsizes[index] = parseFloat(event.target.value.replace(",","."))
-          setFieldValue("sizes", newsizes)
-          dispatch(changeSize(event.target.value, index))
+          setFieldValue("price", event.target.value)
+          dispatch(changePrice(event.target.value))
         }}
         type="text"
-        placeholder="0,0"
+        onBlur={() => handlePrice(price)}
+        placeholder="00,00€"
       />
-      {unitSizeFloat===0.0 && errors.sizes && touched.sizes ? (<div>{errors.sizes}</div>): null }
-      Pakettimäärä
-      <Form.Control
-        value={storageQuantity}
-        onChange={(event) => handleQuantityChange(parseInt(event.target.value))}
-        type="number"
-        placeholder="0"
-      />
-      {storageQuantity<1 && errors.quantities && touched.quantities ? (<div>{errors.quantities}</div>): null }
-      <p>Hinta: {priceFloat * unitSizeFloat}€</p> 
+      {touched.price && errors.price ? <div>{errors.price}</div> : null}
     </div>
   )
 }
 
-export default ProductRow
+export default Price
