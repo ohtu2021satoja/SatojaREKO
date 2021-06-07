@@ -18,7 +18,7 @@ sellersRouter.delete('/:id/image', async (req, res) => {
   return res.sendStatus(200).end()
 })
 
-buyersRouter.put('/:id/image', async (req, res) => {
+sellersRouter.put('/:id/image', async (req, res) => {
   const { id } = req.params
   await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
   return res.sendStatus(200).end()

@@ -15,4 +15,4 @@ const updateBuyersInfo= async (seller_id, req_body, sellersRepository, usersRepo
 }
 
 
-module.exports = { updateNewsLetterCheck, updateCancelNotificationCheck, removeBuyerImage, updateBuyersInfo, updateBuyerImage }
+module.exports = { removeBuyerImage, updateBuyersInfo, updateBuyerImage }
