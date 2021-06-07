@@ -17,7 +17,7 @@ const AddProducts = () => {
   const state = useSelector((state) => state)
   console.log(state)
   const [events, setEvents] = useState([])
-  const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(0)
+  const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
   useEffect(async () => {
     const events = await eventService.getSellersUpcomingEvents(1)
     setEvents(events)
