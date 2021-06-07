@@ -18,6 +18,12 @@ sellersRouter.delete('/:id/image', async (req, res) => {
   return res.sendStatus(200).end()
 })
 
+buyersRouter.put('/:id/image', async (req, res) => {
+  const { id } = req.params
+  await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
+  return res.sendStatus(200).end()
+})
+
 sellersRouter.get("/events/:id", async (req, res) => {
   const { id } = req.params
   const events = await sellersService.getEventsSellerHasProducts(id, eventsRepository)
