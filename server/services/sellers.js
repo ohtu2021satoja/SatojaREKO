@@ -1,8 +1,16 @@
 
 const BLANK_IMAGE = "profile-blank_or75kg"
 
-const updateSalesReportCheck = async (id, check, sellersRepository) => {
-  await sellersRepository.updateSalesReportCheck(id, check)
+const updateSellersInfo= async (seller_id, req_body, sellersRepository, usersRepository) => {
+  const delete_reko_areas = req_body.reko_areas.delete
+  await sellersRepository.deleteRekoAreas(seller_id, delete_reko_areas)
+
+  const add_reko_areas = req_body.reko_areas.add
+  await sellersRepository.addRekoAreas(seller_id, add_reko_areas)
+
+  await sellersRepository.updateSellersInfo(seller_id, req_body.seller_info)
+
+  await usersRepository.updateUsersInfo(seller_id, req.body.user_info)
 }
 
 const removeSellerImage = async (id, sellersRepository) => {
@@ -14,4 +22,4 @@ getEventsSellerHasProducts = async (id, eventsRepository) => {
   return(events)
 } 
 
-module.exports = { updateSalesReportCheck, removeSellerImage, getEventsSellerHasProducts }
+module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo }

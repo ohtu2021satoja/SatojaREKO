@@ -1,39 +1,28 @@
 const db = require("../db")
 
-const getAllProducts = async () => {
-  const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
-  return(products)
+const addOrder = async (buyer_id, event_id) => {
+  const query = "INSERT INTO orders VALUES(DEFAULT, $1, DEFAULT, $2) Returning id"
+  const order_id = await db.query(query, [buyer_id, event_id])
+  return(order_id[0].id)
 }
 
-const getSellersProducts = async (id) => {
-  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id WHERE sellers_id=$1 GROUP BY products.id",[id])
-  return(products)
+const addBatch = async (order_id, size_id, quantity) => {
+  const query = "INSERT INTO batches VALUES($1, $2, $3)"
+  await db.query(query, [order_id, size_id, quantity])
 }
 
-const addProduct = async (product) => {
-  const dbParams = [product.name, product.unit_price, product.organic, product.sellers_id, product.category, product.type,  product.batch_quantity, product.description, product.deleteBeforeEvent, product.vat, product.imageURL]
-  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, DEFAULT, $8, $9, $10, $11) RETURNING id", dbParams)
-  return(result[0].id)
+const getSellersEventOrders = async (sellers_id, event_id) => {
+  const query = "SELECT  users.firstname, users.lastname, json_agg(json_build_object('quantity', batches.quantity, 'product_name', products.name, 'size', sizes.unit, 'price', sizes.unit*products.unit_price)) AS orders from orders INNER JOIN batches ON orders.id = batches.order_id INNER JOIN sizes ON sizes.id = batches.sizes_id INNER JOIN products ON products.id = sizes.product_id INNER JOIN buyers ON buyers.id = orders.buyers_id INNER JOIN users ON users.id = buyers.id WHERE orders.event_id=$1 AND products.sellers_id=$2 GROUP BY (users.firstname, users.lastname)"
+  const orders = await db.query(query, [event_id, sellers_id])
+  return(orders)
+   
 }
 
-const addProductSizes = async (product_id, sizes) => {
-  sizes.forEach(size => {
-    db.query("INSERT INTO sizes VALUES($1, $2, $3, DEFAULT)", [product_id, size.quantity, size.unit])
-  });
+const getBuyersEventOrders = async (buyers_id, event_id) => {
+  const query = "SELECT  users.firstname, users.lastname, json_agg(json_build_object('quantity', batches.quantity, 'product_name', products.name, 'size', sizes.unit, 'price', sizes.unit*products.unit_price)) AS orders from orders INNER JOIN batches ON orders.id = batches.order_id INNER JOIN sizes ON sizes.id = batches.sizes_id INNER JOIN products ON products.id = sizes.product_id INNER JOIN buyers ON buyers.id = orders.buyers_id INNER JOIN users ON users.id = buyers.id WHERE orders.event_id=$1 AND buyers.id=$2 GROUP BY (users.firstname, users.lastname)"
+  const orders = await db.query(query, [event_id, buyers_id])
+  return(orders)
 }
 
-const getEventProducts = async (event_id) => {
-  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products_events INNER JOIN products ON products_events.id_product = products.id INNER JOIN sizes ON sizes.product_id = products.id WHERE products_events.id_event=$1 GROUP BY products.id",[event_id])
-  return(products)
-}
 
-const getSellersEventProducts = async (event_id, sellers_id) => {
-  const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit)) AS sizes FROM products_events INNER JOIN products ON products_events.id_product = products.id INNER JOIN sizes ON sizes.product_id = products.id WHERE products_events.id_event=$1 AND products.sellers_id=$2 GROUP BY products.id",[event_id, sellers_id])
-  return(products)
-}
-
-const updateSizeQuantity = async (size_id, order_quantity) => {
-  await db.query("UPDATE sizes SET quantity=quantity-$1 WHERE id=$2",[order_quantity,size_id])
-}
-
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, updateSizeQuantity, getSellersEventProducts }
+module.exports = { addOrder, addBatch, getSellersEventOrders, getBuyersEventOrders}
