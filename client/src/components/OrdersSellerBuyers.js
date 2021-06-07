@@ -53,15 +53,18 @@ const OrdersSellerBuyers = () => {
             <Col>{product.sold}</Col>
             <Col>{product.price * product.sold}€</Col>
             <Col>
-              <Card.Img onClick={HandleDeleteButton} src="generic photo"/> Delete
+              <Card.Img onClick={HandleDeleteProductButton} src="generic photo"/> Delete
             </Col>
           </Row>
         </ListGroupItem>
       )
   }
 
-  const HandleDeleteButton = () => {
+  const HandleDeleteProductButton = () => {
     console.log("deletes this product")
+  }
+  const HandleDeleteOrderButton = () => {
+    console.log("deletes this order")
   }
 
   const renderBuyers = (buyer, index) => {
@@ -87,13 +90,13 @@ const OrdersSellerBuyers = () => {
                   </Row>
                     <Row>
                       <Col>Tuote</Col>
-                      <Col>Määrä</Col>
+                      <Col>Määrä.</Col>
                       <Col>Hinta</Col>
                       <Col>     </Col>
                     </Row>
                   {products.map(renderProducts)}
                     <Row className="mt-5">
-                      <Col><h6>Yhteensä</h6></Col>
+                      <Col><h6>YHTEENSÄ</h6></Col>
                       <Col></Col>
                       <Col></Col>
                       <Col></Col>
@@ -103,6 +106,14 @@ const OrdersSellerBuyers = () => {
                       <Col></Col>
                       <Col></Col>
                       <Col></Col>
+                    </Row>
+                    <Row>
+                      <Col></Col>
+                      <Col></Col>
+                      <Col></Col>
+                      <Col>
+                      <Card.Img onClick={HandleDeleteOrderButton} src="generic photo"/> Delete tilaus
+                      </Col>
                     </Row>
                   </ListGroup>
                 </Col>
