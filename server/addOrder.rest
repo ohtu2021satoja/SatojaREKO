@@ -6,7 +6,7 @@ Content-Type: application/json
     {"event_id": 1,
       "batches": [
         {
-          "size_id": 22,
+          "size_id": 25,
           "order_quantity": 2
         }
       ]
