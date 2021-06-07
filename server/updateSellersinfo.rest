@@ -1,13 +1,10 @@
-POST http://localhost:3003/api/products/1
+PUT http://localhost:3003/api/sellers/info/1
 Content-Type: application/json
 
 {
   "reko_areas": {
     "delete": [1,2],
-    "add": [3,4]
-  },
-  "seller_info": {
-
+    "add": [1]
   },
   "seller_info": {
     "name": "Farmi :)",

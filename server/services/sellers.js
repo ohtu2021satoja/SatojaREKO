@@ -10,7 +10,7 @@ const updateSellersInfo= async (seller_id, req_body, sellersRepository, usersRep
 
   await sellersRepository.updateSellersInfo(seller_id, req_body.seller_info)
 
-  await usersRepository.updateUsersInfo(seller_id, req.body.user_info)
+  await usersRepository.updateUsersInfo(seller_id, req_body.user_info)
 }
 
 const removeSellerImage = async (id, sellersRepository) => {
