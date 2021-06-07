@@ -55,13 +55,17 @@ const OrdersSellerProducts = (props) => {
               </Col>
             </Row>
             <Accordion.Collapse eventKey="0">
-              <ListGroup className="list-group-flush">
+              <ListGroup>
                 <ListGroupItem>
                   <Row>
-                    <Col>tilaaja yksi</Col>
+                    <Col>Esko Erkkilä</Col>
                     <Col>
                       <Card.Img onClick={HandleSingleBuyerButton} src="tilaajaan.jpg"/>tilaajaan
                     </Col>
+                  </Row>
+                  <Row>
+                    <Col>Tilausnumero: 53214678</Col>
+                    <Col></Col>
                   </Row>
                   </ListGroupItem>
               </ListGroup>

@@ -3,6 +3,8 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
+import ListGroup from "react-bootstrap/esm/ListGroup"
 
 const OrdersSellerBuyers = () => {
   // example products
@@ -45,14 +47,16 @@ const OrdersSellerBuyers = () => {
   ]
   const renderProducts = (product, index) => {
       return(
-        <Row key={index}>
-          <Col>{product.name}</Col>
-          <Col>{product.sold}</Col>
-          <Col>{product.price * product.sold}€</Col>
-          <Col>
-            <Card.Img onClick={HandleDeleteButton} src="generic photo"/> Delete
-          </Col>
-        </Row>
+        <ListGroupItem>
+          <Row key={index}>
+            <Col>{product.name}</Col>
+            <Col>{product.sold}</Col>
+            <Col>{product.price * product.sold}€</Col>
+            <Col>
+              <Card.Img onClick={HandleDeleteButton} src="generic photo"/> Delete
+            </Col>
+          </Row>
+        </ListGroupItem>
       )
   }
 
@@ -73,27 +77,34 @@ const OrdersSellerBuyers = () => {
               </Col>
             </Row>
             <Accordion.Collapse eventKey="0">
-              
-                <Col>
+              <Col>
+                <ListGroup>
                   <Row className="mt-5">
-                    <Col>Tuote</Col>
-                    <Col>Määrä</Col>
-                    <Col>Hinta</Col>
-                    <Col>     </Col>
+                    <Col><h6>Varauskori:</h6></Col>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col></Col>
                   </Row>
+                    <Row>
+                      <Col>Tuote</Col>
+                      <Col>Määrä</Col>
+                      <Col>Hinta</Col>
+                      <Col>     </Col>
+                    </Row>
                   {products.map(renderProducts)}
-                  <Row className="mt-5">
-                    <Col>Yhteensä</Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
-                  <Row>
-                    <Col>xxx,xx€</Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
+                    <Row className="mt-5">
+                      <Col><h6>Yhteensä</h6></Col>
+                      <Col></Col>
+                      <Col></Col>
+                      <Col></Col>
+                    </Row>
+                    <Row>
+                      <Col>xxx,xx€</Col>
+                      <Col></Col>
+                      <Col></Col>
+                      <Col></Col>
+                    </Row>
+                  </ListGroup>
                 </Col>
               
             </Accordion.Collapse>
