@@ -3,11 +3,12 @@ const sellersRouter = require('express').Router()
 const sellersService = require("../services/sellers")
 const sellersRepository = require("../repositories/sellers")
 const eventsRepository = require("../repositories/events")
+const usersRepository = require("../repositories/users")
 
-sellersRouter.put('/:id/salesreport_check', async (req, res) => {
+sellersRouter.put('/info/:id', async (req, res) => {
+  console.log(req.body)
   const { id } = req.params
-  const check = req.body.check
-  await  sellersService.updateSalesReportCheck(id, check, sellersRepository)
+  await  sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
   return res.sendStatus(200).end()
 })
 

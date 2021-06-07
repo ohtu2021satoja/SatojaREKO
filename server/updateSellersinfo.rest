@@ -1,0 +1,24 @@
+PUT http://localhost:3003/api/sellers/info/1
+Content-Type: application/json
+
+{
+  "reko_areas": {
+    "delete": [1,2],
+    "add": [1]
+  },
+  "seller_info": {
+    "name": "Farmi :)",
+    "homepage": "www.korhonen.fi",
+    "address": "Mannerheimintie 3",
+    "zipcode": "00101",
+    "city": "Helsinki",
+    "salesreport_check": true,
+    "descriprtion": "I am pekka"
+  },
+  "user_info": {
+    "firstname": "Pekka",
+    "lastname": "Korhonen",
+    "email": "pekkakorhonen@email.com",
+    "phonenumber": "+358401234567"
+  }
+}
