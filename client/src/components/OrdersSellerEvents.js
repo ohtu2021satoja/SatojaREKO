@@ -189,7 +189,7 @@ const OrdersSellerEvents = () => {
         <Col xs={12}>
           <Nav fill variant="tabs" defaultActiveKey="product">
             <Nav.Item>
-              <Nav.Link onClick={HandleProductButton} eventKey={"product"}>Tuotteet</Nav.Link>
+              <Nav.Link onClick={HandleProductButton} eventKey={"product"} style={{textDecoration: "none"}}>Tuotteet</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link onClick={HandleOrderButton} eventKey={"order"}>Tilaajat</Nav.Link>
