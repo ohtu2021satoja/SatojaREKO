@@ -47,8 +47,8 @@ const OrdersSellerBuyers = () => {
   ]
   const renderProducts = (product, index) => {
       return(
-        <ListGroupItem>
-          <Row key={index}>
+        <ListGroupItem key={index}>
+          <Row>
             <Col>{product.name}</Col>
             <Col>{product.sold}</Col>
             <Col>{product.price * product.sold}€</Col>
