@@ -8,6 +8,7 @@ const FormSellerSettings = () => {
       <h5 className="mb-4 text-center">Sähköpostiasetukset</h5>
       <Field
         name="emailReport"
+        id="user-settings"
         label="Lähetä tilaisuuskohtainen myyntiraportti, kun tilausaika on umpeutunut"
         component={FormFieldCheckbox}
       />

@@ -1,9 +1,10 @@
+/* CURRENTLY NOT IN USE
 import { useState } from "react"
 import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
-const LoginForm = ({ handleLogin }) => {
+const FormLogin = ({ handleLogin }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -53,4 +54,5 @@ const LoginForm = ({ handleLogin }) => {
   )
 }
 
-export default LoginForm
+export default FormLogin
+*/
