@@ -8,6 +8,10 @@ Content-Type: application/json
         {
           "size_id": 25,
           "order_quantity": 2
+        },
+        {
+          "size_id": 26,
+          "order_quantity": 2
         }
       ]
     }

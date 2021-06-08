@@ -1,4 +1,5 @@
 const db = require("../db")
+const format = require("pg-format")
 
 const addOrder = async (buyer_id, event_id) => {
   const query = "INSERT INTO orders VALUES(DEFAULT, $1, DEFAULT, $2) Returning id"
@@ -6,9 +7,9 @@ const addOrder = async (buyer_id, event_id) => {
   return(order_id[0].id)
 }
 
-const addBatch = async (order_id, size_id, quantity) => {
-  const query = "INSERT INTO batches VALUES($1, $2, $3)"
-  await db.query(query, [order_id, size_id, quantity])
+const addBatches = async (batches) => {
+  const query = format("INSERT INTO batches (order_id, sizes_id, quantity, removed) VALUES %L", batches)
+  await db.query(query, [])
 }
 
 const getSellersOrders = async (sellers_id) => {
@@ -24,5 +25,9 @@ const getBuyersOrders = async (buyers_id) => {
   return(orders)
 }
 
+const removeSellersOrder = async (seller_id, order_id) => {
+  await db.query("UPDATE batches SET removed=true WHERE order_id=$1", [order_id])
+}
 
-module.exports = { addOrder, addBatch, getSellersOrders, getBuyersOrders}
+
+module.exports = { addOrder, addBatches, getSellersOrders, getBuyersOrders, removeSellersOrder}

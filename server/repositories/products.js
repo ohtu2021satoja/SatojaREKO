@@ -1,4 +1,5 @@
 const db = require("../db")
+const format = require("pg-format")
 
 const getAllProducts = async () => {
   const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
@@ -17,9 +18,9 @@ const addProduct = async (product) => {
 }
 
 const addProductSizes = async (product_id, sizes) => {
-  sizes.forEach(size => {
-    db.query("INSERT INTO sizes VALUES($1, $2, $3, DEFAULT)", [product_id, size.quantity, size.unit])
-  });
+  const values = sizes.map(size => [product_id, size.quantity, size.unit])
+  const query = format("INSERT INTO sizes (product_id, quantity, unit) VALUES %L", values)
+  await db.query(query, [])
 }
 
 const getEventProducts = async (event_id) => {
@@ -32,8 +33,16 @@ const getSellersEventProducts = async (event_id, sellers_id) => {
   return(products)
 }
 
-const updateSizeQuantity = async (size_id, order_quantity) => {
-  await db.query("UPDATE sizes SET quantity=quantity-$1 WHERE id=$2",[order_quantity,size_id])
+const removeQuantitiesFromSizes = async (order_id) => {
+  await db.query("UPDATE sizes SET quantity=sizes.quantity-batches.quantity FROM batches WHERE sizes.id = batches.sizes_id AND batches.order_id=$1",[order_id])
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, updateSizeQuantity, getSellersEventProducts }
+const removeProduct = async (products_id) => {
+  await db.query("UPDATE products SET removed=true WHERE id=$1", [products_id])
+}
+
+const removeProductBatches = async (products_id) => {
+  await db.query("UPDATE batches SET removed=true WHERE sizes_id IN (SELECT sizes.id from sizes WHERE sizes.product_id = $1);", [products_id])
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches }
