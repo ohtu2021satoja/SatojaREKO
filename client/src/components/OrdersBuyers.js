@@ -140,14 +140,12 @@ const OrdersBuyers = () => {
   if (eventId === null) {
     return (
       <div>
-        <Row className="mt-5">
-          <Col xs={12} className="text-center mb-4">
-            <h2>Noudot</h2>
-          </Col>
-          <Col className="text-center mb-4">
-            <h4>Tulevat noudot</h4>
-          </Col>
-        </Row>
+        <Col xs={12} className="text-center mb-4">
+          <h2>Noudot</h2>
+        </Col>
+        <Col className="text-center mb-4">
+          <h4>Tulevat noudot</h4>
+        </Col>
         {uniqueDates.map(Paivamaarat)}
       </div>
     )
@@ -193,8 +191,14 @@ const OrdersBuyers = () => {
             {hourMinuteSecond[0]}:{hourMinuteSecond[1]}-
           </h6>
         </Col>
-        <Col xs={12} className="text-center">
+        <Col xs={12} className="text-center mb-4">
           <h6>{x.address}</h6>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h5>Tilausnumero</h5>
+        </Col>
+        <Col xs={12} className="text-center mb-4">
+          <h5>5243522</h5>
         </Col>
         <Col xs={12}>
           <OrdersBuyersProducts
