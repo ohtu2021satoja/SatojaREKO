@@ -13,7 +13,7 @@ productsRouter.get("/", async (req, res) => {
   }
 });
 
-productsRouter.get('/:id', async (req, res) => {
+productsRouter.get('/seller/:id', async (req, res) => {
   const { id } = req.params
   const products = await productService.getSellersProducts(id, productsRepository)
   if (!products) {
