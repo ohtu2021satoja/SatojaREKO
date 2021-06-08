@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
+import { getAllMarkets } from "../services/markets"
 
 const events = [
   {
@@ -80,29 +81,32 @@ const sellers = [
   },
 ]
 
-const MapInstance = ({ setMapBounds, setMapCenter, setMapInstance }) => {
+const MapInstance = (props) => {
   const map = useMapEvents({
     load: () => {
-      setMapBounds(map.getBounds())
-      setMapCenter(map.getCenter())
+      props.setMapBounds(map.getBounds())
+      props.setMapCenter(map.getCenter())
     },
     zoomend: () => {
-      setMapBounds(map.getBounds())
-      setMapCenter(map.getCenter())
+      props.setMapBounds(map.getBounds())
+      props.setMapCenter(map.getCenter())
     },
     moveend: () => {
-      setMapBounds(map.getBounds())
-      setMapCenter(map.getCenter())
+      props.setMapBounds(map.getBounds())
+      props.setMapCenter(map.getCenter())
     },
   })
 
-  setMapInstance(map)
+  useEffect(() => {
+    props.setMapInstance(map)
+  }, [props, map])
 
   return null
 }
 
 const MapPage = () => {
-  const [visibleEvents, setVisibleEvents] = useState([])
+  const [markets, setMarkets] = useState(null)
+  const [visibleMarkets, setvisibleMarkets] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
@@ -115,16 +119,27 @@ const MapPage = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
+
+      const getMarkets = async () => {
+        console.log("fetching markets...")
+        const markets = await getAllMarkets()
+        console.log(markets)
+      }
+
+      const markets = getMarkets
+
+      setMarkets(markets)
+
       return
     }
 
     const updateMapStatus = () => {
-      const visibleEvents = events.filter((event) => mapBounds.contains(event.location))
+      const visibleMarkets = events.filter((event) => mapBounds.contains(event.location))
       const visibleSellers = sellers.filter((seller) =>
         mapBounds.contains(seller.location)
       )
-      setTotalVisible(visibleEvents.length + visibleSellers.length)
-      setVisibleEvents(visibleEvents)
+      setTotalVisible(visibleMarkets.length + visibleSellers.length)
+      setvisibleMarkets(visibleMarkets)
     }
 
     updateMapStatus()
@@ -216,7 +231,7 @@ const MapPage = () => {
 
   return openedPage ? (
     openedPage
-  ) : (
+  ) : markets ? (
     <div className="map-container">
       <MapContainer
         center={mapCenter}
@@ -247,13 +262,15 @@ const MapPage = () => {
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
           <MapBottomPanel
             ref={bottomPanelRef}
-            visibleEvents={visibleEvents}
+            visibleMarkets={visibleMarkets}
             openPage={handleOpenPage}
             closePage={handleClosePage}
           />
         </Col>
       </Row>
     </div>
+  ) : (
+    <p>Loading</p>
   )
 }
 
