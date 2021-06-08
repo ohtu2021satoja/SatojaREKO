@@ -1,13 +1,17 @@
 const passport = require('passport')
-const FacebookStrategy = require('passport-facebook').Strategy
+const FacebookStrategy = require('passport-facebook')
 const config = require('../utils/config')
 const usersService = require('../services/users')
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    console.log('serialize =====> ', user)
+    console.log('serialize id =====> ', user[0].id)
+    done(null, user[0].id)
 })
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser(async (id, done) => {
+    const user = await usersService.getUser(id)
+    console.log('deserialize =====> ', user)
     done(null, user)
 })
 
@@ -34,8 +38,8 @@ passport.use(new FacebookStrategy({
         imageURL: picture
       }
       
-      usersService.createUser(userData)
+      await usersService.createUser(userData)
+      
+      return done(null, profile)
     }
-    // console.log('currentUser', currentUser)
-    // return done(null, profile)
 }))

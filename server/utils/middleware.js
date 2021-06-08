@@ -14,7 +14,17 @@ const errorHandler = (err, req, res, next) => {
     next(err)
 }
 
+const authCheck = (req, res, next) => {
+    if (!res.user) {
+      // if user is not logged in
+      res.redirect('/')
+    } else {
+      next()
+    }
+}
+
 module.exports = {
     unknownEndpoint,
-    errorHandler
+    errorHandler,
+    authCheck
 }
