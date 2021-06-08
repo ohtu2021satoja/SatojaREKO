@@ -24,10 +24,10 @@ ordersRouter.get("/seller/:seller_id", async (req, res) => {
   }
 })
 
-ordersRouter.get("/buyer/:event_id/:buyer_id", async (req,res) => {
+ordersRouter.get("/buyer/:buyer_id", async (req,res) => {
   try{
     const {event_id, buyer_id} = req.params
-    const orders = await ordersService.getBuyersEventOrders(buyer_id, event_id, ordersRepository)
+    const orders = await ordersService.getBuyersOrders(buyer_id, ordersRepository)
     res.send(orders)
   } catch(error){
     console.log(error)
