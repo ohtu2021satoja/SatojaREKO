@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom"
 import HomePage from "../HomePage"
 import HomePageSeller from "../HomePageSeller"
 import ProfilePageSeller from "../ProfilePageSeller"
-import Products from "../Products"
+import ProductsSeller from "../ProductsSeller"
 import AddProducts from "../AddProducts"
 import OrdersSellerEvents from "../OrdersSellerEvents"
 
@@ -19,7 +19,7 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
       <AddProducts />
     </Route>
     <Route path="/products">
-      <Products products={user.products} />
+      <ProductsSeller ProductsSeller={user.ProductsSeller} />
     </Route>
     <Route path="/orders">
       <OrdersSellerEvents OrdersSellerEvents={OrdersSellerEvents} />

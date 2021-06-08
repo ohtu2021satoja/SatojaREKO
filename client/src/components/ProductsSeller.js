@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 
-const Products = () => {
+const ProductsSeller = () => {
   // example products
   const tuotteet = [
     {
@@ -70,4 +70,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default ProductsSeller
