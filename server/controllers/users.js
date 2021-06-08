@@ -1,6 +1,22 @@
 const usersRouter = require('express').Router()
 const usersService = require("../services/users")
+const buyersService = require("../services/buyers")
+const sellersService = require("../services/sellers")
+
+
 const usersRepository = require("../repositories/users")
+const buyersRepository = require("../repositories/buyers")
+const sellersRepository = require("../repositories/sellers")
+usersRouter.put('/:id', async (req, res) => {
+  const { id } = req.params
+  if(req.body.seller_update){
+    await sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
+  } else {
+    await buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
+  }
+  res.sendStatus(200).end()
+})
+
 
 usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params

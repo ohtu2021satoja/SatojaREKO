@@ -2,7 +2,7 @@ PUT http://localhost:3003/api/users/1
 Content-Type: application/json
 
 {
-  "is_seller": false,
+  "seller_update": true,
   "reko_areas": {
     "delete": [1,2],
     "add": [1]
