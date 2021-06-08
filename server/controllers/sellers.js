@@ -5,7 +5,7 @@ const sellersRepository = require("../repositories/sellers")
 const eventsRepository = require("../repositories/events")
 const usersRepository = require("../repositories/users")
 
-sellersRouter.put('/info/:id', async (req, res) => {
+sellersRouter.put('/:id', async (req, res) => {
   console.log(req.body)
   const { id } = req.params
   await  sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)

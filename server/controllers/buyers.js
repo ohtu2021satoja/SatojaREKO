@@ -3,7 +3,7 @@ const buyersService = require("../services/buyers")
 const buyersRepository = require("../repositories/buyers")
 const usersRepository = require("../repositories/users")
 
-buyersRouter.put('/info/:id', async (req, res) => {
+buyersRouter.put('/:id', async (req, res) => {
   const { id } = req.params
   await  buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
   return res.sendStatus(200).end()

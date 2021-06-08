@@ -11,9 +11,9 @@ const addBatch = async (order_id, size_id, quantity) => {
   await db.query(query, [order_id, size_id, quantity])
 }
 
-const getSellersEventOrders = async (sellers_id, event_id) => {
-  const query = "SELECT  users.firstname, users.lastname, SUM(sizes.unit*products.unit_price) AS price, orders.id AS order_id,  json_agg(json_build_object('quantity', batches.quantity, 'product_name', products.name, 'size', sizes.unit, 'price', sizes.unit*products.unit_price, 'sizes_id', sizes.id)) AS orders from orders INNER JOIN batches ON orders.id = batches.order_id INNER JOIN sizes ON sizes.id = batches.sizes_id INNER JOIN products ON products.id = sizes.product_id INNER JOIN buyers ON buyers.id = orders.buyers_id INNER JOIN users ON users.id = buyers.id WHERE orders.event_id=$1 AND products.sellers_id=$2 AND products.removed = false GROUP BY (users.firstname, users.lastname, orders.id)"
-  const orders = await db.query(query, [event_id, sellers_id])
+const getSellersOrders = async (sellers_id, event_id) => {
+  const query = "SELECT * FROM (SELECT  users.firstname, users.lastname, SUM(sizes.unit*products.unit_price) AS price, orders.id AS order_id,  json_agg(json_build_object('quantity', batches.quantity, 'product_name', products.name, 'size', sizes.unit, 'price', sizes.unit*products.unit_price, 'sizes_id', sizes.id)) AS orders from orders INNER JOIN batches ON orders.id = batches.order_id INNER JOIN sizes ON sizes.id = batches.sizes_id INNER JOIN products ON products.id = sizes.product_id INNER JOIN buyers ON buyers.id = orders.buyers_id INNER JOIN users ON users.id = buyers.id WHERE products.sellers_id=$1 AND products.removed = false) GROUP BY (users.firstname, users.lastname, orders.id)"
+  const orders = await db.query(query, [sellers_id])
   return(orders)
    
 }
@@ -25,4 +25,4 @@ const getBuyersEventOrders = async (buyers_id, event_id) => {
 }
 
 
-module.exports = { addOrder, addBatch, getSellersEventOrders, getBuyersEventOrders}
+module.exports = { addOrder, addBatch, getSellersOrders, getBuyersEventOrders}

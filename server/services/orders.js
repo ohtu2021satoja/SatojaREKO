@@ -22,8 +22,8 @@ const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepos
   }
 }
 
-const getSellersEventOrders = async (sellers_id, event_id, ordersRepository) => {
-  const orders = await ordersRepository.getSellersEventOrders(sellers_id, event_id)
+const getSellersOrders = async (sellers_id, ordersRepository) => {
+  const orders = await ordersRepository.getSellersOrders(sellers_id)
   return(orders)
 }
 
@@ -32,4 +32,4 @@ const getBuyersEventOrders = async (buyers_id, event_id, ordersRepository) => {
   return(orders)
 }
 
-module.exports = { addBuyersOrders, getSellersEventOrders, getBuyersEventOrders }
+module.exports = { addBuyersOrders, getSellersOrders, getBuyersEventOrders }

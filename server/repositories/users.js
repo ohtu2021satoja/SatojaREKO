@@ -1,7 +1,7 @@
 const db = require("../db")
 
 const getUser = async (id) => {
-  const user = await  db.query("SELECT * from users WHERE id=$1",[id])
+  const user = await  db.query("SELECT users.firstname from users INNER JOIN sellers ON sellers.id = users.id INNER JOIN buyers ON buyers.id = users.id WHERE id=$1",[id])
   return(user)
 }
 
