@@ -26,7 +26,7 @@ const FormBuyer = (/*{ user }*/) => {
           notification: false,
         }}
         validationSchema={BuyerSchema}
-        handleSubmit={console.log}
+        onSubmit={console.log}
       >
         {() => (
           <Form>

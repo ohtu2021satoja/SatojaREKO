@@ -29,7 +29,7 @@ const FormSeller = (/*{ user }*/) => {
           emailReport: false,
         }}
         validationSchema={SellerSchema}
-        handleSubmit={console.log}
+        onSubmit={console.log}
       >
         {() => (
           <Form>

@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form"
 
 const FormFieldText = ({ field, id, label }) => (
-  <Form.Group>
+  <Form.Group className="mb-2">
     <Form.Label htmlFor={id} srOnly>
       {label}
     </Form.Label>
