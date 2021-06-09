@@ -121,9 +121,7 @@ const MapPage = () => {
       firstRender.current = false
 
       const getMarkets = async () => {
-        console.log("fetching markets...")
-        const markets = await getAllMarkets()
-        console.log(markets)
+        //const markets = await getAllMarkets()
       }
 
       const markets = getMarkets

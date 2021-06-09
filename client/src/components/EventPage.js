@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Card from "react-bootstrap/Card"
 import Nav from "react-bootstrap/Nav"
+import { addProductToCart, removeProductFromCart } from "../reducers/authedUser"
+import { useSelector, useDispatch } from "react-redux"
 
 const products = [
   {
@@ -58,7 +59,16 @@ const products = [
 ]
 
 const ListItem = ({ product }) => {
-  const [amountInCart, setAmountInCart] = useState(0)
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state.authedUser.cart[product.id])
+
+  const handleAddToCart = () => {
+    dispatch(addProductToCart(product))
+  }
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeProductFromCart(product))
+  }
 
   return (
     <Accordion className="mb-2">
@@ -77,29 +87,34 @@ const ListItem = ({ product }) => {
             </Col>
           </Row>
           <Accordion.Collapse as="div" eventKey="0">
-            <div>
-              <Button
-                size="sm"
-                variant="success"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setAmountInCart(amountInCart - 1)
-                }}
-              >
-                -
-              </Button>{" "}
-              {amountInCart}{" "}
-              <Button
-                size="sm"
-                variant="success"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setAmountInCart(amountInCart + 1)
-                }}
-              >
-                +
-              </Button>
-            </div>
+            <Row>
+              <Col xs={12}>
+                <Card.Text>{product.description}</Card.Text>
+              </Col>
+              <Col xs={12}>
+                <Button
+                  size="lg"
+                  variant="outline-dark"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleRemoveFromCart()
+                  }}
+                >
+                  -
+                </Button>
+                {state || 0}{" "}
+                <Button
+                  size="lg"
+                  variant="outline-dark"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleAddToCart()
+                  }}
+                >
+                  +
+                </Button>
+              </Col>
+            </Row>
           </Accordion.Collapse>
         </Accordion.Toggle>
       </Card>
