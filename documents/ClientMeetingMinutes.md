@@ -36,7 +36,7 @@ Toivottuja ominaisuuksia (prioriteetti)
 - Tapahtuman muokkaaminen 
 - Uusien paikkakuntien lisääminen
 - Uusien noutotilaisuuksien lisääminen
-- Häirikkökäyttjien poisto
+- Köyttötilin lukitseminen
 
 Toivottua statistiikkaa
 - Myyjien ja ostajien määrä
