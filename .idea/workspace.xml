@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ee9693b3-eb06-46dd-9f46-0c3900de8c64" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/server/controllers/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/repositories/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/repositories/events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/repositories/markets.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/repositories/markets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/events.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager">
+    <configuration name="geoap.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/geoap.js" working-dir="$PROJECT_DIR$/server">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.geoap.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
