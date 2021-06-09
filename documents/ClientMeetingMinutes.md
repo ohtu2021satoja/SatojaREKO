@@ -45,7 +45,7 @@ Toivottua statistiikkaa
 
 ### Kartta
 
-- Kun ostaja kirjatuu, karttanäkymä on keskitetty hänen sijaintiinsa, jos lupa sijaititietojen käyttöön on annettu
+- Kun ostaja kirjautuu, karttanäkymä on keskitetty hänen sijaintiinsa, jos lupa sijaintitietojen käyttöön on annettu
 
 - Jos lupaa ei ole annettu, näytetään Etelä-Savon maakunta
 
@@ -55,7 +55,7 @@ Toivottua statistiikkaa
 
 - Tuottajan profiilisivulle lisätään osoite- ja kotisivukenttä, kun tuottaja valitsee ensimmäisen Reko-ryhmän
 
-- Luodaan Ota yhteyttä -sivu ja lisätään Ota yhteyttä -linkki tuottajan profiilisivulle, jotta tuottaja voi ehdottaa Reko ryhmän lisäämistä
+- Luodaan Ota yhteyttä -sivu ja lisätään Ota yhteyttä -linkki tuottajan profiilisivulle, jotta tuottaja voi ehdottaa Reko-ryhmän lisäämistä
 
 
 # 31.05.21
