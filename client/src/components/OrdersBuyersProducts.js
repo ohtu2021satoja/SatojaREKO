@@ -44,13 +44,11 @@ const OrdersBuyersProducts = () => {
       <Card key={index}>
         <Row>
           <Col>
-            <Card.Img src={product.image} alt="Generic placeholder" rouded />
+            <Card.Img src={product.image} alt="Generic placeholder" />
           </Col>
           <Col xs={8} className="text-left">
             <Card.Title>{product.seller}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              <h8>{product.name}</h8>
-            </Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">{product.name}</Card.Subtitle>
             <Card.Subtitle className="text-muted">{product.text}</Card.Subtitle>
           </Col>
         </Row>
@@ -61,7 +59,7 @@ const OrdersBuyersProducts = () => {
               width="22"
               height="22"
               fill="currentColor"
-              class="bi bi-dash-circle"
+              className="bi bi-dash-circle"
               viewBox="0 0 16 16"
               onClick={() => setCounter(counter - 1)}
             >
@@ -78,7 +76,7 @@ const OrdersBuyersProducts = () => {
               width="22"
               height="22"
               fill="currentColor"
-              class="bi bi-plus-circle"
+              className="bi bi-plus-circle"
               viewBox="0 0 16 16"
               onClick={() => setCounter(counter + 1)}
             >
