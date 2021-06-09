@@ -58,7 +58,7 @@ const OrdersSellerBuyers = () => {
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-x-circle"
+              className="bi bi-x-circle"
               viewBox="0 0 16 16"
               style={{ color: "red" }}
               onClick={HandleDeleteProductButton}
@@ -72,8 +72,9 @@ const OrdersSellerBuyers = () => {
     )
   }
 
-  const HandleDeleteProductButton = () => {
+  const HandleDeleteProductButton = (event) => {
     console.log("deletes this product")
+    event.stopPropagation()
   }
   const HandleDeleteOrderButton = () => {
     console.log("deletes this order")

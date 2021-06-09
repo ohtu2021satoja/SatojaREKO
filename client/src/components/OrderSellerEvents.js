@@ -95,6 +95,11 @@ const OrdersSellerEvents = () => {
 
   const RenderEvents = (tapahtuma, index) => {
     var date = new Date(tapahtuma.date)
+    var dateMinutes = date.getMinutes()
+    // changes 10:0 to 10:00
+    if (date.getMinutes() === 0) {
+      dateMinutes = "00"
+    }
 
     if (eventId === null) {
       return (
@@ -108,10 +113,10 @@ const OrdersSellerEvents = () => {
           xl={{ span: 4, offset: 4 }}
           onClick={() => setEventId(tapahtuma.id)}
         >
-          <div>tapahtuma {tapahtuma.name}</div>
+          <div>{tapahtuma.name}</div>
           {tapahtuma.address}
           <div>
-            aika {date.getHours()}:{date.getMinutes()}-
+            aika {date.getHours()}:{dateMinutes}-
           </div>
         </Card>
       )
@@ -161,7 +166,7 @@ const OrdersSellerEvents = () => {
     const x = Events.find((y) => y.id === eventId)
     const date = new Date(x.date)
     const dateHour = date.getHours()
-    const dateMinutes = date.getMinutes()
+    var dateMinutes = date.getMinutes()
     const month = date.getMonth() + 1
     const thisDate = date.getDate()
     var paiva = date.getDay()
@@ -187,6 +192,9 @@ const OrdersSellerEvents = () => {
     if (paiva === 7) {
       datepaiva = "Sunnuntai"
     }
+    if (dateMinutes === 0) {
+      dateMinutes = "00"
+    }
 
     return (
       <Row className="mt-5">
@@ -198,14 +206,14 @@ const OrdersSellerEvents = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
-            class="bi bi-arrow-left-circle"
+            fillRule="currentColor"
+            className="bi bi-arrow-left-circle"
             onClick={HandleBackButton}
             viewBox="0 0 16 16"
           >
             <path
-              fill-rule="evenodd"
-              class="bi bi-arrow-left-circle"
+              fillRule="evenodd"
+              className="bi bi-arrow-left-circle"
               d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
             />
           </svg>
