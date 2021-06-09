@@ -28,9 +28,9 @@ const OrdersSellerEvents = () => {
         id: 2
       },
       {
-        name: "testi3 = testi2 (REKO)",
+        name: "testi3 (REKO)",
         address: "Savontie 1",
-        date: "2000-7-12 17:30:00",
+        date: "2021-6-9 17:30:00",
         id: 3
       },
       {
@@ -158,12 +158,37 @@ const OrdersSellerEvents = () => {
         </div>
     )
   } else {
+    // date manipulations, disgusting I know  --Yoda
     const x = Events.find(y => y.id === eventId)
-    const helptime = x.date.split(" ")
-    const helpDate = helptime[0].split("-")
-    const hourMinuteSecond = helptime[1].split(":")
-    const month = helpDate[1]
-    const day = helpDate[2]
+    const date = new Date(x.date)
+    const dateHour = date.getHours()
+    const dateMinutes = date.getMinutes()
+    const month = date.getMonth() + 1
+    const thisDate = date.getDate()
+    var paiva = date.getDay()
+    var datepaiva
+    if (paiva === 1){
+      datepaiva = "Maanantai"
+    }
+    if (paiva === 2){
+      datepaiva = "Tiistai"
+    }
+    if (paiva === 3){
+      datepaiva = "Keskiviikko"
+    }
+    if (paiva === 4){
+      datepaiva = "Torstai"
+    }
+    if (paiva === 5){
+      datepaiva = "Perjantai"
+    }
+    if (paiva === 6){
+      datepaiva = "Lauantai"
+    }
+    if (paiva === 7){
+      datepaiva = "Sunnuntai"
+    }
+
     return(
       <Row className="mt-5">
         <Col xs={12} className="text-center mb-4">
@@ -186,10 +211,10 @@ const OrdersSellerEvents = () => {
           <h6>{x.name}</h6>
         </Col>
         <Col xs={12} className="text-center">
-          <h6>generic weekday {day}.{month}.</h6>
+          <h6>{datepaiva} {thisDate}.{month}.</h6>
         </Col>
         <Col xs={12} className="text-center">
-          <h6>{hourMinuteSecond[0]}:{hourMinuteSecond[1]}-</h6>
+          <h6>{dateHour}:{dateMinutes}-</h6>
         </Col>
         <Col xs={12} className="text-center">
           <h6>{x.address}</h6>
