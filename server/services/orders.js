@@ -29,8 +29,8 @@ const getBuyersOrders = async (buyers_id, ordersRepository) => {
   return(orders)
 }
 
-const removeSellersOrder = async (seller_id, order_id, ordersRepository) => {
-  await productsRepository.update
+const removeSellersOrder = async (seller_id, order_id, ordersRepository, productsRepository) => {
+  await productsRepository.addQuantitiesToSizes(order_id, seller_id)
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 

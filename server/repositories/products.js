@@ -17,7 +17,7 @@ const addProduct = async (product) => {
   return(result[0].id)
 }
 
-const addProductSizes = async (product_id, sizes) => {
+const addProductSizes = async (product_id, sizes) => { 
   const values = sizes.map(size => [product_id, size.quantity, size.unit])
   const query = format("INSERT INTO sizes (product_id, quantity, unit) VALUES %L", values)
   await db.query(query, [])
@@ -45,4 +45,11 @@ const removeProductBatches = async (products_id) => {
   await db.query("UPDATE batches SET removed=true WHERE sizes_id IN (SELECT sizes.id from sizes WHERE sizes.product_id = $1);", [products_id])
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches }
+const addQuantitiesToSizes = async (order_id, sellers_id) => {
+  await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches, products WHERE batches.order_id=$1 AND batches.sizes_id=sizes.id AND sizes.product_id = products.id AND products.sellers_id=$2;", [order_id, sellers_id])
+}
+
+const address = "Lappajärvi Purontie 9"
+const url = `https://api.geoapify.com/v1/geocode/search?text=${address}limit=5&apiKey=YOUR_API_KEY`
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes }
