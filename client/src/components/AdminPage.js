@@ -155,17 +155,15 @@ const MarketForm = ({ setAddingMarket }) => {
     setRekoAreas(result.data)
   })
   const handleSubmit = async ({ area, address }) => {
-    await marketService.addMarket(area, address, rekoChoices)
+    await marketService.addMarket(address, rekoChoices)
   }
   const validationSchema = Yup.object().shape({
-    area: Yup.string().required("Vaadittu"),
     address: Yup.string().required("Vaadittu"),
   })
   return (
     <Col xs={12}>
       <Formik
         initialValues={{
-          area: "",
           address: "",
         }}
         validationSchema={validationSchema}
@@ -195,8 +193,6 @@ const MarketForm = ({ setAddingMarket }) => {
 const MarketFormDetails = () => {
   return (
     <Col xs={12} className="mb-5">
-      <Field name="area" id="area" label="Alue" component={FormFieldText} />
-      <ErrorMessage name="area" component={FormErrorMessage} />
       <Field name="address" id="address" label="address" component={FormFieldText} />
       <ErrorMessage name="address" component={FormErrorMessage} />
     </Col>
