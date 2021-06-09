@@ -9,8 +9,6 @@ const RoutesBuyer = ({ user, logOut, setSellerView }) => (
       <HomePage logOut={logOut} setSellerView={setSellerView} />
     </Route>
     <Route path="/orders">Orders</Route>
-    <Route path="/products">
-    </Route>
     <Route path="/events">Events</Route>
     <Route path="/cart">Shopping cart</Route>
     <Route path="/profile">
