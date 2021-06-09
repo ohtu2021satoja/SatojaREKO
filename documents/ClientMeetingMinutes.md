@@ -1,6 +1,6 @@
 ## Notes from the weekly meeting
 
-# 08.06.21
+# 07.06.21
 
 ### Yleistä
 
