@@ -11,30 +11,35 @@ const FormSellerGroups = () => {
       </div>
       <Field
         name="rekoGroup"
+        id="reko-group-1"
         label="Ristiina"
         value="group1"
         component={FormFieldCheckbox}
       />
       <Field
         name="rekoGroup"
+        id="reko-group-2"
         label="Mikkeli"
         value="group2"
         component={FormFieldCheckbox}
       />
       <Field
         name="rekoGroup"
+        id="reko-group-3"
         label="Mäntyharju"
         value="group3"
         component={FormFieldCheckbox}
       />
       <Field
         name="rekoGroup"
+        id="reko-group-4"
         label="Pertunmaa"
         value="group4"
         component={FormFieldCheckbox}
       />
       <Field
         name="rekoGroup"
+        id="reko-group-5"
         label="Pieksämäki"
         value="group5"
         component={FormFieldCheckbox}
