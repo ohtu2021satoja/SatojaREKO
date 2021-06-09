@@ -5,7 +5,7 @@ const sellersRepository = require("../repositories/sellers")
 const eventsRepository = require("../repositories/events")
 const usersRepository = require("../repositories/users")
 
-sellersRouter.put('/info/:id', async (req, res) => {
+sellersRouter.put('/:id', async (req, res) => {
   console.log(req.body)
   const { id } = req.params
   await  sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
@@ -15,6 +15,12 @@ sellersRouter.put('/info/:id', async (req, res) => {
 sellersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
   await sellersService.removeSellerImage(id, sellersRepository)
+  return res.sendStatus(200).end()
+})
+
+sellersRouter.put('/:id/image', async (req, res) => {
+  const { id } = req.params
+  await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
   return res.sendStatus(200).end()
 })
 

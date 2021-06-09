@@ -14,20 +14,20 @@ ordersRouter.post('/buyer/:id', async (req, res) => {
   }
 })
 
-ordersRouter.get("/seller/:event_id/:seller_id", async (req, res) => {
+ordersRouter.get("/seller/:seller_id", async (req, res) => {
   try{
-    const {event_id, seller_id} = req.params
-    const orders = await ordersService.getSellersEventOrders(seller_id, event_id, ordersRepository)
+    const {seller_id} = req.params
+    const orders = await ordersService.getSellersOrders(seller_id, ordersRepository)
     res.send(orders)
   } catch(error){
     console.log(error)
   }
 })
 
-ordersRouter.get("/buyer/:event_id/:buyer_id", async (req,res) => {
+ordersRouter.get("/buyer/:buyer_id", async (req,res) => {
   try{
-    const {event_id, buyer_id} = req.params
-    const orders = await ordersService.getBuyersEventOrders(buyer_id, event_id, ordersRepository)
+    const {buyer_id} = req.params
+    const orders = await ordersService.getBuyersOrders(buyer_id, ordersRepository)
     res.send(orders)
   } catch(error){
     console.log(error)

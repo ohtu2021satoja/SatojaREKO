@@ -1,11 +1,7 @@
 const db = require("../db")
 
-const updateNewsLetterCheck = async (id, check) => {
-  await db.query("UPDATE buyers SET newsletter_check = $1 WHERE id=$2", [check, id])
-}
-
-const updateCancelNotificationCheck = async (id, check) => {
-  await db.query("UPDATE buyers SET cancel_notification_check = $1 WHERE id=$2", [check, id])
+const updateBuyersInfo = async (buyer_id, buyer_info) => {
+  await db.query("UPDATE buyers SET cancel_notification_check=$1, newsletter_check=$2 WHERE id=$3", [buyer_info.cancel_notification_check, buyer_info.newsletter_check, buyer_id])
 }
 
 const updateBuyersImage = async (id, image_url) => {
@@ -13,4 +9,4 @@ const updateBuyersImage = async (id, image_url) => {
 }
 
 
-module.exports = { updateNewsLetterCheck, updateCancelNotificationCheck, updateBuyersImage }
+module.exports = { updateBuyersInfo, updateBuyersImage }

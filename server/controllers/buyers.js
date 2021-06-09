@@ -1,17 +1,24 @@
 const buyersRouter = require('express').Router()
 const buyersService = require("../services/buyers")
 const buyersRepository = require("../repositories/buyers")
+const usersRepository = require("../repositories/users")
 
-buyersRouter.put('/:id/newsletter_check', async (req, res) => {
+buyersRouter.put('/:id', async (req, res) => {
   const { id } = req.params
-  const check = req.body.check
-  await  buyersService.updateNewsLetterCheck(id, check, buyersRepository)
+  await  buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
   return res.sendStatus(200).end()
 })
+
 
 buyersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
   await buyersService.removeBuyerImage(id, buyersRepository)
+  return res.sendStatus(200).end()
+})
+
+buyersRouter.put('/:id/image', async (req, res) => {
+  const { id } = req.params
+  await buyersService.updateBuyerImage(id, req.body.image_url, buyersRepository)
   return res.sendStatus(200).end()
 })
 

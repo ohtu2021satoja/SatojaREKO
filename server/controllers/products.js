@@ -13,7 +13,7 @@ productsRouter.get("/", async (req, res) => {
   }
 });
 
-productsRouter.get('/:id', async (req, res) => {
+productsRouter.get('/seller/:id', async (req, res) => {
   const { id } = req.params
   const products = await productService.getSellersProducts(id, productsRepository)
   if (!products) {
@@ -52,7 +52,7 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
   }
 })
 
-productsRouter.post('/:id', async (req, res) => {
+productsRouter.post('seller/:id', async (req, res) => {
   try{
     console.log(req.body)
     await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
