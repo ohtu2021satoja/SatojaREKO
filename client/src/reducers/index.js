@@ -5,6 +5,7 @@ import { events } from "./events"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import { shoppingCart } from "./shoppingCart"
 
 export default combineReducers({
   price: priceReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   authedUser,
   products,
   events,
+  shoppingCart,
 })

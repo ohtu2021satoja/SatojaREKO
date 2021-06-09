@@ -1,11 +1,8 @@
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Accordion from "react-bootstrap/Accordion"
-import Card from "react-bootstrap/Card"
 import Nav from "react-bootstrap/Nav"
-import { addProductToCart, removeProductFromCart } from "../reducers/authedUser"
-import { useSelector, useDispatch } from "react-redux"
+import EventPageListItem from "./EventPageListItem"
 
 const products = [
   {
@@ -22,7 +19,7 @@ const products = [
     image_url: "porkkana_okbtuk",
     category: "Hedelmät & marjat",
     quantity_left: "7",
-    sizes: [{ quantity: 7, unit: 1.25 }],
+    sizes: [{ id: 3, quantity: 7, unit: 1.25 }],
   },
   {
     id: 11,
@@ -38,7 +35,10 @@ const products = [
     image_url: "porkkana_okbtuk",
     category: "Leivät & leivonta",
     quantity_left: "7",
-    sizes: [{ quantity: 10, unit: 0.5 }],
+    sizes: [
+      { id: 1, quantity: 10, unit: 0.5 },
+      { id: 2, quantity: 5, unit: 1.0 },
+    ],
   },
   {
     id: 3,
@@ -54,73 +54,9 @@ const products = [
     image_url: "porkkana_okbtuk",
     category: "Hedelmät & marjat",
     quantity_left: "7",
-    sizes: [{ quantity: 12, unit: 1.0 }],
+    sizes: [{ id: 0, quantity: 12, unit: 1.0 }],
   },
 ]
-
-const ListItem = ({ product }) => {
-  const dispatch = useDispatch()
-  const state = useSelector((state) => state.authedUser.cart[product.id])
-
-  const handleAddToCart = () => {
-    dispatch(addProductToCart(product))
-  }
-
-  const handleRemoveFromCart = () => {
-    dispatch(removeProductFromCart(product))
-  }
-
-  return (
-    <Accordion className="mb-2">
-      <Card>
-        <Accordion.Toggle as={Button} variant="text" eventKey="0">
-          <Row>
-            <Col xs={4}>
-              <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
-            </Col>
-            <Col xs={8} className="text-left">
-              <Card.Subtitle className="mb-2 text-muted">Myyjä X</Card.Subtitle>
-              <Card.Title>
-                {product.name} {product.sizes[0].unit} {product.type}
-              </Card.Title>
-              <Card.Title>{product.unit_price / 100}e / kpl</Card.Title>
-            </Col>
-          </Row>
-          <Accordion.Collapse as="div" eventKey="0">
-            <Row>
-              <Col xs={12}>
-                <Card.Text>{product.description}</Card.Text>
-              </Col>
-              <Col xs={12}>
-                <Button
-                  size="lg"
-                  variant="outline-dark"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleRemoveFromCart()
-                  }}
-                >
-                  -
-                </Button>
-                {state || 0}{" "}
-                <Button
-                  size="lg"
-                  variant="outline-dark"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleAddToCart()
-                  }}
-                >
-                  +
-                </Button>
-              </Col>
-            </Row>
-          </Accordion.Collapse>
-        </Accordion.Toggle>
-      </Card>
-    </Accordion>
-  )
-}
 
 const EventPage = ({ event, closePage }) => {
   return (
@@ -145,7 +81,7 @@ const EventPage = ({ event, closePage }) => {
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (
-          <ListItem product={product} key={index} />
+          <EventPageListItem product={product} eventID={event.id} key={index} />
         ))}
       </Col>
     </Row>
