@@ -10,55 +10,55 @@ const OrdersBuyers = () => {
     {
       name: "Mikkeli (REKO)",
       address: "porkkalankatu 6",
-      date: "1996-12-31 18:30:00",
+      date: "2021-6-14 18:30:00",
       id: 0,
     },
     {
-      name: "testi = mikkeli (REKO)",
+      name: "testi (REKO)",
       address: "Porrassalmenkatu 67",
-      date: "1996-12-31 18:30:00",
+      date: "2021-9-12 18:30:00",
       id: 1,
     },
     {
       name: "testi2 (REKO)",
       address: "Brahentie 33",
-      date: "2000-7-12 17:30:00",
+      date: "2021-6-11 17:30:00",
       id: 2,
     },
     {
       name: "testi3 = testi2 (REKO)",
       address: "Savontie 1",
-      date: "2000-7-12 17:30:00",
+      date: "2021-7-12 17:30:00",
       id: 3,
     },
     {
       name: "testi4 (REKO)",
       address: "salotie 13",
-      date: "2004-7-11 11:00:00",
+      date: "2021-7-11 11:00:00",
       id: 4,
     },
     {
       name: "testi5 (REKO)",
       address: "esplanadinkatu 2",
-      date: "2000-6-12 17:30:00",
+      date: "2021-8-12 17:30:00",
       id: 5,
     },
     {
       name: "testi6 (REKO)",
       address: "mannerheimintie 4",
-      date: "2000-5-12 17:30:00",
+      date: "2021-8-1 17:30:00",
       id: 6,
     },
     {
       name: "testi7 (REKO)",
       address: "väinö tannerintie 12",
-      date: "2000-5-10 17:30:00",
+      date: "2021-6-1 17:30:00",
       id: 7,
     },
     {
       name: "testi8 (REKO)",
       address: "Braku 3",
-      date: "2021-7-12 12:30:00",
+      date: "2021-7-22 12:30:00",
       id: 8,
     },
   ]
@@ -151,11 +151,41 @@ const OrdersBuyers = () => {
     )
   } else {
     const x = Events.find((y) => y.id === eventId)
-    const helptime = x.date.split(" ")
-    const helpDate = helptime[0].split("-")
-    const hourMinuteSecond = helptime[1].split(":")
-    const month = helpDate[1]
-    const day = helpDate[2]
+    const date = new Date(x.date)
+    const dateHour = date.getHours()
+    var dateMinutes = date.getMinutes()
+    const month = date.getMonth() + 1
+    const thisDate = date.getDate()
+    var paiva = date.getDay()
+    var datepaiva
+    if (paiva === 0) {
+      datepaiva = "Sunnuntai"
+    }
+    if (paiva === 1) {
+      datepaiva = "Maanantai"
+    }
+    if (paiva === 2) {
+      datepaiva = "Tiistai"
+    }
+    if (paiva === 3) {
+      datepaiva = "Keskiviikko"
+    }
+    if (paiva === 4) {
+      datepaiva = "Torstai"
+    }
+    if (paiva === 5) {
+      datepaiva = "Perjantai"
+    }
+    if (paiva === 6) {
+      datepaiva = "Lauantai"
+    }
+    if (dateMinutes === 0) {
+      dateMinutes = "00"
+    }
+    console.log("dateminutes ", dateMinutes + "0")
+
+    console.log("paiva ", paiva)
+    console.log("datepaiva ", datepaiva)
     return (
       <Row className="mt-5">
         <Col xs={12} className="text-center mb-4">
@@ -183,12 +213,12 @@ const OrdersBuyers = () => {
         </Col>
         <Col xs={12} className="text-center">
           <h6>
-            generic weekday {day}.{month}.
+            {datepaiva} {thisDate}.{month}.
           </h6>
         </Col>
         <Col xs={12} className="text-center">
           <h6>
-            {hourMinuteSecond[0]}:{hourMinuteSecond[1]}-
+            {dateHour}:{dateMinutes}-
           </h6>
         </Col>
         <Col xs={12} className="text-center mb-4">
