@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
-import OrdersSellerBuyers from "./OrdersSellerBuyers"
+import OrdersSellerBuyers from "./OrderSellerBuyers"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 

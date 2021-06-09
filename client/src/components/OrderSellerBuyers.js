@@ -5,7 +5,6 @@ import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
-import "./OrderSellerProducts.css"
 
 const OrdersSellerBuyers = () => {
   // example products

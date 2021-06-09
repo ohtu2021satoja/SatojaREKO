@@ -4,7 +4,7 @@ import HomePage from "../HomePage"
 import HomePageSeller from "../HomePageSeller"
 import ProfilePageSeller from "../profiles/ProfilePageSeller"
 import Products from "../Products"
-import OrdersSeller from "../OrdersSeller"
+import OrdersSellerEvents from "../OrderSellerEvents"
 import AddProducts from "../AddProducts"
 
 const RoutesSeller = ({ user, logOut, setSellerView }) => (
@@ -22,7 +22,7 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
       <Products products={user.products} />
     </Route>
     <Route path="/orders">
-      <OrdersSeller OrdersSeller={OrdersSeller} />
+      <OrdersSellerEvents OrdersSeller={OrdersSellerEvents} />
     </Route>
     <Route path="/profile">
       <ProfilePageSeller user={user} />

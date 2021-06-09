@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import { useState } from "react"
-import OrdersSellerProducts from "./OrdersSellerProducts"
+import OrdersSellerProducts from "./OrderSellerProducts"
 import Nav from "react-bootstrap/Nav"
 
 const OrdersSellerEvents = () => {
