@@ -43,5 +43,6 @@ server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
 
 server.listen(config.PORT, () => {
+  console.log(process.env.GEO_API_KEY)
   console.log(`Server running on port ${config.PORT}`)
 })
