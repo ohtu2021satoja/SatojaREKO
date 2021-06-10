@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import EventPageListButtons from "./EventPageListButtons"
-import { addProductToCart, removeProductFromCart } from "../reducers/shoppingCart"
+import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { useDispatch } from "react-redux"
 
 const EventPageListItem = ({ product, event }) => {

@@ -1,28 +1,28 @@
+import { submitBuyerOrders } from "../services/orders"
+
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART"
 export const SUBMIT_ORDERS = "SUBMIT_ORDERS"
 
-export const addProductToCart = (product, sizeID, event) => {
-  return {
-    type: ADD_PRODUCT_TO_CART,
-    product,
-    sizeID,
-    event,
+export const addProductToCart = (product, size, event) => {
+  return async (dispatch) => {
+    dispatch({ type: "ADD_PRODUCT_TO_CART", product, size, event })
   }
 }
 
-export const removeProductFromCart = (product, sizeID, event) => {
-  return {
-    type: REMOVE_PRODUCT_FROM_CART,
-    product,
-    sizeID,
-    event,
+export const removeProductFromCart = (product, size, event) => {
+  return async (dispatch) => {
+    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, size, event })
   }
 }
 
-export const submitOrders = (buyerID) => {
-  return {
-    type: SUBMIT_ORDERS,
-    buyerID,
+export const submitOrders = (orders, buyerID) => {
+  return async (dispatch) => {
+    console.log("SUBMITTING: ")
+    console.log(orders)
+    const res = await submitBuyerOrders(orders, buyerID)
+    console.log(res)
+    const success = res.status === 200 ? true : false
+    dispatch({ type: "SUBMIT_ORDERS", success })
   }
 }

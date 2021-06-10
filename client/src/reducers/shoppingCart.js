@@ -4,8 +4,6 @@ import {
   SUBMIT_ORDERS,
 } from "../actions/shoppingCart"
 
-import { submitBuyerOrders } from "../services/orders"
-
 export const shoppingCart = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
@@ -85,28 +83,5 @@ export const shoppingCart = (state = [], action) => {
     }
     default:
       return state
-  }
-}
-
-export const addProductToCart = (product, size, event) => {
-  return async (dispatch) => {
-    dispatch({ type: "ADD_PRODUCT_TO_CART", product, size, event })
-  }
-}
-
-export const removeProductFromCart = (product, size, event) => {
-  return async (dispatch) => {
-    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, size, event })
-  }
-}
-
-export const submitOrders = (orders, buyerID) => {
-  return async (dispatch) => {
-    console.log("SUBMITTING: ")
-    console.log(orders)
-    const res = await submitBuyerOrders(orders, buyerID)
-    console.log(res)
-    const success = res.status === 200 ? true : false
-    dispatch({ type: "SUBMIT_ORDERS", success })
   }
 }
