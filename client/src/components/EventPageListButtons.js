@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
 
 const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
-  const amountInCart = useSelector((state) => state.shoppingCart)
+  const amountInCart = useSelector((state) => state.shoppingCart[0])
   return (
     <Col xs={8}>
       <b>
