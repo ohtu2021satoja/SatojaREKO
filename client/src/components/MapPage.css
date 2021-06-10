@@ -1,3 +1,8 @@
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
 .leaflet-container {
   width: 100%;
   height: 90%;
@@ -6,4 +11,26 @@
 .map-container {
   padding-top: 10px;
   height: 100%;
+}
+
+.marker-event {
+  color: rgb(70, 143, 3);
+}
+
+.marker-event:hover,
+.marker-event:active {
+  color: rgb(124, 231, 124);
+}
+
+.marker-seller {
+  color: rgb(17, 17, 110);
+}
+
+.marker-seller:hover,
+.marker-seller:active {
+  color: rgb(154, 154, 230);
+}
+
+.popup-card {
+  border-width: 0;
 }

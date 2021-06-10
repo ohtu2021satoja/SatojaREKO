@@ -1,6 +1,7 @@
 const productsService = require("../services/products")
 const mockProductRepository = require("./mocks/mockProductRepository")
 const mockEventRepository = require("./mocks/mockEventRepository")
+const mockDB = require("./mocks/db")
 
 const mockProducts = mockProductRepository.getAllProducts()
 const mockSizes = mockProductRepository.getSizes()
@@ -47,7 +48,7 @@ describe("adding product", () => {
     const productsLengthBefore = mockProducts.length
     const sizesLengthBefore = mockSizes.length
     const events = [1,2]
-    await productsService.addProduct(product, events, sizes, mockProductRepository, mockEventRepository)
+    await productsService.addProduct(product, events, sizes, mockProductRepository, mockEventRepository, mockDB)
     const newMockProducts = mockProductRepository.getAllProducts()
     const newMockSizes = mockProductRepository.getSizes()
     expect(newMockProducts.length).toBe(productsLengthBefore+1)

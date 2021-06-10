@@ -2,6 +2,7 @@ const productsRouter = require("express").Router();
 const productService = require("../services/products")
 const productsRepository = require("../repositories/products")
 const eventsRepository = require("../repositories/events")
+const db = require("../db")
 productsRouter.get("/", async (req, res) => {
   try {
     const products = await productService.getAllProducts(productsRepository)
@@ -12,22 +13,49 @@ productsRouter.get("/", async (req, res) => {
   }
 });
 
-productsRouter.get('/:id', async (req, res) => {
+productsRouter.get('/seller/:id', async (req, res) => {
   const { id } = req.params
   const products = await productService.getSellersProducts(id, productsRepository)
   if (!products) {
     return res.status(404).send({ error: 'Sellers products not found' });
   }
   try {
-    res.send(200).json(products)
+    res.send(products)
   } catch (err) {
     next(err)
   }
 })
 
-productsRouter.post('/:id', async (req, res) => {
+productsRouter.get("/events/:id", async (req, res) => {
+  const { id } = req.params
+  const products = await productService.getEventProducts(id, productsRepository)
+  if (!products) {
+    return res.status(404).send({ error: 'Sellers products not found' });
+  }
+  try {
+    res.send(products)
+  } catch (err) {
+    next(err)
+  }
+})
+
+productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
+  const { event_id, seller_id } = req.params
+  const products = await productService.getSellersEventProducts(event_id, seller_id, productsRepository)
+  if (!products) {
+    return res.status(404).send({ error: 'Sellers products not found' });
+  }
+  try {
+    res.send(products)
+  } catch (err) {
+    next(err)
+  }
+})
+
+productsRouter.post('seller/:id', async (req, res) => {
   try{
-    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository)
+    console.log(req.body)
+    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)

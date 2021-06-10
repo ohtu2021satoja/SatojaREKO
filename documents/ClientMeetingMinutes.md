@@ -1,5 +1,63 @@
 ## Notes from the weekly meeting
 
+# 07.06.21
+
+### Yleistä
+
+- Profiili- tai tuotekuviin voidaan käyttää oletuskuvaa, jos kuvaa ei ole ladattu
+
+- Tuotteen tiedot voidaan katsoa suoraan noutotilaisuuden tuotelistalta, ei siirrytä uudelle sivulle
+
+- Haetaan ratkaisua tilausten poiston toiminnallisuuteen
+    - Miten vahinkopoistoja voidaan vähentää
+    - Voidaanko poistettu tuote palauttaa
+    - Poistetun tuotteen pitää myös näkyä poistettuna kaikille 
+    - Poistettuja tuotteita ei näytetä karttasivulla
+
+- Sähköposti-ilmoitukset eivät ole tällä hetkellä prioritettilistalla, mutta mietitään, mitä ilmoituksia voitaisiin lähettää 
+
+- Toiveena olisi saada muutama testikäyttäjä sovellukselle 21.06 alkavalla viikolla
+
+- Herokulle hankitaan maksullinen versio
+
+- Sovellukseen liitetään Google Analytics
+
+### Tuottajat
+
+- Kaikki tuottajan tilaukset näytetään Tilaus-sivulla aikajärjestyksessä (päivämäärän mukaan uusin ensin)
+
+- Myyntiraportti on nähtävillä sovelluksessa
+
+### Admin-paneeli (prioriteetti)
+
+Toivottuja ominaisuuksia (prioriteetti)
+- Kategorian muokkaaminen
+- Ilmoitusten muokkaaminen
+- Tapahtuman muokkaaminen 
+- Uusien paikkakuntien lisääminen
+- Uusien noutotilaisuuksien lisääminen
+- Käyttötilin lukitseminen
+
+Toivottua statistiikkaa
+- Myyjien ja ostajien määrä
+- Palaavien asiakkaiden osuus
+- Myyntiluvut
+
+### Kartta
+
+- Kun ostaja kirjautuu, karttanäkymä on keskitetty hänen sijaintiinsa, jos lupa sijaintitietojen käyttöön on annettu
+
+- Jos lupaa ei ole annettu, näytetään Etelä-Savon maakunta
+
+- Tuottajan tiedot (nimi, logo/kuva, osoite, numero) näyttävä ponnahdusikkuna tulee esille sijaintiosoitinta napauttamalla ja nappia painamalle siirrytään tuottajan profiilisivulle
+
+### Profiilisivu
+
+- Tuottajan profiilisivulle lisätään osoite- ja kotisivukenttä, kun tuottaja valitsee ensimmäisen Reko-ryhmän
+
+- Luodaan Ota yhteyttä -sivu ja lisätään Ota yhteyttä -linkki tuottajan profiilisivulle, jotta tuottaja voi ehdottaa Reko-ryhmän lisäämistä
+
+
 # 31.05.21
 
 ### Profiilitietojen päivitys

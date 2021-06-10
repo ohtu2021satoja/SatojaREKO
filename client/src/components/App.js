@@ -6,30 +6,40 @@ import "./App.css"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import LoginPage from "./LoginPage"
+import LoginPage from "./login/LoginPage"
+import SignUpPage from "./login/SignUpPage"
 import HomePage from "./HomePage"
 import AppSeller from "./AppSeller"
 import AppBuyer from "./AppBuyer"
 
 const App = (props) => {
   const [sellerView, setSellerView] = useState(null)
-
-  const { authedUser, products } = props
+  const [signUp, setSignUp] = useState(false)
+  const { authedUser, setAuthedUser, logoutUser } = props
 
   /*
   useEffect(() => {
     // Get data form API
-    props.handleInitialData()
+    // props.handleInitialData()
   }, [props])
   */
 
-  const loginWithFacebook = (id) => props.setAuthedUser(id)
+  // Facebook login/sign up - temporary workaround
+  const signOut = () => setSignUp(false)
 
-  const logOut = () => props.logoutUser()
-
-  const handleViewChange = (value) => {
-    setSellerView(value)
+  const loginWithFacebook = (id) => {
+    setAuthedUser(id)
+    signOut()
   }
+
+  const activateSignUp = (user) => {
+    setAuthedUser(user)
+    setSignUp(true)
+  }
+
+  const logOut = () => logoutUser()
+
+  const handleViewChange = (value) => setSellerView(value)
 
   return (
     <Container fluid>
@@ -40,15 +50,31 @@ const App = (props) => {
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (!authedUser) return <LoginPage handleLogin={loginWithFacebook} />
+            if (authedUser && signUp)
+              return (
+                <SignUpPage
+                  user={authedUser}
+                  handleSignUp={activateSignUp}
+                  handleSignOut={signOut}
+                  handleLogout={logOut}
+                />
+              )
 
-            if (sellerView === null)
+            if (!authedUser)
+              return (
+                <LoginPage
+                  signed={signUp}
+                  handleLogin={loginWithFacebook}
+                  handleSignUp={activateSignUp}
+                />
+              )
+
+            if (sellerView === null && !signUp)
               return <HomePage setSellerView={handleViewChange} logOut={logOut} />
 
             if (sellerView === true)
               return (
                 <AppSeller
-                  products={products}
                   user={authedUser}
                   logOut={logOut}
                   setSellerView={handleViewChange}
@@ -58,7 +84,6 @@ const App = (props) => {
             if (sellerView === false)
               return (
                 <AppBuyer
-                  products={products}
                   user={authedUser}
                   logOut={logOut}
                   setSellerView={handleViewChange}
@@ -71,10 +96,9 @@ const App = (props) => {
   )
 }
 
-const mapStateToProps = ({ authedUser, products }) => {
+const mapStateToProps = ({ authedUser }) => {
   return {
     authedUser,
-    products,
   }
 }
 
