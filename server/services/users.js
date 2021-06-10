@@ -3,4 +3,8 @@ const getUser = async (id, usersRepository) => {
   return(user)
 }
 
-module.exports = { getUser }
+const createUser = async (params, usersRepository) => {
+  await usersRepository.createUser(params)
+}
+
+module.exports = { getUser, createUser }
