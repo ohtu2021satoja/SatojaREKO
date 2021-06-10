@@ -9,4 +9,8 @@ const updateUsersInfo = async (user_id, user_info) => {
   await db.query("UPDATE users SET firstname=$1, lastname=$2, phonenumber=$3, email=$4 WHERE id=$5", [user_info.firstname, user_info.lastname, user_info.phonenumber, user_info.email, user_id] )
 }
 
-module.exports = { getUser, updateUsersInfo }
+const createUser = async (params) => {
+  await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, DEFAULT, $3, $4, $5, $6, $7, $8);", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id])
+}
+
+module.exports = { getUser, updateUsersInfo, createUser }
