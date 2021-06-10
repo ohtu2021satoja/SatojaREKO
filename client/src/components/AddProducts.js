@@ -45,9 +45,12 @@ const AddProducts = () => {
   const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
-  useEffect(async () => {
-    const events = await eventService.getSellersUpcomingEvents(1)
-    setEvents(events)
+  useEffect(() => {
+    async function fetchData() {
+      const events = await eventService.getSellersUpcomingEvents(1)
+      setEvents(events)
+    }
+    fetchData()
   }, [])
   const productSizes = useSelector((state) => state.productSizes)
   const [productType, setProductType] = useState("Valitse yksikkö")

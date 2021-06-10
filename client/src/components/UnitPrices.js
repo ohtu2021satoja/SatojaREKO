@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import Alv from "./Alv"
 import Price from "./Price"
 import Button from "react-bootstrap/Button"
@@ -8,7 +8,6 @@ import { addQuantity, removeQuantity } from "../reducers/productSizesReducer"
 
 const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
   const dispatch = useDispatch()
-  const price = useSelector((state) => state.price)
   const productSizes = useSelector((state) => state.productSizes)
   const productrows = []
   for (const i in productSizes) {
@@ -33,13 +32,15 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
   }
 
   const deleteProductRow = () => {
-    const newsize = sizes
-    newsize.pop()
-    const newquantities = quantities
-    newquantities.pop()
-    setFieldValue("sizes", newsize)
-    setFieldValue("quantities", newquantities)
-    dispatch(removeQuantity())
+    if (sizes.length > 1 && quantities.length > 1) {
+      const newsize = sizes
+      newsize.pop()
+      const newquantities = quantities
+      newquantities.pop()
+      setFieldValue("sizes", newsize)
+      setFieldValue("quantities", newquantities)
+      dispatch(removeQuantity())
+    }
   }
 
   return (
