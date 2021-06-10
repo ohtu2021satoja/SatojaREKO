@@ -44,20 +44,47 @@ export const shoppingCart = (
         currentOrderQuantity < 1 ? currentOrderQuantity : currentOrderQuantity - 1
 
       const newCartState = {
-        orders: {
-          ...state.orders,
-          [action.event.id]: {
-            ...orderState,
-            [action.sizeID]: newOrderQuantity,
-          },
-        },
-        products:
+        orders:
           newOrderQuantity === 0
             ? (() => {
-                const { [action.sizeID]: omit, ...rest } = state.products
-                return rest
+                const { [action.sizeID]: omit, ...rest } = orderState
+                if (Object.keys(rest).length > 0) {
+                  return {
+                    ...state.orders,
+                    [action.event.id]: rest,
+                  }
+                } else {
+                  const { [action.event.id]: omit, ...rest } = state.orders
+                  return rest
+                }
               })()
-            : state.products,
+            : {
+                ...state.orders,
+                [action.event.id]: {
+                  ...orderState,
+                  [action.sizeID]: newOrderQuantity,
+                },
+              },
+        products: (() => {
+          if (newOrderQuantity === 0) {
+            const lastSize = (() => {
+              let isLast = true
+              Object.keys(state.orders).forEach((eventID) => {
+                if (
+                  action.sizeID in state.orders[eventID] &&
+                  eventID !== action.event.id.toString()
+                )
+                  isLast = false
+              })
+              return isLast
+            })()
+            if (lastSize) {
+              const { [action.sizeID]: omit, ...rest } = state.products
+              return rest
+            }
+          }
+          return state.products
+        })(),
         events: (() => {
           if (newOrderQuantity === 0) {
             if (Object.keys(state.products).length === 1) {
