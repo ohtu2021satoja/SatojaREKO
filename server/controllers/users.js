@@ -17,6 +17,11 @@ usersRouter.put('/:id', async (req, res) => {
   res.sendStatus(200).end()
 })
 
+usersRouter.post("/", async (req, res) => {
+  await usersService.createUser(req.body, usersRepository)
+  res.sendStatus(200)
+})
+
 
 usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params
