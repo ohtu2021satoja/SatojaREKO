@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
-  const state = useSelector((state) => state.shoppingCart[0])
+  const state = useSelector((state) => state.shoppingCart.orders)
   const buyerID = 4
 
   const handleSubmitOrders = () => {

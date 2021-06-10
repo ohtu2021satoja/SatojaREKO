@@ -19,7 +19,7 @@ const products = [
     image_url: "porkkana_okbtuk",
     category: "Hedelmät & marjat",
     quantity_left: "7",
-    sizes: [{ id: 3, quantity: 7, unit: 1.25 }],
+    sizes: [{ id: 36, quantity: 7, unit: 1.25 }],
   },
   {
     id: 11,
@@ -54,7 +54,7 @@ const products = [
     image_url: "porkkana_okbtuk",
     category: "Hedelmät & marjat",
     quantity_left: "7",
-    sizes: [{ id: 0, quantity: 12, unit: 1.0 }],
+    sizes: [{ id: 34, quantity: 12, unit: 1.0 }],
   },
 ]
 
