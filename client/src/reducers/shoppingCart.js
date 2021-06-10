@@ -41,16 +41,6 @@ export const shoppingCart = (state = {}, action) => {
       return newCartState
     }
     case SUBMIT_ORDERS: {
-      const eventOrders = Object.keys(state).map((eventID) => {
-        const eventSizes = Object.keys(state[eventID]).map((sizeID) => {
-          return { size_id: sizeID, order_quantity: state[eventID][sizeID] }
-        })
-        return { event_id: eventID, batches: eventSizes }
-      })
-      const submittableOrders = { orders: eventOrders }
-      console.log(submittableOrders)
-      // Submit to server here
-
       return {}
     }
     default:
@@ -70,9 +60,9 @@ export const removeProductFromCart = (product, sizeID, eventID) => {
   }
 }
 
-export const submitOrders = (buyerID) => {
+export const submitOrders = (orders, buyerID) => {
   return async (dispatch) => {
-    const res = await submitBuyerOrders(buyerID)
+    const res = await submitBuyerOrders(orders, buyerID)
     console.log(res)
     dispatch({ type: "SUBMIT_ORDERS", buyerID })
   }

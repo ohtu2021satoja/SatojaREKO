@@ -16,7 +16,7 @@ const ShoppingCart = () => {
     })
     const submittableOrders = { orders: eventOrders }
     console.log(submittableOrders)
-    dispatch(submitOrders(buyerID))
+    dispatch(submitOrders(submittableOrders, buyerID))
   }
 
   return (

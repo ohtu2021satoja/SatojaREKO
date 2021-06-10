@@ -19,7 +19,7 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
       >
         -
       </Button>{" "}
-      {amountInCart[eventID] ? amountInCart[eventID][size.id] : 0}{" "}
+      {amountInCart[eventID] ? amountInCart[eventID][size.id] || 0 : 0}{" "}
       <Button
         size="lg"
         variant="outline-dark"
