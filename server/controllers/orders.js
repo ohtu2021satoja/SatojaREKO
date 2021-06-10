@@ -34,4 +34,10 @@ ordersRouter.get("/buyer/:buyer_id", async (req,res) => {
   }
 })
 
+ordersRouter.delete("/seller/:seller_id/:order_id", async (req, res) => {
+  const {seller_id, order_id} = req.params
+  await ordersService.removeSellersOrder(seller_id, order_id, ordersRepository, productsRepository)
+  res.send(200).end()
+})
+
 module.exports = ordersRouter

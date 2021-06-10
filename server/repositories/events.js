@@ -1,10 +1,11 @@
  
 const db = require("../db")
+const format = require("pg-format")
 
 const addProductToEvents = (product_id, events) => {
-  events.forEach(event => {
-    db.query("INSERT INTO products_events VALUES ($1,$2)", [product_id, event])
-  })
+  const values = events.map(event => [product_id, event])
+  const query = format("INSERT INTO products_events (id_product,id_event) VALUES %L", values)
+  db.query(query, [])
 }
 
 const getSellersEvents = async (seller_id) => {

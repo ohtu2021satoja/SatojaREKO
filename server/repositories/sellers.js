@@ -1,5 +1,7 @@
  
 const db = require("../db")
+const format = require("pg-format")
+
 
 const updateSalesReportCheck = async (id, check) => {
   await db.query("UPDATE sellers SET salesreport_check = $1 WHERE id=$2", [check, id])
@@ -10,10 +12,9 @@ const updateSellersImage = async (id, image_url) => {
 }
 
 const addRekoAreas = async (seller_id, reko_areas) => {
-  console.log("adding")
-  reko_areas.forEach(reko_id => {
-    db.query("INSERT INTO sellers_reko VALUES($1,$2)", [seller_id, reko_id])    
-  });
+  const values = reko_areas.map(reko_id => [seller_id, reko_id])
+  const query = format("INSERT INTO sellers_reko (seller_id, reko_area_id) VALUES %L", values)
+  await db.query(query,[])
 }
 
 const updateSellersInfo = async (seller_id, seller_info) => {
@@ -21,10 +22,8 @@ const updateSellersInfo = async (seller_id, seller_info) => {
 }
 
 const deleteRekoAreas = async (seller_id, reko_areas) => {
-  console.log("deleting")
-  reko_areas.forEach(reko_id => {
-    db.query("DELETE FROM sellers_reko WHERE seller_id=$1 AND reko_area_id = $2", [seller_id, reko_id])    
-  });
+  db.query("DELETE FROM sellers_reko WHERE seller_id=$1 AND reko_area_id = ANY($2::int[])", [seller_id, reko_areas])    
+
 }
 
 module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo }

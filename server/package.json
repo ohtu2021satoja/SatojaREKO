@@ -15,7 +15,8 @@
         "cors": "^2.8.5",
         "dotenv": "^9.0.2",
         "express": "^4.17.1",
-        "pg": "^8.6.0"
+        "pg": "^8.6.0",
+        "pg-format": "^1.0.4"
     },
     "devDependencies": {
         "eslint": "^7.27.0",

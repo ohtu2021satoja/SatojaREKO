@@ -20,7 +20,11 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
     await db.rollBack()
     throw e
   }
+}
 
+const removeProduct = async (product_id, productsRepository) => {
+  await productsRepository.removeProduct(product_id)
+  await productsRepository.removeProductBatches(product_id)
 }
 
 const getEventProducts = async (id, productsRepository) => {
@@ -33,4 +37,4 @@ const getSellersEventProducts = async (event_id, sellers_id, productsRepository)
   return(products)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts }
+module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts, removeProduct }

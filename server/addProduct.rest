@@ -1,21 +1,27 @@
-POST http://localhost:3003/api/products/1
+POST http://localhost:3003/api/products/seller/2
 Content-Type: application/json
 
 {
   "product":{
     "name": "restTest",
     "organic": true,
-    "sellers_id": 1,
+    "sellers_id": 2,
     "type": "pc",
     "batch_quantity": 5,
     "description": "Tuotekuvaudfgds",
     "imageURL": "kuvalinsfdffkki",
-    "category": "Hedelmät & marjat"
+    "category": "Hedelmät & marjat",
+    "unit_price": 500,
+    "vat": 24,
+    "deleteBeforeEvent": 24
   },
-  "eventChoices": [1],
+  "eventChoices": [1,2],
   "sizes": [{
-    "price": 5,
     "quantity": 5,
     "unit": 1
+  },
+  {
+    "quantity": 2,
+    "unit": 1.5
   }]
 }
