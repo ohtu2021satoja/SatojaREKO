@@ -12,5 +12,12 @@ const updateUsersInfo = async (user_id, user_info) => {
 const createUser = async (params) => {
   await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, DEFAULT, $3, $4, $5, $6, $7, $8);", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id])
 }
+const setAsBuyer = async (id) => {
+  await db.query("UPDATE users SET is_buyer=true WHERE id=$1", [id])
+}
 
-module.exports = { getUser, updateUsersInfo, createUser }
+const setAsSeller = async (id) => {
+  await db.query("UPDATE users SET is_seller=true WHERE id=$1", [id])
+}
+
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller }

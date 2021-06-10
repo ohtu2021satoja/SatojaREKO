@@ -9,6 +9,12 @@ buyersRouter.put('/:id', async (req, res) => {
   return res.sendStatus(200).end()
 })
 
+buyersRouter.post('/:id', async (req, res) => {
+  const { id } = req.params
+  await buyersService.createBuyer(id, req.body, buyersRepository, usersRepository)
+  res.sendStatus(200)
+})
+
 
 buyersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
