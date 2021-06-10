@@ -15,7 +15,7 @@ const products = [
     created_at: "2021-06-01T10:36:00.129Z",
     description: "Halpoja omenoita",
     close_before_event: 24,
-    unit_price: 1250,
+    unit_price: 500,
     image_url: "porkkana_okbtuk",
     category: "Hedelmät & marjat",
     quantity_left: "7",

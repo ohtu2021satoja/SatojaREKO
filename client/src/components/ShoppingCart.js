@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import { submitOrders } from "../actions/shoppingCart"
 import { useDispatch, useSelector } from "react-redux"
+import ShoppingCartListItem from "./ShoppingCartListItem"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -37,7 +38,7 @@ const ShoppingCart = () => {
 
   return (
     <Row className="mt-5 mx-2">
-      <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
+      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
         <h2 className="mb-4">Ostoskori</h2>
         {cart.map((order, index) => {
           if (orderHasSizes(order)) {
@@ -46,12 +47,7 @@ const ShoppingCart = () => {
                 Noutotilaus paikassa {order.event.name} <br /> Tuotteet: <br />
                 {order.batches.map((batch, index) => {
                   if (batch.order_quantity > 0) {
-                    return (
-                      <p key={index}>
-                        {batch.order_quantity} x {batch.product.name} {batch.unit}{" "}
-                        {batch.product.type}
-                      </p>
-                    )
+                    return <ShoppingCartListItem batch={batch} key={index} />
                   } else return null
                 })}
               </div>

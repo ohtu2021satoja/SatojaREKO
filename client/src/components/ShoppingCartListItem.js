@@ -1,13 +1,8 @@
-import Accordion from "react-bootstrap/Accordion"
 import Card from "react-bootstrap/Card"
-import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import EventPageListButtons from "./EventPageListButtons"
-import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
-import { useDispatch } from "react-redux"
 
-const ShoppingCartListItem = ({ product }) => {
+const ShoppingCartListItem = ({ batch }) => {
   return (
     <Card>
       <Row>
@@ -16,16 +11,19 @@ const ShoppingCartListItem = ({ product }) => {
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle className="mb-2 text-muted">Myyjä X</Card.Subtitle>
-          <Card.Title>{product.name}</Card.Title>
           <Card.Title>
-            {product.unit_price / 100}e / {product.type}
+            {batch.product.name} {batch.unit * batch.order_quantity}
+            {batch.product.type}
+          </Card.Title>
+          <Card.Title></Card.Title>
+          <Card.Title>
+            {(batch.product.unit_price * batch.unit * batch.order_quantity) / 100}e
           </Card.Title>
         </Col>
       </Row>
-
       <Row>
         <Col xs={4}>
-          <Card.Text className="text-left">{product.description}</Card.Text>
+          <Card.Text className="text-left">{batch.product.description}</Card.Text>
         </Col>
       </Row>
     </Card>
