@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/sellers/26
+Content-Type: application/json
+
+{
+  "name": "Toukon tila",
+  "homepage": "www.touko.fi",
+  "address": "Hämeentie 54",
+  "zipcode": "00100",
+  "city": "Turku",
+  "salesreport_check": true,
+  "description": "Moi :)"
+  
+}
