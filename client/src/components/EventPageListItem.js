@@ -10,12 +10,12 @@ import { useDispatch } from "react-redux"
 const EventPageListItem = ({ product, event }) => {
   const dispatch = useDispatch()
 
-  const handleAddToCart = (sizeID) => {
-    dispatch(addProductToCart(product, sizeID, event))
+  const handleAddToCart = (size) => {
+    dispatch(addProductToCart(product, size, event))
   }
 
-  const handleRemoveFromCart = (sizeID) => {
-    dispatch(removeProductFromCart(product, sizeID, event))
+  const handleRemoveFromCart = (size) => {
+    dispatch(removeProductFromCart(product, size, event))
   }
 
   return (

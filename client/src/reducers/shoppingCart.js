@@ -6,100 +6,81 @@ import {
 
 import { submitBuyerOrders } from "../services/orders"
 
-export const shoppingCart = (
-  state = { orders: {}, products: {}, events: {} },
-  action
-) => {
+export const shoppingCart = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
-      const orderState = state.orders[action.event.id] || {
-        [action.sizeID]: 0,
+      if (state.filter((order) => order.event_id === action.event.id).length === 0) {
+        return state.concat({
+          event_id: action.event.id,
+          event: action.event,
+          batches: [
+            {
+              size_id: action.size.id,
+              order_quantity: 1,
+              product: action.product,
+              unit: action.size.unit,
+            },
+          ],
+        })
       }
 
-      const newOrderQuantity = orderState[action.sizeID]
-        ? orderState[action.sizeID] + 1
-        : 1
-
-      const newCartState = {
-        orders: {
-          ...state.orders,
-          [action.event.id]: {
-            ...orderState,
-            [action.sizeID]: newOrderQuantity,
-          },
-        },
-        products: { ...state.products, [action.sizeID]: action.product },
-        events: { ...state.events, [action.event.id]: action.event },
-      }
-      return newCartState
+      const newOrdersState = state.map((order) => {
+        if (order.event_id === action.event.id) {
+          if (
+            order.batches.filter((batch) => batch.size_id === action.size.id).length === 0
+          ) {
+            //console.log("new size found")
+            return {
+              ...order,
+              batches: order.batches.concat({
+                size_id: action.size.id,
+                order_quantity: 1,
+                product: action.product,
+                unit: action.size.unit,
+              }),
+            }
+          } else {
+            const newBatchesState = order.batches.map((batch) => {
+              if (batch.size_id === action.size.id) {
+                //console.log("existing size found")
+                return { ...batch, order_quantity: batch.order_quantity + 1 }
+              }
+              return batch
+            })
+            return { ...order, batches: newBatchesState }
+          }
+        }
+        return order
+      })
+      return newOrdersState
     }
     case REMOVE_PRODUCT_FROM_CART: {
-      const orderState = state.orders[action.event.id] || { [action.sizeID]: 0 }
-
-      const currentOrderQuantity = orderState[action.sizeID]
-        ? orderState[action.sizeID]
-        : 0
-
-      const newOrderQuantity =
-        currentOrderQuantity < 1 ? currentOrderQuantity : currentOrderQuantity - 1
-
-      const newCartState = {
-        orders:
-          newOrderQuantity === 0
-            ? (() => {
-                const { [action.sizeID]: omit, ...rest } = orderState
-                if (Object.keys(rest).length > 0) {
-                  return {
-                    ...state.orders,
-                    [action.event.id]: rest,
-                  }
-                } else {
-                  const { [action.event.id]: omit, ...rest } = state.orders
-                  return rest
+      const currentOrder = state.find((order) => order.event_id === action.event.id)
+      if (currentOrder) {
+        if (currentOrder.batches.find((batch) => batch.size_id === action.size.id)) {
+          const newOrdersState = state.map((order) => {
+            if (order.event_id === action.event.id) {
+              const newBatchesState = order.batches.map((batch) => {
+                if (batch.size_id === action.size.id) {
+                  const newQuantity =
+                    batch.order_quantity < 1
+                      ? batch.order_quantity
+                      : batch.order_quantity - 1
+                  return { ...batch, order_quantity: newQuantity }
                 }
-              })()
-            : {
-                ...state.orders,
-                [action.event.id]: {
-                  ...orderState,
-                  [action.sizeID]: newOrderQuantity,
-                },
-              },
-        products: (() => {
-          if (newOrderQuantity === 0) {
-            const lastSize = (() => {
-              let isLast = true
-              Object.keys(state.orders).forEach((eventID) => {
-                if (
-                  action.sizeID in state.orders[eventID] &&
-                  eventID !== action.event.id.toString()
-                )
-                  isLast = false
+                return batch
               })
-              return isLast
-            })()
-            if (lastSize) {
-              const { [action.sizeID]: omit, ...rest } = state.products
-              return rest
+              return { ...order, batches: newBatchesState }
             }
-          }
-          return state.products
-        })(),
-        events: (() => {
-          if (newOrderQuantity === 0) {
-            if (Object.keys(state.products).length === 1) {
-              const { [action.event.id]: omit, ...rest } = state.events
-              return rest
-            }
-          }
-          return state.events
-        })(),
+            return order
+          })
+          return newOrdersState
+        }
       }
-
-      return newCartState
+      return state
     }
     case SUBMIT_ORDERS: {
-      if (action.success) return { orders: {}, products: {}, events: {} }
+      if (action.success) return []
       else return state
     }
     default:
@@ -107,20 +88,22 @@ export const shoppingCart = (
   }
 }
 
-export const addProductToCart = (product, sizeID, event) => {
+export const addProductToCart = (product, size, event) => {
   return async (dispatch) => {
-    dispatch({ type: "ADD_PRODUCT_TO_CART", product, sizeID, event })
+    dispatch({ type: "ADD_PRODUCT_TO_CART", product, size, event })
   }
 }
 
-export const removeProductFromCart = (product, sizeID, event) => {
+export const removeProductFromCart = (product, size, event) => {
   return async (dispatch) => {
-    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, sizeID, event })
+    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, size, event })
   }
 }
 
 export const submitOrders = (orders, buyerID) => {
   return async (dispatch) => {
+    console.log("SUBMITTING: ")
+    console.log(orders)
     const res = await submitBuyerOrders(orders, buyerID)
     console.log(res)
     const success = res.status === 200 ? true : false

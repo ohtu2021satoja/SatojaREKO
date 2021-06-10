@@ -6,42 +6,44 @@ import { useDispatch, useSelector } from "react-redux"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
-  const state = useSelector((state) => state.shoppingCart)
+  const cart = useSelector((state) => state.shoppingCart)
   const buyerID = 4
 
   const handleSubmitOrders = () => {
-    const eventOrders = Object.keys(state.orders).map((eventID) => {
-      const eventSizes = Object.keys(state.orders[eventID]).map((sizeID) => {
-        return { size_id: sizeID, order_quantity: state.orders[eventID][sizeID] }
+    const orders = []
+    cart.forEach((order) => {
+      const orderBatches = []
+      order.batches.forEach((batch) => {
+        if (batch.order_quantity > 0) {
+          orderBatches.push({
+            size_id: batch.size_id,
+            order_quantity: batch.order_quantity,
+          })
+        }
       })
-      return { event_id: eventID, batches: eventSizes }
+      if (orderBatches.length > 0) {
+        orders.push({ event_id: order.event_id, batches: orderBatches })
+      }
     })
-    const submittableOrders = { orders: eventOrders }
-    console.log(submittableOrders)
-    dispatch(submitOrders(submittableOrders, buyerID))
+    if (orders.length > 0) {
+      console.log(orders)
+      dispatch(submitOrders({ orders: orders }, buyerID))
+    }
   }
 
   return (
     <Row className="mt-5 mx-2">
       <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
         <h2 className="mb-4">Ostoskori</h2>
-        {Object.keys(state.orders).map((eventID) => {
+        {cart.map((order) => {
           return (
             <div>
-              tapahtumassa {state.events[eventID].name} on tilaus{" "}
-              {Object.keys(state.orders[eventID]).length} eri tuotekoosta:
-              <br />
-              <br />
-              {Object.keys(state.orders[eventID]).map((sizeID) => {
+              Noutotilaus paikassa {order.event.name} <br /> Tuotteet: <br />
+              {order.batches.map((batch) => {
                 return (
                   <p>
-                    {state.orders[eventID][sizeID]} X {state.products[sizeID].name}{" "}
-                    {
-                      state.products[sizeID].sizes.find(
-                        (size) => size.id.toString() === sizeID
-                      ).unit
-                    }{" "}
-                    {state.products[sizeID].type}
+                    {batch.order_quantity} x {batch.product.name} {batch.unit}{" "}
+                    {batch.product.type}
                   </p>
                 )
               })}
