@@ -5,6 +5,9 @@ import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
+import DeleteProductPopUp from "./DeleteProductPopUp"
+import DeleteOrderPopUp from "./DeleteOrderPopUp"
+import { useState } from "react"
 
 const OrdersSellerBuyers = () => {
   // example products
@@ -61,7 +64,10 @@ const OrdersSellerBuyers = () => {
               className="bi bi-x-circle"
               viewBox="0 0 16 16"
               style={{ color: "red" }}
-              onClick={HandleDeleteProductButton}
+              onClick={() => {
+                HandleDeleteProductButton()
+                setProductIndexi(index)
+              }}
             >
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -72,17 +78,50 @@ const OrdersSellerBuyers = () => {
     )
   }
 
-  const HandleDeleteProductButton = (event) => {
-    console.log("deletes this product")
-    event.stopPropagation()
+  const [deleteProductPopUp, setDeleteProductPopUp] = useState(false)
+  const [deleteOrderPopUp, setDeleteOrderPopUp] = useState(false)
+  const [productIndexi, setProductIndexi] = useState(null)
+  const [buyerIndexi, setBuyerIndexi] = useState(null)
+
+  const HandleDeleteProductButton = () => {
+    setDeleteProductPopUp(true)
   }
   const HandleDeleteOrderButton = () => {
-    console.log("deletes this order")
+    setDeleteOrderPopUp(true)
+    //event.stopPropagation()
   }
 
+  if (deleteOrderPopUp) {
+    return (
+      <DeleteOrderPopUp
+        setPopUp={setDeleteOrderPopUp}
+        orderers={orderers}
+        products={products}
+        buyerIndexi={buyerIndexi}
+      />
+    )
+  }
+
+  if (deleteProductPopUp) {
+    return (
+      <DeleteProductPopUp
+        setPopUp={setDeleteProductPopUp}
+        orderers={orderers}
+        products={products}
+        buyerIndexi={buyerIndexi}
+        productIndexi={productIndexi}
+      />
+    )
+  }
   const renderBuyers = (buyer, index) => {
     return (
-      <Accordion className="mb-2" key={index}>
+      <Accordion
+        className="mb-2"
+        key={index}
+        onClick={() => {
+          setBuyerIndexi(index)
+        }}
+      >
         <Card>
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
             <Row>
@@ -138,7 +177,10 @@ const OrdersSellerBuyers = () => {
                         className="bi bi-trash"
                         viewBox="0 0 16 16"
                         style={{ color: "red" }}
-                        onClick={HandleDeleteOrderButton}
+                        onClick={() => {
+                          HandleDeleteOrderButton()
+                          setBuyerIndexi(index)
+                        }}
                       >
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                         <path
