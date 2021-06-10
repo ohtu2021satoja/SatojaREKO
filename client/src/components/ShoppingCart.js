@@ -44,10 +44,10 @@ const ShoppingCart = () => {
             return (
               <div key={index}>
                 Noutotilaus paikassa {order.event.name} <br /> Tuotteet: <br />
-                {order.batches.map((batch) => {
+                {order.batches.map((batch, index) => {
                   if (batch.order_quantity > 0) {
                     return (
-                      <p>
+                      <p key={index}>
                         {batch.order_quantity} x {batch.product.name} {batch.unit}{" "}
                         {batch.product.type}
                       </p>

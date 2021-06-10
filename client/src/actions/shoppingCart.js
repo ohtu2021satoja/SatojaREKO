@@ -22,7 +22,7 @@ export const submitOrders = (orders, buyerID) => {
     console.log(orders)
     const res = await submitBuyerOrders(orders, buyerID)
     console.log(res)
-    const success = res.status === 200 ? true : false
+    const success = res.status === 200
     dispatch({ type: "SUBMIT_ORDERS", success })
   }
 }

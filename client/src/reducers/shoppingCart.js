@@ -4,10 +4,55 @@ import {
   SUBMIT_ORDERS,
 } from "../actions/shoppingCart"
 
+/*
+Example cart state:
+[
+  {
+    event_id: 1,
+    event: eventObject,
+    batches: [
+      {
+        size_id: 1,
+        order_quantity: 2,
+        product: productObject,
+        unit: 0.5,
+      },
+      {
+        size_id: 2,
+        order_quantity: 1,
+        product: productObject,
+        unit: 1,
+      },
+    ],
+  },
+  {
+    event_id: 2,
+    event: eventObject,
+    batches: [
+      {
+        size_id: 36,
+        order_quantity: 3,
+        product: productObject,
+        unit: 1.25,
+      },
+      {
+        size_id: 34,
+        order_quantity: 1,
+        product: productObject,
+        unit: 1,
+      },
+    ],
+  },
+]
+*/
+
 export const shoppingCart = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
-      if (state.filter((order) => order.event_id === action.event.id).length === 0) {
+      // Check if an order object for this event_id exists
+      // if not, add new order object to state
+      if (!state.find((order) => order.event_id === action.event.id)) {
+        //console.log("new event found")
         return state.concat({
           event_id: action.event.id,
           event: action.event,
@@ -24,9 +69,9 @@ export const shoppingCart = (state = [], action) => {
 
       const newOrdersState = state.map((order) => {
         if (order.event_id === action.event.id) {
-          if (
-            order.batches.filter((batch) => batch.size_id === action.size.id).length === 0
-          ) {
+          // Check if a batch object for this size_id exists
+          // if not, add new batch object to order.batches
+          if (!order.batches.find((batch) => batch.size_id === action.size.id)) {
             //console.log("new size found")
             return {
               ...order,
@@ -54,7 +99,11 @@ export const shoppingCart = (state = [], action) => {
     }
     case REMOVE_PRODUCT_FROM_CART: {
       const currentOrder = state.find((order) => order.event_id === action.event.id)
+      // Check if an order object for this event_id exists
+      // if not, return current state
       if (currentOrder) {
+        // Check if a batch object for this size_id exists
+        // if not, return current state
         if (currentOrder.batches.find((batch) => batch.size_id === action.size.id)) {
           const newOrdersState = state.map((order) => {
             if (order.event_id === action.event.id) {
