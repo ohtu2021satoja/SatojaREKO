@@ -81,7 +81,7 @@ const EventPage = ({ event, closePage }) => {
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (
-          <EventPageListItem product={product} eventID={event.id} key={index} />
+          <EventPageListItem product={product} event={event} key={index} />
         ))}
       </Col>
     </Row>

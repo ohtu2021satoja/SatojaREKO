@@ -7,15 +7,15 @@ import EventPageListButtons from "./EventPageListButtons"
 import { addProductToCart, removeProductFromCart } from "../reducers/shoppingCart"
 import { useDispatch } from "react-redux"
 
-const EventPageListItem = ({ product, eventID }) => {
+const EventPageListItem = ({ product, event }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (sizeID) => {
-    dispatch(addProductToCart(product, sizeID, eventID))
+    dispatch(addProductToCart(product, sizeID, event))
   }
 
   const handleRemoveFromCart = (sizeID) => {
-    dispatch(removeProductFromCart(product, sizeID, eventID))
+    dispatch(removeProductFromCart(product, sizeID, event))
   }
 
   return (
@@ -43,7 +43,7 @@ const EventPageListItem = ({ product, eventID }) => {
                 <EventPageListButtons
                   addToCart={handleAddToCart}
                   removeFromCart={handleRemoveFromCart}
-                  eventID={eventID}
+                  eventID={event.id}
                   size={size}
                   unit={product.type}
                   key={index}

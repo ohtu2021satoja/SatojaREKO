@@ -6,10 +6,10 @@ import {
 
 //import { submitBuyerOrders } from "../services/orders"
 
-export const shoppingCart = (state = [{}, {}], action) => {
+export const shoppingCart = (state = [{}, {}, {}], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
-      const eventState = state[0][action.eventID] || {
+      const eventState = state[0][action.event.id] || {
         [action.sizeID]: 0,
       }
 
@@ -20,18 +20,19 @@ export const shoppingCart = (state = [{}, {}], action) => {
       const newCartState = [
         {
           ...state[0],
-          [action.eventID]: {
+          [action.event.id]: {
             ...eventState,
             [action.sizeID]: newOrderQuantity,
           },
         },
         { ...state[1], [action.sizeID]: action.product },
+        { ...state[2], [action.event.id]: action.event },
       ]
 
       return newCartState
     }
     case REMOVE_PRODUCT_FROM_CART: {
-      const eventState = state[0][action.eventID] || { [action.sizeID]: 0 }
+      const eventState = state[0][action.event.id] || { [action.sizeID]: 0 }
 
       const currentOrderQuantity = eventState[action.sizeID]
         ? eventState[action.sizeID]
@@ -43,7 +44,7 @@ export const shoppingCart = (state = [{}, {}], action) => {
       const newCartState = [
         {
           ...state[0],
-          [action.eventID]: {
+          [action.event.id]: {
             ...eventState,
             [action.sizeID]: newOrderQuantity,
           },
@@ -52,12 +53,16 @@ export const shoppingCart = (state = [{}, {}], action) => {
           ...state[1],
           [action.sizeID]: newOrderQuantity === 0 ? {} : state[1][action.sizeID],
         },
+        {
+          ...state[2],
+          [action.event.id]: newOrderQuantity === 0 ? {} : state[2][action.event.id],
+        },
       ]
 
       return newCartState
     }
     case SUBMIT_ORDERS: {
-      if (action.success) return [{}, {}]
+      if (action.success) return [{}, {}, {}]
       else return state
     }
     default:
@@ -65,15 +70,15 @@ export const shoppingCart = (state = [{}, {}], action) => {
   }
 }
 
-export const addProductToCart = (product, sizeID, eventID) => {
+export const addProductToCart = (product, sizeID, event) => {
   return async (dispatch) => {
-    dispatch({ type: "ADD_PRODUCT_TO_CART", product, sizeID, eventID })
+    dispatch({ type: "ADD_PRODUCT_TO_CART", product, sizeID, event })
   }
 }
 
-export const removeProductFromCart = (product, sizeID, eventID) => {
+export const removeProductFromCart = (product, sizeID, event) => {
   return async (dispatch) => {
-    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, sizeID, eventID })
+    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, sizeID, event })
   }
 }
 
