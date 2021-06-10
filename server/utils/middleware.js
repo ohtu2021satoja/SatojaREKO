@@ -15,12 +15,14 @@ const errorHandler = (err, req, res, next) => {
 }
 
 const authCheck = (req, res, next) => {
-    if (!res.user) {
-      // if user is not logged in
-      res.redirect('/')
-    } else {
-      next()
-    }
+  if (req.isAuthenticated()) {
+    console.log('auth ============>')
+    return next()
+  } else {
+    // if user is not logged in
+    console.log('not auth ==========>')
+    res.redirect('/auth/notauth')
+  }
 }
 
 module.exports = {

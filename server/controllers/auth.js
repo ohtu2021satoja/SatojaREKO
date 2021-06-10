@@ -18,9 +18,13 @@ authRouter.get('/success', (req, res) => {
 })
 
 authRouter.get('/logout', (req, res) => {
+  console.log('===============> logout')
   req.logout()
   res.redirect('/')
-  res.send('not allowed')
+})
+
+authRouter.get('/notauth', (req, res) => {
+  res.send("not authenticated")
 })
 
 module.exports = authRouter
