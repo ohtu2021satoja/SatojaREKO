@@ -49,7 +49,4 @@ const addQuantitiesToSizes = async (order_id, sellers_id) => {
   await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches, products WHERE batches.order_id=$1 AND batches.sizes_id=sizes.id AND sizes.product_id = products.id AND products.sellers_id=$2;", [order_id, sellers_id])
 }
 
-const address = "Lappajärvi Purontie 9"
-const url = `https://api.geoapify.com/v1/geocode/search?text=${address}limit=5&apiKey=YOUR_API_KEY`
-
 module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes }
