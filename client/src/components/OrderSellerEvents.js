@@ -246,7 +246,11 @@ const OrdersSellerEvents = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={HandleOrderButton} eventKey={"order"}>
+              <Nav.Link
+                onClick={HandleOrderButton}
+                eventKey={"order"}
+                style={{ textDecoration: "none" }}
+              >
                 Tilaajat
               </Nav.Link>
             </Nav.Item>
