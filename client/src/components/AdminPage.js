@@ -115,6 +115,52 @@ const EventFormDetails = () => {
   )
 }
 
+const RekoForm = ({ setAddingReko }) => {
+  const handleSubmit = async ({ area, name }) => {
+    console.log(area, name)
+    setAddingReko(false)
+  }
+  const validationSchema = Yup.object().shape({
+    area: Yup.string().required("Vaadittu"),
+    name: Yup.string().required("Vaadittu"),
+  })
+  return (
+    <Col xs={12}>
+      <Formik
+        initialValues={{
+          area: "",
+          name: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {() => (
+          <Form>
+            <Row>
+              <RekoFormDetails />
+            </Row>
+            <Button variant="danger" onClick={() => setAddingReko(false)}>
+              Peruuta
+            </Button>
+            <Button type="submit">Lähetä</Button>
+          </Form>
+        )}
+      </Formik>
+    </Col>
+  )
+}
+
+const RekoFormDetails = () => {
+  return (
+    <Col xs={12} className="mb-5">
+      <Field name="area" id="area" label="Alue" component={FormFieldText} />
+      <ErrorMessage name="area" component={FormErrorMessage} />
+      <Field name="name" id="name" label="Nimi" component={FormFieldText} />
+      <ErrorMessage name="nimi" component={FormErrorMessage} />
+    </Col>
+  )
+}
+
 const RekoCheckBox = ({ reko_area, rekoChoices, setRekoChoices }) => {
   const handleCheck = (id) => {
     if (rekoChoices.includes(id)) {
@@ -202,12 +248,15 @@ const MarketFormDetails = () => {
 const AdminPage = () => {
   const [addingEvent, setAddingEvent] = useState(false)
   const [addingMarket, setAddingMarket] = useState(false)
+  const [addingReko, setAddingReko] = useState(false)
   return (
     <div>
       <Button onClick={() => setAddingEvent(true)}>Lisää tapahtuma</Button>
       <Button onClick={() => setAddingMarket(true)}>Lisää noutopaikka</Button>
+      <Button onClick={() => setAddingReko(true)}>Lisää Reko-alue</Button>
       {addingMarket ? <MarketForm setAddingMarket={setAddingMarket} /> : null}
       {addingEvent ? <EventForm setAddingEvent={setAddingEvent} /> : null}
+      {addingReko ? <RekoForm setAddingReko={setAddingReko} /> : null}
     </div>
   )
 }
