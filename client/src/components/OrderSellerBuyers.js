@@ -5,49 +5,10 @@ import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
-import DeleteProductPopUp from "./DeleteProductPopUp"
-import DeleteOrderPopUp from "./DeleteOrderPopUp"
+import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
 
-const OrdersSellerBuyers = () => {
-  // example products
-  const orderers = [
-    {
-      name: "John Dillinger",
-      id: 189226,
-      soldlimit: 10,
-      price: 52,
-    },
-    {
-      name: "Bonnie Parker",
-      id: 367979,
-      soldlimit: 15,
-      price: 23,
-    },
-    {
-      name: "Clyde Barrow",
-      id: 2235235,
-      soldlimit: 4,
-      price: 66,
-    },
-  ]
-  const products = [
-    {
-      name: "mansikka 5kg",
-      sold: 5,
-      price: 52,
-    },
-    {
-      name: "herne 1L",
-      sold: 3,
-      price: 23,
-    },
-    {
-      name: "naudan sisäfile",
-      sold: 2,
-      price: 66,
-    },
-  ]
+const OrdersSellerBuyers = (props) => {
   const renderProducts = (product, index) => {
     return (
       <ListGroupItem key={index}>
@@ -90,27 +51,24 @@ const OrdersSellerBuyers = () => {
     setDeleteOrderPopUp(true)
     //event.stopPropagation()
   }
+  const HandleBuyerInfo = () => {
+    props.setBuyerInfo(true)
+  }
 
   if (deleteOrderPopUp) {
     return (
-      <DeleteOrderPopUp
-        setPopUp={setDeleteOrderPopUp}
-        orderers={orderers}
-        products={products}
-        buyerIndexi={buyerIndexi}
-      />
+      <OrderDeletePopUp setPopUp={setDeleteOrderPopUp}>
+        Oletko varma että haluat poistaa {props.orderers[buyerIndexi].name} tilauksen
+      </OrderDeletePopUp>
     )
   }
 
   if (deleteProductPopUp) {
     return (
-      <DeleteProductPopUp
-        setPopUp={setDeleteProductPopUp}
-        orderers={orderers}
-        products={products}
-        buyerIndexi={buyerIndexi}
-        productIndexi={productIndexi}
-      />
+      <OrderDeletePopUp setPopUp={setDeleteProductPopUp}>
+        Oletko varma että haluat poistaa {props.orderProducts[productIndexi].name}{" "}
+        henkilön {props.orderers[buyerIndexi].name} tilauksesta
+      </OrderDeletePopUp>
     )
   }
   const renderBuyers = (buyer, index) => {
@@ -126,7 +84,10 @@ const OrdersSellerBuyers = () => {
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
             <Row>
               <Col xs={8} className="text-left">
-                <Card.Title style={{ textDecorationLine: "underline" }}>
+                <Card.Title
+                  style={{ textDecorationLine: "underline" }}
+                  onClick={HandleBuyerInfo}
+                >
                   {buyer.name}
                 </Card.Title>
                 <Card.Title>{buyer.id}</Card.Title>
@@ -149,7 +110,7 @@ const OrdersSellerBuyers = () => {
                     <Col>Hinta</Col>
                     <Col> </Col>
                   </Row>
-                  {products.map(renderProducts)}
+                  {props.orderProducts.map(renderProducts)}
                   <Row className="mt-5">
                     <Col>
                       <h6>YHTEENSÄ</h6>
@@ -199,7 +160,7 @@ const OrdersSellerBuyers = () => {
     )
   }
 
-  return <div>{orderers.map(renderBuyers)}</div>
+  return <div>{props.orderers.map(renderBuyers)}</div>
 }
 
 export default OrdersSellerBuyers

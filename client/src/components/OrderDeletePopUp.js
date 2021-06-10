@@ -2,7 +2,7 @@ import "./PopUp.css"
 import Col from "react-bootstrap/esm/Col"
 import Row from "react-bootstrap/esm/Row"
 
-const DeleteProductPopUp = (props) => {
+const DeleteOrderPopUp = (props) => {
   const handleDeleteButton = () => {
     console.log("delete this product")
   }
@@ -10,10 +10,7 @@ const DeleteProductPopUp = (props) => {
     <div className="popup">
       <div className="popup-inner">
         <Row className="mb-2">
-          <Col>
-            Haluatko todella poistaa {props.products[props.productIndexi].name} Henkilön{" "}
-            {props.orderers[props.buyerIndexi].name} tilauksesta
-          </Col>
+          <Col>{props.children}</Col>
           <div className="exitButton">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,4 +51,4 @@ const DeleteProductPopUp = (props) => {
   )
 }
 
-export default DeleteProductPopUp
+export default DeleteOrderPopUp
