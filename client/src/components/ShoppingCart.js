@@ -47,7 +47,13 @@ const ShoppingCart = () => {
                 Noutotilaus paikassa {order.event.name} <br /> Tuotteet: <br />
                 {order.batches.map((batch, index) => {
                   if (batch.order_quantity > 0) {
-                    return <ShoppingCartListItem batch={batch} key={index} />
+                    return (
+                      <ShoppingCartListItem
+                        event={order.event}
+                        batch={batch}
+                        key={index}
+                      />
+                    )
                   } else return null
                 })}
               </div>

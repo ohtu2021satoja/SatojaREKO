@@ -1,8 +1,21 @@
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import { useDispatch } from "react-redux"
+import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
+import ShoppingCartListButtons from "./ShoppingCartListButtons"
 
-const ShoppingCartListItem = ({ batch }) => {
+const ShoppingCartListItem = ({ event, batch }) => {
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (batch) => {
+    dispatch(addProductToCart(batch.product, batch, event))
+  }
+
+  const handleRemoveFromCart = (batch) => {
+    dispatch(removeProductFromCart(batch.product, batch, event))
+  }
+
   return (
     <Card>
       <Row>
@@ -25,6 +38,12 @@ const ShoppingCartListItem = ({ batch }) => {
         <Col xs={4}>
           <Card.Text className="text-left">{batch.product.description}</Card.Text>
         </Col>
+        <ShoppingCartListButtons
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+          eventID={event.id}
+          batch={batch}
+        />
       </Row>
     </Card>
   )
