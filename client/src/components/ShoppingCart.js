@@ -48,10 +48,6 @@ const ShoppingCart = () => {
     }
   }
 
-  const handleChangePrice = (value) => {
-    setTotalPrice(totalPrice + value)
-  }
-
   const orderHasSizes = (order) => {
     return order.batches.reduce((acc, batch) => acc + batch.order_quantity, 0) > 0
   }
@@ -64,7 +60,8 @@ const ShoppingCart = () => {
           if (orderHasSizes(order)) {
             return (
               <div key={index}>
-                Noutotilaus paikassa {order.event.name} <br /> Tuotteet: <br />
+                Noutotilaus paikassa {order.event.name} {order.event.type} <br />{" "}
+                Tuotteet: <br />
                 {order.batches.map((batch, index) => {
                   if (batch.order_quantity > 0) {
                     return (
@@ -81,7 +78,7 @@ const ShoppingCart = () => {
             )
           } else return null
         })}
-        <h3>Yhteensä: {totalPrice}e</h3>
+        <div>{totalPrice > 0 && <h3>Yhteensä: {totalPrice}e</h3>}</div>
         <Button variant="success" onClick={handleSubmitOrders}>
           Lähetä tilaus
         </Button>

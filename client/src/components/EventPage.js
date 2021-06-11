@@ -60,8 +60,8 @@ const products = [
 
 const EventPage = ({ event, closePage }) => {
   return (
-    <Row className="h-100">
-      <Col xs={12}>
+    <Row className="">
+      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
         <Nav className="py-2">
           <Nav.Item>
             <Button
@@ -77,7 +77,15 @@ const EventPage = ({ event, closePage }) => {
         </Nav>
       </Col>
       <Col xs={12} className="text-center mb-4">
-        <p>Noutotilaisuus paikassa {event.address}</p>
+        <h2 className="mb-4">Noutotilaisuus</h2>
+        <div>
+          <p>{event.name} (REKO)</p>
+          <p>{event.address}</p>
+          {(() => {
+            const startDate = new Date(event.start)
+            return <p>{startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}</p>
+          })()}{" "}
+        </div>
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (

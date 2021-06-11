@@ -30,7 +30,8 @@ const ShoppingCartListItem = ({ event, batch, total }) => {
           </Card.Title>
           <Card.Title></Card.Title>
           <Card.Title>
-            {(batch.product.unit_price * batch.unit * batch.order_quantity) / 100}e
+            {(batch.product.unit_price * batch.unit * batch.order_quantity) / 100}e (
+            {batch.product.unit_price / 100}e/{batch.product.type})
           </Card.Title>
         </Col>
       </Row>
