@@ -1,13 +1,13 @@
-const pg = require("pg")
+const pg = require('pg')
 
 const connectionString = process.env.DATABASE_URL
 console.log(connectionString)
 
 const pool = new pg.Pool({
-  connectionString: connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
+    connectionString: connectionString,
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 
 let client
@@ -31,6 +31,7 @@ rollBack = async () => {
 } 
 
 query = async (text, params) => {
+<<<<<<< HEAD
   try {
     const result = await client.query(text, params)
     const results = (result) ? result.rows : null
@@ -40,6 +41,18 @@ query = async (text, params) => {
     console.error(err)
     throw err
   }
+=======
+    try {
+        console.log(text)
+        const client = await pool.connect()
+        const result = await client.query(text, params)
+        const results = (result) ? result.rows : null
+        console.log(results)
+        return results
+    } catch(err) {
+        console.error(err)
+    }
+>>>>>>> 8daa931741e8376dc1808db2211c1487624e3f3a
 }
 
 module.exports = { query, beginTransaction, endTransaction, rollBack }
