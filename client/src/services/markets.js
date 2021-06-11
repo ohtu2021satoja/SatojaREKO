@@ -7,4 +7,9 @@ const getMarkets = async () => {
   return response.data
 }
 
-export default { getMarkets }
+export const getSellerMarkets = async (id) => {
+  const response = await axios.get(`${apiUrl}/seller/${id}`)
+  return response.data
+}
+
+export default { getMarkets, getSellerMarkets }
