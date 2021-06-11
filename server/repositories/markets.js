@@ -5,7 +5,7 @@ const getAllMarkets = async () => {
     return markets
 }
 const addMarkets = async (market, location) => {
-    const dbParams = [market.address, market.type, `{"lat":"location[0]","lon":"location[1]"}`]
+    const dbParams = [market.address, `{"lat":"${location[0]}","lon":"${location[1]}"}`, market.type]
     const result = await db.query("INSERT INTO markets VALUES(Default, $1, $2, $3) RETURNING id", dbParams)
     return result[0].id
 }

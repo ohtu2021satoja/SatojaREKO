@@ -18,17 +18,4 @@ rekoAreasRouter.post('/', async (req,res) => {
   }
 })
 
-rekoAreasRouter.post('/markets/:id', async (req,res) => {
-  try {
-    const {id} = req.params
-    rekoAreasService.addRekoAreas(id, req.body, rekoAreasRepository)
-    res.sendStatus(200).end()
-  } catch (err) {
-    console.log(err)
-    next(err)
-  }
-})
-
-
-
 module.exports = rekoAreasRouter

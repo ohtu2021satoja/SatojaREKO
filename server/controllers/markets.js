@@ -1,6 +1,7 @@
 const marketsRouter = require('express').Router()
 const marketsService = require("../services/markets")
 const marketsRepository = require("../repositories/markets")
+const rekoAreasRepository = require("../repositories/reko_areas")
 
 marketsRouter.get('/', async (req, res) => {
     try {
@@ -15,7 +16,7 @@ marketsRouter.get('/', async (req, res) => {
 marketsRouter.post('/', async (req, res) => {
     try {
         const marketData = req.body
-        await marketsService.addMarkets(marketData,req.body.location, marketsRepository)
+        await marketsService.addMarkets(marketData,req.body.areas, marketsRepository, rekoAreasRepository)
         res.sendStatus(200).end()
     } catch (err) {
         console.log(err)

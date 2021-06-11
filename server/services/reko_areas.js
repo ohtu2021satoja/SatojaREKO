@@ -7,8 +7,8 @@ const addRekoAreas = async (rekoArea, rekoAreasRepository) => {
   const newRekoArea = await rekoAreasRepository.addRekoAreas(rekoArea)
 }
 
-const addRekoMarkets = async (market_id, rekoAreas, rekoAreasRepository) => {
-  const newRekoMarkets = await rekoAreasRepository.addRekoMarkets(market_id, req_body, rekoAreasRepository)
+const addRekoMarkets = async (reko_areas, market_id, rekoAreasRepository) => {
+  const newRekoMarkets = await rekoAreasRepository.addRekoMarkets(reko_areas, market_id, rekoAreasRepository)
 }
 
-module.exports = { getRekoAreas, addRekoAreas }
+module.exports = { getRekoAreas, addRekoAreas, addRekoMarkets }
