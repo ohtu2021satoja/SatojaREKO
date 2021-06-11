@@ -9,7 +9,8 @@ const ShoppingCartListItem = ({ event, batch, total }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (batch) => {
-    dispatch(addProductToCart(batch.product, batch, event))
+    if (batch.order_quantity < batch.quantity)
+      dispatch(addProductToCart(batch.product, batch, event))
   }
 
   const handleRemoveFromCart = (batch) => {

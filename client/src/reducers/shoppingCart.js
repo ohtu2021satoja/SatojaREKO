@@ -59,6 +59,7 @@ export const shoppingCart = (state = [], action) => {
             {
               size_id: action.size.id,
               order_quantity: 1,
+              quantity: action.size.quantity,
               product: action.product,
               unit: action.size.unit,
             },
@@ -76,6 +77,7 @@ export const shoppingCart = (state = [], action) => {
               batches: order.batches.concat({
                 size_id: action.size.id,
                 order_quantity: 1,
+                quantity: action.size.quantity,
                 product: action.product,
                 unit: action.size.unit,
               }),
