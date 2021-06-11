@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import ShoppingCartListButtons from "./ShoppingCartListButtons"
 
-const ShoppingCartListItem = ({ event, batch }) => {
+const ShoppingCartListItem = ({ event, batch, total }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (batch) => {

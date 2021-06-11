@@ -49,11 +49,9 @@ Example cart state:
 export const shoppingCart = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
-      console.log(action.size)
       // Check if an order object for this event_id exists
       // if not, add new order object to state
       if (!state.find((order) => order.event_id === action.event.id)) {
-        //console.log("new event found")
         return state.concat({
           event_id: action.event.id,
           event: action.event,
@@ -73,7 +71,6 @@ export const shoppingCart = (state = [], action) => {
           // Check if a batch object for this size_id exists
           // if not, add new batch object to order.batches
           if (!order.batches.find((batch) => batch.size_id === action.size.id)) {
-            //console.log("new size found")
             return {
               ...order,
               batches: order.batches.concat({
@@ -86,7 +83,6 @@ export const shoppingCart = (state = [], action) => {
           } else {
             const newBatchesState = order.batches.map((batch) => {
               if (batch.size_id === action.size.id) {
-                //console.log("existing size found")
                 return { ...batch, order_quantity: batch.order_quantity + 1 }
               }
               return batch

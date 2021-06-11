@@ -3,12 +3,29 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import { submitOrders } from "../actions/shoppingCart"
 import { useDispatch, useSelector } from "react-redux"
+import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.shoppingCart)
   const buyerID = 4
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    const total =
+      cart.reduce(
+        (acc, order) =>
+          acc +
+          order.batches.reduce(
+            (acc, batch) =>
+              acc + batch.order_quantity * batch.unit * batch.product.unit_price,
+            0
+          ),
+        0
+      ) / 100
+    setTotalPrice(total || 0)
+  }, [cart])
 
   const handleSubmitOrders = () => {
     const orders = []
@@ -27,9 +44,12 @@ const ShoppingCart = () => {
       }
     })
     if (orders.length > 0) {
-      console.log(orders)
       dispatch(submitOrders({ orders: orders }, buyerID))
     }
+  }
+
+  const handleChangePrice = (value) => {
+    setTotalPrice(totalPrice + value)
   }
 
   const orderHasSizes = (order) => {
@@ -51,6 +71,7 @@ const ShoppingCart = () => {
                       <ShoppingCartListItem
                         event={order.event}
                         batch={batch}
+                        total={totalPrice}
                         key={index}
                       />
                     )
@@ -60,6 +81,7 @@ const ShoppingCart = () => {
             )
           } else return null
         })}
+        <h3>Yhteensä: {totalPrice}e</h3>
         <Button variant="success" onClick={handleSubmitOrders}>
           Lähetä tilaus
         </Button>
