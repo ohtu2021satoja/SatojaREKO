@@ -18,8 +18,20 @@ const marketsRoute = require('./controllers/markets')
 const rekoAreasRoute = require("./controllers/reko_areas")
 const authRouter = require('./controllers/auth')
 
+
 server.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 server.use(express.json())
+
+server.use(express.urlencoded({ extended:true }))
+
+server.use(session({
+  secret: 'SECRET',
+  resave: true,
+  saveUninitialized: true
+}))
+
+server.use(passport.initialize())
+server.use(passport.session())
 
 
 
@@ -43,21 +55,9 @@ server.use("/api/orders", ordersRoute)
 server.use('/api/markets', marketsRoute)
 server.use("/api/reko_areas", rekoAreasRoute)
 
-server.use(express.urlencoded({ extended:true }))
-
-server.use(session({
-  secret: 'SECRET',
-  resave: true,
-  saveUninitialized: true
-}))
-
-server.use(passport.initialize())
-server.use(passport.session())
-
 // Routes
 server.get('/', middleware.authCheck, (req, res) => res.send('Successfully logged in'))
-server.use('/auth', authRouter)
-server.use('/api/users', usersRouter)
+server.use('/api/auth', authRouter)
 
 // Middlewares
 server.use(middleware.unknownEndpoint)

@@ -9,12 +9,22 @@ authRouter.get('/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/fail' }), (req, res) => {
     // Successful authentication, redirect home.
     console.log('success')
-    res.redirect('/auth/success')
+    res.redirect('/api/auth/success')
+})
+
+authRouter.post("/email", passport.authenticate('local', {
+  successRedirect: "api/auth/success",
+  failureRedirect: "/",
+  failureMessage: true
+}), (req, res) => {
+  // Successful authentication, redirect home.
+  console.log('success')
+  res.redirect('/auth/success')
 })
 
 authRouter.get('/success', (req, res) => {
   console.log('successfully logged in', req.user)
-  res.send(req.user)
+  res.redirect("/")
 })
 
 authRouter.get('/logout', (req, res) => {

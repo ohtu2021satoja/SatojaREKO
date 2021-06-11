@@ -1,5 +1,4 @@
 const usersRouter = require('express').Router()
-<<<<<<< HEAD
 const usersService = require("../services/users")
 const buyersService = require("../services/buyers")
 const sellersService = require("../services/sellers")
@@ -23,10 +22,6 @@ usersRouter.post("/", async (req, res) => {
   res.sendStatus(200)
 })
 
-=======
-const usersService = require('../services/users')
-const usersRepository = require('../repositories/users')
->>>>>>> 8daa931741e8376dc1808db2211c1487624e3f3a
 
 usersRouter.get('/:id', async (req, res, next) => {
     const { id } = req.params

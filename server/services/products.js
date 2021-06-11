@@ -8,7 +8,6 @@ const getSellersProducts = async (id, productsRepository) => {
     return(products)
 }
 
-<<<<<<< HEAD
 const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository, db) => {
   try{
     await db.beginTransaction()
@@ -21,12 +20,6 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
     await db.rollBack()
     throw e
   }
-=======
-const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository) => {
-    const product_id  = await productsRepository.addProduct(product)
-    await productsRepository.addProductSizes(product_id, sizes)
-    await eventsRepository.addProductToEvents(product_id, eventChoices)
->>>>>>> 8daa931741e8376dc1808db2211c1487624e3f3a
 }
 
 const removeProduct = async (product_id, productsRepository) => {

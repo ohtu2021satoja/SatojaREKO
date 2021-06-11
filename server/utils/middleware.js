@@ -21,7 +21,7 @@ const authCheck = (req, res, next) => {
   } else {
     // if user is not logged in
     console.log('not auth ==========>')
-    res.redirect('/auth/notauth')
+    res.redirect('api/auth/notauth')
   }
 }
 

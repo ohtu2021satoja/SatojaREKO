@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 const productsService = require("../services/products")
 const mockProductRepository = require("./mocks/mockProductRepository")
 const mockEventRepository = require("./mocks/mockEventRepository")
 const mockDB = require("./mocks/db")
-=======
-const productsService = require('../services/products')
-const mockProductRepository = require('./mocks/mockProductRepository')
-const mockEventRepository = require('./mocks/mockEventRepository')
->>>>>>> 8daa931741e8376dc1808db2211c1487624e3f3a
 
 const mockProducts = mockProductRepository.getAllProducts()
 const mockSizes = mockProductRepository.getSizes()
