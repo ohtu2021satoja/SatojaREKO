@@ -10,6 +10,7 @@ const BuyerSchema = Yup.object().shape({
   name: Yup.string().required(),
   surname: Yup.string().required(),
   phone: Yup.string().required(),
+  email: Yup.string().required(),
   newsletter: Yup.boolean(),
   notification: Yup.boolean(),
 })
@@ -22,6 +23,7 @@ const FormBuyer = (/*{ user }*/) => {
           name: "",
           surname: "",
           phone: "",
+          email: "",
           newsletter: false,
           notification: false,
         }}

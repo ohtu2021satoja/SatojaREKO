@@ -1,58 +1,38 @@
 import { Field, ErrorMessage } from "formik"
 import Col from "react-bootstrap/Col"
 import FormFieldText from "../FormFieldText"
-import FormFieldPhone from "../FormFieldPhone"
-import FormFieldEmail from "../FormFieldEmail"
 import FormFieldUrl from "../FormFieldUrl"
 import FormFieldTextArea from "../FormFieldTextArea"
 import FormErrorMessage from "../FormErrorMessage"
 
-const FormSellerDetails = () => {
+const FormSellerModalDetails = () => {
   return (
     <Col xs={12} className="mb-5">
       <Field
         name="company"
         id="user-company-name"
-        label="Yrityksen / Tilan nimi"
+        label="Yrityksen / Tilan nimi*"
         component={FormFieldText}
       />
       <ErrorMessage name="company" component={FormErrorMessage} />
-      <Field name="name" id="user-name" label="Etunimi" component={FormFieldText} />
-      <ErrorMessage name="name" component={FormErrorMessage} />
-      <Field
-        name="surname"
-        id="user-surname"
-        label="Sukunimi"
-        component={FormFieldText}
-      />
-      <ErrorMessage name="surname" component={FormErrorMessage} />
-      <Field
-        name="phone"
-        id="user-phone"
-        label="Puhelinnumero"
-        component={FormFieldPhone}
-      />
-      <ErrorMessage name="phone" component={FormErrorMessage} />
-      <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
-      <ErrorMessage name="email" component={FormErrorMessage} />
       <Field
         name="address"
         id="user-address"
-        label="Katuosoite"
+        label="Katuosoite*"
         component={FormFieldText}
       />
       <ErrorMessage name="address" component={FormErrorMessage} />
       <Field
         name="zipCode"
         id="user-zip-code"
-        label="Postinumero"
+        label="Postinumero*"
         component={FormFieldText}
       />
       <ErrorMessage name="zipCode" component={FormErrorMessage} />
       <Field
         name="municipality"
         id="user-municipality"
-        label="Kunta"
+        label="Kunta*"
         component={FormFieldText}
       />
       <ErrorMessage name="municipality" component={FormErrorMessage} />
@@ -81,4 +61,4 @@ const FormSellerDetails = () => {
   )
 }
 
-export default FormSellerDetails
+export default FormSellerModalDetails
