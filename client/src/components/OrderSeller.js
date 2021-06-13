@@ -2,6 +2,7 @@ import { useState } from "react"
 import OrderSellerEventList from "./OrderSellerEventList"
 import OrdersSellerSingleEvent from "./OrdersSellerSingleEvent"
 import OrdersSellerTitle from "./OrdersSellerTitle"
+import BuyerInfo from "./BuyerInfo"
 
 const OrderSeller = () => {
   // example products
@@ -154,6 +155,9 @@ const OrderSeller = () => {
       </div>
     )
   } else {
+    if (buyerInfo) {
+      return <BuyerInfo HandleBackButton={HandleBackButton} setBuyerInfo={setBuyerInfo} />
+    }
     return (
       <div>
         <OrdersSellerSingleEvent

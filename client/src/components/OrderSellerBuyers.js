@@ -7,6 +7,7 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
+import BuyerInfo from "./BuyerInfo"
 
 const OrdersSellerBuyers = (props) => {
   const renderProducts = (product, index) => {
@@ -71,6 +72,7 @@ const OrdersSellerBuyers = (props) => {
       </OrderDeletePopUp>
     )
   }
+  console.log("buyerinfo ", props.buyerInfo)
   const renderBuyers = (buyer, index) => {
     return (
       <Accordion
