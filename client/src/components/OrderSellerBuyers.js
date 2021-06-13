@@ -49,7 +49,7 @@ const OrdersSellerBuyers = (props) => {
   }
   const HandleDeleteOrderButton = () => {
     setDeleteOrderPopUp(true)
-    //event.stopPropagation()
+    // event.stopPropagation()
   }
   const HandleBuyerInfo = () => {
     props.setBuyerInfo(true)

@@ -3,7 +3,6 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
-import OrdersSellerBuyers from "./OrderSellerBuyers"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 
@@ -50,20 +49,7 @@ const OrdersSellerProducts = (props) => {
       </Accordion>
     )
   }
-  if (props.ListView) {
-    return <div>{props.orderProducts.map(renderOrders)}</div>
-  } else {
-    return (
-      <div>
-        <OrdersSellerBuyers
-          orderProducts={props.orderProducts}
-          orderers={props.orderers}
-          setBuyerInfo={props.setBuyerInfo}
-          buyerInfo={props.buyerInfo}
-        />
-      </div>
-    )
-  }
+  return <div>{props.orderProducts.map(renderOrders)}</div>
 }
 
 export default OrdersSellerProducts
