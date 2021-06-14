@@ -18,7 +18,7 @@ const addRekoAreas = async (seller_id, reko_areas) => {
 }
 
 const updateSellersInfo = async (seller_id, seller_info) => {
-  await db.query("UPDATE sellers SET name=$1, homepage=$2, address=$3, zipcode=$4, city=$5, salesreport_check=$6, description=$7 WHERE id=$8", [seller_info.name, seller_info.home_page, seller_info.address, seller_info.zipcode, seller_info.city, seller_info.salesreport_check, seller_info.description, seller_id])
+  await db.query("UPDATE sellers SET name=$1, homepage=$2, address=$3, zipcode=$4, city=$5, salesreport_check=$6, description=$7, location=$8 WHERE id=$9", [seller_info.name, seller_info.homepage, seller_info.address, seller_info.zipcode, seller_info.city, seller_info.salesreport_check, seller_info.description, `{"lat":"${seller_info.location[0]}","lon":"${seller_info.location[1]}"}`, seller_id])
 }
 
 const deleteRekoAreas = async (seller_id, reko_areas) => {

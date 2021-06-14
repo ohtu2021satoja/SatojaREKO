@@ -1,11 +1,11 @@
-POST http://localhost:3003/api/products/seller/2
+POST http://localhost:3003/api/products/seller/26
 Content-Type: application/json
 
 {
   "product":{
     "name": "restTest",
     "organic": true,
-    "sellers_id": 2,
+    "sellers_id": 26,
     "type": "pc",
     "batch_quantity": 5,
     "description": "Tuotekuvaudfgds",
