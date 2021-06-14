@@ -14,4 +14,13 @@ const getSellersUpcomingEvents = (id) => {
   return request.then((response) => response.data)
 }
 
-export default { /*getEvents,*/ getSellersUpcomingEvents }
+const addEvent = async (start, end, market_id) => {
+  const response = await axios.post(`${apiUrl}`, {
+    start,
+    end,
+    market_id,
+  })
+  return response
+}
+
+export default { /*getEvents,*/ getSellersUpcomingEvents, addEvent }
