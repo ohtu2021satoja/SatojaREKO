@@ -1,4 +1,5 @@
 const usersRouter = require("../controllers/users")
+const geoap = require("../geoap")
 
 const BLANK_IMAGE = "profile-blank_or75kg"
 
@@ -35,7 +36,8 @@ const createSeller = async (id, params, sellersRepository, usersRepository) => {
     params.image_url=BLANK_IMAGE
   }
 
-  params.location = params.address 
+  params.location = await geoap.getAddressInfo(params.address)
+  console.log(params.location)
   await sellersRepository.createSeller(id, params)
 
   await usersRepository.setAsSeller(id)
