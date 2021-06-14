@@ -1,8 +1,11 @@
-const path = require("path")
+const path = require('path')
 const config = require('./utils/config')
 const middleware = require('./utils/middleware')
+const passportStrategy = require('./services/auth')
 const express = require('express')
-const cors = require('cors');
+const cors = require('cors')
+const session = require('express-session')
+const passport = require('passport')
 const server = express()
 
 const usersRoute = require('./controllers/users')
@@ -12,10 +15,27 @@ const buyersRoute = require("./controllers/buyers")
 const sellersRoute = require("./controllers/sellers")
 const ordersRoute = require("./controllers/orders")
 const marketsRoute = require('./controllers/markets')
+<<<<<<< HEAD
 const rekoAreasRoute = require('./controllers/reko_areas')
+=======
+const rekoAreasRoute = require("./controllers/reko_areas")
+const authRouter = require('./controllers/auth')
+>>>>>>> e943abf1eab45631e6dc136e89a1c148cb1c05b2
 
-server.use(cors())
+
+server.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 server.use(express.json())
+
+server.use(express.urlencoded({ extended:true }))
+
+server.use(session({
+  secret: 'SECRET',
+  resave: true,
+  saveUninitialized: true
+}))
+
+server.use(passport.initialize())
+server.use(passport.session())
 
 
 
@@ -39,10 +59,21 @@ server.use("/api/orders", ordersRoute)
 server.use('/api/markets', marketsRoute)
 server.use('/api/reko_areas', rekoAreasRoute)
 
+// Routes
+server.get('/', middleware.authCheck, (req, res) => res.send('Successfully logged in'))
+server.use('/api/auth', authRouter)
+
+// Middlewares
 server.use(middleware.unknownEndpoint)
 server.use(middleware.errorHandler)
 
+// Connect to PORT
 server.listen(config.PORT, () => {
+<<<<<<< HEAD
   console.log(process.env.GEO_API_KEY)
   console.log(`Server running on port ${config.PORT}`)
 })
+=======
+    console.log(`Server running on port ${config.PORT}`)
+})
+>>>>>>> e943abf1eab45631e6dc136e89a1c148cb1c05b2

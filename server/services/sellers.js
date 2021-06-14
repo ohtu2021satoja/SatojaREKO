@@ -1,3 +1,4 @@
+const usersRouter = require("../controllers/users")
 
 const BLANK_IMAGE = "profile-blank_or75kg"
 
@@ -26,4 +27,17 @@ getEventsSellerHasProducts = async (id, eventsRepository) => {
   return(events)
 } 
 
-module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage }
+const createSeller = async (id, params, sellersRepository, usersRepository) => {
+  if(!params.salesreport_check){
+    params.salesreport_check = false
+  }
+  if(!params.image_url){
+    params.image_url=BLANK_IMAGE
+  }
+
+  params.location = params.address 
+  await sellersRepository.createSeller(id, params)
+
+  await usersRepository.setAsSeller(id)
+}
+module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, createSeller }

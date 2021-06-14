@@ -1,6 +1,9 @@
-const getUser = async (id, usersRepository) => {
-  const user = await usersRepository.getUser(id)
-  return(user)
+const usersRepository = require('../repositories/users')
+
+const getUser = async (id) => {
+    const user = await usersRepository.getUser(id)
+
+    return user
 }
 
 const createUser = async (params, usersRepository) => {

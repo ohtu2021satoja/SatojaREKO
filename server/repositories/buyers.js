@@ -8,5 +8,9 @@ const updateBuyersImage = async (id, image_url) => {
   await db.query("UPDATE buyers SET image_url = $1 WHERE id=$2 ", [image_url, id])
 }
 
+const createBuyer = async (id, params) => {
+  await db.query("INSERT INTO buyers VALUES ($1,$2,$3,$4);",[id, params.newsletter_check, params.cancel_notification_check, params.image_url])
+}
 
-module.exports = { updateBuyersInfo, updateBuyersImage }
+
+module.exports = { updateBuyersInfo, updateBuyersImage, createBuyer }

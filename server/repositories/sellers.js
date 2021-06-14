@@ -22,8 +22,11 @@ const updateSellersInfo = async (seller_id, seller_info) => {
 }
 
 const deleteRekoAreas = async (seller_id, reko_areas) => {
-  db.query("DELETE FROM sellers_reko WHERE seller_id=$1 AND reko_area_id = ANY($2::int[])", [seller_id, reko_areas])    
-
+  await db.query("DELETE FROM sellers_reko WHERE seller_id=$1 AND reko_area_id = ANY($2::int[])", [seller_id, reko_areas])    
 }
 
-module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo }
+const createSeller = async (id, params) => {
+  await db.query("INSERT INTO sellers VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",[id, params.name, params.homepage, params.address, params.zipcode, params.city, params.salesreport_check, params.description, params.image_url, params.location])
+}
+
+module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, createSeller }

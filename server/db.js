@@ -1,13 +1,13 @@
-const pg = require("pg")
+const pg = require('pg')
 
 const connectionString = process.env.DATABASE_URL
 console.log(connectionString)
 
 const pool = new pg.Pool({
-  connectionString: connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
+    connectionString: connectionString,
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 
 let client

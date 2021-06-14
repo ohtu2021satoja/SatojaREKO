@@ -11,8 +11,10 @@ import SignUpPage from "./login/SignUpPage"
 import HomePage from "./HomePage"
 import AppSeller from "./AppSeller"
 import AppBuyer from "./AppBuyer"
+import Cookies from "js-cookie"
 
 const App = (props) => {
+  console.log(Cookies.get())
   const [sellerView, setSellerView] = useState(null)
   const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser, logoutUser } = props
