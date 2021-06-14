@@ -10,4 +10,9 @@ const addMarket = async (address, rekoChoices) => {
   return response
 }
 
-export default { addMarket }
+const getAllMarkets = () => {
+  const request = axios.get(apiUrl)
+  return request.then((response) => response.data)
+}
+
+export { getAllMarkets, addMarkets }

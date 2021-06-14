@@ -12,4 +12,8 @@ const getEventProductFeed = async (eventsRepository) => {
   const eventProductFeed = await eventsRepository.getEventsProductFeed()
   return eventProductFeed
 }
-module.exports = { getSellerEvents, getMarketEvents, getEventProductFeed }
+const addEvent = async (event, eventsRepository) => {
+  const newEvent = await eventsRepository.addEvent(event)
+  return newEvent
+}
+module.exports = { getSellerEvents, getMarketEvents, getEventProductFeed, addEvent }

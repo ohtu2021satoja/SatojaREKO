@@ -1,6 +1,8 @@
 import { Field, ErrorMessage } from "formik"
 import Col from "react-bootstrap/Col"
 import FormFieldText from "../FormFieldText"
+import FormFieldPhone from "../FormFieldPhone"
+import FormFieldEmail from "../FormFieldEmail"
 import FormErrorMessage from "../FormErrorMessage"
 
 const FormBuyerDetails = () => {
@@ -19,9 +21,11 @@ const FormBuyerDetails = () => {
         name="phone"
         id="user-phone"
         label="Puhelinnumero"
-        component={FormFieldText}
+        component={FormFieldPhone}
       />
       <ErrorMessage name="phone" component={FormErrorMessage} />
+      <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
+      <ErrorMessage name="email" component={FormErrorMessage} />
     </Col>
   )
 }

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 
 const MapBottomPanel = forwardRef((props, ref) => {
-  const mapEvents = props.visibleEvents.map((event, index) => (
+  const markets = props.visibleMarkets.map((event, index) => (
     <div key={index} style={{ marginBottom: 10 }}>
       {event.name} <br />
       {event.address} <br />
@@ -23,7 +23,7 @@ const MapBottomPanel = forwardRef((props, ref) => {
 
   return (
     <div className="bottom-panel" ref={ref} style={{ paddingBottom: 50 }}>
-      {mapEvents}
+      {markets}
     </div>
   )
 })
