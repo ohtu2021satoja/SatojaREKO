@@ -5,7 +5,9 @@ import { events } from "./events"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import { shoppingCart } from "./shoppingCart"
 import alvReducer from "./alvReducer"
+
 
 export default combineReducers({
   alv: alvReducer,
@@ -15,4 +17,5 @@ export default combineReducers({
   authedUser,
   products,
   events,
+  shoppingCart,
 })

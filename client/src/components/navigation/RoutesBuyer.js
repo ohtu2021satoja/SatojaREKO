@@ -4,7 +4,9 @@ import HomePage from "../HomePage"
 import ProfilePageBuyer from "../profiles/ProfilePageBuyer"
 import MapPage from "../MapPage"
 import Products from "../Products"
+import ShoppingCart from "../ShoppingCart"
 import OrdersBuyers from "../OrdersBuyers"
+
 
 const RoutesBuyer = ({ user, logOut, setSellerView }) => (
   <Switch>
@@ -18,7 +20,7 @@ const RoutesBuyer = ({ user, logOut, setSellerView }) => (
       <Products products={user.products} />
     </Route>
     <Route path="/events" component={MapPage}></Route>
-    <Route path="/cart">Shopping cart</Route>
+    <Route path="/cart" component={ShoppingCart}></Route>
     <Route path="/profile">
       <ProfilePageBuyer user={user} />
     </Route>
