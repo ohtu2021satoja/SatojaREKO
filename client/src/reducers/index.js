@@ -8,7 +8,6 @@ import eventChoicesReducer from "./eventChoicesReducer"
 import { shoppingCart } from "./shoppingCart"
 import alvReducer from "./alvReducer"
 
-
 export default combineReducers({
   alv: alvReducer,
   price: priceReducer,
