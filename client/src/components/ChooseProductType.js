@@ -1,7 +1,7 @@
 import React from "react"
 import Dropdown from "react-bootstrap/Dropdown"
 
-const ChooseProductType = ({ productType, setProductType }) => {
+const ChooseProductType = ({ productType, setFieldValue }) => {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -9,11 +9,26 @@ const ChooseProductType = ({ productType, setProductType }) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => setProductType("Kg")}> Kg </Dropdown.Item>
-        <Dropdown.Item onClick={() => setProductType("Litra")}> Litra </Dropdown.Item>
-        <Dropdown.Item onClick={() => setProductType("Gramma")}> Gramma </Dropdown.Item>
-        <Dropdown.Item onClick={() => setProductType("Motti")}> Motti </Dropdown.Item>
-        <Dropdown.Item onClick={() => setProductType("Kuutio")}> Kuutio </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Kg")}>
+          {" "}
+          Kg{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Litra")}>
+          {" "}
+          Litra{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Gramma")}>
+          {" "}
+          Gramma{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Motti")}>
+          {" "}
+          Motti{" "}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setFieldValue("productType", "Kuutio")}>
+          {" "}
+          Kuutio{" "}
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
