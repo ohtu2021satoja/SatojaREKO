@@ -7,13 +7,11 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
-import BuyerInfo from "./BuyerInfo"
 
 const OrdersSellerBuyers = (props) => {
   const [deleteProductPopUp, setDeleteProductPopUp] = useState(false)
   const [deleteOrderPopUp, setDeleteOrderPopUp] = useState(false)
   const [productIndexi, setProductIndexi] = useState(null)
-  const [buyerIndexi, setBuyerIndexi] = useState(null)
 
   const HandleDeleteProductButton = () => {
     setDeleteProductPopUp(true)
@@ -29,7 +27,8 @@ const OrdersSellerBuyers = (props) => {
   if (deleteOrderPopUp) {
     return (
       <OrderDeletePopUp setPopUp={setDeleteOrderPopUp}>
-        Oletko varma että haluat poistaa {props.orderers[buyerIndexi].name} tilauksen
+        Oletko varma että haluat poistaa {props.orderers[props.buyerIndexi].name}{" "}
+        tilauksen
       </OrderDeletePopUp>
     )
   }
@@ -38,7 +37,7 @@ const OrdersSellerBuyers = (props) => {
     return (
       <OrderDeletePopUp setPopUp={setDeleteProductPopUp}>
         Oletko varma että haluat poistaa {props.orderProducts[productIndexi].name}{" "}
-        henkilön {props.orderers[buyerIndexi].name} tilauksesta
+        henkilön {props.orderers[props.buyerIndexi].name} tilauksesta
       </OrderDeletePopUp>
     )
   }
@@ -80,7 +79,7 @@ const OrdersSellerBuyers = (props) => {
         className="mb-2"
         key={index}
         onClick={() => {
-          setBuyerIndexi(index)
+          props.setBuyerIndexi(index)
         }}
       >
         <Card>
@@ -91,7 +90,7 @@ const OrdersSellerBuyers = (props) => {
                   style={{ textDecorationLine: "underline" }}
                   onClick={() => {
                     HandleBuyerInfo()
-                    setBuyerIndexi(index)
+                    props.setBuyerIndexi(index)
                   }}
                 >
                   {buyer.name}
@@ -146,7 +145,7 @@ const OrdersSellerBuyers = (props) => {
                         style={{ color: "red" }}
                         onClick={() => {
                           HandleDeleteOrderButton()
-                          setBuyerIndexi(index)
+                          props.setBuyerIndexi(index)
                         }}
                       >
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />

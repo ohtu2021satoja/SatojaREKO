@@ -98,6 +98,8 @@ const OrdersSellerSingleEvent = (props) => {
               orderers={props.orderers}
               setBuyerInfo={props.setBuyerInfo}
               buyerInfo={props.buyerInfo}
+              buyerIndexi={props.buyerIndexi}
+              setBuyerIndexi={props.setBuyerIndexi}
             />
           </Col>
         </div>

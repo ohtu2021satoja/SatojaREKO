@@ -119,6 +119,7 @@ const OrderSeller = () => {
   const [eventId, setEventId] = useState(null)
   const [listView, setListView] = useState(true)
   const [buyerInfo, setBuyerInfo] = useState(null)
+  const [buyerIndexi, setBuyerIndexi] = useState(null)
 
   const HandleOrderButton = () => {
     setListView(false)
@@ -156,7 +157,14 @@ const OrderSeller = () => {
     )
   } else {
     if (buyerInfo) {
-      return <BuyerInfo HandleBackButton={HandleBackButton} setBuyerInfo={setBuyerInfo} />
+      return (
+        <BuyerInfo
+          HandleBackButton={HandleBackButton}
+          setBuyerInfo={setBuyerInfo}
+          buyerIndexi={buyerIndexi}
+          orderers={orderers}
+        />
+      )
     }
     return (
       <div>
@@ -175,6 +183,8 @@ const OrderSeller = () => {
           HandleProductButton={HandleProductButton}
           HandleOrderButton={HandleOrderButton}
           uniqueDates={uniqueDates}
+          buyerIndexi={buyerIndexi}
+          setBuyerIndexi={setBuyerIndexi}
         />
       </div>
     )

@@ -26,7 +26,7 @@ const BuyerInfo = (props) => {
         </svg>
       </Col>
       <Row>
-        <Col>Matti Meikäläinen</Col>
+        <Col>{props.orderers[props.buyerIndexi].name}</Col>
       </Row>
       <div className="mb-4">
         <Image src="https://via.placeholder.com/500" rounded fluid alt="User photo" />
