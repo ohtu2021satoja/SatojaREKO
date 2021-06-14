@@ -22,6 +22,19 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
   }
 }
 
+const updateProduct = async (product_id, product, eventChoices, sizes, productsRepository, eventsRepository, db) => {
+  try{
+    await db.beginTransaction()
+    const product  = await productsRepository.getProductById(product_id)
+    console.log(product)
+    await db.endTransaction()
+  } catch(e) {
+    console.log(e)
+    await db.rollBack()
+    throw e
+  }
+}
+
 const removeProduct = async (product_id, productsRepository) => {
   await productsRepository.removeProduct(product_id)
   await productsRepository.removeProductBatches(product_id)

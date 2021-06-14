@@ -52,7 +52,7 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
   }
 })
 
-productsRouter.post('/seller/:id', async (req, res) => {
+productsRouter.post('/seller/:id', async (req, res, next) => {
   try{
     console.log(req.body)
     await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
@@ -62,6 +62,17 @@ productsRouter.post('/seller/:id', async (req, res) => {
     next(error)
   }
 
+})
+
+productsRouter.put("/:id", async (req, res, next) => {
+  try{
+    const { id } = req.params
+    await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
+    res.sendStatus(200).end()
+  } catch(error){
+    console.log(error)
+    next(error)
+  }
 })
 
 productsRouter.delete("/:id", async (req, res) => {
