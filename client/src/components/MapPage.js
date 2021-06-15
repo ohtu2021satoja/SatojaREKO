@@ -9,7 +9,6 @@ import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
-import { getAllMarkets } from "../services/markets"
 
 const events = [
   {
@@ -105,7 +104,6 @@ const MapInstance = (props) => {
 }
 
 const MapPage = () => {
-  const [markets, setMarkets] = useState(null)
   const [visibleMarkets, setvisibleMarkets] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
@@ -119,14 +117,6 @@ const MapPage = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
-
-      const getMarkets = async () => {
-        //const markets = await getAllMarkets()
-      }
-
-      const markets = getMarkets
-
-      setMarkets(markets)
 
       return
     }
@@ -229,7 +219,7 @@ const MapPage = () => {
 
   return openedPage ? (
     openedPage
-  ) : markets ? (
+  ) : events ? (
     <div className="map-container">
       <MapContainer
         center={mapCenter}
