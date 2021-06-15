@@ -1,11 +1,11 @@
 const getAllProducts = async (productsRepository) => {
-  const products = productsRepository.getAllProducts()
-  return(products)
+    const products = productsRepository.getAllProducts()
+    return(products)
 }
 
 const getSellersProducts = async (id, productsRepository) => {
-  const products = productsRepository.getSellersProducts(id)
-  return(products)
+    const products = productsRepository.getSellersProducts(id)
+    return(products)
 }
 
 const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository, db) => {
