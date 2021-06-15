@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
 import SellerPage from "./SellerPage"
+import ProductPage from "./ProductPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
 
 const events = [
@@ -153,6 +154,29 @@ const MapPage = () => {
     setMapInstance(map)
   }
 
+  const handleOpenProduct = (product, event, addToCart, removeFromCart) => {
+    setOpenedPage(
+      ProductPage({
+        product: product,
+        event: event,
+        returnToEvent: handleCloseProduct,
+        addToCart: addToCart,
+        removeFromCart: removeFromCart,
+      })
+    )
+  }
+
+  const handleCloseProduct = (event) => {
+    setOpenedPage(
+      EventPage({
+        event: event,
+        closePage: handleClosePage,
+        openProductPage: handleOpenProduct,
+        closeProductPage: handleClosePage,
+      })
+    )
+  }
+
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
       behavior: "smooth",
@@ -181,7 +205,14 @@ const MapPage = () => {
           className="btn btn-primary btn-sm popup-button"
           variant="success"
           onClick={() =>
-            setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+            setOpenedPage(
+              EventPage({
+                event: event,
+                closePage: handleClosePage,
+                openProductPage: handleOpenProduct,
+                closeProductPage: handleClosePage,
+              })
+            )
           }
         >
           Siirry tilaisuuteen

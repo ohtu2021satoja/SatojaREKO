@@ -78,10 +78,16 @@ const ShoppingCart = () => {
             )
           } else return null
         })}
-        <div>{totalPrice > 0 && <h3>Yhteensä: {totalPrice}e</h3>}</div>
-        <Button variant="success" onClick={handleSubmitOrders}>
-          Lähetä tilaus
-        </Button>
+        {totalPrice > 0 ? (
+          <div>
+            <h3>Yhteensä: {totalPrice}e</h3>
+            <Button variant="success" onClick={handleSubmitOrders}>
+              Lähetä tilaus
+            </Button>
+          </div>
+        ) : (
+          <p>Ostoskorisi on tyhjä</p>
+        )}
       </Col>
     </Row>
   )

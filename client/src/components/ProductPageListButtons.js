@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
-const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
+const ProductPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
   const cart = useSelector((state) => state.shoppingCart)
   const [inCart, setInCart] = useState(0)
   useEffect(() => {
@@ -20,17 +20,16 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
 
   return (
     <>
-      <Col xs={3} className="d-flex justify-content-center align-items-center">
+      <Col xs={6} className="d-flex justify-content-center align-items-center">
         <b>
           {size.unit} {unit}
         </b>
       </Col>
-      <Col xs={5} className="d-flex justify-content-between align-items-center">
+      <Col xs={6} className="d-flex justify-content-between align-items-center">
         <Button
           size="sm"
           variant="light"
           onClick={(e) => {
-            e.stopPropagation()
             removeFromCart(size)
           }}
         >
@@ -43,7 +42,6 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
           size="sm"
           variant="light"
           onClick={(e) => {
-            e.stopPropagation()
             if (inCart < size.quantity) addToCart(size)
           }}
         >
@@ -56,4 +54,4 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
   )
 }
 
-export default EventPageListButtons
+export default ProductPageListButtons
