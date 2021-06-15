@@ -60,8 +60,21 @@ const ShoppingCart = () => {
           if (orderHasSizes(order)) {
             return (
               <div key={index}>
-                Noutotilaus paikassa {order.event.name} {order.event.type} <br />{" "}
-                Tuotteet: <br />
+                <h6>
+                  <u>Noutotilaisuus</u>
+                  <br />
+                  <br />
+                  {order.event.name} (REKO)
+                  <br />
+                  {order.event.address}
+                  <br />
+                  {(() => {
+                    const startDate = new Date(order.event.start)
+                    return (
+                      <>{startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}</>
+                    )
+                  })()}{" "}
+                </h6>{" "}
                 {(() => {
                   const ordersByProduct = []
 
@@ -91,6 +104,7 @@ const ShoppingCart = () => {
                     )
                   })
                 })()}
+                <br />
               </div>
             )
           } else return null

@@ -46,13 +46,14 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
         <Col xs={12} className="mb-3">
           <Card.Text className="text-center">{product.description}</Card.Text>
         </Col>
-        {sizes.map((size) => (
+        {sizes.map((size, index) => (
           <ShoppingCartListButtons
             addToCart={handleAddToCart}
             removeFromCart={handleRemoveFromCart}
             eventID={event.id}
             size={size}
             unit={product.type}
+            key={index}
           />
         ))}
       </Row>
