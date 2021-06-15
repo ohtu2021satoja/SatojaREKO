@@ -17,11 +17,11 @@ Content-Type: application/json
   },
   "eventChoices": [1,2],
   "sizes": [{
-    "quantity": 4,
+    "quantity": 2,
     "unit": 1
   },
   {
-    "quantity": 4,
+    "quantity": 3,
     "unit": 1.5
   }]
 }

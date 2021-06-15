@@ -32,10 +32,13 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
       const difference = new_sizes[i].quantity - product.sizes[i].batch_quantity
       new_sizes[i].batch_quantity = new_sizes[i].quantity 
       new_sizes[i].quantity = product.sizes[i].quantity + difference
+      new_sizes[i].id = product.sizes[i].id
+      new_sizes[i].is_different = product.sizes[i].unit - new_sizes[i].unit === 0 ? false : true
     }
 
     if(product.unit_price === new_product.unit_price){
-      await productsRepository.updateProduct(product_id, new_product)
+      await productsRepository.updateProduct(product_id, new_product) 
+      await productsRepository.updateProductSizes(new_sizes)
     } else{
       await addProduct(new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db)
       await productsRepository.updateOldPricedProduct(product.id)
