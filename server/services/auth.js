@@ -1,7 +1,12 @@
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook')
 const config = require('../utils/config')
-const usersRepository = require('../repositories/users')
+const usersService = require('../services/users')
+
+const usersRepository = require("../repositories/users")
+const buyersRepository = require("../repositories/buyers")
+const sellersRepository = require("../repositories/sellers")
+
 const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
@@ -61,7 +66,7 @@ passport.use(new FacebookStrategy({
 
     console.log("userData",userData)
     
-    await usersRepository.createUser(userData)
+    await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
     
     return done(null, profile)
   }

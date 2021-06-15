@@ -36,4 +36,19 @@ usersRouter.get('/:id', async (req, res, next) => {
     }
 })
 
+usersRouter.get("/current/user", async (req, res, next) => {
+  if(!req.user){
+    return res.send("No current user")
+  }
+  const user = await usersService.getUser(30, usersRepository)
+  if (!user) {
+      return res.status(404).send({ error: 'User not found' })
+  }
+  try {
+      res.send(user)
+  } catch (err) {
+      next(err)
+  }
+})
+
 module.exports = usersRouter

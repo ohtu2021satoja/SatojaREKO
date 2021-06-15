@@ -26,7 +26,7 @@ const deleteRekoAreas = async (seller_id, reko_areas) => {
 }
 
 const createSeller = async (id, params) => {
-  await db.query("INSERT INTO sellers VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",[id, params.name, params.homepage, params.address, params.zipcode, params.city, params.salesreport_check, params.description, params.image_url, `{"lat":"${params.location[0]}","lon":"${params.location[1]}"}`])
+  await db.query("INSERT INTO sellers VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",[id, params.seller_name, params.homepage, params.address, params.zipcode, params.city, false, params.description, params.image_url, `{"lat":"${params.location[0]}","lon":"${params.location[1]}"}`])
 }
 
 module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, createSeller }

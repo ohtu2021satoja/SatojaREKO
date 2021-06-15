@@ -1,8 +1,7 @@
 const db = require('../db')
-const {isEmpty} = require('../utils/validation')
 
 const getUser = async (id) => {
-  const user = await  db.query("SELECT *, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users INNER JOIN buyers ON buyers.id = users.id INNER JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
+  const user = await  db.query("SELECT *, users.id, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users LEFT JOIN buyers ON buyers.id = users.id LEFT JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
   return(user[0])
 }
 
@@ -23,7 +22,8 @@ const updateUsersInfo = async (user_id, user_info) => {
 
 const createUser = async (params) => {
   const current_date = new Date()
-  await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, $9, $3, $4, $5, $6, $7, $8);", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id, current_date])
+  const user_id = await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, $9, $3, $4, $5, $6, $7, $8) Returning id;", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id, current_date])
+  return(user_id[0].id)
 }
 const setAsBuyer = async (id) => {
   await db.query("UPDATE users SET is_buyer=true WHERE id=$1", [id])

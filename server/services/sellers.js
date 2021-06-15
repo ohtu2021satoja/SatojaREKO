@@ -29,19 +29,4 @@ getEventsSellerHasProducts = async (id, eventsRepository) => {
   const events = await eventsRepository.getEventsSellerHasProducts(id)
   return(events)
 } 
-
-const createSeller = async (id, params, sellersRepository, usersRepository) => {
-  if(!params.salesreport_check){
-    params.salesreport_check = false
-  }
-  if(!params.image_url){
-    params.image_url=BLANK_IMAGE
-  }
-
-  params.location = await geoap.getAddressInfo(params.address)
-  console.log(params.location)
-  await sellersRepository.createSeller(id, params)
-
-  await usersRepository.setAsSeller(id)
-}
-module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, createSeller }
+module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage }

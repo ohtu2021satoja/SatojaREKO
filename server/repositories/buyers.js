@@ -9,7 +9,7 @@ const updateBuyersImage = async (id, image_url) => {
 }
 
 const createBuyer = async (id, params) => {
-  await db.query("INSERT INTO buyers VALUES ($1,$2,$3,$4);",[id, params.newsletter_check, params.cancel_notification_check, params.image_url])
+  await db.query("INSERT INTO buyers VALUES ($1,$2,$3,$4);",[id, false, false, params.image_url])
 }
 
 

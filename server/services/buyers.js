@@ -14,20 +14,5 @@ const updateBuyersInfo= async (seller_id, req_body, buyersRepository, usersRepos
   await usersRepository.updateUsersInfo(seller_id, req_body.user_info)
 }
 
-const createBuyer = async (id, params, buyersRepository, usersRepository) => {
-  if(!params.image_url){
-    params.image_url = BLANK_IMAGE
-  }
-  if(!params.newsletter_check){
-    params.newsletter_check=false
-  }
-  if(!params.cancel_notification_check){
-    params.cancel_notification_check=false
-  }
-  await buyersRepository.createBuyer(id, params)
 
-  await usersRepository.setAsBuyer(id)
-}
-
-
-module.exports = { removeBuyerImage, updateBuyersInfo, updateBuyerImage, createBuyer }
+module.exports = { removeBuyerImage, updateBuyersInfo, updateBuyerImage }
