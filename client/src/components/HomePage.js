@@ -9,7 +9,7 @@ const HomePage = ({ logOut, setSellerView }) => (
         onClick={() => setSellerView(false)}
         variant="outline-primary"
         size="lg"
-        type="submit"
+        type="button"
         className="w-75"
       >
         Ostan lähiruokaa
@@ -20,14 +20,14 @@ const HomePage = ({ logOut, setSellerView }) => (
         onClick={() => setSellerView(true)}
         variant="outline-primary"
         size="lg"
-        type="submit"
+        type="button"
         className="w-75"
       >
         Myyn lähiruokaa
       </Button>
     </Col>
     <Col xs={12} className="mb-4">
-      <Button variant="outline-success" size="lg" type="submit" className="w-75">
+      <Button variant="outline-success" size="lg" type="button" className="w-75">
         Ota yhteyttä
       </Button>
     </Col>
@@ -36,7 +36,7 @@ const HomePage = ({ logOut, setSellerView }) => (
         onClick={logOut}
         variant="outline-danger"
         size="lg"
-        type="submit"
+        type="button"
         className="w-75"
       >
         Kirjaudu ulos

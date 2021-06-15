@@ -1,43 +1,84 @@
 import Toast from "react-bootstrap/Toast"
 
-const NotificationPush = ({ icon, title, timeStamp, children }) => {
-  const getTime = () => {
-    const timeDifference = parseInt(
-      (Math.abs(Date.now().getTime() - timeStamp.getTime()) / (1000 * 60)) % 60
-    )
+/*
+Parent Component:
+- the push notification should be placed apart from the main content
+- set an icon and alt text for the icon
+  - svg icons can be downloaded from https://icons.getbootstrap.com/ and placed in the media folder
+  - remove width and height from svg
+  - import a link to the file ie. import ArrowLeftIcon from "../media/arrow-left.svg"
+  - send it as icon props ie. icon={ArrowLeftIcon}
+  - set an alt text to describe the image: iconAlt="left arrow"
+- set a timestamp for when the notified action took place in Date.now() format
+- set a delay in milliseconds (5000 = 5 sec) for how long the notification should be displayed
 
-    switch (timeDifference) {
-      case timeDifference > 60:
-        return "yli tunti sitten"
-      case timeDifference > 10 && timeDifference < 60:
-        return "alle tunti sitten"
-      case 1 < timeDifference && timeDifference < 10:
-        return `${timeDifference} min sitten`
-      default:
-        return "hetki sitten"
+const Parent = () => {
+    const [show, setShow] = React.useState(false);
+
+  return (
+    <>
+      <NotificationPush
+        show={show}
+        handleClose={() => setShow(false)}
+        icon={icon}
+        iconAlt="alt text"
+        title="title"
+        timeStamp={t}
+        delay={ms}
+      >
+        push notification content goes here
+      </NotificationPush>
+
+      <div>
+        Other content
+      </div>
+    </>
+  );
+*/
+
+const NotificationPush = ({
+  show,
+  handleClose,
+  icon,
+  iconAlt,
+  title,
+  timeStamp,
+  delay,
+  children,
+}) => {
+  const getTime = () => {
+    // time difference between the event and notification
+    const timer = Math.floor((Date.now() - timeStamp) / (1000 * 60))
+
+    if (timer > 60) {
+      return "yli tunti sitten"
+    } else if (timer > 1 && timer <= 60) {
+      return `${timer} min sitten`
+    } else {
+      return "hetki sitten"
     }
   }
 
   return (
-    <div
-      aria-live="polite"
-      aria-atomic="true"
-      style={{
-        position: "relative",
-        minHeight: "100px",
-      }}
-    >
+    <div style={{ position: "relative" }}>
       <Toast
         style={{
           position: "absolute",
           top: 0,
+          left: 0,
           right: 0,
+          margin: "auto",
+          zIndex: 100,
         }}
+        show={show}
+        onClose={handleClose}
+        delay={delay}
+        autohide
       >
         <Toast.Header>
-          <i>{icon}</i>
+          <img src={icon} width="16" height="16" className="rounded mr-2" alt={iconAlt} />
           <strong className="mr-auto">{title}</strong>
-          <small>{getTime}</small>
+          <small>{getTime()}</small>
         </Toast.Header>
         <Toast.Body>{children}</Toast.Body>
       </Toast>

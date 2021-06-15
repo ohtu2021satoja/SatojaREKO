@@ -2,7 +2,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
 import Button from "react-bootstrap/Button"
-
+import ArrowLeftIcon from "../../media/arrow-left.svg"
 import FormSignUp from "./FormSignUp"
 
 const SignUpPage = ({ user, handleSignUp, handleSignOut, handleLogout }) => {
@@ -20,10 +20,9 @@ const SignUpPage = ({ user, handleSignUp, handleSignOut, handleLogout }) => {
               variant="light"
               size="lg"
               className="mr-1"
-              ariaLabel="Return to login page"
               onClick={() => returnToLogin()}
             >
-              <i class="bi bi-arrow-left" />
+              <img src={ArrowLeftIcon} width="24" height="24" alt="Return to login" />
             </Button>
           </Nav.Item>
         </Nav>

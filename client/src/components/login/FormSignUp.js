@@ -54,7 +54,7 @@ const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
             <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
               Rekisteröidy
             </Button>
-            <p class="text-center text-muted">
+            <p className="text-center text-muted">
               Rekisteröidyttyäsi pyydämme sinua kirjautumaan Facebookilla
             </p>
           </Form>

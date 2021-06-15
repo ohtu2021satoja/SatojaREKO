@@ -1,13 +1,51 @@
 import Toast from "react-bootstrap/Toast"
 import Alert from "react-bootstrap/Alert"
 
-// parent component sets the message and the length time it is shown
-const NotificationError = ({ messageError }) => (
-  <Toast>
-    <Alert className="my-0" variant="danger">
-      {messageError}
-    </Alert>
-  </Toast>
+/*
+Parent Component:
+- the error notification should be placed apart from the main content
+- set a delay in milliseconds (ie. 5000 = 5 sec) for how long the notification should be displayed
+
+const Parent = () => {
+    const [show, setShow] = React.useState(false);
+
+  return (
+    <>
+      <NotificationError
+        show={show}
+        handleClose={() => setShow(false)}
+        delay={ms}
+        message="message"
+      />
+
+      <div>
+        Other content
+      </div>
+    </>
+  );
+*/
+
+const NotificationError = ({ show, handleClose, delay, message }) => (
+  <div style={{ position: "relative" }}>
+    <Toast
+      show={show}
+      onClose={handleClose}
+      delay={delay}
+      autohide
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        margin: "auto",
+        zIndex: 100,
+      }}
+    >
+      <Alert className="my-0" variant="danger">
+        {message}
+      </Alert>
+    </Toast>
+  </div>
 )
 
 export default NotificationError
