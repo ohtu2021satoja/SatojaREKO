@@ -62,18 +62,35 @@ const ShoppingCart = () => {
               <div key={index}>
                 Noutotilaus paikassa {order.event.name} {order.event.type} <br />{" "}
                 Tuotteet: <br />
-                {order.batches.map((batch, index) => {
-                  if (batch.order_quantity > 0) {
+                {(() => {
+                  const ordersByProduct = []
+
+                  order.batches.map((batch, index) => {
+                    const currentProduct = ordersByProduct.find(
+                      (order) => order.product.id === batch.product.id
+                    )
+                    if (batch.order_quantity > 0) {
+                      if (currentProduct) {
+                        return currentProduct.batches.push(batch)
+                      } else {
+                        return ordersByProduct.push({
+                          product: batch.product,
+                          batches: [batch],
+                        })
+                      }
+                    } else return null
+                  })
+                  return ordersByProduct.map((product, index) => {
                     return (
                       <ShoppingCartListItem
                         event={order.event}
-                        batch={batch}
-                        total={totalPrice}
+                        product={product.product}
+                        sizes={product.batches}
                         key={index}
                       />
                     )
-                  } else return null
-                })}
+                  })
+                })()}
               </div>
             )
           } else return null

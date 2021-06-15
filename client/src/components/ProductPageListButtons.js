@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 
 const ProductPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
   const cart = useSelector((state) => state.shoppingCart)
+
   const [inCart, setInCart] = useState(0)
   useEffect(() => {
     const updateCart = () => {
