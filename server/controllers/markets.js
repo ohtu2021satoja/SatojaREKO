@@ -13,6 +13,7 @@ marketsRouter.get('/', async (req, res) => {
     }
 })
 
+
 marketsRouter.post('/', async (req, res) => {
     try {
         const marketData = req.body

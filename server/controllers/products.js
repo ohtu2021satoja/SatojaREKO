@@ -67,8 +67,8 @@ productsRouter.post('/seller/:id', async (req, res, next) => {
 productsRouter.put("/:id", async (req, res, next) => {
   try{
     const { id } = req.params
-    await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
-    res.sendStatus(200).end()
+    const product = await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
+    res.send(product)
   } catch(error){
     console.log(error)
     next(error)
