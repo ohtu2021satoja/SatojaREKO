@@ -1,7 +1,6 @@
-const usersRepository = require('../repositories/users')
 const BLANK_IMAGE = "profile-blank_or75kg"
 
-const getUser = async (id) => {
+const getUser = async (id, usersRepository) => {
     const user = await usersRepository.getUser(id)
     console.log(user)
     return user
