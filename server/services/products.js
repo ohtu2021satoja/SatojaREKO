@@ -50,4 +50,4 @@ const getSellersEventProducts = async (event_id, sellers_id, productsRepository)
   return(products)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts, removeProduct }
+module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts, removeProduct, updateProduct }
