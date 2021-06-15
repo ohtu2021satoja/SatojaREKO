@@ -7,6 +7,11 @@ const getEvents = async () => {
   const response = await axios.get(apiUrl)
   return response.data
 }
+
+const getSellerEvents = async (id) => {
+  const response = await axios.get(`${apiUrl}/seller/${id}`)
+  return response.data
+}
 */
 
 const getSellersUpcomingEvents = (id) => {
@@ -14,4 +19,4 @@ const getSellersUpcomingEvents = (id) => {
   return request.then((response) => response.data)
 }
 
-export default { /*getEvents,*/ getSellersUpcomingEvents }
+export default { /*getEvents, getSellerEvents*/ getSellersUpcomingEvents }
