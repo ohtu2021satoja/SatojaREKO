@@ -68,6 +68,7 @@ const updateProductSizes = async (new_sizes) => {
     db.query("UPDATE sizes SET unit=$1, quantity=$2, batch_quantity=$3 WHERE id=$4", [size.unit, size.quantity, size.batch_quantity, size.id])
     if(size.is_different){
       db.query("UPDATE batches SET removed=true WHERE batches.sizes_id=$1", [size.id])
+      db.query("UPDATE sizes SET quantity=sizes.quantity+batches.quantity FROM batches WHERE batches.sizes_id = sizes.id AND sizes.id=$1",[sizes.id])
     }
   })
 }
