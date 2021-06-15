@@ -17,5 +17,4 @@ const submitBuyerOrders = async (orders, buyerID) => {
   return response
 }
 
-export default { getSellerOrders, getBuyerOrders, submitBuyerOrders  }
-
+export default { getSellerOrders, getBuyerOrders, submitBuyerOrders }
