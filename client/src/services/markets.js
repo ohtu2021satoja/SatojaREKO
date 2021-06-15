@@ -2,7 +2,7 @@ import axios from "axios"
 
 const apiUrl = "/api/markets"
 
-const getMarkets = async () => {
+const getAllMarkets = async () => {
   const response = await axios.get(apiUrl)
   return response.data
 }
@@ -12,4 +12,5 @@ export const getSellerMarkets = async (id) => {
   return response.data
 }
 
-export default { getMarkets, getSellerMarkets }
+export default { getAllMarkets, getSellerMarkets }
+

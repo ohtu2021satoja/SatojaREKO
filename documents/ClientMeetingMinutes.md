@@ -49,7 +49,7 @@ Toivottua statistiikkaa
 
 - Jos lupaa ei ole annettu, näytetään Etelä-Savon maakunta
 
-- Tuottajan tiedot (nimi, logo/kuva, osoite, numero) näyttävä ponnahdusikkuna tulee esille sijaintiosoitinta napauttamalla ja nappia painamalle siirrytään tuottajan profiilisivulle
+- Tuottajan tiedot (nimi, logo/kuva, osoite, numero) näyttävä ponnahdusikkuna tulee esille sijaintiosoitinta napauttamalla ja nappia painamalla siirrytään tuottajan profiilisivulle
 
 ### Profiilisivu
 

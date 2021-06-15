@@ -12,4 +12,10 @@ export const getBuyerOrders = async (id) => {
   return response.data
 }
 
-export default { getSellerOrders, getBuyerOrders }
+const submitBuyerOrders = async (orders, buyerID) => {
+  const response = await axios.post(`${apiUrl}/buyer/${buyerID}`, orders)
+  return response
+}
+
+export default { getSellerOrders, getBuyerOrders, submitBuyerOrders  }
+

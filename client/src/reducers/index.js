@@ -12,8 +12,11 @@ import { sellerProducts } from "./sellerProducts"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import { shoppingCart } from "./shoppingCart"
+import alvReducer from "./alvReducer"
 
 export default combineReducers({
+  alv: alvReducer,
   price: priceReducer,
   productSizes: productSizesReducer,
   eventChoices: eventChoicesReducer,
@@ -26,5 +29,5 @@ export default combineReducers({
   sellerEvents,
   sellerMarkets,
   sellerOrders,
-  sellerProducts,
+  shoppingCart,
 })

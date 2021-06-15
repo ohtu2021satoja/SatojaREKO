@@ -25,7 +25,7 @@ const getUserProducts = (id) => {
 
 const addProduct = async (productObject) => {
   const response = await axios.post(
-    `${apiUrl}/${productObject.product.sellers_id}`,
+    `${apiUrl}/seller/${productObject.product.sellers_id}`,
     productObject
   )
   return response

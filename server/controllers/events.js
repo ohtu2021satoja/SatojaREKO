@@ -44,5 +44,17 @@ eventsRouter.get('/product/feed/', async (req,res) => {
 
 })
 
+eventsRouter.post('/', async (req,res) =>{
+  try{
+    const event = req.body
+    req.body.start = new Date(req.body.start)
+    req.body.end = new Date(req.body.end)
+    await eventsService.addEvent(event, eventsRepository)
+    res.sendStatus(200).end()
+  } catch(error){
+    console.log(error)
+  }
+})
+
 module.exports = eventsRouter
 

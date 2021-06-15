@@ -33,4 +33,10 @@ const getEventsProductFeed = async () => {
   return eventsProductFeed
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts  }
+const addEvent = async (event) => {
+  const dbParams = [event.market_id, event.start, event.end]
+  const result = await db.query("INSERT INTO events VALUES(Default,$1,$2,$3) RETURNING id", dbParams)
+  return(result[0].id)
+}
+
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent}
