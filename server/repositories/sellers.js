@@ -26,4 +26,9 @@ const deleteRekoAreas = async (seller_id, reko_areas) => {
 
 }
 
-module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo }
+const getAllSellers = async () => {
+  const sellers = db.query("SELECT * FROM sellers")
+  return sellers
+}
+
+module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, getAllSellers }
