@@ -54,9 +54,18 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
       }
     }
     if(product.unit_price === new_product.unit_price){
-      const old_sizes = new_sizes.filter(size => size.id != null)
+      
       await productsRepository.updateProduct(product_id, new_product)
+
+      const old_sizes = new_sizes.filter(size => size.id != null)
       await productsRepository.updateOldProductSizes(old_sizes)
+
+      const new_product_sizes = new_sizes.filter(size => size.id === null)
+      if(new_product_sizes.length > 0){
+        await productsRepository.addProductSizes(product_id,new_product_sizes)
+      }
+      
+
     } else{
       await addProduct(new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db)
       await productsRepository.updateOldPricedProduct(product.id)
