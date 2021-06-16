@@ -15,7 +15,7 @@ Content-Type: application/json
     "vat": 14,
     "close_before_event": 24
   },
-  "eventChoices": [1,2],
+  "delete_even": [1,2],
   "sizes": [{
     "quantity": 2,
     "unit": 1

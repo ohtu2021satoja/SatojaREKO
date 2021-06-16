@@ -10,9 +10,14 @@ const addMarket = async (address, rekoChoices) => {
   return response
 }
 
-const getAllMarkets = () => {
-  const request = axios.get(apiUrl)
-  return request.then((response) => response.data)
+const getAllMarkets = async () => {
+  const response = await axios.get(apiUrl)
+  return response.data
 }
 
-export default { getAllMarkets, addMarket }
+export const getSellerMarkets = async (id) => {
+  const response = await axios.get(`${apiUrl}/seller/${id}`)
+  return response.data
+}
+
+export default { getAllMarkets, getSellerMarkets, addMarket }

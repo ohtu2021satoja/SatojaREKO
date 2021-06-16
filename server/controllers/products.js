@@ -4,6 +4,7 @@ const productsRepository = require("../repositories/products")
 const eventsRepository = require("../repositories/events")
 const db = require("../db")
 productsRouter.get("/", async (req, res) => {
+  console.log("USEEEEEER",req.user)
   try {
     const products = await productService.getAllProducts(productsRepository)
     res.status(200).json(products);

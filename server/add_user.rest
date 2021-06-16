@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "firstname": "Touko",
+  "lastname": "Puro",
+  "email": "puro.touko@gmail.com",
+  "phonenumber": "+358452143423"
+}

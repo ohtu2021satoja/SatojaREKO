@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { resetPrice, changePrice } from "../reducers/priceReducer"
 import { setAlv } from "../reducers/alvReducer.js"
 import { resetProductSizes, initializeSizes } from "../reducers/productSizesReducer"
+import { initializeEvents } from "../reducers/eventChoicesReducer"
 import imageService from "../services/images"
 import eventService from "../services/events"
 import productService from "../services/products"
@@ -87,11 +88,13 @@ const UpdateProduct = () => {
     setDeleteBeforeEvent(product.close_before_event)
     dispatch(initializeSizes(product.sizes))
     setImageID(product.image_url)
+    console.log(product.events)
+    dispatch(initializeEvents(product.events))
     setProduct(product)
   }
   useEffect(() => {
     async function fetchData() {
-      const events = await eventService.getSellersUpcomingEvents(1)
+      const events = await eventService.getSellersUpcomingEvents(26)
       const res_product = await productService.getProductById(id)
       initialSetUp(res_product)
       setEvents(events)
@@ -127,6 +130,7 @@ const UpdateProduct = () => {
       vat,
     }
     console.log(product)
+    console.log("choices", eventChoices)
     await productService.updateProduct(id, { product, eventChoices, sizes })
   }
   if (product) {

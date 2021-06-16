@@ -4,19 +4,19 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
+import EventInfoLabel from "./EventInfoLabel"
 import SellerPage from "./SellerPage"
+import ProductPage from "./ProductPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
-import { getAllMarkets } from "../services/markets"
 
 const events = [
   {
     id: 1,
     market_id: 1,
-    start: "2021-05-26T16:30:00.683Z",
-    endtime: "2021-05-26T17:00:00.683Z",
+    start: "2021-05-23T16:30:00.683Z",
+    endtime: "2021-05-23T17:00:00.683Z",
     area: "Etelä-Savo",
     address: "Brahentie 4",
     type: "reko_market",
@@ -35,8 +35,8 @@ const events = [
   {
     id: 2,
     market_id: 2,
-    start: "2021-05-26T16:11:47.683Z",
-    endtime: "2021-05-26T16:11:47.683Z",
+    start: "2021-05-26T16:00:47.683Z",
+    endtime: "2021-05-26T16:30:47.683Z",
     area: "Etelä-Savo",
     address: "Maaherrankatu 67",
     type: "reko_market",
@@ -105,7 +105,6 @@ const MapInstance = (props) => {
 }
 
 const MapPage = () => {
-  const [markets, setMarkets] = useState(null)
   const [visibleMarkets, setvisibleMarkets] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
@@ -119,14 +118,6 @@ const MapPage = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
-
-      const getMarkets = async () => {
-        //const markets = await getAllMarkets()
-      }
-
-      const markets = getMarkets
-
-      setMarkets(markets)
 
       return
     }
@@ -163,6 +154,29 @@ const MapPage = () => {
     setMapInstance(map)
   }
 
+  const handleOpenProduct = (product, event, addToCart, removeFromCart) => {
+    setOpenedPage(
+      ProductPage({
+        product: product,
+        event: event,
+        returnToEvent: handleCloseProduct,
+        addToCart: addToCart,
+        removeFromCart: removeFromCart,
+      })
+    )
+  }
+
+  const handleCloseProduct = (event) => {
+    setOpenedPage(
+      EventPage({
+        event: event,
+        closePage: handleClosePage,
+        openProductPage: handleOpenProduct,
+        closeProductPage: handleClosePage,
+      })
+    )
+  }
+
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
       behavior: "smooth",
@@ -181,17 +195,19 @@ const MapPage = () => {
       }}
     >
       <Popup className="map-popup" autoPan={false}>
-        <Card className="text-center popup-card">
-          Noutotilaisuus (REKO) <br />
-          {event.address} <br />
-          10.7 <br />
-          18.00-18.30 <br />
-        </Card>
+        <EventInfoLabel event={event} classes="mb-0 mt-0" styles={{ fontSize: 14 }} />
         <Button
-          className="btn btn-primary btn-sm popup-button"
+          className="btn btn-primary btn-sm popup-button mt-1"
           variant="success"
           onClick={() =>
-            setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+            setOpenedPage(
+              EventPage({
+                event: event,
+                closePage: handleClosePage,
+                openProductPage: handleOpenProduct,
+                closeProductPage: handleClosePage,
+              })
+            )
           }
         >
           Siirry tilaisuuteen
@@ -229,7 +245,7 @@ const MapPage = () => {
 
   return openedPage ? (
     openedPage
-  ) : markets ? (
+  ) : events ? (
     <div className="map-container">
       <MapContainer
         center={mapCenter}

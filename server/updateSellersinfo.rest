@@ -1,10 +1,10 @@
-PUT http://localhost:3003/api/users/1
+PUT http://localhost:3003/api/users/26
 Content-Type: application/json
 
 {
   "seller_update": true,
   "reko_areas": {
-    "delete": [3,1],
+    "delete": [3,1,5,4],
     "add": [1,5,4]
   },
   "seller_info": {
@@ -14,12 +14,12 @@ Content-Type: application/json
     "zipcode": "00101",
     "city": "Helsinki",
     "salesreport_check": true,
-    "descriprtion": "I am pekka"
+    "description": "I am pekka"
   },
   "user_info": {
     "firstname": "Pekka",
     "lastname": "Korhonen",
-    "email": "pekkakorhonen@email.com",
-    "phonenumber": "+358401234567"
+    "email": "pekkakorfdsfhonen@email.com",
+    "phonenumber": "+35840254234567"
   }
 }

@@ -12,15 +12,17 @@ const FacebookSignUpButton = ({ handleSignUp }) => {
   }
 
   return (
-    <Button
-      onClick={() => getUserFormFacebook()}
-      variant="outline-primary"
-      size="lg"
-      type="submit"
-      className="w-100"
-    >
-      Rekisteröidy Facebookilla
-    </Button>
+    <a href="api/auth/facebook">
+      <Button
+        onClick={() => getUserFormFacebook()}
+        variant="outline-primary"
+        size="lg"
+        type="submit"
+        className="w-100"
+      >
+        Rekisteröidy Facebookilla
+      </Button>
+    </a>
   )
 }
 
