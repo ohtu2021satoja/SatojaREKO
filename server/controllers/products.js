@@ -67,6 +67,7 @@ productsRouter.post('/seller/:id', async (req, res, next) => {
 productsRouter.put("/:id", async (req, res, next) => {
   try{
     const { id } = req.params
+    console.log("REG body",req.body.product)
     const product = await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
     res.send(product)
   } catch(error){
@@ -82,6 +83,16 @@ productsRouter.delete("/:id", async (req, res) => {
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)
+  }
+})
+
+productsRouter.get("/:id", async (req, res, next) => {
+  const { id } = req.params
+  try{
+    const product = await productService.getProductById(id, productsRepository)
+    res.send(product)
+  } catch(error){
+    next(error)
   }
 })
 

@@ -7,7 +7,7 @@ const getAllProducts = async () => {
 }
 
 const getProductById = async (id) => {
-  const product = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id  WHERE products.id= $1 GROUP BY products.id",[id])
+  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id  WHERE products.id= $1 GROUP BY products.id",[id])
   console.log(product)
   return(product[0])
 }
@@ -60,7 +60,7 @@ const updateOldPricedProduct = async (product_id) => {
 }
 
 const updateProduct = async (product_id, new_product) => {
-  db.query("UPDATE products SET name=$1, category=$2, type=$3, description=$4, close_before_event=$5, vat=$6, image_url=$7 WHERE id=$8", [new_product.name, new_product.category, new_product.type, new_product.description, new_product.close_before_event, new_product.vat, new_product.image_url, product_id])
+  db.query("UPDATE products SET name=$1, category=$2, type=$3, description=$4, close_before_event=$5, vat=$6, image_url=$7 WHERE id=$8", [new_product.name, new_product.category, new_product.type, new_product.description, new_product.close_before_event, new_product.vat, new_product.imageURL, product_id])
 }
 
 const updateProductSizes = async (new_sizes) => {
