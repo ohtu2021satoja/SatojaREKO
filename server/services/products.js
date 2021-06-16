@@ -64,9 +64,12 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
       if(new_product_sizes.length > 0){
         await productsRepository.addProductSizes(product_id,new_product_sizes)
       }
-      
 
+      const new_units = new_sizes.map(size => size.unit)
+      const removed_sizes = product.sizes.filter(size => ! new_units.includes(size.unit))
+      await productsRepository.removeSizes(product_id, removed_sizes)
     } else{
+      console.log("B")
       await addProduct(new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db)
       await productsRepository.updateOldPricedProduct(product.id)
     }

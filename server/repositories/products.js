@@ -69,4 +69,10 @@ const updateOldProductSizes = async (new_sizes) => {
   })
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes }
+const removeSizes = async (product_id, removed_sizes) => {
+  const IDs = removed_sizes.map(size => size.id)
+  db.query("UPDATE batches SET removed=false WHERE batches.sizes_id=ANY($1::int[])", [IDs])
+  db.query("DELETE from sizes WHERE id=ANY($1::int[])",[IDs])  
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes }
