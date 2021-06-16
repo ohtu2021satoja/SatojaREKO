@@ -5,11 +5,12 @@ import { events } from "./events"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import currentProduct from "./currentProduct"
 import { shoppingCart } from "./shoppingCart"
 import alvReducer from "./alvReducer"
 
-
 export default combineReducers({
+  currentProduct: currentProduct,
   alv: alvReducer,
   price: priceReducer,
   productSizes: productSizesReducer,

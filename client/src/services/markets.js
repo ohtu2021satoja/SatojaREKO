@@ -15,4 +15,4 @@ const getAllMarkets = () => {
   return request.then((response) => response.data)
 }
 
-export { getAllMarkets, addMarkets }
+export default { getAllMarkets, addMarket }

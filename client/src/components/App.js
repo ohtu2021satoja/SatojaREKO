@@ -11,7 +11,6 @@ import SignUpPage from "./login/SignUpPage"
 import HomePage from "./HomePage"
 import AppSeller from "./AppSeller"
 import AppBuyer from "./AppBuyer"
-import AdminPage from "./AdminPage"
 
 const App = (props) => {
   const [sellerView, setSellerView] = useState(null)
@@ -42,7 +41,59 @@ const App = (props) => {
 
   const handleViewChange = (value) => setSellerView(value)
 
-  return <AdminPage />
+  return (
+    <Container fluid>
+      <Row className="vh-100">
+        <Col
+          xs={12}
+          sm={{ span: 8, offset: 2 }}
+          style={{ backgroundColor: "white", paddingBottom: 70 }}
+        >
+          {(() => {
+            if (authedUser && signUp)
+              return (
+                <SignUpPage
+                  user={authedUser}
+                  handleSignUp={activateSignUp}
+                  handleSignOut={signOut}
+                  handleLogout={logOut}
+                />
+              )
+
+            if (!authedUser)
+              return (
+                <LoginPage
+                  signed={signUp}
+                  handleLogin={loginWithFacebook}
+                  handleSignUp={activateSignUp}
+                />
+              )
+
+            if (sellerView === null && !signUp)
+              return <HomePage setSellerView={handleViewChange} logOut={logOut} />
+
+            if (sellerView === true)
+              return (
+                <AppSeller
+                  user={authedUser}
+                  logOut={logOut}
+                  setSellerView={handleViewChange}
+                />
+              )
+
+            if (sellerView === false)
+              return (
+                <AppBuyer
+                  user={authedUser}
+                  logOut={logOut}
+                  setSellerView={handleViewChange}
+                />
+              )
+          })()}
+        </Col>
+      </Row>
+    </Container>
+  )
 }
 
 const mapStateToProps = ({ authedUser }) => {
