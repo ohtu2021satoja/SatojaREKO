@@ -68,8 +68,19 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
       const new_units = new_sizes.map(size => size.unit)
       const removed_sizes = product.sizes.filter(size => ! new_units.includes(size.unit))
       await productsRepository.removeSizes(product_id, removed_sizes)
+
+      const adding_events = new_event_choices.filter(event => ! product.events.includes(event))
+      if(adding_events.length > 0){
+        await eventsRepository.addProductToEvents(product_id, adding_events)
+      }
+
+      const events_to_remove = product.events.filter(event => ! new_event_choices.includes(event))
+      if(events_to_remove.length > 0){
+        await eventsRepository.removeProductFromEvents(product_id, events_to_remove)
+      }
+
+
     } else{
-      console.log("B")
       await addProduct(new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db)
       await productsRepository.updateOldPricedProduct(product.id)
     }

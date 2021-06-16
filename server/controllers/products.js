@@ -69,6 +69,7 @@ productsRouter.put("/:id", async (req, res, next) => {
     const { id } = req.params
     console.log("REG body",req.body.product)
     console.log("REG SIZES", req.body.sizes)
+    console.log("REG EVENTS", req.body.eventChoices)
     const product = await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
     res.send(product)
   } catch(error){
