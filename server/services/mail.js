@@ -3,17 +3,18 @@ const mailConfig = require('../utils/mailConfig')
 const mailTemp = require('../services/templates/userVerificationTemp')
 
 const sendMail = async (mailOptions) => {
-    const transporter = await nodemailer.createTransport(mailConfig)
+    const transporter = await nodemailer.createTransport(mailConfig.emailConfig)
     const mail = await transporter.sendMail(mailOptions)
     return mail
 }
 
-const initiateVerificationMail = (address) => {
+const initiateVerificationMail = (address, url) => {
+    const text = mailTemp.message(url)
     return {
-        from: config.mailUsername,
+        from: mailConfig.ADMIN_EMAIL,
         to: address,
         subject: mailTemp.subject,
-        html: mailTemp.message
+        html: text
     }
 }
 

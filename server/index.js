@@ -17,7 +17,7 @@ const ordersRoute = require('./controllers/orders')
 const marketsRoute = require('./controllers/markets')
 const authRouter = require('./controllers/auth')
 const rekoAreasRoute = require('./controllers/reko_areas')
-const mailRoute = require('./controllers/mail')
+const mailRouter = require('./controllers/mail')
 
 
 server.use(cors({credentials: true, origin: 'http://localhost:3000'}))
@@ -55,7 +55,7 @@ server.use('/api/sellers', sellersRoute)
 server.use('/api/orders', ordersRoute)
 server.use('/api/markets', marketsRoute)
 server.use('/api/reko_areas', rekoAreasRoute)
-server.use('/api/mail', mailRoute)
+server.use('/api/mail', mailRouter)
 
 // Routes
 server.get('/', middleware.authCheck, (req, res) => {
