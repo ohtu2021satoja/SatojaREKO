@@ -19,32 +19,40 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
   }, [cart, eventID, size.id])
 
   return (
-    <Col xs={8}>
-      <b>
-        {size.unit} {unit}{" "}
-      </b>
-      <Button
-        size="lg"
-        variant="outline-dark"
-        onClick={(e) => {
-          e.stopPropagation()
-          removeFromCart(size)
-        }}
-      >
-        -
-      </Button>{" "}
-      {inCart}{" "}
-      <Button
-        size="lg"
-        variant="outline-dark"
-        onClick={(e) => {
-          e.stopPropagation()
-          if (inCart < size.quantity) addToCart(size)
-        }}
-      >
-        +
-      </Button>
-    </Col>
+    <>
+      <Col xs={3} className="d-flex justify-content-center align-items-center">
+        <b>
+          {size.unit} {unit}
+        </b>
+      </Col>
+      <Col xs={5} className="d-flex justify-content-between align-items-center">
+        <Button
+          size="sm"
+          variant="light"
+          onClick={(e) => {
+            e.stopPropagation()
+            removeFromCart(size)
+          }}
+        >
+          <h4>
+            <i className="bi bi-cart-dash" style={{ fontSize: 28 }} />
+          </h4>
+        </Button>{" "}
+        <h5>{inCart} </h5>
+        <Button
+          size="sm"
+          variant="light"
+          onClick={(e) => {
+            e.stopPropagation()
+            if (inCart < size.quantity) addToCart(size)
+          }}
+        >
+          <h4>
+            <i className="bi bi-cart-plus" style={{ fontSize: 28 }} />
+          </h4>
+        </Button>
+      </Col>
+    </>
   )
 }
 

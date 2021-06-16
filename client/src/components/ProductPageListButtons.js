@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
-const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
+const ProductPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
   const cart = useSelector((state) => state.shoppingCart)
 
   const [inCart, setInCart] = useState(0)
@@ -11,14 +11,13 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
     const updateCart = () => {
       const eventOrders = cart.find((order) => order.event_id === eventID)
       if (eventOrders) {
-        const batch = eventOrders.batches.find((batch) => batch.size_id === size.size_id)
+        const batch = eventOrders.batches.find((batch) => batch.size_id === size.id)
         if (batch) setInCart(batch.order_quantity)
         else setInCart(0)
       } else setInCart(0)
     }
-
     updateCart()
-  }, [cart, eventID, size.size_id])
+  }, [cart, eventID, size.id])
 
   return (
     <>
@@ -32,7 +31,7 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
           size="sm"
           variant="light"
           onClick={(e) => {
-            if (inCart > 0) removeFromCart(size)
+            removeFromCart(size)
           }}
         >
           <h4>
@@ -56,4 +55,4 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
   )
 }
 
-export default ShoppingCartListButtons
+export default ProductPageListButtons

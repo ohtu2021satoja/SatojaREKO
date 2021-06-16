@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
+import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
 
 const products = [
@@ -58,9 +59,9 @@ const products = [
   },
 ]
 
-const EventPage = ({ event, closePage }) => {
+const EventPage = ({ event, closePage, openProductPage, closeProductPage }) => {
   return (
-    <Row className="">
+    <Row>
       <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
         <Nav className="py-2">
           <Nav.Item>
@@ -78,18 +79,17 @@ const EventPage = ({ event, closePage }) => {
       </Col>
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
-        <div>
-          <p>{event.name} (REKO)</p>
-          <p>{event.address}</p>
-          {(() => {
-            const startDate = new Date(event.start)
-            return <p>{startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}</p>
-          })()}{" "}
-        </div>
+        <EventInfoLabel event={event} classes="mb-0" styles={{ fontSize: 16 }} />
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (
-          <EventPageListItem product={product} event={event} key={index} />
+          <EventPageListItem
+            product={product}
+            event={event}
+            openProductPage={openProductPage}
+            closeProductPage={closeProductPage}
+            key={index}
+          />
         ))}
       </Col>
     </Row>
