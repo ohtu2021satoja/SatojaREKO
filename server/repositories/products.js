@@ -7,7 +7,7 @@ const getAllProducts = async () => {
 }
 
 const getProductById = async (id) => {
-  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id  WHERE products.id= $1 GROUP BY products.id",[id])
+  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, array_agg(DISTINCT products_events.id_event) AS events, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id INNER JOIN products_events ON products_events.id_product=products.id  WHERE products.id= $1 GROUP BY products.id",[id])
   console.log(product)
   return(product[0])
 }
