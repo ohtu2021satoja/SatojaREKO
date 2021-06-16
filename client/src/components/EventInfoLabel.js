@@ -2,6 +2,16 @@ const EventInfoLabel = ({ event, classes, styles }) => {
   const startDate = new Date(event.start)
   const endDate = new Date(event.endtime)
 
+  const weekdays = [
+    "Sunnuntai",
+    "Maanantai",
+    "Tiistai",
+    "Keskiviikko",
+    "Torstai",
+    "Perjantai",
+    "Lauantai",
+  ]
+
   const startTime =
     startDate.getUTCHours() +
     ":" +
@@ -15,6 +25,8 @@ const EventInfoLabel = ({ event, classes, styles }) => {
       ? "0" + endDate.getUTCMinutes()
       : endDate.getUTCMinutes())
 
+  const startDay = weekdays[startDate.getUTCDay()]
+
   return (
     <div className="d-flex flex-column text-center">
       <p className={classes} style={styles}>
@@ -25,7 +37,7 @@ const EventInfoLabel = ({ event, classes, styles }) => {
         {event.address}
       </p>
       <p className={classes} style={styles}>
-        {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+        {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
       </p>
       <p className={classes} style={styles}>
         {startTime}-{endTime}
