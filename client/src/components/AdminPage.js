@@ -164,14 +164,15 @@ const RekoFormDetails = () => {
 const RekoCheckBox = ({ reko_area, rekoChoices, setRekoChoices }) => {
   const handleCheck = (id) => {
     if (rekoChoices.includes(id)) {
-      setRekoChoices(rekoChoices.filter((reko_id) => reko_id != id))
+      setRekoChoices([])
     } else {
-      setRekoChoices(rekoChoices.concat(id))
+      setRekoChoices([id])
     }
   }
   return (
     <BootStrapForm.Check
-      type="checkbox"
+      type="radio"
+      name="flexRadioDefault"
       label={reko_area.name}
       onChange={() => handleCheck(reko_area.id)}
     />
@@ -180,14 +181,16 @@ const RekoCheckBox = ({ reko_area, rekoChoices, setRekoChoices }) => {
 
 const RekoAreas = ({ setRekoChoices, rekoAreas, rekoChoices }) => {
   const checkboxes = rekoAreas.map((reko_area) => (
-    <RekoCheckBox
-      key={reko_area.id}
-      reko_area={reko_area}
-      rekoChoices={rekoChoices}
-      setRekoChoices={setRekoChoices}
-    />
+    <div class="form-check">
+      <RekoCheckBox
+        key={reko_area.id}
+        reko_area={reko_area}
+        rekoChoices={rekoChoices}
+        setRekoChoices={setRekoChoices}
+      />
+    </div>
   ))
-  return <div>{checkboxes}</div>
+  return <div> {checkboxes} </div>
 }
 
 const MarketForm = ({ setAddingMarket }) => {
