@@ -5,6 +5,7 @@ import { submitOrders } from "../actions/shoppingCart"
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
+import EventInfoLabel from "./EventInfoLabel"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -62,20 +63,17 @@ const ShoppingCart = () => {
               <div key={index}>
                 <h6>
                   <u>Noutotilaisuus</u>
-                  <br />
-                  <br />
-                  {order.event.name} (REKO)
-                  <br />
-                  {order.event.address}
-                  <br />
-                  {(() => {
-                    const startDate = new Date(order.event.start)
-                    return (
-                      <>{startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}</>
-                    )
-                  })()}{" "}
-                </h6>{" "}
+                </h6>
+                <div className="mb-3">
+                  <EventInfoLabel
+                    event={order.event}
+                    classes="mb-0 mt-0"
+                    styles={{ fontSize: 16 }}
+                  />
+                </div>
                 {(() => {
+                  // Sort orders by product to render different sizes
+                  // of same product on the same card
                   const ordersByProduct = []
 
                   order.batches.map((batch, index) => {

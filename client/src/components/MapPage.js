@@ -4,9 +4,9 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
+import EventInfoLabel from "./EventInfoLabel"
 import SellerPage from "./SellerPage"
 import ProductPage from "./ProductPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
@@ -35,8 +35,8 @@ const events = [
   {
     id: 2,
     market_id: 2,
-    start: "2021-05-26T16:11:47.683Z",
-    endtime: "2021-05-26T16:11:47.683Z",
+    start: "2021-05-26T16:00:47.683Z",
+    endtime: "2021-05-26T16:30:47.683Z",
     area: "Etelä-Savo",
     address: "Maaherrankatu 67",
     type: "reko_market",
@@ -195,14 +195,9 @@ const MapPage = () => {
       }}
     >
       <Popup className="map-popup" autoPan={false}>
-        <Card className="text-center popup-card">
-          Noutotilaisuus (REKO) <br />
-          {event.address} <br />
-          10.7 <br />
-          18.00-18.30 <br />
-        </Card>
+        <EventInfoLabel event={event} classes="mb-0 mt-0" styles={{ fontSize: 14 }} />
         <Button
-          className="btn btn-primary btn-sm popup-button"
+          className="btn btn-primary btn-sm popup-button mt-1"
           variant="success"
           onClick={() =>
             setOpenedPage(
