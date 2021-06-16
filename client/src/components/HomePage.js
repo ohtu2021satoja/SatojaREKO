@@ -44,4 +44,5 @@ const HomePage = ({ logOut, setSellerView }) => (
     </Col>
   </Row>
 )
+
 export default HomePage

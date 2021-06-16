@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form"
 import { changePrice } from "../reducers/priceReducer"
 import { useSelector, useDispatch } from "react-redux"
 
-const Price = () => {
+const Price = ({ setFieldValue, errors, touched }) => {
   const price = useSelector((state) => state.price)
   const dispatch = useDispatch()
   const handlePrice = (newPrice) => {
@@ -14,13 +14,19 @@ const Price = () => {
     dispatch(changePrice(newPrice))
   }
   return (
-    <Form.Control
-      value={price}
-      onChange={(event) => dispatch(changePrice(event.target.value))}
-      type="text"
-      onBlur={() => handlePrice(price)}
-      placeholder="00,00€"
-    />
+    <div>
+      <Form.Control
+        value={price}
+        onChange={(event) => {
+          setFieldValue("price", event.target.value)
+          dispatch(changePrice(event.target.value))
+        }}
+        type="text"
+        onBlur={() => handlePrice(price)}
+        placeholder="00,00€"
+      />
+      {touched.price && errors.price ? <div>{errors.price}</div> : null}
+    </div>
   )
 }
 

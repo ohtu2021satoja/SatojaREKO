@@ -2,8 +2,9 @@ const db = require("../db")
 const format = require("pg-format")
 
 const addOrder = async (buyer_id, event_id) => {
-  const query = "INSERT INTO orders VALUES(DEFAULT, $1, DEFAULT, $2) Returning id"
-  const order_id = await db.query(query, [buyer_id, event_id])
+  const current_date = new Date()
+  const query = "INSERT INTO orders VALUES(DEFAULT, $1, $2, $3) Returning id"
+  const order_id = await db.query(query, [buyer_id, current_date ,event_id])
   return(order_id[0].id)
 }
 
