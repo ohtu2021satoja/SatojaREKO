@@ -92,42 +92,14 @@ const UpdateProduct = () => {
   useEffect(() => {
     async function fetchData() {
       const events = await eventService.getSellersUpcomingEvents(1)
-      const product = {
-        id: 29,
-        name: "UusiName",
-        organic: true,
-        sellers_id: 2,
-        type: "kg",
-        batch_quantity: 5,
-        created_at: "2021-06-01T07:36:00.129Z",
-        description: "Toimiiko",
-        close_before_event: 30,
-        vat: 24,
-        unit_price: 500,
-        image_url: "profile-blank_or75kg",
-        category: "Hedelmät & marjat",
-        quantity_left: "1",
-        sizes: [
-          { quantity: 0, unit: 1, price: 500, batch_quantity: 2, id: 44 },
-          {
-            quantity: 1,
-            unit: 1.5,
-            price: 750,
-            batch_quantity: 3,
-            id: 45,
-          },
-        ],
-      }
-      //const product = await productService.getProduct(id)
-      console.log(product)
-      initialSetUp(product)
+      const res_product = await productService.getProductById(id)
+      initialSetUp(res_product)
       setEvents(events)
     }
     fetchData()
   }, [])
-  const updateProduct = async ({ title, description, productType, category }) => {
+  const updateProduct = async ({ title, description, category }) => {
     const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
-    const type = parseTypeBack(productType)
     const sizes = productSizes.map((unitSize) => {
       const unitSizeFloat = parseFloat(unitSize.size.replace(",", "."))
       const resFloat = priceFloat * unitSizeFloat
@@ -139,23 +111,23 @@ const UpdateProduct = () => {
     })
     const vat = parseInt(alv.slice(0, -1))
     const priceInt = parseInt(100 * priceFloat)
-
+    console.log("productType", productType)
     const batch_quantity = productSizes.reduce((a, b) => a + b.quantity, 0)
     const product = {
       name: title,
       organic,
       sellers_id: 1,
-      type,
+      type: parseTypeBack(productType),
       batch_quantity,
       description,
-      imageURL: imageID,
+      image_url: imageID,
       category,
-      deleteBeforeEvent,
+      close_before_event: deleteBeforeEvent,
       unit_price: priceInt,
       vat,
     }
-    console.log(product, eventChoices, sizes)
-    await productService.updateProduct({ product, eventChoices, sizes })
+    console.log(product)
+    await productService.updateProduct(id, { product, eventChoices, sizes })
   }
   if (product) {
     return (

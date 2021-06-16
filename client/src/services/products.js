@@ -44,10 +44,20 @@ const getUserProducts = (id) => {
 
 const addProduct = async (productObject) => {
   const response = await axios.post(
-    `${apiUrl}/${productObject.product.sellers_id}`,
+    `${apiUrl}/seller/${productObject.product.sellers_id}`,
     productObject
   )
   return response
 }
 
-export default { getUserProducts, getProducts, addProduct }
+const updateProduct = async (product_id, productObject) => {
+  const response = await axios.put(`${apiUrl}/${product_id}`, productObject)
+}
+
+const getProductById = async (product_id) => {
+  const response = await axios.get(`${apiUrl}/${product_id}`)
+  console.log(response.data)
+  return response.data
+}
+
+export default { getUserProducts, getProducts, addProduct, updateProduct, getProductById }

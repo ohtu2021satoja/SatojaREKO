@@ -38,20 +38,25 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
     console.log(product_id)
     const product  = await productsRepository.getProductById(product_id)
     console.log(product.sizes)
-    if(!new_product.imageURL){
-      new_product.imageURL = BLANK_IMAGE
+    if(!new_product.image_url){
+      new_product.image_url = BLANK_IMAGE
     }
     for(i in new_sizes){
-      const difference = new_sizes[i].quantity - product.sizes[i].batch_quantity
       new_sizes[i].batch_quantity = new_sizes[i].quantity 
-      new_sizes[i].quantity = product.sizes[i].quantity + difference
-      new_sizes[i].id = product.sizes[i].id
-      new_sizes[i].is_different = product.sizes[i].unit - new_sizes[i].unit === 0 ? false : true
+      const old_size = product.sizes.filter(size => size.unit === new_sizes[i].unit)[0]
+      console.log(old_size)
+      if(old_size){
+        const difference = new_sizes[i].quantity - old_size.batch_quantity
+        new_sizes[i].quantity = old_size.quantity + difference
+        new_sizes[i].id = old_size.id
+      } else{
+        new_sizes[i].id = null
+      }
     }
-
     if(product.unit_price === new_product.unit_price){
-      await productsRepository.updateProduct(product_id, new_product) 
-      await productsRepository.updateProductSizes(new_sizes)
+      const old_sizes = new_sizes.filter(size => size.id != null)
+      await productsRepository.updateProduct(product_id, new_product)
+      await productsRepository.updateOldProductSizes(old_sizes)
     } else{
       await addProduct(new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db)
       await productsRepository.updateOldPricedProduct(product.id)
