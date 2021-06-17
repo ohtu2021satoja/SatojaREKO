@@ -6,6 +6,8 @@ const usersRepository = require("../repositories/users")
 const buyersRepository = require("../repositories/buyers")
 const sellersRepository = require("../repositories/sellers")
 
+const bcrypt = require("bcrypt")
+
 
 // auth with facebook
 authRouter.get('/facebook', passport.authenticate('facebook'))
@@ -33,7 +35,8 @@ authRouter.post("/email/register", async (req, res) => {
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
   const url = `http://localhost:3003/api/auth/email/verify/${firstname}/${lastname}/${email}/${passwordHash}/${phonenumber}`
-  await mailService.sendMail(mailService.initiateVerificationMail('puro.touko@gmail.com',url))
+  await mailService.sendMail(mailService.initiateVerificationMail(email,url))
+  res.send("Ok")
 })
 
 authRouter.get("/email/verify/:firstname/:lastname/:email/:password/:phonenumber", async (req, res) => {
