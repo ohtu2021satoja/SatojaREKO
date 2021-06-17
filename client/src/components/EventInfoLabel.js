@@ -1,4 +1,4 @@
-const EventInfoLabel = ({ event, classes, styles, omitDate, alignLeft }) => {
+const EventInfoLabel = ({ event, classes, styles, omitDate }) => {
   const startDate = new Date(event.start)
   const endDate = new Date(event.endtime)
 
