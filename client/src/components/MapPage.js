@@ -5,11 +5,9 @@ import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
-import EventPage from "./EventPage"
 import EventInfoLabel from "./EventInfoLabel"
-import SellerPage from "./SellerPage"
-import ProductPage from "./ProductPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
+import { Link } from "react-router-dom"
 
 const events = [
   {
@@ -150,7 +148,6 @@ const MapPage = () => {
   const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
   const [mapInstance, setMapInstance] = useState(null)
-  const [openedPage, setOpenedPage] = useState(null)
 
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
@@ -184,39 +181,8 @@ const MapPage = () => {
     setMapCenter(value)
   }
 
-  const handleClosePage = () => {
-    setOpenedPage(null)
-  }
-
-  const handleOpenPage = (page) => {
-    setOpenedPage(page)
-  }
-
   const getMapInstance = (map) => {
     setMapInstance(map)
-  }
-
-  const handleOpenProduct = (product, event, addToCart, removeFromCart) => {
-    setOpenedPage(
-      ProductPage({
-        product: product,
-        event: event,
-        returnToEvent: handleCloseProduct,
-        addToCart: addToCart,
-        removeFromCart: removeFromCart,
-      })
-    )
-  }
-
-  const handleCloseProduct = (event) => {
-    setOpenedPage(
-      EventPage({
-        event: event,
-        closePage: handleClosePage,
-        openProductPage: handleOpenProduct,
-        closeProductPage: handleClosePage,
-      })
-    )
   }
 
   const scrollIntoPanel = () => {
@@ -241,16 +207,11 @@ const MapPage = () => {
         <Button
           className="btn btn-primary btn-sm popup-button mt-1"
           variant="success"
-          onClick={() =>
-            setOpenedPage(
-              EventPage({
-                event: event,
-                closePage: handleClosePage,
-                openProductPage: handleOpenProduct,
-                closeProductPage: handleClosePage,
-              })
-            )
-          }
+          as={Link}
+          to={{
+            pathname: `/events/${event.id}`,
+            state: { event: event },
+          }}
         >
           Siirry tilaisuuteen
         </Button>
@@ -275,11 +236,11 @@ const MapPage = () => {
         <Button
           className="btn btn-primary btn-sm"
           variant="success"
-          onClick={() =>
-            setOpenedPage(
-              SellerPage({ seller: seller, events: events, closePage: handleClosePage })
-            )
-          }
+          as={Link}
+          to={{
+            pathname: `/sellers/${seller.id}`,
+            state: { seller: seller, events: events },
+          }}
         >
           Tuottajan sivulle
         </Button>
@@ -287,9 +248,7 @@ const MapPage = () => {
     </Marker>
   ))
 
-  return openedPage ? (
-    openedPage
-  ) : events ? (
+  return events ? (
     <div className="map-container">
       <MapContainer
         center={mapCenter}
@@ -322,14 +281,7 @@ const MapPage = () => {
             Näytä lista
           </Button>
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
-          <MapBottomPanel
-            ref={bottomPanelRef}
-            visibleMarkets={visibleMarkets}
-            handleOpenPage={handleOpenPage}
-            handleClosePage={handleClosePage}
-            handleOpenProduct={handleOpenProduct}
-            handleCloseProduct={handleCloseProduct}
-          />
+          <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>
     </div>

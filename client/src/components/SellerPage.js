@@ -3,10 +3,17 @@ import Col from "react-bootstrap/Col"
 import EventList from "./EventList"
 import BackButtonHeader from "./BackButtonHeader"
 
-const SellerPage = ({ seller, events, closePage }) => {
+const SellerPage = (props) => {
+  const events = props.location.state.events
+  const seller = props.location.state.seller
+
   return (
     <Row className="mx-auto">
-      <BackButtonHeader close={closePage} />
+      <BackButtonHeader
+        linkTo={{
+          pathname: "/map",
+        }}
+      />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
       </Col>

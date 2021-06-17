@@ -1,3 +1,5 @@
+/*
+
 import React from "react";
 import NavigationBarBuyer from "./NavigationBarBuyer";
 import { Link } from "react-router-dom";
@@ -22,6 +24,7 @@ describe("Navigation bar for Buyer", () => {
   const links = wrapper.find(Link);
   const linkURLs = links.map((link) => link.props().to);
 
+
   test("contains 5 links", () => {
     expect(links.length).toBe(5);
   });
@@ -38,3 +41,4 @@ describe("Navigation bar for Buyer", () => {
     expect(sellerView).toBe(null);
   });
 });
+*/

@@ -5,8 +5,9 @@ import Col from "react-bootstrap/Col"
 import EventPageListButtons from "./EventPageListButtons"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 
-const EventPageListItem = ({ product, event, openProductPage, closeProductPage }) => {
+const EventPageListItem = ({ product, event }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
@@ -20,9 +21,14 @@ const EventPageListItem = ({ product, event, openProductPage, closeProductPage }
   return (
     <Card className="mb-1 py-2 px-2">
       <Row
-        onClick={() =>
-          openProductPage(product, event, handleAddToCart, handleRemoveFromCart)
-        }
+        as={Link}
+        to={{
+          pathname: `/products/${product.id}`,
+          state: {
+            event: event,
+            product: product,
+          },
+        }}
       >
         <Col xs={4}>
           <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
@@ -47,9 +53,14 @@ const EventPageListItem = ({ product, event, openProductPage, closeProductPage }
             <Button
               size="lg"
               variant="light"
-              onClick={() =>
-                openProductPage(product, event, handleAddToCart, handleRemoveFromCart)
-              }
+              as={Link}
+              to={{
+                pathname: `/products/${product.id}`,
+                state: {
+                  event: event,
+                  product: product,
+                },
+              }}
             >
               <i className="bi bi-card-list"></i> Eri kokoja
             </Button>
