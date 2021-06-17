@@ -14,7 +14,11 @@ const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepos
     await db.endTransaction()
   } catch (e) {
     await db.rollBack()
-    console.log(e)
+    console.log(e.message)
+    if(e.message === 'new row for relation "sizes" violates check constraint "non_negative_quantity"'){
+      e.status = 400
+      e.message = "Trying to order too much of some product"
+    }
     throw e
   }
 }

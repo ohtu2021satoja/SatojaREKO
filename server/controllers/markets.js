@@ -4,6 +4,7 @@ const marketsRepository = require("../repositories/markets")
 const sellerService = require('../services/sellers')
 const sellerRepository = require('../repositories/sellers')
 const rekoAreasRepository = require("../repositories/reko_areas")
+const middleware = require("../utils/middleware")
 
 marketsRouter.get("/map", async (req, res, next) => {
     try {

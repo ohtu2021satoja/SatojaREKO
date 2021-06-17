@@ -4,15 +4,20 @@ const eventsRepository = require('../repositories/events')
 
 eventsRouter.get('/seller/:id', async (req, res, next) => {
     const { id } = req.params
-    const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
-    if (!sellerEvents) {
-        return res.status(404).send({ error: 'Seller events not found' })
+    if(! req.user || req.user.id != id){
+      res.sendStatus(401)
+    } else {
+      const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
+      if (!sellerEvents) {
+          return res.status(404).send({ error: 'Seller events not found' })
+      }
+      try {
+          res.send(sellerEvents)
+      } catch (err) {
+          next(err)
+      }
     }
-    try {
-        res.status(200).json(sellerEvents)
-    } catch (err) {
-        next(err)
-    }
+
 })
 
 eventsRouter.get('/market/:id', async (req,res) => {
@@ -30,7 +35,6 @@ eventsRouter.get('/market/:id', async (req,res) => {
 })
 
 eventsRouter.get('/product/feed/', async (req,res) => {
-  const {id} = req.params
   const eventProductFeed = await eventsService.getEventProductFeed(eventsRepository)
 
   if (!eventProductFeed) {

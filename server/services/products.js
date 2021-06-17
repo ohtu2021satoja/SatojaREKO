@@ -32,11 +32,16 @@ const getProductById = async (product_id, productsRepository) => {
   return(product)
 }
 
-const updateProduct = async (product_id, new_product, new_event_choices, new_sizes, productsRepository, eventsRepository, db) => {
+const updateProduct = async (product_id, new_product, new_event_choices, new_sizes, current_user, productsRepository, eventsRepository, db) => {
   try{
     await db.beginTransaction()
     console.log(product_id)
     const product  = await productsRepository.getProductById(product_id)
+    if(current_user.id != product.sellers_id){
+      const error = new Error("Current user doesn't own this product")
+      error.status = 400
+      throw error
+    }
     console.log(product.sizes)
     if(!new_product.image_url){
       new_product.image_url = BLANK_IMAGE
@@ -48,6 +53,11 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
       if(old_size){
         const difference = new_sizes[i].quantity - old_size.batch_quantity
         new_sizes[i].quantity = old_size.quantity + difference
+        if(new_sizes[i].quantity < 0){
+          const error =  new Error("Can't set batch quantity lower than what product has been ordered")
+          error.status = 400
+          throw error
+        }
         new_sizes[i].id = old_size.id
       } else{
         new_sizes[i].id = null
@@ -87,8 +97,8 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
 
     await db.endTransaction()
     return(new_sizes)
+
   } catch(e) {
-    console.log(e)
     await db.rollBack()
     throw e
   }

@@ -10,7 +10,6 @@ const addProductToEvents = (product_id, events) => {
 
 const removeProductFromEvents = (product_id, events) => {
   db.query("DELETE from products_events WHERE id_product=$1 AND id_event=ANY($2::int[])",[product_id, events])
-  db.query("UPDATE batches SET removed=true FROM orders,sizes WHERE orders.event_id=ANY($1::int[]) AND orders.id=batches.order_id AND batches.sizes_id=sizes.id AND sizes.product_id=$2",[events, product_id])
 }
 
 const getSellersEvents = async (seller_id) => {

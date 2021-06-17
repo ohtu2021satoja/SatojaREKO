@@ -15,13 +15,13 @@ Content-Type: application/json
     "vat": 14,
     "close_before_event": 24
   },
-  "delete_even": [1,2],
+  "eventChoices": [1,2],
   "sizes": [{
     "quantity": 2,
     "unit": 1
   },
   {
-    "quantity": 3,
+    "quantity": 2,
     "unit": 1.5
   }]
 }
