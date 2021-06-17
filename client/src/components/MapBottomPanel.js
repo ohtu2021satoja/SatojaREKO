@@ -13,7 +13,14 @@ const MapBottomPanel = forwardRef((props, ref) => {
         className="btn btn-primary btn-sm"
         variant="success"
         onClick={() =>
-          props.openPage(EventPage({ event: event, closePage: props.closePage }))
+          props.handleOpenPage(
+            EventPage({
+              event: event,
+              closePage: props.handleClosePage,
+              openProductPage: props.handleOpenProduct,
+              closeProductPage: props.handleCloseProduct,
+            })
+          )
         }
       >
         Siirry tilaisuuteen
