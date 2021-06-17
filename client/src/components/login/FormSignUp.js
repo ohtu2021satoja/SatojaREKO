@@ -17,20 +17,20 @@ const SignUpSchema = Yup.object().shape({
     .required(),
 })
 
-const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
+const FormSignUp = ({ user /*, handleSignUp, handleLogout*/ }) => {
   return (
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <Formik
         initialValues={{
-          name: user.name,
-          surname: user.surname,
-          email: user.email,
-          phone: "",
+          name: user.name ? user.name : "",
+          surname: user.surname ? user.surname : "",
+          email: user.email ? user.email : "",
+          phone: user.phone ? user.phone : "",
           terms: false,
         }}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          const updatedUser = {
+          /*const updatedUser = {
             name: values.name,
             surname: values.surname,
             email: values.email,
@@ -39,7 +39,7 @@ const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
           }
 
           handleSignUp(updatedUser)
-          handleLogout()
+          handleLogout()*/
         }}
       >
         {() => (
@@ -54,9 +54,6 @@ const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
             <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
               Rekisteröidy
             </Button>
-            <p class="text-center text-muted">
-              Rekisteröidyttyäsi pyydämme sinua kirjautumaan Facebookilla
-            </p>
           </Form>
         )}
       </Formik>
