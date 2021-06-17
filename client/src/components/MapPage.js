@@ -270,7 +270,11 @@ const MapPage = () => {
       </MapContainer>
       <Row className="mt-1 mx-2">
         <Col xs={12} className="mb-4 text-center">
-          <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
+          <Button
+            className="btn btn-sm"
+            variant="outline-success"
+            onClick={scrollIntoPanel}
+          >
             Näytä lista
           </Button>
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
