@@ -60,7 +60,7 @@ authRouter.post("/email/reset_password", async (req, res) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
     const url = `http://localhost:3003/api/users/${user.id}/reset_password?passwordHash=${passwordHash}`
-    await mailService.sendMail(mailService.initiateVerificationMail(email,url))
+    await mailService.sendMail(mailService.initiatePasswordResetMail(email,url))
     res.send(`Resetting email has been sent to ${email}`)
   }
 })

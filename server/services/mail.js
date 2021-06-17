@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer')
 const mailConfig = require('../utils/mailConfig')
 const mailTemp = require('../services/templates/userVerificationTemp')
+const resetTemp = require('../services/templates/passwordResetTemp')
 
 const sendMail = async (mailOptions) => {
     const transporter = await nodemailer.createTransport(mailConfig.emailConfig)
@@ -18,4 +19,14 @@ const initiateVerificationMail = (address, url) => {
     }
 }
 
-module.exports = {sendMail, initiateVerificationMail}
+const initiatePasswordResetMail = (address, url) => {
+    const text = resetTemp.message(url)
+    return {
+        from: mailConfig.ADMIN_EMAIL,
+        to: address,
+        subject: resetTemp.subject,
+        html: text
+    }
+}
+
+module.exports = {sendMail, initiateVerificationMail, initiatePasswordResetMail}
