@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { getAuthedUser, logoutUser } from "../services/users"
+import { getAuthedUser } from "../services/users"
+import { logoutUser } from "../services/logout"
 import { setAuthedUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
@@ -21,7 +22,7 @@ const App = (props) => {
   // promise returns undefined if no user is found
   useEffect(() => {
     getAuthedUser().then(({ user }) => (user ? setAuthedUser(user) : setAuthedUser(null)))
-  }, [props, setAuthedUser])
+  }, [setAuthedUser])
 
   const getUser = async () => {
     const user = await getAuthedUser()
