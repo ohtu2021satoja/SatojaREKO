@@ -1,26 +1,17 @@
 const buyersRouter = require('express').Router()
 const buyersService = require("../services/buyers")
 const buyersRepository = require("../repositories/buyers")
-const usersRepository = require("../repositories/users")
-const axios  = require('axios')
-
-buyersRouter.put('/:id', async (req, res) => {
-  const { id } = req.params
-  await  buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
-  return res.sendStatus(200).end()
-})
-
-buyersRouter.post('/:id', async (req, res) => {
-  const { id } = req.params
-  await buyersService.createBuyer(id, req.body, buyersRepository, usersRepository)
-  res.sendStatus(200)
-})
 
 
 buyersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
-  await buyersService.removeBuyerImage(id, buyersRepository)
-  return res.sendStatus(200).end()
+  if(! req.user || req.user.id != id){
+    res.sendStatus(401)
+  } else{
+    await buyersService.removeBuyerImage(id, buyersRepository)
+    res.sendStatus(200).end()
+  }
+
 })
 
 buyersRouter.put('/:id/image', async (req, res) => {
