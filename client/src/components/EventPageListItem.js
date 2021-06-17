@@ -23,7 +23,7 @@ const EventPageListItem = ({ product, event }) => {
       <Row
         as={Link}
         to={{
-          pathname: `/products/${product.id}`,
+          pathname: `/events/${event.id}/products/${product.id}`,
           state: {
             event: event,
             product: product,
@@ -55,7 +55,7 @@ const EventPageListItem = ({ product, event }) => {
               variant="light"
               as={Link}
               to={{
-                pathname: `/products/${product.id}`,
+                pathname: `/events/${event.id}/products/${product.id}`,
                 state: {
                   event: event,
                   product: product,

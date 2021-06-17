@@ -14,20 +14,24 @@ const RoutesBuyer = ({ user, logOut, setSellerView }) => (
     <Route exact path="/">
       <HomePage logOut={logOut} setSellerView={setSellerView} />
     </Route>
-    <Route path="/orders">
+    <Route exact path="/orders">
       <OrdersBuyers />
     </Route>
-    <Route path="/map">
+    <Route exact path="/map">
       <MapPage />
     </Route>
-    <Route path="/cart">
+    <Route exact path="/cart">
       <ShoppingCart />
     </Route>
-    <Route path="/profile">
+    <Route exact path="/profile">
       <ProfilePageBuyer user={user} />
     </Route>
     <Route path="/events/:eventID" exact component={EventPage}></Route>
-    <Route path="/products/:productID" exact component={ProductPage}></Route>
+    <Route
+      path="/events/:eventID/products/:productID"
+      exact
+      component={ProductPage}
+    ></Route>
     <Route path="/sellers/:sellerID" exact component={SellerPage}></Route>
     <Route>Not found</Route>
   </Switch>

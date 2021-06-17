@@ -205,7 +205,8 @@ const MapPage = () => {
       <Popup className="map-popup" autoPan={false}>
         <EventInfoLabel event={event} classes="mb-0 mt-0" styles={{ fontSize: 14 }} />
         <Button
-          className="btn btn-primary btn-sm popup-button mt-1"
+          className="btn btn-success btn-sm popup-button mt-1"
+          style={{ color: "white" }}
           variant="success"
           as={Link}
           to={{
@@ -234,7 +235,8 @@ const MapPage = () => {
         {seller.name} <br />
         {seller.address} <br />
         <Button
-          className="btn btn-primary btn-sm"
+          className="btn btn-success btn-sm popup-button"
+          style={{ color: "white" }}
           variant="success"
           as={Link}
           to={{

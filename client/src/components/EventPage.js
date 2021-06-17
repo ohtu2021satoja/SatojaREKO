@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
 import BackButtonHeader from "./BackButtonHeader"
-import { useParams } from "react-router-dom"
+//import { useParams } from "react-router-dom"
 
 const products = [
   {
@@ -60,8 +60,8 @@ const products = [
 ]
 
 const EventPage = (props) => {
-  const { eventID } = useParams()
-  console.log("eventID: " + eventID)
+  //const { eventID } = useParams()
+  //console.log("eventID: " + eventID)
 
   const event = props.location.state.event
 
