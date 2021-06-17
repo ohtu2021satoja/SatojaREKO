@@ -21,6 +21,17 @@ usersRouter.put('/:id', async (req, res) => {
   res.sendStatus(200).end()
 })
 
+usersRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params
+
+  if(! req.user || req.user.id != id){
+    res.sendStatus(401)
+  }
+
+  await sellersService.deleteUser(id, usersRepository)
+  res.sendStatus(200)
+})
+
 usersRouter.post("/", async (req, res) => {
   await usersService.createUser(req.body, usersRepository)
   res.sendStatus(200)

@@ -6,6 +6,15 @@ const getUser = async (id, usersRepository) => {
     return user
 }
 
+const getUserByEmail = async (email, usersRepository) => {
+  const user = await usersRepository.getUserByEmail(email)
+  return(user)
+}
+
+const addPasswordToUser = async (id, password, usersRepository) => {
+  await usersRepository.addPasswordToUser(id, password)
+}
+
 const createUser = async (params, usersRepository, sellersRepository, buyersRepository ) => {
   params.image_url = BLANK_IMAGE
   params.location = [null, null]
@@ -15,4 +24,9 @@ const createUser = async (params, usersRepository, sellersRepository, buyersRepo
   await buyersRepository.createBuyer(user_id, params)
 }
 
-module.exports = { getUser, createUser }
+const deleteUser = async (id, usersRepository, productsRepository) => {
+  await productsRepository.addUsersOrdersQuantitiesToSizes(id)
+  await usersRepository.deleteUser(id)
+}
+
+module.exports = { getUser, createUser, deleteUser, getUserByEmail, addPasswordToUser }

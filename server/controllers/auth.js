@@ -34,9 +34,22 @@ authRouter.post("/email/register", async (req, res) => {
   const {firstname, lastname, email, password, phonenumber} = req.body
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
-  const url = `http://localhost:3003/api/auth/email/verify/${firstname}/${lastname}/${email}/${passwordHash}/${phonenumber}`
-  await mailService.sendMail(mailService.initiateVerificationMail(email,url))
-  res.send("Ok")
+  user = await usersService.getUserByEmail(email, usersRepository)
+  console.log(user)
+  if(user){
+    if(user.password){
+      res.send("User has been registered with email already")
+    } else{
+      await usersService.addPasswordToUser(user.id, passwordHash, usersRepository)
+      res.send("We found user with your email and added password to that")
+    }
+  } else{
+    const url = `http://localhost:3003/api/auth/email/verify/${firstname}/${lastname}/${email}/${passwordHash}/${phonenumber}`
+    await mailService.sendMail(mailService.initiateVerificationMail(email,url))
+    res.send(`Verification email has been sent to ${email}`)
+  }
+
+  
 })
 
 authRouter.get("/email/verify/:firstname/:lastname/:email/:password/:phonenumber", async (req, res) => {

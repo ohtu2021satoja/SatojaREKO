@@ -55,6 +55,9 @@ const removeProductBatches = async (products_id) => {
 const addQuantitiesToSizes = async (order_id, sellers_id) => {
   await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches, products WHERE batches.order_id=$1 AND batches.sizes_id=sizes.id AND sizes.product_id = products.id AND products.sellers_id=$2;", [order_id, sellers_id])
 }
+const addUsersOrdersQuantitiesToSizes = async (id) => {
+  await db.query("UDPATE sizes SET quantity=sizes.quantity+batches.quantity FROM batches,orders WHERE batches.sizes_id=sizes.id AND AND batches.order_id = orders.id AND orders.buyers_id=$1",[id])
+}
 
 const updateOldPricedProduct = async (product_id) => {
   db.query("UPDATE sizes SET quantity=0, batch_quantity=sizes.quantity WHERE sizes.product_id=$1", [product_id])

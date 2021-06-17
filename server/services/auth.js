@@ -46,13 +46,18 @@ passport.use(new FacebookStrategy({
   callbackURL: 'https://satoja-reko.herokuapp.com/api/auth/facebook/callback',
   profileFields: ['id', 'name', 'picture.type(large)', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
+  const { id, first_name, last_name, email } = profile._json
   // console.log(profile)
-  const currentUser = await usersRepository.getUserById(profile.id)
-  // const currentUser = false
+
+  let currentUser
+  if(email){
+    currentUser = await usersRepository.getUserByEmailOrId(id, email)
+  } else{
+    currentUser = await usersRepository.getUserById(id)
+  }
   if (currentUser) {
     done(null, currentUser)
   } else {
-    const { id, first_name, last_name, email } = profile._json
     const picture = profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'
 
     const userData = {
