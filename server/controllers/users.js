@@ -22,15 +22,21 @@ usersRouter.put("/:id/password", async (req, res, next) => {
   }
 })
 
-usersRouter.get("/:id/reset_password/:passwordHash", async (req, res, next) => {
+usersRouter.get("/:id/reset_password", async (req, res, next) => {
   try{
-    const { id, passwordHash } = req.params
+    const { id } = req.params
+    const { passwordHash } = req.query
     await usersService.setUserPasswordHash( id, passwordHash, usersRepository)
     res.redirect("/")
   } catch(error){
     next(error)
   }
 })
+
+usersRouter.get("/", async (req, res) => {
+  res.send(req.query)
+})
+
 usersRouter.put('/:id', async (req, res) => {
   const { id } = req.params
 

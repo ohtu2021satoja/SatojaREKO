@@ -42,7 +42,8 @@ const setUserPassword = async (id, passwordHash) => {
 } 
  
 const getUserByEmailOrId = async (id, email) => {
-  await db.query("SELECT * from users WHERE id=$1 OR facebook_id=$1 OR email=$2", [id, email])
+  const user = await db.query("SELECT * from users WHERE id=$1 OR facebook_id=$1 OR email=$2", [id, email])
+  return (user[0])
 }
 
 module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId}
