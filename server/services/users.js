@@ -15,6 +15,9 @@ const getUserByEmail = async (email, usersRepository) => {
 const setUserPassword = async (id, password, usersRepository) => {
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
+  await setUserPasswordHash(id, passwordHash, usersRepository)
+}
+const setUserPasswordHash = async (id, passwordHash, usersRepository) => {
   await usersRepository.setUserPassword(id, passwordHash)
 }
 
@@ -42,4 +45,4 @@ const updateOldPassword = async (user, old_password, new_password, usersReposito
   }
 }
 
-module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword }
+module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword, setUserPasswordHash }
