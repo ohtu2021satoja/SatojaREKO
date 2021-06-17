@@ -37,7 +37,7 @@ const deleteUser = async (id) => {
   await db.query("DELETE FROM users WHERE id=$1", [id])
 }
 
-const addPasswordToUser = async (id, passwordHash) => {
+const setUserPassword = async (id, passwordHash) => {
   await db.query("UPDATE users SET password=$1 WHERE id=$2", [passwordHash, id])
 } 
  
@@ -45,4 +45,4 @@ const getUserByEmailOrId = async (id, email) => {
   await db.query("SELECT * from users WHERE id=$1 OR facebook_id=$1 OR email=$2", [id, email])
 }
 
-module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, addPasswordToUser}
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId}

@@ -7,6 +7,31 @@ const sellersService = require("../services/sellers")
 const usersRepository = require("../repositories/users")
 const buyersRepository = require("../repositories/buyers")
 const sellersRepository = require("../repositories/sellers")
+usersRouter.put("/:id/password", async (req, res, next) => {
+  const { id } = req.params
+  if(! req.user || req.user.id != id){
+    res.send(401)
+  }
+  try{
+    const { old_password, new_password } = req.body
+    console.log(old_password)
+    await usersService.updateOldPassword( req.user, old_password, new_password, usersRepository)
+    res.send("Ok") 
+  } catch(error){
+    next(error)
+  }
+})
+
+usersRouter.put("/:id/reset_password", async (req, res, next) => {
+  try{
+    const { id } = req.params
+    const { password } = req.body
+    await usersService.setUserPassword( id, password, usersRepository)
+    res.send("Ok") 
+  } catch(error){
+    next(error)
+  }
+})
 usersRouter.put('/:id', async (req, res) => {
   const { id } = req.params
 

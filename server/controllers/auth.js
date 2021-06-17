@@ -40,7 +40,7 @@ authRouter.post("/email/register", async (req, res) => {
     if(user.password){
       res.send("User has been registered with email already")
     } else{
-      await usersService.addPasswordToUser(user.id, passwordHash, usersRepository)
+      await usersService.setUserPassword(user.id, password, usersRepository)
       res.send("We found user with your email and added password to that")
     }
   } else{

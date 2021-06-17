@@ -1,4 +1,5 @@
 const BLANK_IMAGE = "profile-blank_or75kg"
+const bcrypt = require("bcrypt")
 
 const getUser = async (id, usersRepository) => {
     const user = await usersRepository.getUser(id)
@@ -11,8 +12,10 @@ const getUserByEmail = async (email, usersRepository) => {
   return(user)
 }
 
-const addPasswordToUser = async (id, password, usersRepository) => {
-  await usersRepository.addPasswordToUser(id, password)
+const setUserPassword = async (id, password, usersRepository) => {
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash(password, saltRounds)
+  await usersRepository.setUserPassword(id, passwordHash)
 }
 
 const createUser = async (params, usersRepository, sellersRepository, buyersRepository ) => {
@@ -29,4 +32,14 @@ const deleteUser = async (id, usersRepository, productsRepository) => {
   await usersRepository.deleteUser(id)
 }
 
-module.exports = { getUser, createUser, deleteUser, getUserByEmail, addPasswordToUser }
+const updateOldPassword = async (user, old_password, new_password, usersRepository ) => {
+  if(await bcrypt.compare(old_password, user.password)){
+    await setUserPassword(user.id, new_password, usersRepository)
+  } else {
+    const error = new Error("Incorrect password")
+    error.status = 400
+    throw error
+  }
+}
+
+module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword }

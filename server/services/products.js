@@ -46,6 +46,7 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
     if(!new_product.image_url){
       new_product.image_url = BLANK_IMAGE
     }
+
     for(i in new_sizes){
       new_sizes[i].batch_quantity = new_sizes[i].quantity 
       const old_size = product.sizes.filter(size => size.unit === new_sizes[i].unit)[0]
@@ -63,6 +64,7 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
         new_sizes[i].id = null
       }
     }
+
     if(product.unit_price === new_product.unit_price){
       
       await productsRepository.updateProduct(product_id, new_product)
