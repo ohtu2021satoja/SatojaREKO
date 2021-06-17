@@ -9,6 +9,10 @@ const buyersRepository = require("../repositories/buyers")
 const sellersRepository = require("../repositories/sellers")
 usersRouter.put('/:id', async (req, res) => {
   const { id } = req.params
+
+  if(! req.user || req.user.id != id){
+    res.sendStatus(401)
+  }
   if(req.body.seller_update){
     await sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
   } else {

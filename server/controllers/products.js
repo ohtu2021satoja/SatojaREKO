@@ -4,7 +4,6 @@ const productsRepository = require("../repositories/products")
 const eventsRepository = require("../repositories/events")
 const db = require("../db")
 productsRouter.get("/", async (req, res) => {
-  console.log("USEEEEEER",req.user)
   try {
     const products = await productService.getAllProducts(productsRepository)
     res.status(200).json(products);
@@ -54,6 +53,10 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
 })
 
 productsRouter.post('/seller/:id', async (req, res, next) => {
+  const { id } = req.params
+  if(! req.user || req.user.id != id){
+    res.sendStatus(401)
+  }
   try{
     console.log(req.body)
     await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
