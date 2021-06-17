@@ -61,10 +61,9 @@ const products = [
 
 const EventPage = (props) => {
   const { eventID } = useParams()
+  console.log("eventID: " + eventID)
 
   const event = props.location.state.event
-
-  console.log("eventID: " + eventID)
 
   return (
     <Row>
@@ -79,13 +78,7 @@ const EventPage = (props) => {
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (
-          <EventPageListItem
-            product={product}
-            event={event}
-            openProductPage={() => {}}
-            closeProductPage={() => {}}
-            key={index}
-          />
+          <EventPageListItem product={product} event={event} key={index} />
         ))}
       </Col>
     </Row>

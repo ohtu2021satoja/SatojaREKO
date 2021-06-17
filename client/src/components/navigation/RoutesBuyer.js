@@ -26,9 +26,9 @@ const RoutesBuyer = ({ user, logOut, setSellerView }) => (
     <Route path="/profile">
       <ProfilePageBuyer user={user} />
     </Route>
-    <Route path="/events/:id" exact component={EventPage}></Route>
-    <Route path="/products/:id" exact component={ProductPage}></Route>
-    <Route path="/sellers/:id" exact component={SellerPage}></Route>
+    <Route path="/events/:eventID" exact component={EventPage}></Route>
+    <Route path="/products/:productID" exact component={ProductPage}></Route>
+    <Route path="/sellers/:sellerID" exact component={SellerPage}></Route>
     <Route>Not found</Route>
   </Switch>
 )
