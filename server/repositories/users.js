@@ -1,7 +1,7 @@
 const db = require('../db')
 
 const getUser = async (id) => {
-  const user = await  db.query("SELECT *, users.id, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users LEFT JOIN buyers ON buyers.id = users.id LEFT JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
+  const user = await  db.query("SELECT *, users.id, (SELECT users.id IN (SELECT id from admins)) AS is_admin, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users LEFT JOIN buyers ON buyers.id = users.id LEFT JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
   return(user[0])
 }
 
