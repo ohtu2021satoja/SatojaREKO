@@ -13,13 +13,17 @@ const bcrypt = require("bcrypt")
 passport.serializeUser((user, done) => {
     console.log('serialize =====> ', user)
     console.log('serialize id =====> ', user.id)
-    done(null, user.id)
+    done(null, user)
 })
 
-passport.deserializeUser(async (id, done) => {
-    const user = await usersRepository.getUserById(id)
-    console.log('deserialize =====> ', user)
-    done(null, user)
+passport.deserializeUser(async (user, done) => {
+    console.log("DESERIALIZE USER", user)
+    const userInDB = await usersRepository.getUserById(user.id)
+    if(userInDB){
+      done(null, userInDB)
+    } else{
+      done(null, user)
+    }
 })
 
 const authenticateUser = async (email, password, done) => {
@@ -32,7 +36,7 @@ const authenticateUser = async (email, password, done) => {
   const correct = await bcrypt.compare(password, user.password)
   if(correct){
     console.log("success")
-    return done(null, user)
+    return done(null, "lol")
   } else {
     return done(null, false, { message: "Incorrect password" })
   }
@@ -44,7 +48,7 @@ passport.use(new LocalStrategy({ usernameField: "email"}, authenticateUser))
 passport.use(new FacebookStrategy({
   clientID: config.FB_CLIENT_ID,
   clientSecret: config.FB_CLIENT_SECRET,
-  callbackURL: 'https://satoja-reko.herokuapp.com/api/auth/facebook/callback',
+  callbackURL: 'https://localhost:3003/api/auth/facebook/callback',
   profileFields: ['id', 'name', 'picture.type(large)', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
   const { id, first_name, last_name, email } = profile._json
@@ -67,7 +71,11 @@ passport.use(new FacebookStrategy({
       lastname: last_name,
       email: email
     }
+
+    console.log("userData",userData)
     
-    return done(null, profile)
+    // await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
+    
+    return done(null, userData)
   }
 }))

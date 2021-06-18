@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav"
 import Button from "react-bootstrap/Button"
 import FormSignUp from "./FormSignUp"
 
-const SignUpPage = ({ user, handleSignUp }) => {
+const FacebookSignUpPage = ({ user, handleSignUp }) => {
   return (
     <Row className="h-100">
       <Col xs={12}>
@@ -27,4 +27,4 @@ const SignUpPage = ({ user, handleSignUp }) => {
   )
 }
 
-export default SignUpPage
+export default FacebookSignUpPage

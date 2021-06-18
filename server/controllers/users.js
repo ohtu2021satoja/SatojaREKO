@@ -91,12 +91,9 @@ usersRouter.get("/current/user", async (req, res, next) => {
   console.log("REQ USER",req.user)
   console.log("USER",user)
   if (!user) {
-      return res.status(404).send({ error: 'User not found' })
-  }
-  try {
-      res.send(user)
-  } catch (err) {
-      next(err)
+      res.send(req.user)
+  } else {
+    res.send(user)
   }
 })
 

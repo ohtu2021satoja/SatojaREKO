@@ -41,4 +41,10 @@ const getProductById = async (product_id) => {
   return response.data
 }
 
-export default { getUserProducts, getEventProducts, addProduct, updateProduct, getProductById }
+export default {
+  getUserProducts,
+  getEventProducts,
+  addProduct,
+  updateProduct,
+  getProductById,
+}
