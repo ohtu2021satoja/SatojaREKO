@@ -7,7 +7,7 @@ buyersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
   
   if(! req.user || req.user.id != id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the buyer")
   } else{
     await buyersService.removeBuyerImage(id, buyersRepository)
     res.sendStatus(200).end()
@@ -19,7 +19,7 @@ buyersRouter.put('/:id/image', async (req, res) => {
   const { id } = req.params
 
   if(! req.user || req.user.id != id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the buyer")
   } else {
     await buyersService.updateBuyerImage(id, req.body.image_url, buyersRepository)
     return res.sendStatus(200).end()
@@ -32,7 +32,7 @@ buyersRouter.put('/:id/cancel_notification_check', async (req, res) => {
   const { id } = req.params
 
   if(! req.user || req.user.id != id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the buyer")
   } else {
     const check = req.body.check
     await  buyersService.updateCancelNotificationCheck(id, check, buyersRepository)

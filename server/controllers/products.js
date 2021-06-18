@@ -55,16 +55,18 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
 productsRouter.post('/seller/:id', async (req, res, next) => {
   const { id } = req.params
   if(! req.user || req.user.id != id){
-    res.sendStatus(401)
+    res.status(401).send("Current user doesn't match")
+  } else{
+    try{
+      console.log(req.body)
+      await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
+      res.sendStatus(200).end()
+    } catch(error){
+      console.log(error)
+      next(error)
+    }
   }
-  try{
-    console.log(req.body)
-    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
-    res.sendStatus(200).end()
-  } catch(error){
-    console.log(error)
-    next(error)
-  }
+
 
 })
 

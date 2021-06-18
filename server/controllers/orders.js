@@ -7,7 +7,7 @@ ordersRouter.post('/buyer/:id', async (req, res, next) => {
   const { id } = req.params
 
   if(!req.user || req.user.id != id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the buyer")
   } else {
     try{
       const orders = req.body.orders
@@ -23,7 +23,7 @@ ordersRouter.get("/seller/:seller_id", async (req, res) => {
   const {seller_id} = req.params
 
   if(!req.user || req.user.id != seller_id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the seller")
   } else {
     try{
      
@@ -40,7 +40,7 @@ ordersRouter.get("/buyer/:buyer_id", async (req,res, next) => {
   const {buyer_id} = req.params
 
   if(!req.user || req.user.id != buyer_id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the buyer")
   } else {
     try{
       const orders = await ordersService.getBuyersOrders(buyer_id, ordersRepository)
@@ -54,7 +54,7 @@ ordersRouter.get("/buyer/:buyer_id", async (req,res, next) => {
 ordersRouter.delete("/seller/:seller_id/:order_id", async (req, res) => {
   const {seller_id, order_id} = req.params
   if(!req.user || req.user.id != seller_id){
-    res.sendStatus(401)
+    res.status(401).send("Current user isn't the seller")
   } else {
     await ordersService.removeSellersOrder(seller_id, order_id, ordersRepository, productsRepository)
     res.send(200).end()

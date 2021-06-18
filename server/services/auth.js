@@ -34,9 +34,10 @@ const authenticateUser = async (email, password, done) => {
     return done(null, false, { message: "No user with that email"})
   }
   const correct = await bcrypt.compare(password, user.password)
+  console.log(correct)
   if(correct){
     console.log("success")
-    return done(null, "lol")
+    return done(null, user)
   } else {
     return done(null, false, { message: "Incorrect password" })
   }

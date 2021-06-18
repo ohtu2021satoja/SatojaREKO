@@ -27,6 +27,11 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
   }
 }
 
+const getEventProduct = async (event_id, product_id, productsRepository) => {
+  const product = await productsRepository.getProductById(event_id, product_id)
+  return(product)
+}
+
 const getProductById = async (product_id, productsRepository) => {
   const product = await productsRepository.getProductById(product_id)
   return(product)
@@ -121,4 +126,4 @@ const getSellersEventProducts = async (event_id, sellers_id, productsRepository)
   return(products)
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts, removeProduct, updateProduct, getProductById }
+module.exports = { getAllProducts, getSellersProducts, addProduct, getEventProducts, getSellersEventProducts, removeProduct, updateProduct, getProductById, getEventProduct }

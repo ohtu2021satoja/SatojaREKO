@@ -12,6 +12,11 @@ const getProductById = async (id) => {
   return(product[0])
 }
 
+const getEventProduct = async (event_id, product_id) => {
+  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, array_agg(DISTINCT products_events.id_event) AS events, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id INNER JOIN products_events ON products_events.id_product=products.id  WHERE products.id= $1 AND products_events.id_event=$2 GROUP BY products.id",[product_id, event_id])
+  return(product[0])
+}
+
 const getSellersProducts = async (id) => {
   const products = await  db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'size_id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id WHERE sellers_id=$1 GROUP BY products.id",[id])
   return(products)
@@ -79,4 +84,4 @@ const removeSizes = async (product_id, removed_sizes) => {
   db.query("DELETE from sizes WHERE id=ANY($1::int[])",[IDs])  
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes }
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes, getEventProduct }

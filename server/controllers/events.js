@@ -1,11 +1,13 @@
 const eventsRouter = require('express').Router()
 const eventsService = require('../services/events')
 const eventsRepository = require('../repositories/events')
+const productsService = require("../services/products")
+const productsRepository = require("../repositories/products")
 
 eventsRouter.get('/seller/:id', async (req, res, next) => {
     const { id } = req.params
     if(! req.user || req.user.id != id){
-      res.sendStatus(401)
+      res.status(401).send("Current user isn't the seller")
     } else {
       const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
       if (!sellerEvents) {
@@ -18,6 +20,12 @@ eventsRouter.get('/seller/:id', async (req, res, next) => {
       }
     }
 
+})
+
+eventsRouter.get("/:event_id/products/:product_id", async (req, res, next) => {
+  const { event_id, product_id } = req.params
+  const product = await productsService.getEventProduct(event_id, product_id, productsRepository)
+  return(product)
 })
 
 eventsRouter.get('/market/:id', async (req,res) => {
