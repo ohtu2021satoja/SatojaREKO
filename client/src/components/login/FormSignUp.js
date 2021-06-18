@@ -1,5 +1,6 @@
 import * as Yup from "yup"
 import { Formik, Form } from "formik"
+import { createNewUser, updateUser } from "../../services/users"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
@@ -17,20 +18,27 @@ const SignUpSchema = Yup.object().shape({
     .required(),
 })
 
-const FormSignUp = ({ user /*, handleSignUp, handleLogout*/ }) => {
+const FormSignUp = ({ user, handleRegisterUser }) => {
+  //  if user is null, initialValues don't work unless...
+  // they are conditional ie. user ? user.name : ""
+  if (!user) {
+    user = {}
+  }
+
   return (
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <Formik
         initialValues={{
-          name: user.name ? user.name : "",
-          surname: user.surname ? user.surname : "",
-          email: user.email ? user.email : "",
-          phone: user.phone ? user.phone : "",
+          name: user.name || "",
+          surname: user.surname || "",
+          email: user.email || "",
+          phone: user.phone || "",
           terms: false,
         }}
+        enableReinitialize={true}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          /*const updatedUser = {
+          const newUser = {
             name: values.name,
             surname: values.surname,
             email: values.email,
@@ -38,8 +46,9 @@ const FormSignUp = ({ user /*, handleSignUp, handleLogout*/ }) => {
             terms: values.terms,
           }
 
-          handleSignUp(updatedUser)
-          handleLogout()*/
+          user = { ...user, ...newUser }
+          user === newUser ? createNewUser(newUser) : updateUser(user)
+          handleRegisterUser(user)
         }}
       >
         {() => (
