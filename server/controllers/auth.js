@@ -7,6 +7,7 @@ const buyersRepository = require("../repositories/buyers")
 const sellersRepository = require("../repositories/sellers")
 
 const bcrypt = require("bcrypt")
+const axios = require('axios')
 
 
 // auth with facebook
@@ -27,7 +28,7 @@ authRouter.post("/email", passport.authenticate('local', {
 }), (req, res) => {
   // Successful authentication, redirect home.
   console.log('success')
-  res.redirect('/auth/success')
+  res.redirect('api/auth/success')
 })
 
 authRouter.post("/email/register", async (req, res) => {
@@ -44,7 +45,8 @@ authRouter.post("/email/register", async (req, res) => {
       res.send("We found user with your email and added password to that")
     }
   } else{
-    const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastame=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
+    const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
+    console.log(url)
     await mailService.sendMail(mailService.initiateVerificationMail(email,url))
     res.send(`Verification email has been sent to ${email}`)
   }
@@ -67,7 +69,12 @@ authRouter.post("/email/reset_password", async (req, res) => {
 
 authRouter.get("/email/verify", async (req, res) => {
   await usersService.createUser(req.query, usersRepository, sellersRepository, buyersRepository )
-  res.send("Ok")
+  await axios.post("http://localhost:3003/api/auth/email",{
+    email: req.query.email,
+    password: req.query.password
+  })
+
+  res.redirect("/")
 })
 authRouter.get('/success', (req, res) => {
   console.log('successfully logged in', req.user)

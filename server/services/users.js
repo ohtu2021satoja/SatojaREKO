@@ -45,7 +45,7 @@ const updateOldPassword = async (user, old_password, new_password, usersReposito
   }
 }
 
-const updateUsersInfo = (id, user_info) => {
+const updateUsersInfo = async (id, user_info) => {
   await usersRepository.updateUsersInfo(id, user_info)
 }
 

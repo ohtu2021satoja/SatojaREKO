@@ -83,10 +83,13 @@ usersRouter.get('/:id', async (req, res, next) => {
 })
 
 usersRouter.get("/current/user", async (req, res, next) => {
+  console.log("REQ USER", req.user)
   if(!req.user){
     return res.send(null)
   }
   const user = await usersService.getUser(req.user.id, usersRepository)
+  console.log("REQ USER",req.user)
+  console.log("USER",user)
   if (!user) {
       return res.status(404).send({ error: 'User not found' })
   }
