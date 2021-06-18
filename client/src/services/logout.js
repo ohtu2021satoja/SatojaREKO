@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = "/api/out/logout"
+const baseUrl = "/api/auth/logout"
 
 export const logoutUser = () => {
   axios.get(`${baseUrl}`)

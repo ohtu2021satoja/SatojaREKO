@@ -6,13 +6,13 @@ import FormErrorMessage from "../FormErrorMessage"
 const FormSignUpTerms = () => (
   <Col xs={12} className="mb-2">
     <Field
-      name="terms"
+      name="terms_ok"
       id="user-terms"
       label="Jatkamalla sitoudut noudattamaan"
       component={FormFieldCheckboxInline}
     />
     <a href="/">käyttöehtojamme</a>
-    <ErrorMessage name="terms" component={FormErrorMessage} />
+    <ErrorMessage name="terms_ok" component={FormErrorMessage} />
   </Col>
 )
 

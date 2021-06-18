@@ -7,10 +7,10 @@ export const getAuthedUser = async () => {
   return response.data
 }
 
-export const createNewUser = (user) => {
-  axios.post(`${apiUrl}/current/user`, user)
+export const createNewUser = (newUser) => {
+  axios.post("/api/auth/email/register", { user_info: newUser })
 }
 
-export const updateUser = (user) => {
-  axios.put(`${apiUrl}/current/user`, user)
+export const createNewFacebookUser = (newUser) => {
+  axios.post(`${apiUrl}`, newUser)
 }

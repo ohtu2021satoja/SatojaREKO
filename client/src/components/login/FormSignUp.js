@@ -1,6 +1,6 @@
 import * as Yup from "yup"
 import { Formik, Form } from "formik"
-import { createNewUser, updateUser } from "../../services/users"
+import { createNewUser, createNewFacebookUser } from "../../services/users"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
@@ -9,11 +9,11 @@ import FormSignUpTerms from "./FormSignUpTerms"
 
 // Yup
 const SignUpSchema = Yup.object().shape({
-  name: Yup.string().required(),
-  surname: Yup.string().required(),
+  firstname: Yup.string().required(),
+  lastname: Yup.string().required(),
   email: Yup.string().email("invalid email address").required(),
-  phone: Yup.string().required(),
-  terms: Yup.boolean()
+  phonenumber: Yup.string().required(),
+  terms_ok: Yup.boolean()
     .test("consent", "you have to agree with our terms", (value) => value === true)
     .required(),
 })
@@ -29,25 +29,24 @@ const FormSignUp = ({ user, handleRegisterUser }) => {
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <Formik
         initialValues={{
-          name: user.name || "",
-          surname: user.surname || "",
+          firstname: user.firstname || "",
+          lastname: user.lastname || "",
           email: user.email || "",
-          phone: user.phone || "",
-          terms: false,
+          phonenumber: user.phonenumber || "",
+          terms_ok: false,
         }}
         enableReinitialize={true}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
           const newUser = {
-            name: values.name,
-            surname: values.surname,
+            firstname: values.name,
+            lastname: values.surname,
             email: values.email,
-            phone: values.phone,
-            terms: values.terms,
+            phonenumber: values.phone,
           }
 
           user = { ...user, ...newUser }
-          user === newUser ? createNewUser(newUser) : updateUser(user)
+          user === newUser ? createNewUser(newUser) : createNewFacebookUser(user)
           handleRegisterUser(user)
         }}
       >
