@@ -42,12 +42,9 @@ usersRouter.get("/current/user", async (req, res, next) => {
   }
   const user = await usersService.getUser(req.user.id, usersRepository)
   if (!user) {
-      return res.status(404).send({ error: 'User not found' })
-  }
-  try {
-      res.send(user)
-  } catch (err) {
-      next(err)
+      res.send(req.user)
+  } else {
+    res.send(user)
   }
 })
 

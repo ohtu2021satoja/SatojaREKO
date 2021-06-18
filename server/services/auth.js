@@ -13,13 +13,17 @@ const bcrypt = require("bcrypt")
 passport.serializeUser((user, done) => {
     console.log('serialize =====> ', user)
     console.log('serialize id =====> ', user.id)
-    done(null, user.id)
+    done(null, user)
 })
 
-passport.deserializeUser(async (id, done) => {
-    const user = await usersRepository.getUserById(id)
-    console.log('deserialize =====> ', user)
-    done(null, user)
+passport.deserializeUser(async (user, done) => {
+    console.log("DESERIALIZE USER", user)
+    const userInDB = await usersRepository.getUserById(user.id)
+    if(userInDB){
+      done(null, userInDB)
+    } else{
+      done(null, user)
+    }
 })
 
 const authenticateUser = async (email, password, done) => {
@@ -66,8 +70,8 @@ passport.use(new FacebookStrategy({
 
     console.log("userData",userData)
     
-    await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
+    // await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
     
-    return done(null, profile)
+    return done(null, userData)
   }
 }))
