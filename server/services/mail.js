@@ -9,24 +9,18 @@ const sendMail = async (mailOptions) => {
     return mail
 }
 
-const initiateVerificationMail = (address, url) => {
-    const text = mailTemp.message(url)
-    return {
-        from: mailConfig.ADMIN_EMAIL,
-        to: address,
-        subject: mailTemp.subject,
-        html: text
-    }
-}
+const initiateVerificationMail = (address, url) => initiateTemplate(address, { url }, mailTemp)
 
-const initiatePasswordResetMail = (address, url) => {
-    const text = resetTemp.message(url)
-    return {
+const initiatePasswordResetMail = (address, url) => initiateTemplate(address, { url }, resetTemp)
+
+const initiateTemplate= (address, parameters, template) => {
+    const text = template.message(parameters)
+    return{
         from: mailConfig.ADMIN_EMAIL,
         to: address,
-        subject: resetTemp.subject,
+        subject: template.subject,
         html: text
     }
-}
+} 
 
 module.exports = {sendMail, initiateVerificationMail, initiatePasswordResetMail}

@@ -1,9 +1,9 @@
 const subject = 'Vahvista tunnus'
-const message = (url) => {
+const message = (parameters) => {
 
     return (`<p>Paina alla olevaa vahvista nappia, vahvistaaksesi tunnuksen luomisen</p>\
     \
-    <form action=${url}>\
+    <form action=${parameters.url}>\
         <input type="submit" value="Vahvista tunnus" />\
     </form>`)
 }

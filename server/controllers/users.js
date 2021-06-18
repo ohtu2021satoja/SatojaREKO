@@ -48,6 +48,7 @@ usersRouter.put('/:id', async (req, res) => {
   } else {
     await buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
   }
+  await usersRepository.updateUsersInfo(id, req.body.user_info)
   res.sendStatus(200).end()
 })
 

@@ -45,4 +45,9 @@ const updateOldPassword = async (user, old_password, new_password, usersReposito
   }
 }
 
-module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword, setUserPasswordHash }
+const updateUsersInfo = (id, user_info) => {
+  await usersRepository.updateUsersInfo(id, user_info)
+}
+
+
+module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword, setUserPasswordHash, updateUsersInfo }

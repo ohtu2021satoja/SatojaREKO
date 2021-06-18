@@ -66,10 +66,6 @@ passport.use(new FacebookStrategy({
       lastname: last_name,
       email: email
     }
-
-    console.log("userData",userData)
-    
-    await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
     
     return done(null, profile)
   }
