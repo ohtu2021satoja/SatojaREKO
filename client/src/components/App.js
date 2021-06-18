@@ -1,7 +1,8 @@
-import { /*useEffect,*/ useState } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
-//import { handleInitialData } from "../actions/shared"
-import { setAuthedUser, logoutUser } from "../actions/authedUser"
+import { getAuthedUser } from "../services/users"
+import { logoutUser } from "../services/logout"
+import { setAuthedUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
@@ -15,29 +16,51 @@ import AppBuyer from "./AppBuyer"
 const App = (props) => {
   const [sellerView, setSellerView] = useState(null)
   const [signUp, setSignUp] = useState(false)
-  const { authedUser, setAuthedUser, logoutUser } = props
+  const { authedUser, setAuthedUser } = props
 
-  /*
+  // Get user form API
+  // promise returns null if no user is found
   useEffect(() => {
-    // Get data form API
-    // props.handleInitialData()
-  }, [props])
-  */
+    const fetchData = async () => {
+      const user = await getAuthedUser()
+      console.log(user)
+      user ? setAuthedUser(user) : setAuthedUser(null)
+    }
+    fetchData()
+    
+  }, [setAuthedUser])
 
-  // Facebook login/sign up - temporary workaround
-  const signOut = () => setSignUp(false)
-
-  const loginWithFacebook = (id) => {
-    setAuthedUser(id)
-    signOut()
+  const getUser = async () => {
+    const user = await getAuthedUser()
+    setAuthedUser(user)
   }
 
-  const activateSignUp = (user) => {
+  // develoment workaroud
+  const getMockUser = () => {
+    const user = {
+      id: "111",
+      name: "Olli",
+      surname: "Ostaja",
+    }
+
     setAuthedUser(user)
+  }
+
+  const signUpWithFacebook = () => {
+    getUser()
     setSignUp(true)
   }
 
-  const logOut = () => logoutUser()
+  const registerUser = (user) => {
+    setAuthedUser(user)
+    setSignUp(false)
+  }
+
+  // Remove current user form API and update state
+  const logOut = () => {
+    logoutUser()
+    setAuthedUser(null)
+  }
 
   const handleViewChange = (value) => setSellerView(value)
 
@@ -50,26 +73,25 @@ const App = (props) => {
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (authedUser && signUp)
+            if (!authedUser && !signUp)
+              return (
+                <LoginPage
+                  handleFacebookLogin={getUser}
+                  handleFacebookSignUp={signUpWithFacebook}
+                  handleMockLogin={getMockUser}
+                />
+              )
+
+            if (signUp)
               return (
                 <SignUpPage
                   user={authedUser}
-                  handleSignUp={activateSignUp}
-                  handleSignOut={signOut}
-                  handleLogout={logOut}
+                  handleSigned={() => setSignUp(false)}
+                  handleRegisterUser={registerUser}
                 />
               )
 
-            if (!authedUser)
-              return (
-                <LoginPage
-                  signed={signUp}
-                  handleLogin={loginWithFacebook}
-                  handleSignUp={activateSignUp}
-                />
-              )
-
-            if (sellerView === null && !signUp)
+            if (authedUser && sellerView === null)
               return <HomePage setSellerView={handleViewChange} logOut={logOut} />
 
             if (sellerView === true)
@@ -103,6 +125,5 @@ const mapStateToProps = ({ authedUser }) => {
 }
 
 export default connect(mapStateToProps, {
-  /*handleInitialData,*/ setAuthedUser,
-  logoutUser,
+  setAuthedUser,
 })(App)

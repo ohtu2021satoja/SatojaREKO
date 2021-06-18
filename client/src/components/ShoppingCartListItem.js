@@ -1,11 +1,19 @@
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import ShoppingCartListButtons from "./ShoppingCartListButtons"
 
-const ShoppingCartListItem = ({ event, batch, total }) => {
+const ShoppingCartListItem = ({ event, sizes, product }) => {
+  const [totalWeight, setTotalWeight] = useState(0)
+
+  useEffect(() => {
+    const total = sizes.reduce((acc, size) => acc + size.unit * size.order_quantity, 0)
+    setTotalWeight(total)
+  }, [sizes])
+
   const dispatch = useDispatch()
 
   const handleAddToCart = (batch) => {
@@ -18,7 +26,7 @@ const ShoppingCartListItem = ({ event, batch, total }) => {
   }
 
   return (
-    <Card>
+    <Card className="mb-1 py-2 px-2">
       <Row>
         <Col xs={4}>
           <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
@@ -26,26 +34,28 @@ const ShoppingCartListItem = ({ event, batch, total }) => {
         <Col xs={8} className="text-left">
           <Card.Subtitle className="mb-2 text-muted">Myyjä X</Card.Subtitle>
           <Card.Title>
-            {batch.product.name} {batch.unit * batch.order_quantity}
-            {batch.product.type}
+            {product.name} {product.unit_price / 100}e/{product.type}
+          </Card.Title>
+          <Card.Title>
+            Yhteensä {totalWeight} {product.type}
           </Card.Title>
           <Card.Title></Card.Title>
-          <Card.Title>
-            {(batch.product.unit_price * batch.unit * batch.order_quantity) / 100}e (
-            {batch.product.unit_price / 100}e/{batch.product.type})
-          </Card.Title>
         </Col>
       </Row>
       <Row>
-        <Col xs={4}>
-          <Card.Text className="text-left">{batch.product.description}</Card.Text>
+        <Col xs={12} className="mb-3">
+          <Card.Text className="text-center">{product.description}</Card.Text>
         </Col>
-        <ShoppingCartListButtons
-          addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
-          eventID={event.id}
-          batch={batch}
-        />
+        {sizes.map((size, index) => (
+          <ShoppingCartListButtons
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+            eventID={event.id}
+            size={size}
+            unit={product.type}
+            key={index}
+          />
+        ))}
       </Row>
     </Card>
   )

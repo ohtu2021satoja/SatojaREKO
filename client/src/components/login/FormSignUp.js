@@ -1,5 +1,6 @@
 import * as Yup from "yup"
 import { Formik, Form } from "formik"
+import { createNewUser, createNewFacebookUser } from "../../services/users"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
@@ -8,38 +9,45 @@ import FormSignUpTerms from "./FormSignUpTerms"
 
 // Yup
 const SignUpSchema = Yup.object().shape({
-  name: Yup.string().required(),
-  surname: Yup.string().required(),
+  firstname: Yup.string().required(),
+  lastname: Yup.string().required(),
   email: Yup.string().email("invalid email address").required(),
-  phone: Yup.string().required(),
-  terms: Yup.boolean()
+  phonenumber: Yup.string().required(),
+  terms_ok: Yup.boolean()
     .test("consent", "you have to agree with our terms", (value) => value === true)
     .required(),
 })
 
-const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
+const FormSignUp = ({ user, handleRegisterUser }) => {
+  //  if user is null, initialValues don't work unless...
+  // they are conditional ie. user ? user.name : ""
+  if (!user) {
+    user = {}
+  }
+
   return (
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <Formik
         initialValues={{
-          name: user.name,
-          surname: user.surname,
-          email: user.email,
-          phone: "",
-          terms: false,
+          firstname: user.firstname || "",
+          lastname: user.lastname || "",
+          email: user.email || "",
+          phonenumber: user.phonenumber || "",
+          terms_ok: false,
         }}
+        enableReinitialize={true}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          const updatedUser = {
-            name: values.name,
-            surname: values.surname,
+          const newUser = {
+            firstname: values.name,
+            lastname: values.surname,
             email: values.email,
-            phone: values.phone,
-            terms: values.terms,
+            phonenumber: values.phone,
           }
 
-          handleSignUp(updatedUser)
-          handleLogout()
+          user = { ...user, ...newUser }
+          user === newUser ? createNewUser(newUser) : createNewFacebookUser(user)
+          handleRegisterUser(user)
         }}
       >
         {() => (
@@ -54,9 +62,6 @@ const FormSignUp = ({ user, handleSignUp, handleLogout }) => {
             <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
               Rekisteröidy
             </Button>
-            <p className="text-center text-muted">
-              Rekisteröidyttyäsi pyydämme sinua kirjautumaan Facebookilla
-            </p>
           </Form>
         )}
       </Formik>

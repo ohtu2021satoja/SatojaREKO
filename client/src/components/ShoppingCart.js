@@ -5,6 +5,7 @@ import { submitOrders } from "../actions/shoppingCart"
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
+import EventInfoLabel from "./EventInfoLabel"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -60,28 +61,62 @@ const ShoppingCart = () => {
           if (orderHasSizes(order)) {
             return (
               <div key={index}>
-                Noutotilaus paikassa {order.event.name} {order.event.type} <br />{" "}
-                Tuotteet: <br />
-                {order.batches.map((batch, index) => {
-                  if (batch.order_quantity > 0) {
+                <h6>
+                  <u>Noutotilaisuus</u>
+                </h6>
+                <div className="mb-3">
+                  <EventInfoLabel
+                    event={order.event}
+                    classes="mb-0 mt-0"
+                    styles={{ fontSize: 16 }}
+                  />
+                </div>
+                {(() => {
+                  // Sort orders by product to render different sizes
+                  // of same product on the same card
+                  const ordersByProduct = []
+
+                  order.batches.map((batch, index) => {
+                    const currentProduct = ordersByProduct.find(
+                      (order) => order.product.id === batch.product.id
+                    )
+                    if (batch.order_quantity > 0) {
+                      if (currentProduct) {
+                        return currentProduct.batches.push(batch)
+                      } else {
+                        return ordersByProduct.push({
+                          product: batch.product,
+                          batches: [batch],
+                        })
+                      }
+                    } else return null
+                  })
+                  return ordersByProduct.map((product, index) => {
                     return (
                       <ShoppingCartListItem
                         event={order.event}
-                        batch={batch}
-                        total={totalPrice}
+                        product={product.product}
+                        sizes={product.batches}
                         key={index}
                       />
                     )
-                  } else return null
-                })}
+                  })
+                })()}
+                <br />
               </div>
             )
           } else return null
         })}
-        <div>{totalPrice > 0 && <h3>Yhteensä: {totalPrice}e</h3>}</div>
-        <Button variant="success" onClick={handleSubmitOrders}>
-          Lähetä tilaus
-        </Button>
+        {totalPrice > 0 ? (
+          <div>
+            <h3>Yhteensä: {totalPrice}e</h3>
+            <Button variant="success" onClick={handleSubmitOrders}>
+              Lähetä tilaus
+            </Button>
+          </div>
+        ) : (
+          <p>Ostoskorisi on tyhjä</p>
+        )}
       </Col>
     </Row>
   )

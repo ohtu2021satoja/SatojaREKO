@@ -4,18 +4,19 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import EventPage from "./EventPage"
+import EventInfoLabel from "./EventInfoLabel"
 import SellerPage from "./SellerPage"
+import ProductPage from "./ProductPage"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
 
 const events = [
   {
     id: 1,
     market_id: 1,
-    start: "2021-05-26T16:30:00.683Z",
-    endtime: "2021-05-26T17:00:00.683Z",
+    start: "2021-05-23T16:30:00.683Z",
+    endtime: "2021-05-23T17:00:00.683Z",
     area: "Etelä-Savo",
     address: "Brahentie 4",
     type: "reko_market",
@@ -34,8 +35,8 @@ const events = [
   {
     id: 2,
     market_id: 2,
-    start: "2021-05-26T16:11:47.683Z",
-    endtime: "2021-05-26T16:11:47.683Z",
+    start: "2021-05-26T16:00:47.683Z",
+    endtime: "2021-05-26T16:30:47.683Z",
     area: "Etelä-Savo",
     address: "Maaherrankatu 67",
     type: "reko_market",
@@ -50,6 +51,46 @@ const events = [
     description: "I am john",
     image_url: "profile-blank_or75kg",
     location: [61.695615176857764, 27.27694062704281],
+  },
+  {
+    id: 3,
+    market_id: 3,
+    start: "2021-04-26T15:00:47.683Z",
+    endtime: "2021-05-26T15:30:47.683Z",
+    area: "test",
+    address: "test",
+    type: "reko_market",
+    areas_id: 1,
+    name: "test",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "50500",
+    county: "Mikkeli",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    location: [62.695615176857764, 27.27694062704281],
+  },
+  {
+    id: 4,
+    market_id: 4,
+    start: "2021-04-26T14:00:47.683Z",
+    endtime: "2021-05-26T15:30:47.683Z",
+    area: "test2",
+    address: "test",
+    type: "reko_market",
+    areas_id: 1,
+    name: "test2",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "50500",
+    county: "Mikkeli",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    location: [63.695615176857764, 27.27694062704281],
   },
 ]
 
@@ -114,6 +155,8 @@ const MapPage = () => {
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
 
+  // map endpoint https://satoja-reko.herokuapp.com/api/markets/map
+
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
@@ -153,6 +196,29 @@ const MapPage = () => {
     setMapInstance(map)
   }
 
+  const handleOpenProduct = (product, event, addToCart, removeFromCart) => {
+    setOpenedPage(
+      ProductPage({
+        product: product,
+        event: event,
+        returnToEvent: handleCloseProduct,
+        addToCart: addToCart,
+        removeFromCart: removeFromCart,
+      })
+    )
+  }
+
+  const handleCloseProduct = (event) => {
+    setOpenedPage(
+      EventPage({
+        event: event,
+        closePage: handleClosePage,
+        openProductPage: handleOpenProduct,
+        closeProductPage: handleClosePage,
+      })
+    )
+  }
+
   const scrollIntoPanel = () => {
     bottomPanelRef.current.scrollIntoView({
       behavior: "smooth",
@@ -171,17 +237,19 @@ const MapPage = () => {
       }}
     >
       <Popup className="map-popup" autoPan={false}>
-        <Card className="text-center popup-card">
-          Noutotilaisuus (REKO) <br />
-          {event.address} <br />
-          10.7 <br />
-          18.00-18.30 <br />
-        </Card>
+        <EventInfoLabel event={event} classes="mb-0 mt-0" styles={{ fontSize: 14 }} />
         <Button
-          className="btn btn-primary btn-sm popup-button"
+          className="btn btn-primary btn-sm popup-button mt-1"
           variant="success"
           onClick={() =>
-            setOpenedPage(EventPage({ event: event, closePage: handleClosePage }))
+            setOpenedPage(
+              EventPage({
+                event: event,
+                closePage: handleClosePage,
+                openProductPage: handleOpenProduct,
+                closeProductPage: handleClosePage,
+              })
+            )
           }
         >
           Siirry tilaisuuteen
@@ -208,7 +276,9 @@ const MapPage = () => {
           className="btn btn-primary btn-sm"
           variant="success"
           onClick={() =>
-            setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
+            setOpenedPage(
+              SellerPage({ seller: seller, events: events, closePage: handleClosePage })
+            )
           }
         >
           Tuottajan sivulle
@@ -244,15 +314,21 @@ const MapPage = () => {
       </MapContainer>
       <Row className="mt-1 mx-2">
         <Col xs={12} className="mb-4 text-center">
-          <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
+          <Button
+            className="btn btn-sm"
+            variant="outline-success"
+            onClick={scrollIntoPanel}
+          >
             Näytä lista
           </Button>
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
           <MapBottomPanel
             ref={bottomPanelRef}
             visibleMarkets={visibleMarkets}
-            openPage={handleOpenPage}
-            closePage={handleClosePage}
+            handleOpenPage={handleOpenPage}
+            handleClosePage={handleClosePage}
+            handleOpenProduct={handleOpenProduct}
+            handleCloseProduct={handleCloseProduct}
           />
         </Col>
       </Row>

@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/buyers/26
+Content-Type: application/json
+
+{
+  "image_url": "fsdfsdf",
+  "newsletter_check": true
+}

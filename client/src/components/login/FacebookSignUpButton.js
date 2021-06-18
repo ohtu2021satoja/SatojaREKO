@@ -1,19 +1,9 @@
 import Button from "react-bootstrap/Button"
 
-const FacebookSignUpButton = ({ handleSignUp }) => {
-  const getUserFormFacebook = () => {
-    const facebookUser = {
-      name: "Olli",
-      surname: "Ostaja",
-      email: "olli@gmail.com",
-    }
-
-    handleSignUp(facebookUser)
-  }
-
-  return (
+const FacebookSignUpButton = ({ handleFacebookSignUp }) => (
+  <a href="api/auth/facebook">
     <Button
-      onClick={() => getUserFormFacebook()}
+      onClick={handleFacebookSignUp}
       variant="outline-primary"
       size="lg"
       type="submit"
@@ -21,7 +11,7 @@ const FacebookSignUpButton = ({ handleSignUp }) => {
     >
       Rekisteröidy Facebookilla
     </Button>
-  )
-}
+  </a>
+)
 
 export default FacebookSignUpButton
