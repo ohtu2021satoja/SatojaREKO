@@ -21,7 +21,13 @@ const App = (props) => {
   // Get user form API
   // promise returns null if no user is found
   useEffect(() => {
-    getAuthedUser().then(({ user }) => (user ? setAuthedUser(user) : setAuthedUser(null)))
+    const async fetchData = () => {
+      const user = await getAuthedUser()
+      console.log(user)
+      user ? setAuthedUser(user) : setAuthedUser(null)
+    }
+    fetchData()
+    
   }, [setAuthedUser])
 
   const getUser = async () => {
