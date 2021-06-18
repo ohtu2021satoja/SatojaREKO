@@ -4,6 +4,7 @@ const apiUrl = "/api/users"
 
 export const getAuthedUser = async () => {
   const response = await axios.get(`${apiUrl}/current/user`)
+  console.log(response.data)
   return response.data
 }
 
