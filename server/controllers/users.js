@@ -9,6 +9,7 @@ const buyersRepository = require("../repositories/buyers")
 const sellersRepository = require("../repositories/sellers")
 usersRouter.put("/:id/password", async (req, res, next) => {
   const { id } = req.params
+  console.log("REQ USER",req.user)
   if(! req.user || req.user.id != id){
     res.send(401)
   }

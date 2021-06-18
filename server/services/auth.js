@@ -48,7 +48,7 @@ passport.use(new LocalStrategy({ usernameField: "email"}, authenticateUser))
 passport.use(new FacebookStrategy({
   clientID: config.FB_CLIENT_ID,
   clientSecret: config.FB_CLIENT_SECRET,
-  callbackURL: 'https://localhost:3003/api/auth/facebook/callback',
+  callbackURL: 'http://localhost:3003/api/auth/facebook/callback',
   profileFields: ['id', 'name', 'picture.type(large)', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
   const { id, first_name, last_name, email } = profile._json

@@ -22,13 +22,12 @@ authRouter.get('/facebook/callback', passport.authenticate('facebook', {
 })
 
 authRouter.post("/email", passport.authenticate('local', {
-  successRedirect: "api/auth/success",
   failureRedirect: "/",
   failureMessage: true
 }), (req, res) => {
   // Successful authentication, redirect home.
-  console.log('success')
-  res.redirect('api/auth/success')
+  console.log('email success', req.user)
+  res.redirect('/api/auth/success')
 })
 
 authRouter.post("/email/register", async (req, res) => {
@@ -69,12 +68,7 @@ authRouter.post("/email/reset_password", async (req, res) => {
 
 authRouter.get("/email/verify", async (req, res) => {
   await usersService.createUser(req.query, usersRepository, sellersRepository, buyersRepository )
-  await axios.post("http://localhost:3003/api/auth/email",{
-    email: req.query.email,
-    password: req.query.password
-  })
-
-  res.redirect("/")
+  res.redirect("/api/auth/success")
 })
 authRouter.get('/success', (req, res) => {
   console.log('successfully logged in', req.user)
