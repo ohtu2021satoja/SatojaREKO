@@ -241,7 +241,13 @@ const MapPage = () => {
           as={Link}
           to={{
             pathname: `/sellers/${seller.id}`,
-            state: { seller: seller, events: events },
+            state: {
+              seller: seller,
+              events: events,
+              linkTo: {
+                pathname: "/map",
+              },
+            },
           }}
         >
           Tuottajan sivulle

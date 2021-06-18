@@ -6,14 +6,11 @@ import BackButtonHeader from "./BackButtonHeader"
 const SellerPage = (props) => {
   const events = props.location.state.events
   const seller = props.location.state.seller
+  const linkTo = props.location.state.linkTo
 
   return (
     <Row className="mx-auto">
-      <BackButtonHeader
-        linkTo={{
-          pathname: "/map",
-        }}
-      />
+      <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
       </Col>
