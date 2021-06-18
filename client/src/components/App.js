@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import LoginPage from "./login/LoginPage"
-import FacebookSignUpPage from "./login/FacebookSignUpPage"
+import SignUpPage from "./login/SignUpPage"
 import HomePage from "./HomePage"
 import AppSeller from "./AppSeller"
 import AppBuyer from "./AppBuyer"
@@ -19,7 +19,7 @@ const App = (props) => {
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
-  // promise returns undefined if no user is found
+  // promise returns null if no user is found
   useEffect(() => {
     getAuthedUser().then(({ user }) => (user ? setAuthedUser(user) : setAuthedUser(null)))
   }, [setAuthedUser])
@@ -29,9 +29,25 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  const facebookSignUp = () => {
+  // develoment workaroud
+  const getMockUser = () => {
+    const user = {
+      id: "111",
+      name: "Olli",
+      surname: "Ostaja",
+    }
+
+    setAuthedUser(user)
+  }
+
+  const signUpWithFacebook = () => {
     getUser()
     setSignUp(true)
+  }
+
+  const registerUser = (user) => {
+    setAuthedUser(user)
+    setSignUp(false)
   }
 
   // Remove current user form API and update state
@@ -45,26 +61,27 @@ const App = (props) => {
   return (
     <Container fluid>
       <Row className="vh-100">
-        <p>{authedUser}</p>
         <Col
           xs={12}
           sm={{ span: 8, offset: 2 }}
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (!authedUser)
+            if (!authedUser && !signUp)
               return (
                 <LoginPage
-                  handleFacebookLogin={() => getUser()}
-                  handleFacebookSignUp={facebookSignUp}
+                  handleFacebookLogin={getUser}
+                  handleFacebookSignUp={signUpWithFacebook}
+                  handleMockLogin={getMockUser}
                 />
               )
 
             if (signUp)
               return (
-                <FacebookSignUpPage
+                <SignUpPage
                   user={authedUser}
-                  handleSignUp={() => setSignUp(false)}
+                  handleSigned={() => setSignUp(false)}
+                  handleRegisterUser={registerUser}
                 />
               )
 
