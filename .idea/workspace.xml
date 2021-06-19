@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ee9693b3-eb06-46dd-9f46-0c3900de8c64" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/ContactForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/ContactPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/services/mail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/NavigationBarSeller.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/NavigationBarSeller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/RoutesSeller.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/RoutesSeller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/mail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/mail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/utils/mailConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/mailConfig.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/server/repositories/markets.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/markets.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/markets.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/events.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/reko_areas.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/login/FormSignUp.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/buyers.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/utils/mailConfig.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/mail.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/repositories/reko_areas.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/mail.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/repositories/orders.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/repositories/sellers.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/reko_areas.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/buyers.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/orders.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/repositories/products.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/client/src/services/mail.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/repositories/events.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/ContactForm.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/db.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/index.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/orders.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/controllers/events.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/server/services/sellers.js" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectId" id="1tkd5Vf7WXstvTezu4tWPk4I1Pc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../WebstormProjects/test-mailer" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Node.js.mailConfig.js">
+    <configuration name="geoap.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/geoap.js" working-dir="$PROJECT_DIR$/server">
+      <method v="2" />
+    </configuration>
+    <configuration name="mailConfig.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/utils/mailConfig.js" working-dir="$PROJECT_DIR$/server/utils">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.mailConfig.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee9693b3-eb06-46dd-9f46-0c3900de8c64" name="Default Changelist" comment="" />
+      <created>1623316845306</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623316845306</updated>
+      <workItem from="1623316850737" duration="13701000" />
+      <workItem from="1623393148014" duration="5047000" />
+      <workItem from="1623406047754" duration="2900000" />
+      <workItem from="1623488388547" duration="1241000" />
+      <workItem from="1623649276738" duration="687000" />
+      <workItem from="1623688168631" duration="2713000" />
+      <workItem from="1623750473725" duration="8233000" />
+      <workItem from="1623816469112" duration="3321000" />
+      <workItem from="1623848335536" duration="5648000" />
+      <workItem from="1623917668141" duration="3302000" />
+      <workItem from="1623931202980" duration="4159000" />
+      <workItem from="1624000366403" duration="2318000" />
+      <workItem from="1624028059293" duration="5563000" />
+      <workItem from="1624088826807" duration="2848000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -6,6 +6,7 @@ import ProfilePageSeller from "../profiles/ProfilePageSeller"
 import Products from "../Products"
 import OrderSeller from "../OrderSeller"
 import AddProducts from "../AddProducts"
+import ContactPage from "../ContactPage"
 
 const RoutesSeller = ({ user, logOut, setSellerView }) => (
   <Switch>
@@ -26,6 +27,9 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
     </Route>
     <Route path="/profile">
       <ProfilePageSeller user={user} />
+    </Route>
+    <Route path="/contact">
+      <ContactPage user={user} />
     </Route>
     <Route>Not found</Route>
   </Switch>

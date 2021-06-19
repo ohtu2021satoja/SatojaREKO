@@ -1,12 +1,13 @@
 require('dotenv').config()
-const ADMIN_EMAIL = 'satojareko@gmail.com'
+const CUSTOMER_SERVICE_MAIL = process.env.CUSTOMER_SERVICE_MAIL
 
-const emailConfig = {
-    service: 'gmail',
+const customerServiceConfig = {
+    host: 'mail.satoja.fi',
+    port: 465,
     auth: {
-        user: ADMIN_EMAIL,
+        user: process.env.CUSTOMER_SERVICE_MAIL,
         pass: process.env.EMAIL_PASS
     }
 }
 
-module.exports = {emailConfig, ADMIN_EMAIL}
+module.exports = {customerServiceConfig, CUSTOMER_SERVICE_MAIL}

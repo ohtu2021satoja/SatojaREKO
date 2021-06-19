@@ -27,7 +27,6 @@ const App = (props) => {
       user ? setAuthedUser(user) : setAuthedUser(null)
     }
     fetchData()
-    
   }, [setAuthedUser])
 
   const getUser = async () => {

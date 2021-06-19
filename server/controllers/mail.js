@@ -1,18 +1,22 @@
 const mailRouter = require('express').Router()
 const mailService = require('../services/mail')
+const mailConfig = require('../utils/mailConfig')
 
-mailRouter.get('/news', async (req, res) => {
+
+mailRouter.post('/contact', async (req, res) => {
     try {
-        await mailService.sendMail(mailService.initiateVerificationMail(''))
+        const mailOptions = {
+            from: CUSTOMER_SERVICE_MAIL,
+            to: CUSTOMER_SERVICE_MAIL,
+            subject: `Message from ${req.body.email}: ${req.body.subject}`,
+            text: req.body.message
+        }
+        await mailService.sendCustomerServiceMail(mailOptions)
         res.sendStatus(200).end()
     } catch(err) {
         console.log(err)
         res.sendStatus(400)
     }
-})
-
-mailRouter.get('/', (req,res) => {
-    res.send('OK')
 })
 
 module.exports = mailRouter
