@@ -7,26 +7,27 @@ import FormBuyerSettings from "./FormBuyerSettings"
 
 // Yup
 const BuyerSchema = Yup.object().shape({
-  name: Yup.string().required(),
-  surname: Yup.string().required(),
-  phone: Yup.string().required(),
-  email: Yup.string().required(),
+  firstname: Yup.string().required(),
+  lastname: Yup.string().required(),
+  phonenumber: Yup.string().required(),
+  email: Yup.string().email("invalid email address").required(),
   newsletter: Yup.boolean(),
   notification: Yup.boolean(),
 })
 
-const FormBuyer = (/*{ user }*/) => {
+const FormBuyer = ({ user }) => {
   return (
     <Col xs={12}>
       <Formik
         initialValues={{
-          name: "",
-          surname: "",
-          phone: "",
-          email: "",
+          firstname: user.firstname || "",
+          lastname: user.lastname || "",
+          phonenumber: user.phonenumber || "",
+          email: user.email || "",
           newsletter: false,
           notification: false,
         }}
+        enableReinitialize={true}
         validationSchema={BuyerSchema}
         onSubmit={console.log}
       >

@@ -8,22 +8,22 @@ import FormErrorMessage from "../FormErrorMessage"
 const FormBuyerDetails = () => {
   return (
     <Col xs={12} className="mb-5">
-      <Field name="name" id="user-name" label="Etunimi" component={FormFieldText} />
-      <ErrorMessage name="name" component={FormErrorMessage} />
+      <Field name="firstname" id="user-name" label="Etunimi" component={FormFieldText} />
+      <ErrorMessage name="firstname" component={FormErrorMessage} />
       <Field
-        name="surname"
+        name="lastname"
         id="user-surname"
         label="Sukunimi"
         component={FormFieldText}
       />
-      <ErrorMessage name="surname" component={FormErrorMessage} />
+      <ErrorMessage name="lastname" component={FormErrorMessage} />
       <Field
-        name="phone"
+        name="phonenumber"
         id="user-phone"
         label="Puhelinnumero"
         component={FormFieldPhone}
       />
-      <ErrorMessage name="phone" component={FormErrorMessage} />
+      <ErrorMessage name="phonenumber" component={FormErrorMessage} />
       <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
       <ErrorMessage name="email" component={FormErrorMessage} />
     </Col>
