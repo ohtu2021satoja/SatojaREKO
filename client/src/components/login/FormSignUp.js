@@ -39,10 +39,10 @@ const FormSignUp = ({ user, handleRegisterUser }) => {
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
           const newUser = {
-            firstname: values.name,
-            lastname: values.surname,
+            firstname: values.firstname,
+            lastname: values.lastname,
             email: values.email,
-            phonenumber: values.phone,
+            phonenumber: values.phonenumber,
           }
 
           user = { ...user, ...newUser }
