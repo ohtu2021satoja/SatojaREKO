@@ -67,9 +67,9 @@ const EventListAdmin = ({ events }) => {
 
 const EventListItemAdmin = ({ event }) => {
   const [show, setShow] = useState(false)
-  console.log(show)
   return (
-    <Card className="mb-1 py-2 px-2" onClick={() => setShow(!show)}>
+    <Card className="mb-1 py-2 px-2">
+      <Button onClick={() => setShow(true)}>Muokkaa</Button>
       <EventInfoLabel event={event} classes="mb-0" omitDate={true} />
       {show ? <EventForm setShow={setShow} event={event} /> : null}
     </Card>
@@ -79,6 +79,7 @@ const EventForm = ({ setShow, event }) => {
   const validationSchema = Yup.object().shape({
     starting_time: Yup.string().required("Vaadittu"),
     end_time: Yup.string().required("Vaadittu"),
+    date: Yup.string().required("Vaadittu"),
   })
   const [markets, setMarkets] = useState([
     { id: 10, address: "Ståhlentie 14, espoo", type: "reko_market" },
@@ -91,18 +92,18 @@ const EventForm = ({ setShow, event }) => {
     const response = await axios.get("api/markets")
     setMarkets(response.data)
   }, [])
-  const handleSubmit = async ({ starting_time, end_time }) => {
+  const handleSubmit = async ({ starting_time, end_time, date }) => {
+    console.log(starting_time, end_time)
     const current_date = new Date()
     const current_year = current_date.getFullYear()
-    const current_month = current_date.getMonth()
-    const current_day = current_date.getDate()
+    const [day, month] = date.split(".")
 
     const starting_hour = starting_time.split(":")[0]
     const starting_minutes = starting_time.split(":")[1]
     const startingDateObject = new Date(
       current_year,
-      current_month,
-      current_day,
+      month,
+      day,
       starting_hour,
       starting_minutes
     )
@@ -110,13 +111,7 @@ const EventForm = ({ setShow, event }) => {
     const end_hour = end_time.split(":")[0]
     const end_minutes = end_time.split(":")[1]
 
-    const endDateObject = new Date(
-      current_year,
-      current_month,
-      current_day,
-      end_hour,
-      end_minutes
-    )
+    const endDateObject = new Date(current_year, month, day, end_hour, end_minutes)
 
     await eventService.updateEvent(startingDateObject, endDateObject, market.id, event.id)
 
@@ -129,12 +124,13 @@ const EventForm = ({ setShow, event }) => {
     <Col xs={12}>
       <Formik
         initialValues={{
-          starting_time: `${new Date(event.start).getHours()}:${new Date(
+          starting_time: `${new Date(event.start).getUTCHours()}:${new Date(
             event.start
           ).getMinutes()}`,
-          end_time: `${new Date(event.endtime).getHours()}:${new Date(
+          end_time: `${new Date(event.endtime).getUTCHours()}:${new Date(
             event.endtime
           ).getMinutes()}`,
+          date: `${new Date(event.start).getDate()}.${new Date(event.start).getMonth()}`,
           market_address: event.address,
         }}
         validationSchema={validationSchema}
@@ -180,6 +176,8 @@ const EventFormDetails = () => {
         component={FormFieldText}
       />
       <ErrorMessage name="end_time" component={FormErrorMessage} />
+      <Field name="date" id="date" label="Päivä" component={FormFieldText} />
+      <ErrorMessage name="date" component={FormErrorMessage} />
     </Col>
   )
 }
