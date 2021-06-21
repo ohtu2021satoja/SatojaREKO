@@ -14,7 +14,6 @@ const LoginPage = ({ handleFacebookLogin, handleFacebookSignUp, handleMockLogin 
       <FacebookLoginButton handleFacebookLogin={handleFacebookLogin} />
       <FacebookSignUpButton handleFacebookSignUp={handleFacebookSignUp} />
       <MockLoginButton handleMockLogin={handleMockLogin} />
-      <PasswordResetButton />
     </Col>
 
     <Col xs={12} className="text-center">
