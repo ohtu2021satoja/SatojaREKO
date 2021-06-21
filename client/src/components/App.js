@@ -15,7 +15,6 @@ import AppBuyer from "./AppBuyer"
 
 const App = (props) => {
   const [sellerView, setSellerView] = useState(null)
-  const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
@@ -48,12 +47,10 @@ const App = (props) => {
 
   const signUpWithFacebook = () => {
     getUser()
-    setSignUp(true)
   }
 
   const registerUser = (user) => {
     setAuthedUser(user)
-    setSignUp(false)
   }
 
   // Remove current user form API and update state
@@ -73,7 +70,7 @@ const App = (props) => {
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (!authedUser && !signUp)
+            if (!authedUser)
               return (
                 <LoginPage
                   handleFacebookLogin={getUser}
@@ -82,14 +79,17 @@ const App = (props) => {
                 />
               )
 
-            if ((!authedUser && signUp) || (authedUser && signUp))
-              return (
-                <SignUpPage
-                  user={authedUser}
-                  handleSigned={() => setSignUp(false)}
-                  handleRegisterUser={registerUser}
-                />
-              )
+            if (authedUser) {
+              if (!authedUser.phonenumber) {
+                return (
+                  <SignUpPage
+                    user={authedUser}
+                    handleSigned={logOut}
+                    handleRegisterUser={registerUser}
+                  />
+                )
+              }
+            }
 
             if (authedUser && sellerView === null)
               return <HomePage setSellerView={handleViewChange} logOut={logOut} />
