@@ -38,8 +38,10 @@ const App = (props) => {
   const getMockUser = () => {
     const user = {
       id: "111",
-      name: "Olli",
-      surname: "Ostaja",
+      firstname: "Olli",
+      lastname: "Ostaja",
+      phonenumber: "fsfsdfsf",
+      email: "olli@gmail.com",
     }
 
     setAuthedUser(user)
