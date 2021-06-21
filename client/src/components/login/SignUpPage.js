@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav"
 import Button from "react-bootstrap/Button"
 import ArrowLeftIcon from "../../media/arrow-left.svg"
 import FormSignUp from "./FormSignUp"
+import PasswordResetButton from "./PasswordResetButton"
 
 const SignUpPage = ({ user, handleSigned, handleRegisterUser }) => (
   <Row className="h-100">

@@ -1,11 +1,11 @@
-POST http://localhost:3003/api/products/seller/40
+POST http://localhost:3003/api/products/seller/76
 Content-Type: application/json
 
 {
   "product":{
     "name": "Sedän tuliset siivet",
     "organic": true,
-    "sellers_id": 40,
+    "sellers_id": 76,
     "type": "kg",
     "batch_quantity": 5,
     "description": "Tuotfdsfsekuvaudfgds",
@@ -14,11 +14,15 @@ Content-Type: application/json
     "unit_price": 69,
     "vat": 24
   },
-  "eventChoices": [1],
+  "eventChoices": [1,2],
   "sizes": [
     {
     "unit": 1,
     "quantity": 5
+    },
+    {
+      "unit": 2,
+      "quantity": 6
     }
   ]
 }

@@ -12,8 +12,10 @@ import SignUpPage from "./login/SignUpPage"
 import HomePage from "./HomePage"
 import AppSeller from "./AppSeller"
 import AppBuyer from "./AppBuyer"
+import PasswordResetForm from "./PasswordResetForm"
 
 const App = (props) => {
+  return <PasswordResetForm />
   const [sellerView, setSellerView] = useState(null)
   const { authedUser, setAuthedUser } = props
 

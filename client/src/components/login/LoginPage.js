@@ -4,6 +4,7 @@ import AppIcon from "../../media/satoja-logo.png"
 import FacebookLoginButton from "./FacebookLoginButton"
 import FacebookSignUpButton from "./FacebookSignUpButton"
 import MockLoginButton from "./MockLoginButton"
+import PasswordResetButton from "./PasswordResetButton"
 
 const LoginPage = ({ handleFacebookLogin, handleFacebookSignUp, handleMockLogin }) => (
   <Row className="d-flex align-items-end h-100 mx-2">
