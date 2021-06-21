@@ -1,9 +1,8 @@
-import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Nav from "react-bootstrap/Nav"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
+import BackButtonHeader from "./BackButtonHeader"
 
 const products = [
   {
@@ -62,21 +61,7 @@ const products = [
 const EventPage = ({ event, closePage, openProductPage, closeProductPage }) => {
   return (
     <Row>
-      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
-        <Nav className="py-2">
-          <Nav.Item>
-            <Button
-              variant="light"
-              size="lg"
-              className="mr-1"
-              aria-label="Return to map"
-              onClick={closePage}
-            >
-              <i className="bi bi-arrow-left" />
-            </Button>
-          </Nav.Item>
-        </Nav>
-      </Col>
+      <BackButtonHeader close={closePage} />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
         <EventInfoLabel event={event} classes="mb-0" styles={{ fontSize: 16 }} />

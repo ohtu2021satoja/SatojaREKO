@@ -4,27 +4,27 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 
 /*
-parent component should include:
+Parent Component:
+- set a button variant based on React-Bootstrap button variants
 
 const Parent = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [show, setShow] = React.useState(false)
     const handleSubmit = () => {
         what happens on submit
-        setModalShow(false)
+        setShow(false)
     }
 
   return (
     <>
-      <Button onClick={() => setModalShow(true)}>
-        open modal
-      </Button>
+      <Button onClick={() => setShow(true)}>open modal</Button>
 
       <TemplateModal
-        show={modalShow}
-        handleClose={() => setModalShow(false)}
+        show={show}
+        handleClose={() => setShow(false)}
         handleSubmit={handleSubmit}
-        title="Modal title"
+        title="title"
         cancelButtonLabel="Cancel"
+        submitButtonVariant="success"
         submitButtonLabel="Submit"
       >
         add modal content here
@@ -39,6 +39,7 @@ const TemplateModal = ({
   handleSubmit,
   title,
   cancelButtonLabel,
+  submitButtonVariant,
   submitButtonLabel,
   children,
 }) => (
@@ -50,12 +51,22 @@ const TemplateModal = ({
     <Modal.Footer>
       <Row className="w-100">
         <Col xs={6}>
-          <Button className="w-100" variant="outline-secondary" onClick={handleClose}>
+          <Button
+            type="button"
+            className="w-100"
+            variant="outline-secondary"
+            onClick={handleClose}
+          >
             {cancelButtonLabel}
           </Button>
         </Col>
         <Col xs={6}>
-          <Button className="w-100" variant="success" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            className="w-100"
+            variant={submitButtonVariant}
+            onClick={handleSubmit}
+          >
             {submitButtonLabel}
           </Button>
         </Col>

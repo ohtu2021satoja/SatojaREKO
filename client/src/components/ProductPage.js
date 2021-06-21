@@ -1,27 +1,12 @@
-import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Nav from "react-bootstrap/Nav"
 import ProductPageListButtons from "./ProductPageListButtons"
+import BackButtonHeader from "./BackButtonHeader"
 
 const ProductPage = ({ product, event, returnToEvent, addToCart, removeFromCart }) => {
   return (
     <Row className="mx-auto">
-      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
-        <Nav className="py-2">
-          <Nav.Item>
-            <Button
-              variant="light"
-              size="lg"
-              className="mr-1"
-              aria-label="Return to map"
-              onClick={() => returnToEvent(event)}
-            >
-              <i className="bi bi-arrow-left" />
-            </Button>
-          </Nav.Item>
-        </Nav>
-      </Col>
+      <BackButtonHeader close={() => returnToEvent(event)} />
       <Col xs={12} className="d-flex justify-content-start align-items-center mb-4">
         <img src="https://via.placeholder.com/60" alt="Generic placeholder" />{" "}
         <h4 className="mt-2 ml-2">Myyjä X</h4>

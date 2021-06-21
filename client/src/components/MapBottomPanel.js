@@ -1,24 +1,31 @@
 import "./MapPage.css"
 import { forwardRef } from "react"
 import Button from "react-bootstrap/Button"
+import Card from "react-bootstrap/Card"
 import EventPage from "./EventPage"
+import EventInfoLabel from "./EventInfoLabel"
 
 const MapBottomPanel = forwardRef((props, ref) => {
   const markets = props.visibleMarkets.map((event, index) => (
-    <div key={index} style={{ marginBottom: 10 }}>
-      {event.name} <br />
-      {event.address} <br />
-      {event.start} - {event.end}
+    <Card key={index} className="mb-3">
+      <EventInfoLabel event={event} classes="mb-0" />
       <Button
         className="btn btn-primary btn-sm"
         variant="success"
         onClick={() =>
-          props.openPage(EventPage({ event: event, closePage: props.closePage }))
+          props.handleOpenPage(
+            EventPage({
+              event: event,
+              closePage: props.handleClosePage,
+              openProductPage: props.handleOpenProduct,
+              closeProductPage: props.handleCloseProduct,
+            })
+          )
         }
       >
         Siirry tilaisuuteen
       </Button>
-    </div>
+    </Card>
   ))
 
   return (

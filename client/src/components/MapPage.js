@@ -52,6 +52,46 @@ const events = [
     image_url: "profile-blank_or75kg",
     location: [61.695615176857764, 27.27694062704281],
   },
+  {
+    id: 3,
+    market_id: 3,
+    start: "2021-04-26T15:00:47.683Z",
+    endtime: "2021-05-26T15:30:47.683Z",
+    area: "test",
+    address: "test",
+    type: "reko_market",
+    areas_id: 1,
+    name: "test",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "50500",
+    county: "Mikkeli",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    location: [62.695615176857764, 27.27694062704281],
+  },
+  {
+    id: 4,
+    market_id: 4,
+    start: "2021-04-26T14:00:47.683Z",
+    endtime: "2021-05-26T15:30:47.683Z",
+    area: "test2",
+    address: "test",
+    type: "reko_market",
+    areas_id: 1,
+    name: "test2",
+    seller_id: 1,
+    reko_area_id: 1,
+    homepage: "www.john.fi",
+    zipcode: "50500",
+    county: "Mikkeli",
+    salesreport_check: false,
+    description: "I am john",
+    image_url: "profile-blank_or75kg",
+    location: [63.695615176857764, 27.27694062704281],
+  },
 ]
 
 const sellers = [
@@ -114,6 +154,8 @@ const MapPage = () => {
 
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
+
+  // map endpoint https://satoja-reko.herokuapp.com/api/markets/map
 
   useEffect(() => {
     if (firstRender.current) {
@@ -234,7 +276,9 @@ const MapPage = () => {
           className="btn btn-primary btn-sm"
           variant="success"
           onClick={() =>
-            setOpenedPage(SellerPage({ seller: seller, closePage: handleClosePage }))
+            setOpenedPage(
+              SellerPage({ seller: seller, events: events, closePage: handleClosePage })
+            )
           }
         >
           Tuottajan sivulle
@@ -270,15 +314,21 @@ const MapPage = () => {
       </MapContainer>
       <Row className="mt-1 mx-2">
         <Col xs={12} className="mb-4 text-center">
-          <Button className="btn btn-primary btn-sm" onClick={scrollIntoPanel}>
+          <Button
+            className="btn btn-sm"
+            variant="outline-success"
+            onClick={scrollIntoPanel}
+          >
             Näytä lista
           </Button>
           <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
           <MapBottomPanel
             ref={bottomPanelRef}
             visibleMarkets={visibleMarkets}
-            openPage={handleOpenPage}
-            closePage={handleClosePage}
+            handleOpenPage={handleOpenPage}
+            handleClosePage={handleClosePage}
+            handleOpenProduct={handleOpenProduct}
+            handleCloseProduct={handleCloseProduct}
           />
         </Col>
       </Row>

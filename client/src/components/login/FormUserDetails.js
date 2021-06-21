@@ -6,14 +6,19 @@ import FormErrorMessage from "../FormErrorMessage"
 
 const FormUserDetails = () => (
   <Col xs={12}>
-    <Field name="name" id="user-name" label="Etunimi" component={FormFieldText} />
-    <ErrorMessage name="name" component={FormErrorMessage} />
-    <Field name="surname" id="user-surname" label="Sukunimi" component={FormFieldText} />
-    <ErrorMessage name="surname" component={FormErrorMessage} />
+    <Field name="firstname" id="user-name" label="Etunimi" component={FormFieldText} />
+    <ErrorMessage name="firstname" component={FormErrorMessage} />
+    <Field name="lastname" id="user-surname" label="Sukunimi" component={FormFieldText} />
+    <ErrorMessage name="lastname" component={FormErrorMessage} />
     <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
     <ErrorMessage name="email" component={FormErrorMessage} />
-    <Field name="phone" id="user-phone" label="Puhelinnumero" component={FormFieldText} />
-    <ErrorMessage name="phone" component={FormErrorMessage} />
+    <Field
+      name="phonenumber"
+      id="user-phone"
+      label="Puhelinnumero"
+      component={FormFieldText}
+    />
+    <ErrorMessage name="phonenumber" component={FormErrorMessage} />
   </Col>
 )
 

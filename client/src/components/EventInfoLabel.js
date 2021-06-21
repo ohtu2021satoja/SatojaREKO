@@ -1,4 +1,4 @@
-const EventInfoLabel = ({ event, classes, styles }) => {
+const EventInfoLabel = ({ event, classes, styles, omitDate }) => {
   const startDate = new Date(event.start)
   const endDate = new Date(event.endtime)
 
@@ -28,7 +28,7 @@ const EventInfoLabel = ({ event, classes, styles }) => {
   const startDay = weekdays[startDate.getUTCDay()]
 
   return (
-    <div className="d-flex flex-column text-center">
+    <div className="d-flex flex-column">
       <p className={classes} style={styles}>
         {event.name} (REKO)
       </p>
@@ -36,9 +36,11 @@ const EventInfoLabel = ({ event, classes, styles }) => {
         {" "}
         {event.address}
       </p>
-      <p className={classes} style={styles}>
-        {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
-      </p>
+      {!omitDate && (
+        <p className={classes} style={styles}>
+          {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+        </p>
+      )}
       <p className={classes} style={styles}>
         {startTime}-{endTime}
       </p>
