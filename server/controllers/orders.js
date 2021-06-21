@@ -1,6 +1,7 @@
 const ordersRouter = require('express').Router()
 const ordersService = require("../services/orders")
 const ordersRepository = require("../repositories/orders")
+const productsService = require("../services/products")
 const productsRepository = require("../repositories/products")
 
 ordersRouter.post('/buyer/:id', async (req, res, next) => {

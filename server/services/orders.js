@@ -25,11 +25,26 @@ const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepos
 
 const getSellersOrders = async (sellers_id, ordersRepository) => {
   const orders = await ordersRepository.getSellersOrders(sellers_id)
+  orders.forEach(eventorders => {
+    if(new Date() > new Date(eventorders.event_endtime)){
+      eventorders.outdated=true
+    } else{
+      eventorders.outdated=false
+    }
+  })
+  console.log(orders)
   return(orders)
 }
 
 const getBuyersOrders = async (buyers_id, ordersRepository) => {
   const orders = await ordersRepository.getBuyersOrders(buyers_id)
+  orders.forEach(eventorders => {
+    if(new Date() > new Date(eventorders.event_endtime)){
+      eventorders.outdated=true
+    } else{
+      eventorders.outdated=false
+    }
+  })
   return(orders)
 }
 
