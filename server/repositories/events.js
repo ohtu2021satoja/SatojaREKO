@@ -12,6 +12,11 @@ const removeProductFromEvents = (product_id, events) => {
   db.query("DELETE from products_events WHERE id_product=$1 AND id_event=ANY($2::int[])",[product_id, events])
 }
 
+const getEvents = () => {
+  const events = db.query("SELECT *, markets.address, events.id from events INNER JOIN markets on events.market_id = markets.id")
+  return events
+}
+
 const getSellersEvents = async (seller_id) => {
   const query = "SELECT *, reko_areas.name, events.id FROM events INNER JOIN markets ON markets.id = events.market_id INNER JOIN reko_markets ON markets.id = reko_markets.market_id INNER JOIN reko_areas ON reko_markets.areas_id=reko_areas.id INNER JOIN sellers_reko ON sellers_reko.reko_area_id=reko_areas.id INNER JOIN sellers ON sellers.id = sellers_reko.seller_id WHERE sellers.id=$1"
   const sellerEvents = await  db.query(query,[seller_id])
@@ -43,4 +48,4 @@ const addEvent = async (event) => {
   return(result[0].id)
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents}
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents}
