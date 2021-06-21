@@ -1,5 +1,6 @@
 import * as Yup from "yup"
 import { Formik, Form } from "formik"
+import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import FormSellerDetails from "./FormSellerDetails"
@@ -8,11 +9,11 @@ import FormSellerSettings from "./FormSellerSettings"
 
 // Yup
 const SellerSchema = Yup.object().shape({
-  company: Yup.string().required(),
-  name: Yup.string().required(),
-  surname: Yup.string().required(),
-  phone: Yup.string().required(),
-  email: Yup.string().email(),
+  company: Yup.string(),
+  firstname: Yup.string().required(),
+  lastname: Yup.string().required(),
+  phonenumber: Yup.string().required(),
+  email: Yup.string().email("invalid email address").required(),
   address: Yup.string(),
   zipCode: Yup.string(),
   municipality: Yup.string(),
@@ -23,16 +24,16 @@ const SellerSchema = Yup.object().shape({
   emailReport: Yup.boolean(),
 })
 
-const FormSeller = (/*{ user }*/) => {
+const FormSeller = ({ user }) => {
   return (
     <Col xs={12}>
       <Formik
         initialValues={{
           company: "",
-          name: "",
-          surname: "",
-          phone: "",
-          email: "",
+          firstname: user.firstname || "",
+          lastname: user.lastname || "",
+          phonenumber: user.phonenumber || "",
+          email: user.email || "",
           address: "",
           zipCode: "",
           municipality: "",
@@ -42,6 +43,7 @@ const FormSeller = (/*{ user }*/) => {
           rekoGroup: [],
           emailReport: false,
         }}
+        enableReinitialize={true}
         validationSchema={SellerSchema}
         onSubmit={console.log}
       >
@@ -50,6 +52,11 @@ const FormSeller = (/*{ user }*/) => {
             <Row>
               <FormSellerDetails />
               <FormSellerGroups />
+              <Col className="text-center mb-5">
+                <p>
+                  Puuttuko ryhmä listalta? <Link to="/contact">Ota yhteyttä</Link>
+                </p>
+              </Col>
               <FormSellerSettings />
             </Row>
           </Form>
