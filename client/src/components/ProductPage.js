@@ -2,11 +2,31 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import ProductPageListButtons from "./ProductPageListButtons"
 import BackButtonHeader from "./BackButtonHeader"
+import { useDispatch } from "react-redux"
+import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 
-const ProductPage = ({ product, event, returnToEvent, addToCart, removeFromCart }) => {
+const ProductPage = (props) => {
+  const product = props.location.state.product
+  const event = props.location.state.event
+
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (size) => {
+    dispatch(addProductToCart(product, size, event))
+  }
+
+  const handleRemoveFromCart = (size) => {
+    dispatch(removeProductFromCart(product, size, event))
+  }
+
   return (
     <Row className="mx-auto">
-      <BackButtonHeader close={() => returnToEvent(event)} />
+      <BackButtonHeader
+        linkTo={{
+          pathname: `/events/${event.id}`,
+          state: { event: event },
+        }}
+      />
       <Col xs={12} className="d-flex justify-content-start align-items-center mb-4">
         <img src="https://via.placeholder.com/60" alt="Generic placeholder" />{" "}
         <h4 className="mt-2 ml-2">Myyjä X</h4>
@@ -28,8 +48,8 @@ const ProductPage = ({ product, event, returnToEvent, addToCart, removeFromCart 
       {product.sizes.map((size, index) => {
         return (
           <ProductPageListButtons
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
             eventID={event.id}
             size={size}
             unit={product.type}

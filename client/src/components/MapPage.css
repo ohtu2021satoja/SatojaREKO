@@ -31,6 +31,10 @@
   color: rgb(154, 154, 230);
 }
 
+.popup-button {
+  color: white;
+}
+
 .popup-card {
   border-width: 0;
 }
