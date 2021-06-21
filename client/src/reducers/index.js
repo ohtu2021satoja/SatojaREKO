@@ -29,5 +29,6 @@ export default combineReducers({
   sellerEvents,
   sellerMarkets,
   sellerOrders,
+  sellerProducts,
   shoppingCart,
 })

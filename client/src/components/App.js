@@ -26,8 +26,8 @@ const App = (props) => {
       console.log(user)
       user ? setAuthedUser(user) : setAuthedUser(null)
     }
+
     fetchData()
-    
   }, [setAuthedUser])
 
   const getUser = async () => {
@@ -82,7 +82,7 @@ const App = (props) => {
                 />
               )
 
-            if (signUp)
+            if ((!authedUser && signUp) || (authedUser && signUp))
               return (
                 <SignUpPage
                   user={authedUser}
