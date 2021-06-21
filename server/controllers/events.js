@@ -67,6 +67,16 @@ eventsRouter.post('/', async (req,res) =>{
   }
 })
 
+eventsRouter.put("/:id", async (req, res,next) => {
+  const { id } = req.params
+  try{
+    await eventsService.updateEvent(req.body, id, eventsRepository)
+    res.send("Event updated")
+  }catch(error){
+    next(error)
+  }
+})
+
 eventsRouter.get("/", async (req, res, next) => {
   try{
     const events = await eventsService.getEvents(eventsRepository)

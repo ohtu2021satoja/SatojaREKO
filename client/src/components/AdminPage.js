@@ -13,6 +13,7 @@ import marketService from "../services/markets"
 import BootStrapForm from "react-bootstrap/Form"
 import rekoService from "../services/reko"
 import Dropdown from "react-bootstrap/Dropdown"
+import EventListAdmin from "./EventListAdmin"
 
 // Yup
 
@@ -265,7 +266,25 @@ const MarketFormDetails = () => {
 }
 
 const ModifyEvents = ({ setModifyingEvents }) => {
-  return <div>Hello</div>
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      market_id: 2,
+      address: "Hämeentie 1",
+    },
+  ])
+  useEffect(() => {
+    const fetchData = async () => {
+      const events = await axios.get("/api/events")
+      setEvents(events.data)
+    }
+    fetchData()
+  })
+  return (
+    <div>
+      <EventListAdmin events={events} />
+    </div>
+  )
 }
 
 const AdminPage = () => {
