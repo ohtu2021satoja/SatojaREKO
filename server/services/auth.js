@@ -49,7 +49,7 @@ passport.use(new LocalStrategy({ usernameField: "email"}, authenticateUser))
 passport.use(new FacebookStrategy({
   clientID: config.FB_CLIENT_ID,
   clientSecret: config.FB_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3003/api/auth/facebook/callback',
+  callbackURL: 'https://satoja-reko.herokuapp.com/api/auth/facebook/callback,
   profileFields: ['id', 'name', 'picture.type(large)', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
   // console.log(profile)
