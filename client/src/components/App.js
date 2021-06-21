@@ -15,7 +15,6 @@ import AppBuyer from "./AppBuyer"
 import AdminPage from "./AdminPage"
 
 const App = (props) => {
-  return <AdminPage />
   const [sellerView, setSellerView] = useState(null)
   const { authedUser, setAuthedUser } = props
 
@@ -39,11 +38,71 @@ const App = (props) => {
   // develoment workaroud
   const getMockUser = () => {
     const user = {
-      id: "111",
-      firstname: "Olli",
-      lastname: "Ostaja",
-      phonenumber: "fsfsdfsf",
-      email: "olli@gmail.com",
+      id: "75",
+      firstname: "Satoja",
+      lastname: "Reko",
+      created_at: "2021-06-21T11:57:16.859Z",
+      phonenumber: "9++043024",
+      email: "satojareko@gmail.com",
+      password: null,
+      is_buyer: false,
+      is_seller: false,
+      facebook_id: "108265444800905",
+      newsletter_check: false,
+      cancel_notification_check: false,
+      image_url: "profile-blank_or75kg",
+      name: null,
+      homepage: null,
+      address: null,
+      zipcode: null,
+      city: null,
+      salesreport_check: false,
+      description: null,
+      location: null,
+      sellers_image_url: "profile-blank_or75kg",
+      buyers_image_url: "profile-blank_or75kg",
+      reko_areas: [
+        {
+          id: 1,
+          name: "Ristiina",
+          belongs: false,
+        },
+        {
+          id: 2,
+          name: "Mikkeli",
+          belongs: false,
+        },
+        {
+          id: 3,
+          name: "Mäntyharju",
+          belongs: false,
+        },
+        {
+          id: 4,
+          name: "Puumala",
+          belongs: false,
+        },
+        {
+          id: 5,
+          name: "Pertunmaa",
+          belongs: false,
+        },
+        {
+          id: 6,
+          name: "Pieksämäki",
+          belongs: false,
+        },
+        {
+          id: 7,
+          name: "Juva",
+          belongs: false,
+        },
+        {
+          id: 8,
+          name: "testi",
+          belongs: false,
+        },
+      ],
     }
 
     setAuthedUser(user)

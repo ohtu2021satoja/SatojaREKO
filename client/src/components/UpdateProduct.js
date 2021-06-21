@@ -21,6 +21,7 @@ const UpdateProduct = () => {
     setImageID(response.data.public_id)
   }
   const alv = useSelector((state) => state.alv)
+  const user = useSelector((state) => state.authedUser)
   const { id } = useParams()
   console.log(id)
   const dispatch = useDispatch()
@@ -119,7 +120,7 @@ const UpdateProduct = () => {
     const product = {
       name: title,
       organic,
-      sellers_id: 1,
+      sellers_id: user.id,
       type: parseTypeBack(productType),
       batch_quantity,
       description,
