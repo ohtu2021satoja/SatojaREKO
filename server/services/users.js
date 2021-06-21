@@ -23,7 +23,6 @@ const setUserPasswordHash = async (id, passwordHash, usersRepository) => {
 
 const createUser = async (params, usersRepository, sellersRepository, buyersRepository ) => {
   params.image_url = BLANK_IMAGE
-  params.location = [null, null]
   const user_id = await usersRepository.createUser(params)
   console.log(user_id)
   await sellersRepository.createSeller(user_id, params)

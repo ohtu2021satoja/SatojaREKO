@@ -10,6 +10,13 @@ Content-Type: application/json
   "seller_info": {
     "address": "Hämeentie 1",
     "name": "Terpan tila"
+  },
+  "user_info": {
+    "firstname": "Touko",
+    "lastname": "Puro",
+    "phonenumber": "+358481237489275",
+    "email": "puro.touko@gmail.com"
+
   }
 
 }

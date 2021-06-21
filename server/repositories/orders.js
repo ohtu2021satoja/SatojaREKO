@@ -30,5 +30,8 @@ const removeSellersOrder = async (seller_id, order_id) => {
   await db.query("UPDATE batches SET removed=true FROM sizes, products WHERE batches.order_id=$1 AND batches.sizes_id = sizes.id AND sizes.product_id = products.id AND products.sellers_id=$2;", [order_id, seller_id])
 }
 
+const removeProductFromSellersOrder = async (order_id, size_id) => {
+  await db.query("UPDATE batches SET removed=true FROM sizes, products WHERE batches.order_id=$1 AND batches.sizes_id = $2", [order_id, size_id])
+}
 
-module.exports = { addOrder, addBatches, getSellersOrders, getBuyersOrders, removeSellersOrder}
+module.exports = { addOrder, addBatches, getSellersOrders, getBuyersOrders, removeSellersOrder, removeProductFromSellersOrder}

@@ -53,4 +53,11 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 
-module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder }
+const removeProductFromSellersOrder = async (order_id, size_id, ordersRepository, productsRepository) => {
+  await productsRepository.addQuantityToSize(order_id, size_id)
+  await ordersRepository.removeProductFromSellersOrder(order_id, size_id)
+}
+
+
+
+module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder, removeProductFromSellersOrder }

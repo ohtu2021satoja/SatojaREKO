@@ -60,7 +60,18 @@ ordersRouter.delete("/seller/:seller_id/:order_id", async (req, res) => {
     await ordersService.removeSellersOrder(seller_id, order_id, ordersRepository, productsRepository)
     res.send(200).end()
   }
-
 })
+
+ordersRouter.delete("/seller/:seller_id/:order_id/:size_id", async (req, res) => {
+  const {seller_id, order_id, size_id} = req.params
+  if(!req.user || req.user.id != seller_id){
+    res.status(401).send("Current user isn't the seller")
+  } else {
+    await ordersService.removeProductFromSellersOrder(order_id, size_id, ordersRepository, productsRepository)
+    res.send(200).end()
+  }
+})
+
+
 
 module.exports = ordersRouter
