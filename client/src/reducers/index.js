@@ -14,6 +14,7 @@ import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
 import { shoppingCart } from "./shoppingCart"
 import alvReducer from "./alvReducer"
+import { mapPoints } from "./mapReducer"
 
 export default combineReducers({
   alv: alvReducer,
@@ -24,6 +25,7 @@ export default combineReducers({
   buyerOrders,
   eventProducts,
   events,
+  mapPoints,
   markets,
   products,
   sellerEvents,
