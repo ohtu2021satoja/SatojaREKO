@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button"
 const ProfileHeader = ({ user, openModal }) => (
   <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
     <h2 className="mb-4">Omat tiedot</h2>
-    {user.imgUrl && (
+    {/*
       <div className="mb-4">
         <Image
           src={user.imgUrl}
@@ -17,18 +17,16 @@ const ProfileHeader = ({ user, openModal }) => (
           Poista kuva
         </Button>
       </div>
-    )}
-    {!user.imgUrl && (
-      <Button
-        variant="primary"
-        size="lg"
-        type="button"
-        className="w-100"
-        onClick={openModal}
-      >
-        Lisää profiilikuva
-      </Button>
-    )}
+    )*/}
+    <Button
+      variant="primary"
+      size="lg"
+      type="button"
+      className="w-100"
+      onClick={openModal}
+    >
+      Lisää profiilikuva
+    </Button>
   </Col>
 )
 
