@@ -1,43 +1,24 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "/static/css/main.1144c5f8.chunk.css",
-    "main.js": "/static/js/main.c8d6c41c.chunk.js",
-    "main.js.map": "/static/js/main.c8d6c41c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.a06e69b5.js",
-    "runtime-main.js.map": "/static/js/runtime-main.a06e69b5.js.map",
-    "static/js/2.327faed5.chunk.js": "/static/js/2.327faed5.chunk.js",
-    "static/js/2.327faed5.chunk.js.map": "/static/js/2.327faed5.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.1144c5f8.chunk.css.map": "/static/css/main.1144c5f8.chunk.css.map",
-    "static/js/2.327faed5.chunk.js.LICENSE.txt": "/static/js/2.327faed5.chunk.js.LICENSE.txt",
-=======
     "main.css": "/static/css/main.c5da5176.chunk.css",
-    "main.js": "/static/js/main.ee7ed607.chunk.js",
-    "main.js.map": "/static/js/main.ee7ed607.chunk.js.map",
+    "main.js": "/static/js/main.eceb9041.chunk.js",
+    "main.js.map": "/static/js/main.eceb9041.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.a06e69b5.js",
     "runtime-main.js.map": "/static/js/runtime-main.a06e69b5.js.map",
-    "static/js/2.c7a68410.chunk.js": "/static/js/2.c7a68410.chunk.js",
-    "static/js/2.c7a68410.chunk.js.map": "/static/js/2.c7a68410.chunk.js.map",
+    "static/js/2.cee5b329.chunk.js": "/static/js/2.cee5b329.chunk.js",
+    "static/js/2.cee5b329.chunk.js.map": "/static/js/2.cee5b329.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.c5da5176.chunk.css.map": "/static/css/main.c5da5176.chunk.css.map",
-    "static/js/2.c7a68410.chunk.js.LICENSE.txt": "/static/js/2.c7a68410.chunk.js.LICENSE.txt",
+    "static/js/2.cee5b329.chunk.js.LICENSE.txt": "/static/js/2.cee5b329.chunk.js.LICENSE.txt",
     "static/media/arrow-left.27a01551.svg": "/static/media/arrow-left.27a01551.svg",
->>>>>>> fixregister
     "static/media/map-marker-event.d109c0af.svg": "/static/media/map-marker-event.d109c0af.svg",
     "static/media/map-marker-seller.fbe9629e.svg": "/static/media/map-marker-seller.fbe9629e.svg",
     "static/media/satoja-logo.784f376a.png": "/static/media/satoja-logo.784f376a.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a06e69b5.js",
-<<<<<<< HEAD
-    "static/js/2.327faed5.chunk.js",
-    "static/css/main.1144c5f8.chunk.css",
-    "static/js/main.c8d6c41c.chunk.js"
-=======
-    "static/js/2.c7a68410.chunk.js",
+    "static/js/2.cee5b329.chunk.js",
     "static/css/main.c5da5176.chunk.css",
-    "static/js/main.ee7ed607.chunk.js"
->>>>>>> fixregister
+    "static/js/main.eceb9041.chunk.js"
   ]
 }

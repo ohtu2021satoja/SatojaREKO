@@ -26,18 +26,13 @@ usersRouter.put("/:id/password", async (req, res, next) => {
 
 usersRouter.get("/:id/reset_password", async (req, res, next) => {
   const { id } = req.params
-  if(! req.user || req.user.id != id){
-    res.status(401).send("Current user doesn't match")
-  } else{
-    try{
+  try{
       const { passwordHash } = req.query
       await usersService.setUserPasswordHash( id, passwordHash, usersRepository)
       res.redirect("/")
     } catch(error){
       next(error)
     }
-  }
-
 })
 
 usersRouter.get("/", async (req, res) => {
