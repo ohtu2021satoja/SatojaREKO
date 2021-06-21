@@ -16,7 +16,6 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
     <Route exact path="/home">
       <HomePageSeller />
     </Route>
-
     <Route path="/add">
       <AddProducts />
     </Route>
