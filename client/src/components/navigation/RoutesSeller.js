@@ -7,6 +7,7 @@ import Products from "../Products"
 import OrderSeller from "../OrderSeller"
 import AddProducts from "../AddProducts"
 import UpdateProduct from "../UpdateProduct"
+import ContactPage from "../ContactPage"
 
 const RoutesSeller = ({ user, logOut, setSellerView }) => (
   <Switch>
@@ -16,6 +17,7 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
     <Route exact path="/home">
       <HomePageSeller />
     </Route>
+
     <Route path="/add">
       <AddProducts />
     </Route>
@@ -33,6 +35,9 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
     </Route>
     <Route path="/profile">
       <ProfilePageSeller user={user} />
+    </Route>
+    <Route exact path="/contact">
+      <ContactPage user={user} />
     </Route>
     <Route>Not found</Route>
   </Switch>

@@ -75,7 +75,7 @@ usersRouter.delete("/:id", async (req, res) => {
 })
 
 usersRouter.post("/", async (req, res) => {
-  await usersService.createUser(req.body, usersRepository)
+  await usersService.createUser(req.body, usersRepository, sellersRepository, buyersRepository )
   res.sendStatus(200)
 })
 

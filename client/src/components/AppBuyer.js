@@ -6,7 +6,7 @@ const AppBuyer = ({ user, logOut, setSellerView }) => (
   <>
     <NavigationBarBuyer setSellerView={setSellerView} />
     <RoutesBuyer user={user} logOut={logOut} setSellerView={setSellerView} />
-    <Redirect to="/events" />
+    <Redirect to="/map" />
   </>
 )
 export default AppBuyer

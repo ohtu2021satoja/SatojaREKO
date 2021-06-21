@@ -34,14 +34,14 @@ const NotificationSuccess = ({ show, handleClose, delay, message }) => (
       autohide
       style={{
         position: "absolute",
-        top: 0,
+        top: 10,
         left: 0,
         right: 0,
         margin: "auto",
         zIndex: 100,
       }}
     >
-      <Alert className="my-0" variant="success">
+      <Alert className="my-0 text-center" variant="success">
         {message}
       </Alert>
     </Toast>
