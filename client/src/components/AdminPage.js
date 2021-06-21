@@ -11,7 +11,7 @@ import axios from "axios"
 import eventService from "../services/events"
 import marketService from "../services/markets"
 import BootStrapForm from "react-bootstrap/Form"
-
+import rekoService from "../services/reko"
 import Dropdown from "react-bootstrap/Dropdown"
 
 // Yup
@@ -132,7 +132,7 @@ const EventFormDetails = () => {
 
 const RekoForm = ({ setAddingReko }) => {
   const handleSubmit = async ({ area, name }) => {
-    console.log(area, name)
+    await rekoService.addRekoArea({ area, name })
     setAddingReko(false)
   }
   const validationSchema = Yup.object().shape({
