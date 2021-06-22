@@ -130,7 +130,7 @@ const ShoppingCart = () => {
           } else return null
         })}
         {totalPrice > 0 ? (
-          <div className="px-0 py-3 mx-0" style={{ backgroundColor: "#e8fa70" }}>
+          <div className="px-0 py-3 mx-0" style={{ backgroundColor: "#eefaa2" }}>
             <Col xs={12} className="d-flex justify-content-start">
               <h4>Varauskori</h4>
             </Col>

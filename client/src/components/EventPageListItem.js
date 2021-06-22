@@ -30,6 +30,10 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
       product: product,
       market: market,
       singleSize: singleSize,
+      linkTo: {
+        pathname: `/events/${event.id ? event.id : event.event_id}`,
+        state: { market: market, event: event },
+      },
     },
   }
 
@@ -79,21 +83,7 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
           />
         ) : (
           <Col xs={12} className="d-flex justify-content-end">
-            <Button
-              size="lg"
-              variant="light"
-              as={Link}
-              to={{
-                pathname: `/events/${event.id ? event.id : event.event_id}/products/${
-                  product.id
-                }`,
-                state: {
-                  event: event,
-                  product: product,
-                  market: market,
-                },
-              }}
-            >
+            <Button size="lg" variant="light" as={Link} to={productPageLink}>
               <i className="bi bi-card-list"></i> Eri kokoja
             </Button>
           </Col>

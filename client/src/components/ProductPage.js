@@ -10,6 +10,7 @@ const ProductPage = (props) => {
   const product = props.location.state.product
   const event = props.location.state.event
   const market = props.location.state.market
+  const linkTo = props.location.state.linkTo
   const singleSize = product.sizes.length === 1
 
   const dispatch = useDispatch()
@@ -39,12 +40,7 @@ const ProductPage = (props) => {
 
   return (
     <Row className="mx-auto">
-      <BackButtonHeader
-        linkTo={{
-          pathname: event.id ? `/events/${event.id}` : `/events/${event.event_id}`,
-          state: { event: event, market: event.market ? event.market : market },
-        }}
-      />
+      <BackButtonHeader linkTo={linkTo} />
       <Col
         xs={12}
         className="d-flex justify-content-start align-items-center mb-4"
