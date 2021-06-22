@@ -1,14 +1,14 @@
 import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet"
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
+import MapMarkerMarket from "./MapMarkerMarket"
+import MapMarkerSeller from "./MapMarkerSeller"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Spinner from "react-bootstrap/Spinner"
-import EventInfoLabel from "./EventInfoLabel"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
-import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { getMapPoints } from "../actions/map"
 
@@ -48,8 +48,6 @@ const MapPage = () => {
 
   const dispatch = useDispatch()
   const mapPoints = useSelector((state) => state.mapPoints)
-
-  // map endpoint https://satoja-reko.herokuapp.com/api/markets/map
 
   useEffect(() => {
     if (firstRender.current) {
@@ -101,79 +99,22 @@ const MapPage = () => {
     })
   }
 
-  const markMarkets = visibleMarkets.map((market, index) => {
-    return (
-      <Marker
-        position={[Number(market.location.lat), Number(market.location.lon)]}
-        key={index}
-        icon={eventMarkerHTML}
-        eventHandlers={{
-          click: (e) => {
-            mapInstance.flyTo(e.latlng, mapInstance.getZoom())
-          },
-        }}
-      >
-        <Popup className="map-popup" autoPan={false}>
-          <EventInfoLabel
-            market={market}
-            event={market.market_events[0]}
-            classes="mb-0 mt-0"
-            styles={{ fontSize: 14 }}
-          />
-          <Button
-            className="btn btn-success btn-sm popup-button mt-1"
-            style={{ color: "white" }}
-            variant="success"
-            as={Link}
-            to={{
-              pathname: `/events/${
-                market.market_events[0].event_id
-                  ? market.market_events[0].event_id
-                  : market.market_events[0].id
-              }`,
-              state: { market: market, event: market.market_events[0] },
-            }}
-          >
-            Siirry tilaisuuteen
-          </Button>
-        </Popup>
-      </Marker>
-    )
-  })
+  const markMarkets = visibleMarkets.map((market, index) => (
+    <MapMarkerMarket
+      market={market}
+      icon={eventMarkerHTML}
+      mapInstance={mapInstance}
+      key={index}
+    />
+  ))
 
   const markSellers = visibleSellers.map((seller, index) => (
-    <Marker
-      position={[Number(seller.location.lat), Number(seller.location.lon)]}
-      key={index}
+    <MapMarkerSeller
+      seller={seller}
       icon={sellerMarkerHTML}
-      eventHandlers={{
-        click: (e) => {
-          mapInstance.flyTo(e.latlng, mapInstance.getZoom())
-        },
-      }}
-    >
-      <Popup autoPan={false}>
-        {seller.name} <br />
-        {seller.address} <br />
-        <Button
-          className="btn btn-success btn-sm popup-button"
-          style={{ color: "white" }}
-          variant="success"
-          as={Link}
-          to={{
-            pathname: `/sellers/${seller.id}`,
-            state: {
-              seller: seller,
-              linkTo: {
-                pathname: "/map",
-              },
-            },
-          }}
-        >
-          Tuottajan sivulle
-        </Button>
-      </Popup>
-    </Marker>
+      mapInstance={mapInstance}
+      key={index}
+    />
   ))
 
   return mapPoints ? (
