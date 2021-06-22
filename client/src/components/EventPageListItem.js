@@ -11,11 +11,11 @@ const EventPageListItem = ({ product, event, market }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
-    dispatch(addProductToCart(product, size, event))
+    dispatch(addProductToCart(product, size, { ...event, market: market }))
   }
 
   const handleRemoveFromCart = (size) => {
-    dispatch(removeProductFromCart(product, size, event))
+    dispatch(removeProductFromCart(product, size, { ...event, market: market }))
   }
 
   return (
@@ -23,7 +23,9 @@ const EventPageListItem = ({ product, event, market }) => {
       <Row
         as={Link}
         to={{
-          pathname: `/events/${event.id}/products/${product.id}`,
+          pathname: `/events/${event.id ? event.id : event.event_id}/products/${
+            product.id
+          }`,
           state: {
             event: event,
             product: product,
@@ -36,27 +38,30 @@ const EventPageListItem = ({ product, event, market }) => {
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle className="d-flex justify-content-between text-muted">
-            <p>Myyjä X</p>
+            <p>{product.seller_name}</p>
             <i className="bi bi-chevron-right"></i>
           </Card.Subtitle>
-          <Card.Title>{product.name}</Card.Title>
           <Card.Title>
-            {product.unit_price / 100}e / {product.type}
+            {product.sizes.length > 1
+              ? product.name
+              : product.name + " " + product.sizes[0].unit + " " + product.type}
           </Card.Title>
+          {product.sizes.length > 1 && (
+            <Card.Title> {product.unit_price / 100 + "e / " + product.type} </Card.Title>
+          )}
         </Col>
       </Row>
       <Row>
-        <Col xs={4}>
-          <Card.Text className="text-left">{product.description}</Card.Text>
-        </Col>
         {product.sizes.length > 1 ? (
-          <Col xs={8} className="d-flex justify-content-end">
+          <Col xs={12} className="d-flex justify-content-end">
             <Button
               size="lg"
               variant="light"
               as={Link}
               to={{
-                pathname: `/events/${event.id}/products/${product.id}`,
+                pathname: `/events/${event.id ? event.id : event.event_id}/products/${
+                  product.id
+                }`,
                 state: {
                   event: event,
                   product: product,
@@ -71,7 +76,7 @@ const EventPageListItem = ({ product, event, market }) => {
           <EventPageListButtons
             addToCart={handleAddToCart}
             removeFromCart={handleRemoveFromCart}
-            eventID={event.id}
+            eventID={event.id ? event.id : event.event_id}
             size={product.sizes[0]}
             unit={product.type}
           />

@@ -50,7 +50,7 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
           <ShoppingCartListButtons
             addToCart={handleAddToCart}
             removeFromCart={handleRemoveFromCart}
-            eventID={event.id}
+            eventID={event.id ? event.id : event.event_id}
             size={size}
             unit={product.type}
             key={index}

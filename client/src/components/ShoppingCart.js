@@ -67,6 +67,7 @@ const ShoppingCart = () => {
                 <div className="mb-3">
                   <EventInfoLabel
                     event={order.event}
+                    market={order.event.market}
                     classes="mb-0 mt-0"
                     styles={{ fontSize: 16 }}
                   />

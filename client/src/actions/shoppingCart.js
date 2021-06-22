@@ -6,8 +6,12 @@ export const SUBMIT_ORDERS = "SUBMIT_ORDERS"
 
 export const addProductToCart = (product, size, event) => {
   return async (dispatch) => {
+    // Standardize key names
     if ("size_id" in size) {
       size = { ...size, id: size.size_id }
+    }
+    if ("event_id" in event) {
+      event = { ...event, id: event.event_id }
     }
     dispatch({ type: "ADD_PRODUCT_TO_CART", product, size, event })
   }
@@ -15,8 +19,12 @@ export const addProductToCart = (product, size, event) => {
 
 export const removeProductFromCart = (product, size, event) => {
   return async (dispatch) => {
+    // Standardize key names
     if ("size_id" in size) {
       size = { ...size, id: size.size_id }
+    }
+    if ("event_id" in event) {
+      event = { ...event, id: event.event_id }
     }
     dispatch({ type: "REMOVE_PRODUCT_FROM_CART", product, size, event })
   }

@@ -49,6 +49,7 @@ Example cart state:
 export const shoppingCart = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART: {
+      console.log("ACTION in reducer: ", action)
       // Check if an order object for this event_id exists
       // if not, add new order object to state
       if (!state.find((order) => order.event_id === action.event.id)) {
