@@ -7,7 +7,7 @@ const getAllMarketsThatHaveEvents = async () => {
 }
 
 const getAllMarkets = async () => {
-    const markets = await db.query("select DISTINCT jsonb_agg( jsonb_build_object('start', res.start, 'id', res.id, 'endtime', res.endtime)) from (select DISTINCT events.id, events.start, events.endtime FROM events INNER JOIN markets ON events.market_id=markets.id INNER JOIN products_events ON products_events.id_event = events.id ORDER BY events.start) AS res;")
+    const markets = await db.query("select * from markets")
     return markets
 }
 const addMarkets = async (market, location) => {
