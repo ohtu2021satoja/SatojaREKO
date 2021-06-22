@@ -14,18 +14,21 @@ const ShoppingCart = () => {
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
-    const total =
-      cart.reduce(
-        (acc, order) =>
-          acc +
-          order.batches.reduce(
-            (acc, batch) =>
-              acc + batch.order_quantity * batch.unit * batch.product.unit_price,
-            0
-          ),
-        0
-      ) / 100
-    setTotalPrice(total || 0)
+    const getTotalPrice = () => {
+      const total =
+        cart.reduce(
+          (acc, order) =>
+            acc +
+            order.batches.reduce(
+              (acc, batch) =>
+                acc + batch.order_quantity * batch.unit * batch.product.unit_price,
+              0
+            ),
+          0
+        ) / 100
+      return total
+    }
+    setTotalPrice(getTotalPrice() || 0)
   }, [cart])
 
   const handleSubmitOrders = () => {
@@ -47,6 +50,26 @@ const ShoppingCart = () => {
     if (orders.length > 0) {
       dispatch(submitOrders({ orders: orders }, buyerID))
     }
+  }
+
+  const sortSizesByProduct = (order) => {
+    const sortedSizes = []
+    order.batches.map((batch) => {
+      const currentProduct = sortedSizes.find(
+        (size) => size.product.id === batch.product.id
+      )
+      if (batch.order_quantity > 0) {
+        if (currentProduct) {
+          return currentProduct.batches.push(batch)
+        } else {
+          return sortedSizes.push({
+            product: batch.product,
+            batches: [batch],
+          })
+        }
+      } else return null
+    })
+    return sortedSizes
   }
 
   const orderHasSizes = (order) => {
@@ -72,27 +95,10 @@ const ShoppingCart = () => {
                     styles={{ fontSize: 16 }}
                   />
                 </div>
-                {(() => {
+                {
                   // Sort orders by product to render different sizes
                   // of same product on the same card
-                  const ordersByProduct = []
-
-                  order.batches.map((batch, index) => {
-                    const currentProduct = ordersByProduct.find(
-                      (order) => order.product.id === batch.product.id
-                    )
-                    if (batch.order_quantity > 0) {
-                      if (currentProduct) {
-                        return currentProduct.batches.push(batch)
-                      } else {
-                        return ordersByProduct.push({
-                          product: batch.product,
-                          batches: [batch],
-                        })
-                      }
-                    } else return null
-                  })
-                  return ordersByProduct.map((product, index) => {
+                  sortSizesByProduct(order).map((product, index) => {
                     return (
                       <ShoppingCartListItem
                         event={order.event}
@@ -102,8 +108,19 @@ const ShoppingCart = () => {
                       />
                     )
                   })
-                })()}
-                <br />
+                }
+                <Col xs={12} className="d-flex justify-content-between mb-3 mt-2">
+                  <h5>YHTEENSÄ</h5>{" "}
+                  <h5>
+                    {order.batches.reduce(
+                      (acc, size) =>
+                        acc +
+                        (size.order_quantity * size.unit * size.product.unit_price) / 100,
+                      0
+                    )}
+                    e
+                  </h5>
+                </Col>
               </div>
             )
           } else return null

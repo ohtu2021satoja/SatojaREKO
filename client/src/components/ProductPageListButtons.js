@@ -29,7 +29,11 @@ const ProductPageListButtons = ({
   return (
     <>
       <Col xs={6} className="d-flex justify-content-center align-items-center">
-        <b>{singleSize ? size.price / 100 + "e / kpl" : size.unit + " " + unit}</b>
+        <b>
+          {singleSize
+            ? size.price / 100 + "e / kpl"
+            : size.unit + unit + " " + size.price / 100 + "e"}
+        </b>
       </Col>
       <Col xs={6} className="d-flex justify-content-between align-items-center">
         <Button
