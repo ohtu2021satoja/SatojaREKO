@@ -4,18 +4,8 @@ const eventsRepository = require('../repositories/events')
 const productsService = require("../services/products")
 const productsRepository = require("../repositories/products")
 
-eventsRouter.get("/seller/:id", async (req, res, next) => {
-  const { id } = req.params
-  const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
-  if (!sellerEvents) {
-    return res.status(404).send({ error: "Seller events not found" })
-  }
-  try {
-    res.send(sellerEvents)
-  } catch (err) {
-    next(err)
-  }
-  /*
+eventsRouter.get('/seller/:id', async (req, res, next) => {
+    const { id } = req.params
     if(! req.user || req.user.id != id){
       res.status(401).send("Current user isn't the seller")
     } else {
@@ -29,7 +19,7 @@ eventsRouter.get("/seller/:id", async (req, res, next) => {
           next(err)
       }
     }
-*/
+
 })
 
 eventsRouter.get("/:event_id/products/:product_id", async (req, res, next) => {
