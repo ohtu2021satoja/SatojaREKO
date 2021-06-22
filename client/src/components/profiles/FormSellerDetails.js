@@ -17,22 +17,22 @@ const FormSellerDetails = () => {
         component={FormFieldText}
       />
       <ErrorMessage name="company" component={FormErrorMessage} />
-      <Field name="name" id="user-name" label="Etunimi" component={FormFieldText} />
-      <ErrorMessage name="name" component={FormErrorMessage} />
+      <Field name="firstname" id="user-name" label="Etunimi" component={FormFieldText} />
+      <ErrorMessage name="firstname" component={FormErrorMessage} />
       <Field
-        name="surname"
+        name="lastname"
         id="user-surname"
         label="Sukunimi"
         component={FormFieldText}
       />
-      <ErrorMessage name="surname" component={FormErrorMessage} />
+      <ErrorMessage name="lastname" component={FormErrorMessage} />
       <Field
-        name="phone"
+        name="phonenumber"
         id="user-phone"
         label="Puhelinnumero"
         component={FormFieldPhone}
       />
-      <ErrorMessage name="phone" component={FormErrorMessage} />
+      <ErrorMessage name="phonenumber" component={FormErrorMessage} />
       <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
       <ErrorMessage name="email" component={FormErrorMessage} />
       <Field
@@ -74,6 +74,7 @@ const FormSellerDetails = () => {
         name="businessInfo"
         id="user-business-info"
         label="Oma esittely..."
+        rows="3"
         component={FormFieldTextArea}
       />
       <ErrorMessage name="businessInfo" component={FormErrorMessage} />

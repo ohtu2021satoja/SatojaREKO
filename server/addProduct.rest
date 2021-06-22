@@ -1,27 +1,28 @@
-POST http://localhost:3003/api/products/seller/26
+POST http://localhost:3003/api/products/seller/76
 Content-Type: application/json
 
 {
   "product":{
-    "name": "restTest",
+    "name": "Sedän tuliset siivet",
     "organic": true,
-    "sellers_id": 26,
-    "type": "pc",
+    "sellers_id": 76,
+    "type": "kg",
     "batch_quantity": 5,
-    "description": "Tuotekuvaudfgds",
-    "imageURL": "kuvalinsfdffkki",
+    "description": "Tuotfdsfsekuvaudfgds",
+    "imageURL": "kuvalinsfdfkki",
     "category": "Hedelmät & marjat",
-    "unit_price": 500,
-    "vat": 24,
-    "deleteBeforeEvent": 24
+    "unit_price": 69,
+    "vat": 24
   },
   "eventChoices": [1,2],
-  "sizes": [{
-    "quantity": 5,
-    "unit": 1
-  },
-  {
-    "quantity": 2,
-    "unit": 1.5
-  }]
+  "sizes": [
+    {
+    "unit": 1,
+    "quantity": 5
+    },
+    {
+      "unit": 2,
+      "quantity": 6
+    }
+  ]
 }

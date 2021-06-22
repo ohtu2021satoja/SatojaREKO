@@ -2,8 +2,19 @@ const db = require("../db")
 const format = require("pg-format")
 
 const getAllProducts = async () => {
-  const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
+  const products = await db.query("SELECT products.id, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id GROUP BY products.id",)
   return(products)
+}
+
+const getProductById = async (id) => {
+  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, array_agg(DISTINCT products_events.id_event) AS events, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id INNER JOIN products_events ON products_events.id_product=products.id  WHERE products.id= $1 GROUP BY products.id",[id])
+  console.log(product)
+  return(product[0])
+}
+
+const getEventProduct = async (event_id, product_id) => {
+  const product = await db.query("SELECT products.id, products.vat, products.name, products.organic, products.sellers_id, products.type, products.batch_quantity, products.created_at, products.description, products.close_before_event, products.unit_price, products.image_url, products.category, SUM(sizes.quantity) AS quantity_left, array_agg(DISTINCT products_events.id_event) AS events, json_agg(json_build_object('quantity', sizes.quantity, 'unit', sizes.unit, 'price', sizes.unit*products.unit_price, 'batch_quantity', sizes.batch_quantity, 'id', sizes.id)) AS sizes FROM products INNER JOIN sizes ON sizes.product_id = products.id INNER JOIN products_events ON products_events.id_product=products.id  WHERE products.id= $1 AND products_events.id_event=$2 GROUP BY products.id",[product_id, event_id])
+  return(product[0])
 }
 
 const getSellersProducts = async (id) => {
@@ -19,8 +30,8 @@ const addProduct = async (product) => {
 }
 
 const addProductSizes = async (product_id, sizes) => { 
-  const values = sizes.map(size => [product_id, size.quantity, size.unit])
-  const query = format("INSERT INTO sizes (product_id, quantity, unit) VALUES %L", values)
+  const values = sizes.map(size => [product_id, size.quantity, size.unit, size.quantity])
+  const query = format("INSERT INTO sizes (product_id, quantity, unit, batch_quantity) VALUES %L", values)
   await db.query(query, [])
 }
 
@@ -50,4 +61,31 @@ const addQuantitiesToSizes = async (order_id, sellers_id) => {
   await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches, products WHERE batches.order_id=$1 AND batches.sizes_id=sizes.id AND sizes.product_id = products.id AND products.sellers_id=$2;", [order_id, sellers_id])
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes }
+const addQuantityToSize = async (order_id, size_id) => {
+  await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches WHERE batches.order_id=$1 AND batches.sizes_id=$2", [order_id, size_id])
+}
+const addUsersOrdersQuantitiesToSizes = async (id) => {
+  await db.query("UDPATE sizes SET quantity=sizes.quantity+batches.quantity FROM batches,orders WHERE batches.sizes_id=sizes.id AND AND batches.order_id = orders.id AND orders.buyers_id=$1",[id])
+}
+
+const updateOldPricedProduct = async (product_id) => {
+  db.query("UPDATE sizes SET quantity=0, batch_quantity=sizes.quantity WHERE sizes.product_id=$1", [product_id])
+}
+
+const updateProduct = async (product_id, new_product) => {
+  db.query("UPDATE products SET name=$1, category=$2, type=$3, description=$4, close_before_event=$5, vat=$6, image_url=$7 WHERE id=$8", [new_product.name, new_product.category, new_product.type, new_product.description, new_product.close_before_event, new_product.vat, new_product.image_url, product_id])
+}
+
+const updateOldProductSizes = async (new_sizes) => {
+  new_sizes.forEach((size) => {
+    db.query("UPDATE sizes SET unit=$1, quantity=$2, batch_quantity=$3 WHERE id=$4", [size.unit, size.quantity, size.batch_quantity, size.id])
+  })
+}
+
+const removeSizes = async (product_id, removed_sizes) => {
+  const IDs = removed_sizes.map(size => size.id)
+  db.query("UPDATE batches SET removed=false WHERE batches.sizes_id=ANY($1::int[])", [IDs])
+  db.query("DELETE from sizes WHERE id=ANY($1::int[])",[IDs])  
+}
+
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes, getEventProduct, addUsersOrdersQuantitiesToSizes, addQuantityToSize }

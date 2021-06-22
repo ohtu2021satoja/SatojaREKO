@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
 import BackButtonHeader from "./BackButtonHeader"
+//import { useParams } from "react-router-dom"
 
 const products = [
   {
@@ -58,23 +59,26 @@ const products = [
   },
 ]
 
-const EventPage = ({ event, closePage, openProductPage, closeProductPage }) => {
+const EventPage = (props) => {
+  //const { eventID } = useParams()
+  //console.log("eventID: " + eventID)
+
+  const event = props.location.state.event
+
   return (
     <Row>
-      <BackButtonHeader close={closePage} />
+      <BackButtonHeader
+        linkTo={{
+          pathname: "/map",
+        }}
+      />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
         <EventInfoLabel event={event} classes="mb-0" styles={{ fontSize: 16 }} />
       </Col>
       <Col xs={12} className="mx-auto">
         {products.map((product, index) => (
-          <EventPageListItem
-            product={product}
-            event={event}
-            openProductPage={openProductPage}
-            closeProductPage={closeProductPage}
-            key={index}
-          />
+          <EventPageListItem product={product} event={event} key={index} />
         ))}
       </Col>
     </Row>

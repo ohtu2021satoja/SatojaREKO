@@ -9,6 +9,7 @@ import { addQuantity, removeQuantity } from "../reducers/productSizesReducer"
 const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
   const dispatch = useDispatch()
   const productSizes = useSelector((state) => state.productSizes)
+  const productType = useSelector((state) => state.currentProduct.product.type)
   const productrows = []
   for (const i in productSizes) {
     productrows.push(
@@ -20,6 +21,7 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
         touched={touched}
         setFieldValue={setFieldValue}
         quantities={quantities}
+        productType={productType}
       />
     )
   }
@@ -42,11 +44,27 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
       dispatch(removeQuantity())
     }
   }
-
+  const parseType = (productType) => {
+    if (productType === "Kg") {
+      return "Aseta kilohinta (sis alv)"
+    }
+    if (productType === "Kuutio") {
+      return "Aseta kuutiohinta (sis alv)"
+    }
+    if (productType === "Litra") {
+      return "Aseta litrahinta (sis alv)"
+    }
+    if (productType === "Motti") {
+      return "Aseta mottihinta (sis alv)"
+    }
+    if (productType === "Gramma") {
+      return "Aseta grammahinta (sis alv)"
+    }
+  }
   return (
     <div>
       <Alv />
-      Aseta kilohinta (sis alv)
+      {parseType(productType)}
       <Price setFieldValue={setFieldValue} errors={errors} touched={touched} />
       {productrows}
       <Button onClick={deleteProductRow} variant="danger">

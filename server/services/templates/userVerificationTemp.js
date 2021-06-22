@@ -1,11 +1,11 @@
 const subject = 'Vahvista tunnus'
-const message = (url) => {
+const message = (parameters) => {
 
     return (`<p>Paina alla olevaa vahvista nappia, vahvistaaksesi tunnuksen luomisen</p>\
     \
-    <form action=${url}>\
-        <input type="submit" value="Vahvista tunnus" />\
-    </form>`)
+    <a href=${parameters.url}>\
+        <button> Vahvista tunnus </button>\
+    </a>`)
 }
 
 module.exports = {subject, message}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react"
 import Row from "react-bootstrap/Row"
 import ContactForm from "./ContactForm"
@@ -38,6 +39,12 @@ const ContactPage = ({ user }) => {
         </Col>
         <ContactForm user={user} setNotification={setNotification} />
       </Row>
+=======
+const ContactPage = ({ user }) => {
+  return (
+    <div>
+      <p>Contact Page</p>
+>>>>>>> main
     </div>
   )
 }

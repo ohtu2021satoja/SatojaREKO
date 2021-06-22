@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { mount } from "enzyme";
 import { BrowserRouter } from "react-router-dom";
 
-const requiredURLs = ["/", "/orders", "/cart", "/events", "/profile"];
+const requiredURLs = ["/", "/orders", "/cart", "/map", "/profile"];
 
 let sellerView = true;
 

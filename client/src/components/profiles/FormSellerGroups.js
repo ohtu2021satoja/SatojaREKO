@@ -4,7 +4,7 @@ import FormFieldCheckbox from "../FormFieldCheckbox"
 
 const FormSellerGroups = () => {
   return (
-    <Col xs={{ span: 10, offset: 1 }} className="mb-5">
+    <Col xs={{ span: 10, offset: 1 }} className="mb-3">
       <div className="text-center">
         <h5 className="mb-4">REKO-ryhmät, joihin kuulut tuottajana</h5>
         <h6 className="mb-4">Etelä-Savo</h6>

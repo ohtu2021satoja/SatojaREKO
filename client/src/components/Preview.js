@@ -60,6 +60,8 @@ const Preview = ({
   Reset,
 }) => {
   const [published, setPublished] = useState(false)
+  const user = useSelector((state) => state.authedUser)
+  console.log(user)
   const alv = useSelector((state) => state.alv)
   const vat = parseInt(alv.slice(0, -1))
   console.log(vat)
@@ -119,7 +121,7 @@ const Preview = ({
     const product = {
       name: title,
       organic,
-      sellers_id: 1,
+      sellers_id: user.id,
       type,
       batch_quantity,
       description,

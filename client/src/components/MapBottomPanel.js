@@ -1,8 +1,8 @@
 import "./MapPage.css"
 import { forwardRef } from "react"
+import { Link } from "react-router-dom"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
-import EventPage from "./EventPage"
 import EventInfoLabel from "./EventInfoLabel"
 
 const MapBottomPanel = forwardRef((props, ref) => {
@@ -10,18 +10,13 @@ const MapBottomPanel = forwardRef((props, ref) => {
     <Card key={index} className="mb-3">
       <EventInfoLabel event={event} classes="mb-0" />
       <Button
-        className="btn btn-primary btn-sm"
+        className="btn btn-primary btn-sm popup-button mt-1"
         variant="success"
-        onClick={() =>
-          props.handleOpenPage(
-            EventPage({
-              event: event,
-              closePage: props.handleClosePage,
-              openProductPage: props.handleOpenProduct,
-              closeProductPage: props.handleCloseProduct,
-            })
-          )
-        }
+        as={Link}
+        to={{
+          pathname: `/events/${event.id}`,
+          state: { event: event },
+        }}
       >
         Siirry tilaisuuteen
       </Button>

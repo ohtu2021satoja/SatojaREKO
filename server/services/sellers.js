@@ -10,11 +10,9 @@ const updateSellersInfo= async (seller_id, req_body, sellersRepository, usersRep
   const add_reko_areas = req_body.reko_areas.add
   await sellersRepository.addRekoAreas(seller_id, add_reko_areas)
 
-  req_body.seller_info.location = await geoap.getAddressInfo(req_body.seller_info.location)
+  req_body.seller_info.location = await geoap.getAddressInfo(req_body.seller_info.address)
 
   await sellersRepository.updateSellersInfo(seller_id, req_body.seller_info)
-
-  await usersRepository.updateUsersInfo(seller_id, req_body.user_info)
 }
 
 const removeSellerImage = async (id, sellersRepository) => {

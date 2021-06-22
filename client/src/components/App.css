@@ -10,6 +10,14 @@ body {
   background-color: white;
 }
 
-.custom-control-input:checked~.custom-control-label::before {
+.custom-control-input:checked ~ .custom-control-label::before {
   background-color: #28a745;
+}
+
+a {
+  color: currentColor;
+}
+
+Link {
+  color: currentColor;
 }

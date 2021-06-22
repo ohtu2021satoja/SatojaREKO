@@ -8,6 +8,15 @@ const addProductToEvents = (product_id, events) => {
   db.query(query, [])
 }
 
+const removeProductFromEvents = (product_id, events) => {
+  db.query("DELETE from products_events WHERE id_product=$1 AND id_event=ANY($2::int[])",[product_id, events])
+}
+
+const getEvents = () => {
+  const events = db.query("SELECT *, markets.address, events.id from events INNER JOIN markets on events.market_id = markets.id")
+  return events
+}
+
 const getSellersEvents = async (seller_id) => {
   const query = "SELECT *, reko_areas.name, events.id FROM events INNER JOIN markets ON markets.id = events.market_id INNER JOIN reko_markets ON markets.id = reko_markets.market_id INNER JOIN reko_areas ON reko_markets.areas_id=reko_areas.id INNER JOIN sellers_reko ON sellers_reko.reko_area_id=reko_areas.id INNER JOIN sellers ON sellers.id = sellers_reko.seller_id WHERE sellers.id=$1"
   const sellerEvents = await  db.query(query,[seller_id])
@@ -15,7 +24,7 @@ const getSellersEvents = async (seller_id) => {
 }
 
 const getEventsSellerHasProducts = async (seller_id) => {
-  const query = "SELECT DISTINCT events.id, events.start, events.endtime from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1"
+  const query = "SELECT events.id AS event_id, events.start, events.endtime, events.market_id, (SELECT json_build_object('id', markets.id, 'address', markets.address, 'location', markets.location, 'type', markets.type, 'reko_name', reko_areas.name) from markets INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id  where markets.id=events.market_id) AS market from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1 GROUP BY (events.id, events.start, events.endtime)"
   const sellerEvents = await  db.query(query,[seller_id])
   return(sellerEvents)
 }
@@ -39,4 +48,8 @@ const addEvent = async (event) => {
   return(result[0].id)
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent}
+const updateEvent = async (event, event_id) => {
+  await db.query("UPDATE events set market_id=$1, start=$2, endtime=$3 where id=$4", [event.market_id, event.start, event.end, event_id])
+}
+
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent}
