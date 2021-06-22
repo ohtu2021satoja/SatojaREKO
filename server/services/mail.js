@@ -2,14 +2,14 @@ const nodemailer = require('nodemailer')
 const mailConfig = require('../utils/mailConfig')
 const mailTemp = require('../services/templates/userVerificationTemp')
 
-const sendAutomaticMail = async (mailOptions) => {
+const initiateAutomaticMail = async (mailOptions) => {
     const transporter = await nodemailer.createTransport(mailConfig.customerServiceConfig)
     const mail = await transporter.sendMail(mailOptions)
     return mail
 }
 
-const sendCustomerServiceMail = async (mailOption) => {
-    const transporter = await nodemailer.createTransport(mailConfig.customerServiceConfig)
+const initiateCustomerServiceMail = async (mailOptions) => {
+    const transporter = await nodemailer.createTransport(mailConfig.testMail)
     const mail = await transporter.sendMail(mailOptions)
     return mail
 }
@@ -24,8 +24,4 @@ const initiateVerificationMail = (address, url) => {
     }
 }
 
-const intiateContactServiceMail = () => {
-    
-}
-
-module.exports = {sendMail, initiateVerificationMail, initiateVerificationMail}
+module.exports = {initiateAutomaticMail, initiateCustomerServiceMail, initiateVerificationMail}

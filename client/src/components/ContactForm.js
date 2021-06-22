@@ -9,13 +9,18 @@ import FormFieldEmail from "./FormFieldEmail"
 import FormErrorMessage from "./FormErrorMessage"
 
 const mailSchema = Yup.object().shape({
-  name: Yup.string().required(),
-  email: Yup.string().required(),
-  subject: Yup.string().required(),
-  message: Yup.string().required(),
+  firstname: Yup.string().required("Nimi pakollinen"),
+  email: Yup.string().email("invalid email address").required("Sähköposti on pakollinen"),
+  subject: Yup.string().required("Aihe on pakollinen"),
+  message: Yup.string().required("Viesti on pakollinen"),
 })
 
-const ContactForm = ({ user }) => {
+const ContactForm = ({ user, setNotification }) => {
+  const handleMail = async (message) => {
+    const response = await sendMail(message)
+    setNotification(response)
+    return response
+  }
   return (
     <Col xs={12}>
       <Formik
@@ -27,16 +32,23 @@ const ContactForm = ({ user }) => {
         }}
         enableReinitialize={true}
         validationSchema={mailSchema}
-        onSubmit={(values) => {
+        onSubmit={async (values, { resetForm }) => {
           const newMessage = {
             firstname: values.firstname,
             email: values.email,
             subject: values.subject,
             message: values.message,
           }
-
-          sendMail(newMessage)
+          const response = await handleMail(newMessage)
           console.log(newMessage)
+          if (response === "success") {
+            resetForm({
+              values: {
+                subject: "",
+                message: "",
+              },
+            })
+          }
         }}
       >
         {() => (
@@ -62,12 +74,12 @@ const ContactForm = ({ user }) => {
               id="message"
               label="Viesti"
               component={FormFieldTextArea}
+              rows="5"
             />
             <ErrorMessage name="message" component={FormErrorMessage} />
             <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
               Lähetä viesti
             </Button>
-            {/*<input type="submit" className="submit" value="Send Message">}*/}
           </Form>
         )}
       </Formik>

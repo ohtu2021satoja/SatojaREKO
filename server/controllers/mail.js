@@ -4,18 +4,18 @@ const mailConfig = require('../utils/mailConfig')
 
 
 mailRouter.post('/contact', async (req, res) => {
+    const mailOptions = {
+        from: 'satojareko@gmail.com',
+        to: 'satojareko@gmail.com',
+        subject: `Message from ${req.body.subject}: ${req.body.name}: ${req.body.email}`,
+        text: req.body.message
+    }
+    
     try {
-        const mailOptions = {
-            from: CUSTOMER_SERVICE_MAIL,
-            to: CUSTOMER_SERVICE_MAIL,
-            subject: `Message from ${req.body.email}: ${req.body.subject}`,
-            text: req.body.message
-        }
-        await mailService.sendCustomerServiceMail(mailOptions)
-        res.sendStatus(200).end()
+        await mailService.initiateCustomerServiceMail(mailOptions)
+        res.send("success").end()
     } catch(err) {
-        console.log(err)
-        res.sendStatus(400)
+        res.status(404).send("error").end()
     }
 })
 
