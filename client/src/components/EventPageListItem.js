@@ -7,11 +7,16 @@ import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
-const EventPageListItem = ({ product, event, market }) => {
+const EventPageListItem = ({ product, event, market, singleSize }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
-    dispatch(addProductToCart(product, size, { ...event, market: market }))
+    dispatch(
+      addProductToCart({ ...product, singleSize: singleSize }, size, {
+        ...event,
+        market: market,
+      })
+    )
   }
 
   const handleRemoveFromCart = (size) => {
@@ -24,6 +29,7 @@ const EventPageListItem = ({ product, event, market }) => {
       event: event,
       product: product,
       market: market,
+      singleSize: singleSize,
     },
   }
 
@@ -53,17 +59,25 @@ const EventPageListItem = ({ product, event, market }) => {
             <i className="bi bi-chevron-right"></i>
           </Card.Subtitle>
           <Card.Title>
-            {product.sizes.length > 1
-              ? product.name
-              : product.name + " " + product.sizes[0].unit + " " + product.type}
+            {singleSize
+              ? product.name + " " + product.sizes[0].unit + " " + product.type
+              : product.name}
           </Card.Title>
-          {product.sizes.length > 1 && (
+          {!singleSize && (
             <Card.Title> {product.unit_price / 100 + "e / " + product.type} </Card.Title>
           )}
         </Col>
       </Row>
       <Row>
-        {product.sizes.length > 1 ? (
+        {singleSize ? (
+          <EventPageListButtons
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+            eventID={event.id ? event.id : event.event_id}
+            size={product.sizes[0]}
+            unit={product.type}
+          />
+        ) : (
           <Col xs={12} className="d-flex justify-content-end">
             <Button
               size="lg"
@@ -83,14 +97,6 @@ const EventPageListItem = ({ product, event, market }) => {
               <i className="bi bi-card-list"></i> Eri kokoja
             </Button>
           </Col>
-        ) : (
-          <EventPageListButtons
-            addToCart={handleAddToCart}
-            removeFromCart={handleRemoveFromCart}
-            eventID={event.id ? event.id : event.event_id}
-            size={product.sizes[0]}
-            unit={product.type}
-          />
         )}
       </Row>
     </Card>

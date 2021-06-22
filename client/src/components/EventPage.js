@@ -44,6 +44,7 @@ const EventPage = (props) => {
             product={product}
             event={event}
             market={market}
+            singleSize={product.sizes.length === 1}
             key={index}
           />
         ))}

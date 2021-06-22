@@ -16,16 +16,18 @@ const ShoppingCart = () => {
   useEffect(() => {
     const getTotalPrice = () => {
       const total =
-        cart.reduce(
-          (acc, order) =>
-            acc +
-            order.batches.reduce(
-              (acc, batch) =>
-                acc + batch.order_quantity * batch.unit * batch.product.unit_price,
-              0
-            ),
-          0
-        ) / 100
+        Math.round(
+          cart.reduce(
+            (acc, order) =>
+              acc +
+              order.batches.reduce(
+                (acc, batch) =>
+                  acc + batch.order_quantity * batch.unit * batch.product.unit_price,
+                0
+              ),
+            0
+          ) * 100
+        ) / 10000
       return total
     }
     setTotalPrice(getTotalPrice() || 0)
@@ -99,6 +101,7 @@ const ShoppingCart = () => {
                   // Sort orders by product to render different sizes
                   // of same product on the same card
                   sortSizesByProduct(order).map((product, index) => {
+                    console.log(product)
                     return (
                       <ShoppingCartListItem
                         event={order.event}
@@ -109,15 +112,16 @@ const ShoppingCart = () => {
                     )
                   })
                 }
-                <Col xs={12} className="d-flex justify-content-between mb-3 mt-2">
+                <Col xs={12} className="d-flex justify-content-between mb-4 mt-2">
                   <h5>YHTEENSÄ</h5>{" "}
                   <h5>
-                    {order.batches.reduce(
-                      (acc, size) =>
-                        acc +
-                        (size.order_quantity * size.unit * size.product.unit_price) / 100,
-                      0
-                    )}
+                    {Math.round(
+                      order.batches.reduce(
+                        (acc, size) =>
+                          acc + size.order_quantity * size.unit * size.product.unit_price,
+                        0
+                      ) * 100
+                    ) / 10000}
                     e
                   </h5>
                 </Col>

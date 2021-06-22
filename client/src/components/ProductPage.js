@@ -10,11 +10,17 @@ const ProductPage = (props) => {
   const product = props.location.state.product
   const event = props.location.state.event
   const market = props.location.state.market
+  const singleSize = product.sizes.length === 1
 
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
-    dispatch(addProductToCart(product, size, { ...event, market: market }))
+    dispatch(
+      addProductToCart({ ...product, singleSize: singleSize }, size, {
+        ...event,
+        market: market,
+      })
+    )
   }
 
   const handleRemoveFromCart = (size) => {
@@ -53,15 +59,15 @@ const ProductPage = (props) => {
       </Col>
       <Col xs={12} className="text-center mb-0">
         <h4>
-          {product.sizes.length > 1
-            ? product.name
-            : product.name + " " + product.sizes[0].unit + " " + product.type}
+          {singleSize
+            ? product.name + " " + product.sizes[0].unit + " " + product.type
+            : product.name}
         </h4>
       </Col>
       <Col xs={12} className="text-center">
         <p>{product.description}</p>
       </Col>
-      {product.sizes.length > 1 && (
+      {!singleSize && (
         <Col xs={12} className="text-center mb-2">
           <h4>
             {product.unit_price / 100}e / {product.type}
@@ -77,7 +83,7 @@ const ProductPage = (props) => {
             eventID={event.id ? event.id : event.event_id}
             size={size}
             unit={product.type}
-            singleSize={product.sizes.length === 1}
+            singleSize={singleSize}
             key={index}
           />
         )
