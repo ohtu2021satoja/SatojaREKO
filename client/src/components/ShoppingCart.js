@@ -79,8 +79,8 @@ const ShoppingCart = () => {
   }
 
   return (
-    <Row className="mt-5 mx-2">
-      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
+    <Row>
+      <Col xs={12} className="mb-4 text-center">
         <h2 className="mb-4">Ostoskori</h2>
         {cart.map((order, index) => {
           if (orderHasSizes(order)) {
@@ -130,11 +130,19 @@ const ShoppingCart = () => {
           } else return null
         })}
         {totalPrice > 0 ? (
-          <div>
-            <h3>Yhteensä: {totalPrice}e</h3>
-            <Button variant="success" onClick={handleSubmitOrders}>
-              Lähetä tilaus
-            </Button>
+          <div className="px-0 py-3 mx-0" style={{ backgroundColor: "#e8fa70" }}>
+            <Col xs={12} className="d-flex justify-content-start">
+              <h4>Varauskori</h4>
+            </Col>
+            <Col xs={12} className="d-flex justify-content-between">
+              <h5>YHTEENSÄ</h5>
+              <h5> {totalPrice}e</h5>
+            </Col>
+            <Col xs={12} className="mb-4 justify-content-center">
+              <Button variant="success" onClick={handleSubmitOrders} block>
+                Lähetä varaus
+              </Button>
+            </Col>
           </div>
         ) : (
           <p>Ostoskorisi on tyhjä</p>
