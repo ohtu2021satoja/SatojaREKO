@@ -4,7 +4,7 @@ const mailTemp = require('../services/templates/userVerificationTemp')
 const resetTemp = require('../services/templates/passwordResetTemp')
 
 const initiateAutomaticMail = async (mailOptions) => {
-    const transporter = await nodemailer.createTransport(mailConfig.customerServiceConfig)
+    const transporter = await nodemailer.createTransport(mailConfig.notificationConfig)
     const mail = await transporter.sendMail(mailOptions)
     return mail
 }
@@ -26,7 +26,7 @@ const initiateTemplate= (address, parameters, template) => {
     const text = template.message(parameters)
     console.log(text)
     return{
-        from: mailConfig.ADMIN_EMAIL,
+        from: mailConfig.customerServiceConfig,
         to: address,
         subject: template.subject,
         html: text

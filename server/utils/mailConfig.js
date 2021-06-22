@@ -11,7 +11,7 @@ const testMail = {
 }
 
 const customerServiceConfig = {
-    host: CUSTOMER_SERVICE_MAIL,
+    host: 'mail.satoja.fi',
     port: 465,
     auth: {
         user: process.env.CUSTOMER_SERVICE_MAIL,
