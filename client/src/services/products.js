@@ -31,4 +31,20 @@ const addProduct = async (productObject) => {
   return response
 }
 
-export default { getSellerProducts, getEventProducts, getUserProducts, addProduct }
+const updateProduct = async (product_id, productObject) => {
+  const response = await axios.put(`${apiUrl}/${product_id}`, productObject)
+}
+
+const getProductById = async (product_id) => {
+  const response = await axios.get(`${apiUrl}/${product_id}`)
+  console.log(response.data)
+  return response.data
+}
+
+export default {
+  getUserProducts,
+  getEventProducts,
+  addProduct,
+  updateProduct,
+  getProductById,
+}

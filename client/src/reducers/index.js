@@ -12,11 +12,13 @@ import { sellerProducts } from "./sellerProducts"
 import priceReducer from "./priceReducer"
 import productSizesReducer from "./productSizesReducer"
 import eventChoicesReducer from "./eventChoicesReducer"
+import currentProduct from "./currentProduct"
 import { shoppingCart } from "./shoppingCart"
 import alvReducer from "./alvReducer"
 import { mapPoints } from "./mapReducer"
 
 export default combineReducers({
+  currentProduct: currentProduct,
   alv: alvReducer,
   price: priceReducer,
   productSizes: productSizesReducer,

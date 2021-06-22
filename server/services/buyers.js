@@ -10,8 +10,6 @@ const updateBuyerImage = async(id, image_url, buyersRepository) => {
 
 const updateBuyersInfo= async (seller_id, req_body, buyersRepository, usersRepository) => {
   await buyersRepository.updateBuyersInfo(seller_id, req_body.buyer_info)
-
-  await usersRepository.updateUsersInfo(seller_id, req_body.user_info)
 }
 
 

@@ -3,7 +3,7 @@ const mailService = require('../services/mail')
 
 mailRouter.get('/news', async (req, res) => {
     try {
-        await mailService.sendMail(mailService.initiateVerificationMail(''))
+        await mailService.sendMail(mailService.initiateVerificationMail('puro.touko@gmail.com',"https://fi.wikipedia.org/wiki/Wikipedia:Etusivu"))
         res.sendStatus(200).end()
     } catch(err) {
         console.log(err)

@@ -7,6 +7,8 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
   index = parseInt(index)
   const dispatch = useDispatch()
   const productSizes = useSelector((state) => state.productSizes)
+  const productType = useSelector((state) => state.currentProduct.product.type)
+  console.log(productType)
   const state = productSizes[index]
   const storageQuantity = state.quantity
   const unitSize = state.size
@@ -21,7 +23,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
   const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
   return (
     <div>
-      Pakettikoko
+      Tuotteen koko ({productType})
       <Form.Control
         value={unitSize}
         onChange={(event) => {
@@ -36,7 +38,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
       {unitSizeFloat === 0.0 && errors.sizes && touched.sizes ? (
         <div>{errors.sizes}</div>
       ) : null}
-      Pakettimäärä
+      Varastoarvo
       <Form.Control
         value={storageQuantity}
         onChange={(event) => handleQuantityChange(parseInt(event.target.value))}

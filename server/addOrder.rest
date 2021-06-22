@@ -1,16 +1,20 @@
-POST http://localhost:3003/api/orders/buyer/1
+POST http://localhost:3003/api/orders/buyer/76
 Content-Type: application/json
 
 {
   "orders":[
-    {"event_id": 1,
+    {"event_id": 3,
       "batches": [
         {
-          "size_id": 42,
+          "size_id": 81,
           "order_quantity": 2
-        },
+        }
+      ]
+    },
+    {"event_id": 1,
+    "batches": [
         {
-          "size_id": 43,
+          "size_id": 83,
           "order_quantity": 2
         }
       ]

@@ -5,7 +5,7 @@ const unknownEndpoint = (req, res, next) => {
 }
 
 const errorHandler = (err, req, res, next) => {
-    console.log(err)
+    console.log(err.status)
     res.status(err.status || 500)
     res.send({
         error: err.message

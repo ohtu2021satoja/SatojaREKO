@@ -17,6 +17,8 @@ import Preview from "./Preview"
 import { Formik } from "formik"
 import * as yup from "yup"
 import "./App.css"
+import ProductForm from "./ProductForm"
+import { setProductType } from "../reducers/currentProduct"
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Vaadittu"),
@@ -45,15 +47,8 @@ const AddProducts = () => {
   const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
-  useEffect(() => {
-    async function fetchData() {
-      const events = await eventService.getSellersUpcomingEvents(1)
-      setEvents(events)
-    }
-    fetchData()
-  }, [])
+  const productType = useSelector((state) => state.currentProduct.product.type)
   const productSizes = useSelector((state) => state.productSizes)
-  const [productType, setProductType] = useState("Valitse yksikkö")
   const eventChoices = useSelector((state) => state.eventChoices)
   const [organic, setOrganic] = useState(false)
   const [title, setTitle] = useState("")
@@ -70,14 +65,24 @@ const AddProducts = () => {
     setTitle("")
     setDescription("")
     setOrganic(false)
-    setProductType("Valitse yksikkö")
     setCategory("Valitse kategoria")
     setPreview(false)
     setImageID(null)
     dispatch(resetPrice())
+    dispatch(setProductType("Valitse yksikkö"))
     dispatch(setAlv("14%"))
     dispatch(resetProductSizes())
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const events = await eventService.getSellersUpcomingEvents(1)
+      setEvents(events)
+    }
+    Reset()
+    fetchData()
+  }, [])
+
   const goToPreview = ({ title, description, productType, category }) => {
     setTitle(title)
     setDescription(description)
@@ -104,108 +109,23 @@ const AddProducts = () => {
     )
   }
   return (
-    <div style={{ marginBottom: 100 }}>
-      <Form.Label as="h3" className="my-4 text-center">
-        Uusi ilmoitus
-      </Form.Label>
-      <Formik
-        initialValues={{
-          category: category,
-          title: title,
-          description: description,
-          productType: productType,
-          price: price,
-          sizes: productSizes.map((size) => parseFloat(size.size.replace(",", "."))),
-          quantities: productSizes.map((size) => size.quantity),
-        }}
-        onSubmit={goToPreview}
-        validationSchema={validationSchema}
-      >
-        {({
-          values,
-          handleChange,
-          handleSubmit,
-          handleBlur,
-          setFieldValue,
-          isValid,
-          validationSchema,
-          errors,
-          touched,
-        }) => (
-          <Form onSubmit={handleSubmit}>
-            <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
-            {touched.category && errors.category ? <div>{errors.category}</div> : null}
-            <Form.Group>
-              <Form.File
-                id="exampleFormControlFile1"
-                label="Lisää kuva"
-                onChange={(event) => handleImage(event.currentTarget.files[0])}
-              />
-              <div>{values.sizes}</div>
-              {imageID ? <Image cloudName="dpk81nwou" publicId={imageID} /> : null}
-              <Form.Control
-                id="title"
-                name="title"
-                value={values.title}
-                onChange={handleChange}
-                type="text"
-                placeholder="Otsikko"
-              />
-              {touched.title && errors.title ? <div>{errors.title}</div> : null}
-              <Form.Control
-                id="description"
-                name="description"
-                value={values.description}
-                onChange={handleChange}
-                type="text"
-                placeholder="Tuotekuvaus"
-              />
-              {touched.description && errors.description ? (
-                <div>{errors.description}</div>
-              ) : null}
-              <Form.Check
-                type="checkbox"
-                label="Tuote on luomua"
-                onChange={() => setOrganic(!organic)}
-                checked={organic}
-              />
-              <ChooseProductType
-                productType={values.productType}
-                setFieldValue={setFieldValue}
-              />
-              {touched.productType && errors.productType ? (
-                <div>{errors.productType}</div>
-              ) : null}
-              <UnitPrices
-                setFieldValue={setFieldValue}
-                sizes={values.sizes}
-                quantities={values.quantities}
-                errors={errors}
-                touched={touched}
-              />
-              <input
-                type="range"
-                value={deleteBeforeEvent}
-                onChange={(event) => setDeleteBeforeEvent(event.target.value)}
-              />
-              {events ? <Events events={events} isChoice={true} /> : null}
-            </Form.Group>
-            <Form.Row className="mb-3">
-              <Col>
-                <Button
-                  style={{ width: "100%" }}
-                  variant="success"
-                  size="lg"
-                  type="submit"
-                >
-                  Esikatselu
-                </Button>
-              </Col>
-            </Form.Row>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <ProductForm
+      organic={organic}
+      imageID={imageID}
+      deleteBeforeEvent={deleteBeforeEvent}
+      setDeleteBeforeEvent={setDeleteBeforeEvent}
+      events={events}
+      handleImage={handleImage}
+      onSubmit={goToPreview}
+      setOrganic={setOrganic}
+      title={title}
+      category={category}
+      price={price}
+      description={description}
+      productSizes={productSizes}
+      FormTitle="Uusi ilmoitus"
+      submitButtonText="Esikatselu"
+    />
   )
 }
 

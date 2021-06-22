@@ -1,7 +1,7 @@
 const db = require('../db')
 
 const getUser = async (id) => {
-  const user = await  db.query("SELECT *, users.id, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users LEFT JOIN buyers ON buyers.id = users.id LEFT JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
+  const user = await  db.query("SELECT *, (SELECT users.id IN (SELECT id from admins)) AS is_admin, users.id, sellers.image_url AS sellers_image_url, buyers.image_url as buyers_image_url, (SELECT json_agg(json_build_object('id',reko_areas.id, 'name', reko_areas.name, 'belongs',reko_areas.id IN (SELECT sellers_reko.reko_area_id from sellers_reko WHERE sellers_reko.seller_id = $1))) from reko_areas) AS reko_areas from users LEFT JOIN buyers ON buyers.id = users.id LEFT JOIN sellers ON sellers.id = users.id WHERE users.id=$1",[id])
   return(user[0])
 }
 
@@ -33,4 +33,17 @@ const setAsSeller = async (id) => {
   await db.query("UPDATE users SET is_seller=true WHERE id=$1", [id])
 }
 
-module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById}
+const deleteUser = async (id) => {
+  await db.query("DELETE FROM users WHERE id=$1", [id])
+}
+
+const setUserPassword = async (id, passwordHash) => {
+  await db.query("UPDATE users SET password=$1 WHERE id=$2", [passwordHash, id])
+} 
+ 
+const getUserByEmailOrId = async (id, email) => {
+  const user = await db.query("SELECT * from users WHERE id=$1 OR facebook_id=$1 OR email=$2", [id, email])
+  return (user[0])
+}
+
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId}
