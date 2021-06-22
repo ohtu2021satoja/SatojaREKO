@@ -1,12 +1,13 @@
 const db = require("../db")
 
 const getAllMarketsThatHaveEvents = async () => {
-    const markets = await db.query("SELECT markets.id, markets.address, markets.type, markets.location, json_agg(json_build_object('event_id', events.id, 'start', events.start, 'endtime', events.endtime)) AS market_events FROM markets INNER JOIN events ON events.market_id = markets.id GROUP BY(markets.id, markets.type)")
+    const markets = await db.query("SELECT markets.id, markets.address, markets.type, markets.location, (SELECT jsonb_agg(jsonb_build_object('id', res.id, 'start', res.start, 'endtime', res.endtime)) FROM (select DISTINCT events.id AS id, events.start AS start, events.endtime AS endtime FROM   events INNER JOIN markets ON events.market_id = markets.id INNER JOIN products_events ON products_events.id_event = events.id ORDER BY events.start) AS res) AS market_events FROM markets INNER JOIN events ON events.market_id = markets.id INNER JOIN products_events ON products_events.id_event=events.id GROUP BY(markets.id, markets.type)")
+    console.log(markets[0].market_events)
     return markets
 }
 
 const getAllMarkets = async () => {
-    const markets = await db.query("SELECT * from markets")
+    const markets = await db.query("select * from markets")
     return markets
 }
 const addMarkets = async (market, location) => {
