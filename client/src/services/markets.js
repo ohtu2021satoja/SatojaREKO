@@ -3,10 +3,13 @@ import axios from "axios"
 const apiUrl = "api/markets"
 
 const addMarket = async (address, rekoChoices) => {
+  console.log(address, rekoChoices)
   const response = await axios.post(`${apiUrl}`, {
     address,
-    rekoChoices,
+    type: "reko_market",
+    reko_areas: rekoChoices,
   })
+  console.log(response)
   return response
 }
 

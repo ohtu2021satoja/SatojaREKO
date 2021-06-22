@@ -14,18 +14,37 @@ const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepos
     await db.endTransaction()
   } catch (e) {
     await db.rollBack()
-    console.log(e)
+    console.log(e.message)
+    if(e.message === 'new row for relation "sizes" violates check constraint "non_negative_quantity"'){
+      e.status = 400
+      e.message = "Trying to order too much of some product"
+    }
     throw e
   }
 }
 
 const getSellersOrders = async (sellers_id, ordersRepository) => {
   const orders = await ordersRepository.getSellersOrders(sellers_id)
+  orders.forEach(eventorders => {
+    if(new Date() > new Date(eventorders.event_endtime)){
+      eventorders.outdated=true
+    } else{
+      eventorders.outdated=false
+    }
+  })
+  console.log(orders)
   return(orders)
 }
 
 const getBuyersOrders = async (buyers_id, ordersRepository) => {
   const orders = await ordersRepository.getBuyersOrders(buyers_id)
+  orders.forEach(eventorders => {
+    if(new Date() > new Date(eventorders.event_endtime)){
+      eventorders.outdated=true
+    } else{
+      eventorders.outdated=false
+    }
+  })
   return(orders)
 }
 
@@ -34,4 +53,11 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 
-module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder }
+const removeProductFromSellersOrder = async (order_id, size_id, ordersRepository, productsRepository) => {
+  await productsRepository.addQuantityToSize(order_id, size_id)
+  await ordersRepository.removeProductFromSellersOrder(order_id, size_id)
+}
+
+
+
+module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder, removeProductFromSellersOrder }

@@ -1,18 +1,31 @@
 const eventsRouter = require('express').Router()
 const eventsService = require('../services/events')
 const eventsRepository = require('../repositories/events')
+const productsService = require("../services/products")
+const productsRepository = require("../repositories/products")
 
 eventsRouter.get('/seller/:id', async (req, res, next) => {
     const { id } = req.params
-    const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
-    if (!sellerEvents) {
-        return res.status(404).send({ error: 'Seller events not found' })
+    if(! req.user || req.user.id != id){
+      res.status(401).send("Current user isn't the seller")
+    } else {
+      const sellerEvents = await eventsService.getSellerEvents(id, eventsRepository)
+      if (!sellerEvents) {
+          return res.status(404).send({ error: 'Seller events not found' })
+      }
+      try {
+          res.send(sellerEvents)
+      } catch (err) {
+          next(err)
+      }
     }
-    try {
-        res.status(200).json(sellerEvents)
-    } catch (err) {
-        next(err)
-    }
+
+})
+
+eventsRouter.get("/:event_id/products/:product_id", async (req, res, next) => {
+  const { event_id, product_id } = req.params
+  const product = await productsService.getEventProduct(event_id, product_id, productsRepository)
+  return(product)
 })
 
 eventsRouter.get('/market/:id', async (req,res) => {
@@ -30,7 +43,6 @@ eventsRouter.get('/market/:id', async (req,res) => {
 })
 
 eventsRouter.get('/product/feed/', async (req,res) => {
-  const {id} = req.params
   const eventProductFeed = await eventsService.getEventProductFeed(eventsRepository)
 
   if (!eventProductFeed) {
@@ -46,13 +58,31 @@ eventsRouter.get('/product/feed/', async (req,res) => {
 
 eventsRouter.post('/', async (req,res) =>{
   try{
-    const event = req.body
     req.body.start = new Date(req.body.start)
     req.body.end = new Date(req.body.end)
-    await eventsService.addEvent(event, eventsRepository)
+    await eventsService.addEvent(req.body, eventsRepository)
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)
+  }
+})
+
+eventsRouter.put("/:id", async (req, res,next) => {
+  const { id } = req.params
+  try{
+    await eventsService.updateEvent(req.body, id, eventsRepository)
+    res.send("Event updated")
+  }catch(error){
+    next(error)
+  }
+})
+
+eventsRouter.get("/", async (req, res, next) => {
+  try{
+    const events = await eventsService.getEvents(eventsRepository)
+    res.send(events)
+  }catch(error){
+    next(error)
   }
 })
 

@@ -1,0 +1,27 @@
+PUT http://localhost:3003/api/products/29
+Content-Type: application/json
+
+{
+  "product":{
+    "name": "UusiName",
+    "organic": true,
+    "sellers_id": 2,
+    "type": "pc",
+    "batch_quantity": 5,
+    "description": "Toimiiko",
+    "image_url": "Rakkaus repii meidät kappaleiksi taas",
+    "category": "Hedelmät & marjat",
+    "unit_price": 500,
+    "vat": 14,
+    "close_before_event": 24
+  },
+  "eventChoices": [1,2],
+  "sizes": [{
+    "quantity": 1,
+    "unit": 1
+  },
+  {
+    "quantity": 1,
+    "unit": 1.5
+  }]
+}

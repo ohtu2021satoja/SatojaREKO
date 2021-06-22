@@ -1,25 +1,22 @@
-PUT http://localhost:3003/api/users/26
+PUT http://localhost:3003/api/users/76
 Content-Type: application/json
 
 {
   "seller_update": true,
   "reko_areas": {
-    "delete": [3,1,5,4],
-    "add": [1,5,4]
+    "delete": [2],
+    "add": [2]
   },
   "seller_info": {
-    "name": "Farmi :)",
-    "homepage": "www.korhonen.fi",
-    "address": "Mannerheimintie 3",
-    "zipcode": "00101",
-    "city": "Helsinki",
-    "salesreport_check": true,
-    "description": "I am pekka"
+    "address": "Hämeentie 1",
+    "name": "Terpan tila"
   },
   "user_info": {
-    "firstname": "Pekka",
-    "lastname": "Korhonen",
-    "email": "pekkakorfdsfhonen@email.com",
-    "phonenumber": "+35840254234567"
+    "firstname": "Touko",
+    "lastname": "Puro",
+    "phonenumber": "+358481237489275",
+    "email": "puro.touko@gmail.com"
+
   }
+
 }

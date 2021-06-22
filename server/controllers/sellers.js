@@ -3,31 +3,27 @@ const sellersRouter = require('express').Router()
 const sellersService = require("../services/sellers")
 const sellersRepository = require("../repositories/sellers")
 const eventsRepository = require("../repositories/events")
-const usersRepository = require("../repositories/users")
-
-sellersRouter.put('/:id', async (req, res) => {
-  console.log(req.body)
-  const { id } = req.params
-  await  sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
-  return res.sendStatus(200).end()
-})
-
-sellersRouter.post("/:id", async (req, res) => {
-  const { id } = req.params
-  await sellersService.createSeller(id, req.body, sellersRepository, usersRepository)
-  res.sendStatus(200)
-})
 
 sellersRouter.delete('/:id/image', async (req, res) => {
   const { id } = req.params
-  await sellersService.removeSellerImage(id, sellersRepository)
-  return res.sendStatus(200).end()
+  if(!req.user || req.user.id != id){
+    res.status(401).send("Current user doesn't match")
+  } else{
+    await sellersService.removeSellerImage(id, sellersRepository)
+    return res.sendStatus(200).end()
+  }
+
 })
 
 sellersRouter.put('/:id/image', async (req, res) => {
   const { id } = req.params
-  await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
-  return res.sendStatus(200).end()
+  if(!req.user || req.user.id != id){
+    res.status(401).send("Current user doesn't match")
+  } else{
+    await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
+    return res.sendStatus(200).end()
+  }
+
 })
 
 sellersRouter.get("/events/:id", async (req, res) => {

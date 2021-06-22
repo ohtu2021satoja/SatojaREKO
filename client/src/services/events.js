@@ -28,4 +28,13 @@ const addEvent = async (start, end, market_id) => {
   return response
 }
 
-export default { /*getEvents,*/ getSellersUpcomingEvents, addEvent }
+const updateEvent = async (start, end, market_id, event_id) => {
+  const response = await axios.put(`${apiUrl}/${event_id}`, {
+    start,
+    end,
+    market_id,
+  })
+  return response
+}
+
+export default { /*getEvents,*/ getSellersUpcomingEvents, addEvent, updateEvent }

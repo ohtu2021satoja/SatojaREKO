@@ -4,7 +4,6 @@ const productsRepository = require("../repositories/products")
 const eventsRepository = require("../repositories/events")
 const db = require("../db")
 productsRouter.get("/", async (req, res) => {
-  console.log("USEEEEEER",req.user)
   try {
     const products = await productService.getAllProducts(productsRepository)
     res.status(200).json(products);
@@ -53,16 +52,36 @@ productsRouter.get("/events/:event_id/:seller_id", async (req, res) => {
   }
 })
 
-productsRouter.post('/seller/:id', async (req, res) => {
+productsRouter.post('/seller/:id', async (req, res, next) => {
+  const { id } = req.params
+  if(! req.user || req.user.id != id){
+    res.status(401).send("Current user doesn't match")
+  } else{
+    try{
+      console.log(req.body)
+      await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
+      res.sendStatus(200).end()
+    } catch(error){
+      console.log(error)
+      next(error)
+    }
+  }
+
+
+})
+
+productsRouter.put("/:id", async (req, res, next) => {
   try{
-    console.log(req.body)
-    await productService.addProduct(req.body.product, req.body.eventChoices, req.body.sizes, productsRepository, eventsRepository, db)
-    res.sendStatus(200).end()
+    const { id } = req.params
+    console.log("REG body",req.body.product)
+    console.log("REG SIZES", req.body.sizes)
+    console.log("REG EVENTS", req.body.eventChoices)
+    const product = await productService.updateProduct(id, req.body.product, req.body.eventChoices, req.body.sizes, req.user, productsRepository, eventsRepository, db)
+    res.send(product)
   } catch(error){
     console.log(error)
     next(error)
   }
-
 })
 
 productsRouter.delete("/:id", async (req, res) => {
@@ -72,6 +91,16 @@ productsRouter.delete("/:id", async (req, res) => {
     res.sendStatus(200).end()
   } catch(error){
     console.log(error)
+  }
+})
+
+productsRouter.get("/:id", async (req, res, next) => {
+  const { id } = req.params
+  try{
+    const product = await productService.getProductById(id, productsRepository)
+    res.send(product)
+  } catch(error){
+    next(error)
   }
 })
 

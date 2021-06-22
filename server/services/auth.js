@@ -29,12 +29,12 @@ passport.deserializeUser(async (user, done) => {
 const authenticateUser = async (email, password, done) => {
   console.log("yeet")
   const user = await usersRepository.getUserByEmail(email)
+  console.log("USEEER",user)
   if (!user){
     return done(null, false, { message: "No user with that email"})
   }
-  console.log(user.password)
-  console.log(password)
-  const correct = password===user.password
+  const correct = await bcrypt.compare(password, user.password)
+  console.log(correct)
   if(correct){
     console.log("success")
     return done(null, user)
@@ -52,13 +52,18 @@ passport.use(new FacebookStrategy({
   callbackURL: 'https://satoja-reko.herokuapp.com/api/auth/facebook/callback',
   profileFields: ['id', 'name', 'picture.type(large)', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
+  const { id, first_name, last_name, email } = profile._json
   // console.log(profile)
-  const currentUser = await usersRepository.getUserById(profile.id)
-  // const currentUser = false
+
+  let currentUser
+  if(email){
+    currentUser = await usersRepository.getUserByEmailOrId(id, email)
+  } else{
+    currentUser = await usersRepository.getUserById(id)
+  }
   if (currentUser) {
     done(null, currentUser)
   } else {
-    const { id, first_name, last_name, email } = profile._json
     const picture = profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'
 
     const userData = {

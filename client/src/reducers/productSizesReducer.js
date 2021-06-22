@@ -31,7 +31,14 @@ const reducer = (state = [{ size: "0,0", quantity: 0 }], action) => {
       return newstate
 
     case "RESETPRODUCTSIZES":
+      console.log(action.sizes)
       return [{ size: "0,0", quantity: 0 }]
+
+    case "INITIALIZESIZES":
+      return action.sizes.map((size) => ({
+        size: String(size.unit),
+        quantity: size.batch_quantity,
+      }))
 
     default:
       return state
@@ -65,6 +72,13 @@ export const removeQuantity = () => {
 export const resetProductSizes = () => {
   return async (dispatch) => {
     dispatch({ type: "RESETPRODUCTSIZES" })
+  }
+}
+
+export const initializeSizes = (sizes) => {
+  console.log(sizes)
+  return async (dispatch) => {
+    dispatch({ type: "INITIALIZESIZES", sizes })
   }
 }
 
