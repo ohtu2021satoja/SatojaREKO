@@ -8,6 +8,7 @@ import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart
 const ProductPage = (props) => {
   const product = props.location.state.product
   const event = props.location.state.event
+  const market = props.location.state.market
 
   const dispatch = useDispatch()
 
@@ -23,8 +24,8 @@ const ProductPage = (props) => {
     <Row className="mx-auto">
       <BackButtonHeader
         linkTo={{
-          pathname: `/events/${event.id}`,
-          state: { event: event },
+          pathname: event.id ? `/events/${event.id}` : `/events/${event.event_id}`,
+          state: { event: event, market: event.market ? event.market : market },
         }}
       />
       <Col xs={12} className="d-flex justify-content-start align-items-center mb-4">

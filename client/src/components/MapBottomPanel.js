@@ -14,7 +14,7 @@ const MapBottomPanel = forwardRef((props, ref) => {
         variant="success"
         as={Link}
         to={{
-          pathname: `/events/${market.market_events[0]}`,
+          pathname: `/events/${market.market_events[0].event_id}`,
           state: { market: market, event: market.market_events[0] },
         }}
       >

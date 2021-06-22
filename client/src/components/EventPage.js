@@ -1,82 +1,29 @@
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Spinner from "react-bootstrap/Spinner"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveEventProducts } from "../actions/eventProducts"
 import { useEffect } from "react"
-//import { useParams } from "react-router-dom"
-
-const products = [
-  {
-    id: 14,
-    name: "Omenoita",
-    organic: true,
-    sellers_id: 1,
-    type: "kg",
-    batch_quantity: 9,
-    created_at: "2021-06-01T10:36:00.129Z",
-    description: "Halpoja omenoita",
-    close_before_event: 24,
-    unit_price: 500,
-    image_url: "porkkana_okbtuk",
-    category: "Hedelmät & marjat",
-    quantity_left: "7",
-    sizes: [{ id: 36, quantity: 7, unit: 1.25 }],
-  },
-  {
-    id: 11,
-    name: "Kalakukkova",
-    organic: true,
-    sellers_id: 1,
-    type: "kg",
-    batch_quantity: 15,
-    created_at: "2021-06-01T10:36:00.129Z",
-    description: "hyvvee kukkova",
-    close_before_event: 24,
-    unit_price: 750,
-    image_url: "porkkana_okbtuk",
-    category: "Leivät & leivonta",
-    quantity_left: "7",
-    sizes: [
-      { id: 1, quantity: 10, unit: 0.5 },
-      { id: 2, quantity: 5, unit: 1.0 },
-    ],
-  },
-  {
-    id: 3,
-    name: "Mansikkaa",
-    organic: true,
-    sellers_id: 1,
-    type: "kg",
-    batch_quantity: 12,
-    created_at: "2021-06-01T10:36:00.129Z",
-    description: "mansikoita",
-    close_before_event: 24,
-    unit_price: 1500,
-    image_url: "porkkana_okbtuk",
-    category: "Hedelmät & marjat",
-    quantity_left: "7",
-    sizes: [{ id: 34, quantity: 12, unit: 1.0 }],
-  },
-]
+import { useParams } from "react-router-dom"
 
 const EventPage = (props) => {
-  //const { eventID } = useParams()
+  const { eventID } = useParams()
   //console.log("eventID: " + eventID)
 
   const event = props.location.state.event
   const market = props.location.state.market
 
   const dispatch = useDispatch()
-  const eventProducts = useSelector((state) => state.eventProducts)
+  const eventProducts = useSelector((state) => state.eventProducts[eventID])
 
   useEffect(() => {
-    dispatch(receiveEventProducts(event.event_id))
-  }, [dispatch, event])
+    dispatch(receiveEventProducts(eventID))
+  }, [dispatch, eventID])
 
-  return (
+  return eventProducts ? (
     <Row>
       <BackButtonHeader
         linkTo={{
@@ -94,10 +41,19 @@ const EventPage = (props) => {
       </Col>
       <Col xs={12} className="mx-auto">
         {eventProducts.map((product, index) => (
-          <EventPageListItem product={product} event={event} key={index} />
+          <EventPageListItem
+            product={product}
+            event={event}
+            market={market}
+            key={index}
+          />
         ))}
       </Col>
     </Row>
+  ) : (
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
   )
 }
 

@@ -6,6 +6,6 @@ export const receiveEventProducts = (id) => {
   return async (dispatch) => {
     const products = await getEventProducts(id)
     console.log("data in action: ", products)
-    dispatch({ type: "RECEIVE_EVENT_PRODUCTS", products: products })
+    dispatch({ type: "RECEIVE_EVENT_PRODUCTS", products: products, id: id })
   }
 }

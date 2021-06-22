@@ -7,7 +7,7 @@ import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
-const EventPageListItem = ({ product, event }) => {
+const EventPageListItem = ({ product, event, market }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
@@ -27,6 +27,7 @@ const EventPageListItem = ({ product, event }) => {
           state: {
             event: event,
             product: product,
+            market: market,
           },
         }}
       >
@@ -59,6 +60,7 @@ const EventPageListItem = ({ product, event }) => {
                 state: {
                   event: event,
                   product: product,
+                  market: market,
                 },
               }}
             >
