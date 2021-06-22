@@ -5,6 +5,7 @@ import MapBottomPanel from "./MapBottomPanel"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
+import Spinner from "react-bootstrap/Spinner"
 import EventInfoLabel from "./EventInfoLabel"
 import { sellerMarkerHTML, eventMarkerHTML } from "./MapIcons"
 import { Link } from "react-router-dom"
@@ -58,7 +59,7 @@ const MapPage = () => {
       return
     }
 
-    //console.log("mapData in MapPage: ", mapPoints)
+    console.log("mapData in MapPage: ", mapPoints)
 
     if (mapPoints.Markets) {
       const updateMapStatus = () => {
@@ -215,7 +216,9 @@ const MapPage = () => {
       </Row>
     </div>
   ) : (
-    <p>Loading</p>
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
   )
 }
 

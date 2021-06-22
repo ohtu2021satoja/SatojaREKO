@@ -11,7 +11,6 @@ import { useParams } from "react-router-dom"
 
 const EventPage = (props) => {
   const { eventID } = useParams()
-  //console.log("eventID: " + eventID)
 
   const event = props.location.state.event
   const market = props.location.state.market

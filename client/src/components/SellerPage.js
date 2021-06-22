@@ -5,13 +5,23 @@ import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveSellerEvents } from "../actions/sellerEvents"
 import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 const SellerPage = (props) => {
-  const seller = props.location.state.seller
-  const linkTo = props.location.state.linkTo
+  const { sellerID } = useParams()
 
   const dispatch = useDispatch()
   const sellerEvents = useSelector((state) => state.sellerEvents)
+  const sellers = useSelector((state) => state.mapPoints.Sellers)
+
+  const seller = props.location.state.seller
+    ? props.location.state.seller
+    : sellers.find((seller) => seller.id === Number(sellerID))
+  const linkTo = props.location.state.linkTo
+    ? props.location.state.linkTo
+    : {
+        pathname: "/map",
+      }
 
   useEffect(() => {
     dispatch(receiveSellerEvents(seller.id))

@@ -4,6 +4,7 @@ import ProductPageListButtons from "./ProductPageListButtons"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
+import { Link } from "react-router-dom"
 
 const ProductPage = (props) => {
   const product = props.location.state.product
@@ -20,6 +21,16 @@ const ProductPage = (props) => {
     dispatch(removeProductFromCart(product, size, { ...event, market: market }))
   }
 
+  const sellerPageLink = {
+    pathname: `/sellers/${product.sellers_id}`,
+    state: {
+      linkTo: {
+        pathname: `/events/${event.id ? event.id : event.event_id}`,
+        state: { market: market, event: event },
+      },
+    },
+  }
+
   return (
     <Row className="mx-auto">
       <BackButtonHeader
@@ -28,7 +39,12 @@ const ProductPage = (props) => {
           state: { event: event, market: event.market ? event.market : market },
         }}
       />
-      <Col xs={12} className="d-flex justify-content-start align-items-center mb-4">
+      <Col
+        xs={12}
+        className="d-flex justify-content-start align-items-center mb-4"
+        as={Link}
+        to={sellerPageLink}
+      >
         <img src="https://via.placeholder.com/60" alt="Generic placeholder" />{" "}
         <h4 className="mt-2 ml-2">{product.seller_name}</h4>
       </Col>
