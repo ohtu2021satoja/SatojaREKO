@@ -25,7 +25,6 @@ const SellerPage = (props) => {
 
   useEffect(() => {
     dispatch(receiveSellerEvents(seller.id))
-    //console.log("SELLER EVENTS: ", sellerEvents)
   }, [dispatch, seller])
 
   return (

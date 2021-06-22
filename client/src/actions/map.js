@@ -6,7 +6,6 @@ export const getMapPoints = () => {
   return async (dispatch) => {
     try {
       const data = await getMapData()
-      console.log("DATA: ", data)
       dispatch({ type: "RECEIVE_MAP_POINTS", data: data })
     } catch (e) {
       console.log(e)

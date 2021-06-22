@@ -101,7 +101,6 @@ const ShoppingCart = () => {
                   // Sort orders by product to render different sizes
                   // of same product on the same card
                   sortSizesByProduct(order).map((product, index) => {
-                    console.log(product)
                     return (
                       <ShoppingCartListItem
                         event={order.event}

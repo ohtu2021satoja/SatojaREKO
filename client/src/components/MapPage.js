@@ -59,8 +59,6 @@ const MapPage = () => {
       return
     }
 
-    console.log("mapData in MapPage: ", mapPoints)
-
     if (mapPoints.Markets) {
       const updateMapStatus = () => {
         const visibleMarkets = mapPoints.Markets.filter((market) => {
