@@ -103,7 +103,6 @@ const MapPage = () => {
   }
 
   const markMarkets = visibleMarkets.map((market, index) => {
-    console.log("VISIBLE MARKET: ", market)
     return (
       <Marker
         position={[Number(market.location.lat), Number(market.location.lon)]}
@@ -117,6 +116,7 @@ const MapPage = () => {
       >
         <Popup className="map-popup" autoPan={false}>
           <EventInfoLabel
+            market={market}
             event={market.market_events[0]}
             classes="mb-0 mt-0"
             styles={{ fontSize: 14 }}
@@ -127,8 +127,8 @@ const MapPage = () => {
             variant="success"
             as={Link}
             to={{
-              pathname: `/events/${market.market_events[0].id}`,
-              state: { event: market.market_events[0] },
+              pathname: `/events/${market.market_events[0].event_id}`,
+              state: { market: market, event: market.market_events[0] },
             }}
           >
             Siirry tilaisuuteen

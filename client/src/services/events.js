@@ -14,8 +14,8 @@ const getSellerEvents = async (id) => {
 }
 */
 
-const getSellersUpcomingEvents = (id) => {
-  const request = axios.get(`${apiUrl}/seller/${id}`)
+export const getSellersUpcomingEvents = (id) => {
+  const request = axios.get(`/api/sellers/events/${id}`)
   return request.then((response) => response.data)
 }
 
@@ -28,4 +28,4 @@ const addEvent = async (start, end, market_id) => {
   return response
 }
 
-export default { /*getEvents,*/ getSellersUpcomingEvents, addEvent }
+export default { /*getEvents,*/ addEvent }

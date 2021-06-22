@@ -43,7 +43,7 @@ const EventList = ({ events }) => {
           <div key={index}>
             <p className="mt-4">{getDateString(eventsByDate[day][0])}</p>
             {eventsByDate[day].map((event, index) => (
-              <EventListItem event={event} key={index} />
+              <EventListItem market={event.market} event={event} key={index} />
             ))}
           </div>
         )

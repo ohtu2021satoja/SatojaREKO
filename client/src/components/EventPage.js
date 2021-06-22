@@ -3,6 +3,9 @@ import Col from "react-bootstrap/Col"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
 import BackButtonHeader from "./BackButtonHeader"
+import { useDispatch, useSelector } from "react-redux"
+import { receiveEventProducts } from "../actions/eventProducts"
+import { useEffect } from "react"
 //import { useParams } from "react-router-dom"
 
 const products = [
@@ -64,6 +67,14 @@ const EventPage = (props) => {
   //console.log("eventID: " + eventID)
 
   const event = props.location.state.event
+  const market = props.location.state.market
+
+  const dispatch = useDispatch()
+  const eventProducts = useSelector((state) => state.eventProducts)
+
+  useEffect(() => {
+    dispatch(receiveEventProducts(event.event_id))
+  }, [dispatch, event])
 
   return (
     <Row>
@@ -74,10 +85,15 @@ const EventPage = (props) => {
       />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
-        <EventInfoLabel event={event} classes="mb-0" styles={{ fontSize: 16 }} />
+        <EventInfoLabel
+          market={market}
+          event={event}
+          classes="mb-0"
+          styles={{ fontSize: 16 }}
+        />
       </Col>
       <Col xs={12} className="mx-auto">
-        {products.map((product, index) => (
+        {eventProducts.map((product, index) => (
           <EventPageListItem product={product} event={event} key={index} />
         ))}
       </Col>

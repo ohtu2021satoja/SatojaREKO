@@ -1,10 +1,15 @@
+import { getSellersUpcomingEvents } from "../services/events"
+
 export const RECEIVE_SELLER_EVENTS = "RECEIVE_SELLER_EVENTS"
 
-const receiveSellerEvents = (events) => {
-  return {
-    type: RECEIVE_SELLER_EVENTS,
-    events,
+export const receiveSellerEvents = (id) => {
+  return async (dispatch) => {
+    try {
+      const events = await getSellersUpcomingEvents(id)
+      console.log("data in action: ", events)
+      dispatch({ type: "RECEIVE_SELLER_EVENTS", events: events })
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
-
-export default { receiveSellerEvents }
