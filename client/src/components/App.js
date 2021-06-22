@@ -15,6 +15,7 @@ import AppBuyer from "./AppBuyer"
 import AdminPage from "./AdminPage"
 
 const App = (props) => {
+  return <AdminPage />
   const [sellerView, setSellerView] = useState(null)
   const { authedUser, setAuthedUser } = props
 
