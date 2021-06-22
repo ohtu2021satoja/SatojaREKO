@@ -277,6 +277,10 @@ const ModifyEvents = ({ setModifyingEvents }) => {
   })
   return (
     <div>
+      <Button variant="danger" onClick={() => setModifyingEvents(false)}>
+        {" "}
+        Peruuta{" "}
+      </Button>
       <EventListAdmin events={events} />
     </div>
   )
