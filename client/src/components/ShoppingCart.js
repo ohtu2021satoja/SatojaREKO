@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
 import EventInfoLabel from "./EventInfoLabel"
+import { Link } from "react-router-dom"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -111,7 +112,7 @@ const ShoppingCart = () => {
                     )
                   })
                 }
-                <Col xs={12} className="d-flex justify-content-between mb-4 mt-2">
+                <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
                   <h5>YHTEENSÄ</h5>{" "}
                   <h5>
                     {Math.round(
@@ -123,6 +124,26 @@ const ShoppingCart = () => {
                     ) / 10000}
                     e
                   </h5>
+                </Col>
+                <Col xs={12} className="d-flex justify-content-end mb-5 mt-1">
+                  <Button
+                    variant="success"
+                    as={Link}
+                    to={{
+                      pathname: `/events/${
+                        order.event.event_id ? order.event.event_id : order.event.id
+                      }`,
+                      state: {
+                        market: order.event.market,
+                        event: order.event,
+                        linkTo: {
+                          pathname: "/cart",
+                        },
+                      },
+                    }}
+                  >
+                    + Lisää tuotteita
+                  </Button>
                 </Col>
               </div>
             )

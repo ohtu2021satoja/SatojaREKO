@@ -14,6 +14,11 @@ const EventPage = (props) => {
 
   const event = props.location.state.event
   const market = props.location.state.market
+  const linkTo = props.location.state.linkTo
+    ? props.location.state.linkTo
+    : {
+        pathname: "/map",
+      }
 
   const dispatch = useDispatch()
   const eventProducts = useSelector((state) => state.eventProducts[eventID])
@@ -24,11 +29,7 @@ const EventPage = (props) => {
 
   return eventProducts ? (
     <Row>
-      <BackButtonHeader
-        linkTo={{
-          pathname: "/map",
-        }}
-      />
+      <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
         <EventInfoLabel
