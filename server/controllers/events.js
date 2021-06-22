@@ -3,6 +3,8 @@ const eventsService = require('../services/events')
 const eventsRepository = require('../repositories/events')
 const productsService = require("../services/products")
 const productsRepository = require("../repositories/products")
+const usersService = require("../services/users")
+const usersRepository = require("../repositories/users")
 
 eventsRouter.get('/seller/:id', async (req, res, next) => {
     const { id } = req.params
@@ -57,14 +59,19 @@ eventsRouter.get('/product/feed/', async (req,res) => {
 })
 
 eventsRouter.post('/', async (req,res) =>{
-  try{
-    req.body.start = new Date(req.body.start)
-    req.body.end = new Date(req.body.end)
-    await eventsService.addEvent(req.body, eventsRepository)
-    res.sendStatus(200).end()
-  } catch(error){
-    console.log(error)
+  if(req.user && usersService.isAdmin(req.user.id, usersRepository)){
+    try{
+      req.body.start = new Date(req.body.start)
+      req.body.end = new Date(req.body.end)
+      await eventsService.addEvent(req.body, eventsRepository)
+      res.sendStatus(200).end()
+    } catch(error){
+      console.log(error)
+    }
+  } else{
+    res.status(401).send("Current user isn't admin")
   }
+
 })
 
 eventsRouter.put("/:id", async (req, res,next) => {

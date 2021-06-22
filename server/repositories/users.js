@@ -46,4 +46,10 @@ const getUserByEmailOrId = async (id, email) => {
   return (user[0])
 }
 
-module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId}
+isAdmin = async (user) => {
+  const isAdmin = await db.query("select users.id IN (select id from admins) AS is_admin from users WHERE users.id=$1;", [user])
+  console.log(isAdmin)
+  return(isAdmin[0].is_admin)
+}
+
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId, isAdmin}
