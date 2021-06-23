@@ -4,7 +4,7 @@ const baseUrl = "/api/auth"
 
 export const createNewUser = async (newUser) => {
   try {
-    const response = await axios.post(`${baseUrl}/email/register`, { user_info: newUser })
+    const response = await axios.post(`${baseUrl}/email/register`, newUser)
     console.log(response.data)
   } catch (err) {
     console.log(err.message)
@@ -13,7 +13,7 @@ export const createNewUser = async (newUser) => {
 
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${baseUrl}/login`, credentials)
+    const response = await axios.post(`${baseUrl}/email`, credentials)
     console.log(response.data)
   } catch (err) {
     console.log(err.message)
