@@ -47,10 +47,15 @@ const getUserByEmailOrId = async (id, email) => {
   return (user[0])
 }
 
-isAdmin = async (user) => {
+const isAdmin = async (user) => {
   const isAdmin = await db.query("select users.id IN (select id from admins) AS is_admin from users WHERE users.id=$1;", [user])
   console.log(isAdmin)
   return(isAdmin[0].is_admin)
 }
 
-module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId, isAdmin}
+const getOrderUser = async (order_id) => {
+  const user = await db.query("SELECT * from buyers INNER JOIN orders ON buyers.id = orders.buyers_id INNER JOIN users ON buyers.id = users.id WHERE orders.id=$1", [order_id])
+  return(user[0])
+}
+
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId, isAdmin, getOrderUser}

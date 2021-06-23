@@ -53,7 +53,7 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
   await productsRepository.addQuantitiesToSizes(order_id, seller_id)
 
   const order = await ordersRepository.getSellersOrder(seller_id, order_id)
-  // const user = await usersService.getOrderUser(order_id)
+  const user = await usersRepository.getOrderUser(order_id)
   // const event = await eventsRepository.getOrderEvent(order_id)
   // const seller = await sellersService.getSeller(seller_id)
   // if(!seller.seller_name){

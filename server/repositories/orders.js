@@ -21,7 +21,7 @@ const getSellersOrders = async (sellers_id) => {
 }
 
 const getSellersOrder = async (sellers_id, order_id) => {
-  const query = "SELECT json_agg(json_build_object('quantity', batches.quantity)) AS batches from orders INNER JOIN batches ON batches.order_id = orders.id INNER JOIN sizes ON batches.sizes_id = sizes.id INNER JOIN products ON sizes.product_id = products.id WHERE orders.id=$1 AND products.sellers_id=$2"
+  const query = "SELECT orders.id, orders.event_id, json_agg(json_build_object('quantity', batches.quantity, 'name', products.name, 'price', products.unit_price*sizes.unit)) AS batches from orders INNER JOIN batches ON batches.order_id = orders.id INNER JOIN sizes ON batches.sizes_id = sizes.id INNER JOIN products ON sizes.product_id = products.id WHERE orders.id=$1 AND products.sellers_id=$2 GROUP BY(orders.id, orders.event_id)"
   const orders = await db.query(query, [order_id, sellers_id])
   return(orders[0])
    
