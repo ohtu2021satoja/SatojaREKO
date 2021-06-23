@@ -25,6 +25,7 @@ const createUser = async (params) => {
   const user_id = await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, $9, $3, $4, $5, $6, $7, $8) Returning id;", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id, current_date])
   return(user_id[0].id)
 }
+
 const setAsBuyer = async (id) => {
   await db.query("UPDATE users SET is_buyer=true WHERE id=$1", [id])
 }

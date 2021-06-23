@@ -48,13 +48,35 @@ const getBuyersOrders = async (buyers_id, ordersRepository) => {
   return(orders)
 }
 
+
 const removeSellersOrder = async (seller_id, order_id, ordersRepository, productsRepository) => {
   await productsRepository.addQuantitiesToSizes(order_id, seller_id)
+
+  // const batches = await ordersRepository.getSellersOrders(seller_id, order_id)
+  // const user = await usersService.getOrderUser(order_id)
+  // const event = await eventsRepository.getOrderEvent(order_id)
+  // const seller = await sellersService.getSeller(seller_id)
+  // if(!seller.seller_name){
+  //   seller.seller_name = `${seller.firstname} ${seller.lastname}`
+  // }
+  // await emailService.sendRemovedEmail(batches, event, seller, user)
+  // 
+
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 
+const arr = [1,2,3]
+
+
 const removeProductFromSellersOrder = async (order_id, size_id, ordersRepository, productsRepository) => {
   await productsRepository.addQuantityToSize(order_id, size_id)
+
+  // const batches = await ordersRepository.getSellersOrders(size_id, order_id)
+  // const user = await usersService.getOrderUser(order_id)
+  // const event = await eventsRepository.getOrderEvent(order_id)
+  // const seller = await sellersService.get
+  // await emailService.sendRemovedEmail(batches,event,user)
+
   await ordersRepository.removeProductFromSellersOrder(order_id, size_id)
 }
 

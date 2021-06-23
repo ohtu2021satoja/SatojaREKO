@@ -1,7 +1,7 @@
-const productsService = require("../services/products")
-const mockProductRepository = require("./mocks/mockProductRepository")
-const mockEventRepository = require("./mocks/mockEventRepository")
-const mockDB = require("./mocks/db")
+const productsService = require("../../services/products")
+const mockProductRepository = require("../mocks/mockProductRepository")
+const mockEventRepository = require("../mocks/mockEventRepository")
+const mockDB = require("../mocks/db")
 
 const mockProducts = mockProductRepository.getAllProducts()
 const mockSizes = mockProductRepository.getSizes()

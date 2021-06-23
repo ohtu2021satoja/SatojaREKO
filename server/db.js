@@ -1,6 +1,8 @@
 const pg = require('pg')
 
-const connectionString = process.env.DATABASE_URL
+const connectionString =  process.env.NODE_ENV === 'test' 
+  ? process.env.TEST_DATABASE_URL
+  : process.env.DATABASE_URL
 console.log(connectionString)
 
 const pool = new pg.Pool({
@@ -32,6 +34,9 @@ rollBack = async () => {
 
 query = async (text, params) => {
   try {
+    if(!client){
+      await connect()
+    }
     const result = await client.query(text, params)
     const results = (result) ? result.rows : null
     console.log(results)
