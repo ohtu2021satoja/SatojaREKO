@@ -9,6 +9,12 @@ const initiateAutomaticMail = async (mailOptions) => {
     return mail
 }
 
+const sendMail = async (mailOptions) => {
+    const transporter = await nodemailer.createTransport(mailConfig.emailConfig)
+    const mail = await transporter.sendMail(mailOptions)
+    return mail
+}
+
 const initiateCustomerServiceMail = async (mailOptions) => {
     const transporter = await nodemailer.createTransport(mailConfig.testMail)
     const mail = await transporter.sendMail(mailOptions)
@@ -33,4 +39,4 @@ const initiateTemplate= (address, parameters, template) => {
     }
 }
 
-module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateAutomaticMail, initiateCustomerServiceMail}
+module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateAutomaticMail, initiateCustomerServiceMail, sendMail}

@@ -15,7 +15,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().min(8, "password must be at least 8 characters").required(),
 })
 
-const FormLogin = ({ handleSigned }) => {
+const FormLogin = ({ handleSigned, getUser }) => {
   return (
     <Row className="mb-3 py-3 px-1 border border-2 border-success rounded">
       <Col xs={12} className="mb-2 text-center">
@@ -28,13 +28,14 @@ const FormLogin = ({ handleSigned }) => {
             password: "",
           }}
           validationSchema={LoginSchema}
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             const credentials = {
               email: values.email,
               password: values.password,
             }
 
-            loginUser(credentials)
+            await loginUser(credentials)
+            getUser()
           }}
         >
           {() => (

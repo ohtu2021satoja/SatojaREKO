@@ -7,14 +7,14 @@ import FacebookLoginButton from "./FacebookLoginButton"
 import MockLoginButton from "./MockLoginButton"
 import PasswordResetButton from "./PasswordResetButton"
 
-const LoginPage = ({ handleFacebookLogin, handleSigned, handleMockLogin }) => (
+const LoginPage = ({ handleFacebookLogin, handleSigned, handleMockLogin, getUser }) => (
   <Row className="d-flex align-items-end h-100 mx-2">
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <div className="my-5 text-center">
         <img src={AppIcon} alt="Satoja" width="300" className="mb-2" />
         <h3 className="text-muted">Tunne tuottaja!</h3>
       </div>
-      <FormLogin handleSigned={handleSigned} />
+      <FormLogin handleSigned={handleSigned} getUser={getUser} />
       <FacebookLoginButton handleFacebookLogin={handleFacebookLogin} />
       <MockLoginButton handleMockLogin={handleMockLogin} />
     </Col>

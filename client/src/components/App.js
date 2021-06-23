@@ -137,6 +137,7 @@ const App = (props) => {
                   handleFacebookLogin={getUser}
                   handleSigned={() => setSignUp(true)}
                   handleMockLogin={getMockUser}
+                  getUser={getUser}
                 />
               )
             }
