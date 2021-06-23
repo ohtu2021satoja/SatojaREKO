@@ -4,18 +4,12 @@ import { Link } from "react-router-dom";
 import { mount } from "enzyme";
 import { BrowserRouter } from "react-router-dom";
 
-const requiredURLs = ["/", "/orders", "/cart", "/map", "/profile"];
-
-let sellerView = true;
-
-const setSellerView = (value) => {
-  sellerView = value;
-};
+const requiredURLs = ["/", "/orders/buyer", "/cart", "/map", "/profile/buyer"];
 
 describe("Navigation bar for Buyer", () => {
   const wrapper = mount(
     <BrowserRouter>
-      <NavigationBarBuyer setSellerView={setSellerView} />
+      <NavigationBarBuyer />
     </BrowserRouter>
   );
 
@@ -30,11 +24,5 @@ describe("Navigation bar for Buyer", () => {
     requiredURLs.forEach((url) => {
       expect(linkURLs).toContain(url);
     });
-  });
-
-  test("clicking on homepage link sets sellerView to null", () => {
-    const homepageLink = wrapper.find("#home").first();
-    homepageLink.simulate("click");
-    expect(sellerView).toBe(null);
   });
 });
