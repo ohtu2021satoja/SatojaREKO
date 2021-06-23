@@ -68,11 +68,11 @@ const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
           }
 
           user = { ...user, ...newUser }
-          user === newUser
+          facebookUser === false
             ? createNewUser({ password: values.password, ...newUser })
             : createNewFacebookUser(user)
 
-          handleRegisterUser(user)
+          facebookUser === false ? console.log("LOL") : handleRegisterUser(user)
         }}
       >
         {() => (

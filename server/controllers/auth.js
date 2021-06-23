@@ -30,25 +30,31 @@ authRouter.post("/email", passport.authenticate('local', {
   res.redirect('/api/auth/success')
 })
 
-authRouter.post("/email/register", async (req, res) => {
+authRouter.post("/email/register", async (req, res, next) => {
+  console.log(req.body)
   const {firstname, lastname, email, password, phonenumber} = req.body
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
   user = await usersService.getUserByEmail(email, usersRepository)
   console.log(user)
-  if(user){
-    if(user.password){
-      res.send("User has been registered with email already")
+  try{
+    if(user){
+      if(user.password){
+        res.send("User has been registered with email already")
+      } else{
+        await usersService.setUserPassword(user.id, password, usersRepository)
+        res.send("We found user with your email and added password to that")
+      }
     } else{
-      await usersService.setUserPassword(user.id, password, usersRepository)
-      res.send("We found user with your email and added password to that")
+      const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
+      console.log(url)
+      await mailService.sendMail(mailService.initiateVerificationMail(email,url))
+      res.send(`Verification email has been sent to ${email}`)
     }
-  } else{
-    const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
-    console.log(url)
-    await mailService.sendMail(mailService.initiateVerificationMail(email,url))
-    res.send(`Verification email has been sent to ${email}`)
+  }catch(error){
+    next(error)
   }
+
 })
 
 authRouter.post("/email/reset_password", async (req, res) => {
