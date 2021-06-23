@@ -54,8 +54,8 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
 
   const order = await ordersRepository.getSellersOrder(seller_id, order_id)
   const user = await usersRepository.getOrderUser(order_id)
-  // const event = await eventsRepository.getOrderEvent(order_id)
-  // const seller = await sellersService.getSeller(seller_id)
+  const event = await eventsRepository.getOrderEvent(order_id)
+  const seller = await sellersService.getSeller(seller_id)
   // if(!seller.seller_name){
   //   seller.seller_name = `${seller.firstname} ${seller.lastname}`
   // }

@@ -48,8 +48,14 @@ const addEvent = async (event) => {
   return(result[0].id)
 }
 
+const getOrderEvent = async (order_id) => {
+  const query = "SELECT events.id, events.start, events.endtime, markets.address, reko_areas.name AS reko_name FROM events INNER JOIN orders ON orders.event_id = events.id INNER JOIN markets ON events.market_id = markets.id INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id WHERE orders.id=$1"
+  const event = await db.query(query, [order_id])
+  return(event[0])
+}
+
 const updateEvent = async (event, event_id) => {
   await db.query("UPDATE events set market_id=$1, start=$2, endtime=$3 where id=$4", [event.market_id, event.start, event.end, event_id])
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent}
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent}

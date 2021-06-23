@@ -2,10 +2,10 @@ const app = require('./app')
 const http = require('http')
 const config = require('./utils/config')
 const server = http.createServer(app)
-const usersRepository = require("./repositories/users")
+const eventsRepository= require("./repositories/events")
 
 const functioN = async () => {
-  const order = await usersRepository.getOrderUser(80)
+  const order = await eventsRepository.getOrderEvent(80)
   console.log(order)
 }
 
