@@ -1,9 +1,8 @@
-const sendMass = () => {
-  // data = getData()
-  if(data){
-    // sendMails(data)
-  }
-  
+const eventsRepository = require("./repositories/events")
+
+const sendMass = async () => {
+  const events = eventsRepository.getEvents()
+  console.log(events)
 }
 
 sendMass()

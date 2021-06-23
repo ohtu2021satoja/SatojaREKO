@@ -58,4 +58,10 @@ const updateEvent = async (event, event_id) => {
   await db.query("UPDATE events set market_id=$1, start=$2, endtime=$3 where id=$4", [event.market_id, event.start, event.end, event_id])
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent}
+const getMassEmail = async (events) => {
+  const query = "SELECT json_agg(json_build_object('event', json_build_object('id', events.id, 'start', events.start, 'address', markets.address), 'buyers',(SELECT jsonb_agg(DISTINCT jsonb_build_object('firstname', users.firstname, 'lastname', users.lastname, 'email', users.email)) FROM users INNER JOIN buyers ON buyers.id = users.id INNER JOIN orders ON orders.buyers_id = buyers.id WHERE orders.event_id=events.id),'sellers', (SELECT jsonb_agg(DISTINCT jsonb_build_object('firstname', users.firstname, 'lastname', users.lastname, 'seller_name', sellers.name, 'email', users.email )) from sellers INNER JOIN products ON products.sellers_id=sellers.id INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN users ON users.id = sellers.id WHERE products_events.id_event=events.id))) FROM events INNER JOIN markets ON events.market_id = markets.id WHERE events.id=ANY($1::int[]) "
+  const allevents = await db.query(query, [events])
+  return allevents[0].json_agg
+}
+
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent, getMassEmail}
