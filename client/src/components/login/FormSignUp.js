@@ -11,26 +11,24 @@ import FormSignUpTerms from "./FormSignUpTerms"
 import FacebookSignUpButton from "./FacebookSignUpButton"
 
 // Yup
-const SignUpSchema = Yup.object().shape({
+const SharedSchema = {
   firstname: Yup.string().required(),
   lastname: Yup.string().required(),
   email: Yup.string().email("invalid email address").required(),
   phonenumber: Yup.string().required(),
-  password: Yup.string().min(8, "password must be at least 8 characters").required(),
   terms_ok: Yup.boolean()
     .test("consent", "you have to agree with our terms", (value) => value === true)
     .required(),
+}
+
+const SignUpSchema = Yup.object().shape({
+  ...SharedSchema,
+  password: Yup.string().min(8, "password must be at least 8 characters").required(),
 })
 
 const FacebookSignUpSchema = Yup.object().shape({
-  firstname: Yup.string().required(),
-  lastname: Yup.string().required(),
-  email: Yup.string().email("invalid email address").required(),
-  phonenumber: Yup.string().required(),
+  ...SharedSchema,
   password: Yup.string(),
-  terms_ok: Yup.boolean()
-    .test("consent", "you have to agree with our terms", (value) => value === true)
-    .required(),
 })
 
 const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
