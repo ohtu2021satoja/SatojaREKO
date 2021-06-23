@@ -118,29 +118,31 @@ const MapPage = () => {
   ))
 
   return mapPoints ? (
-    <div className="map-container">
-      <MapContainer
-        center={mapCenter}
-        scrollWheelZoom={true}
-        zoom={10}
-        whenCreated={(map) => {
-          setMapBounds(map.getBounds())
-          setMapCenter(map.getCenter())
-        }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MapInstance
-          setMapBounds={handleBoundsChange}
-          setMapCenter={handleCenterChange}
-          setMapInstance={getMapInstance}
-        />
-        {markMarkets}
-        {markSellers}
-      </MapContainer>
-      <Row className="mt-1 mx-2">
+    <>
+      <div className="map-container">
+        <MapContainer
+          center={mapCenter}
+          scrollWheelZoom={true}
+          zoom={10}
+          whenCreated={(map) => {
+            setMapBounds(map.getBounds())
+            setMapCenter(map.getCenter())
+          }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <MapInstance
+            setMapBounds={handleBoundsChange}
+            setMapCenter={handleCenterChange}
+            setMapInstance={getMapInstance}
+          />
+          {markMarkets}
+          {markSellers}
+        </MapContainer>
+      </div>
+      <Row className="mt-0 mx-2">
         <Col xs={12} className="mb-4 text-center">
           <Button
             className="btn btn-sm"
@@ -153,7 +155,7 @@ const MapPage = () => {
           <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>
-    </div>
+    </>
   ) : (
     <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>

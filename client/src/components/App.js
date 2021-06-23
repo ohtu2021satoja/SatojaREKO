@@ -128,7 +128,7 @@ const App = (props) => {
         <Col
           xs={12}
           sm={{ span: 8, offset: 2 }}
-          style={{ backgroundColor: "white", paddingBottom: 70 }}
+          style={{ backgroundColor: "white", paddingBottom: 50 }}
         >
           {(() => {
             if (!authedUser && !signUp) {
