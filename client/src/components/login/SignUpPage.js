@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
@@ -11,6 +12,8 @@ const SignUpPage = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUs
       <Nav className="py-2">
         <Nav.Item>
           <Button
+            as={Link}
+            to="/"
             className="mr-1"
             variant="light"
             size="lg"
