@@ -3,7 +3,14 @@ import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
-const ProductPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
+const ProductPageListButtons = ({
+  eventID,
+  addToCart,
+  removeFromCart,
+  size,
+  unit,
+  singleSize,
+}) => {
   const cart = useSelector((state) => state.shoppingCart)
 
   const [inCart, setInCart] = useState(0)
@@ -11,19 +18,21 @@ const ProductPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit
     const updateCart = () => {
       const eventOrders = cart.find((order) => order.event_id === eventID)
       if (eventOrders) {
-        const batch = eventOrders.batches.find((batch) => batch.size_id === size.id)
+        const batch = eventOrders.batches.find((batch) => batch.size_id === size.size_id)
         if (batch) setInCart(batch.order_quantity)
         else setInCart(0)
       } else setInCart(0)
     }
     updateCart()
-  }, [cart, eventID, size.id])
+  }, [cart, eventID, size.size_id])
 
   return (
     <>
       <Col xs={6} className="d-flex justify-content-center align-items-center">
         <b>
-          {size.unit} {unit}
+          {singleSize
+            ? size.price / 100 + "e / kpl"
+            : size.unit + unit + " / " + size.price / 100 + "e"}
         </b>
       </Col>
       <Col xs={6} className="d-flex justify-content-between align-items-center">
