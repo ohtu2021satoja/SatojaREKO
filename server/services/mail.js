@@ -35,11 +35,6 @@ const sendEventReminderMails = (users,event) => {
     })
 }
 
-
-parameters.event
-parameters.url
-parameters.user
-
 const initiateTemplate= (address, parameters, template) => {
     console.log("Building email")
     console.log(parameters,"paremeters")
