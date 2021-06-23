@@ -11,17 +11,22 @@ const FormSellerDetails = () => {
   return (
     <Col xs={12} className="mb-5">
       <Field
-        name="company"
-        id="user-company-name"
+        name="seller_name"
+        id="user-name"
         label="Yrityksen / Tilan nimi"
         component={FormFieldText}
       />
-      <ErrorMessage name="company" component={FormErrorMessage} />
-      <Field name="firstname" id="user-name" label="Etunimi" component={FormFieldText} />
+      <ErrorMessage name="seller_name" component={FormErrorMessage} />
+      <Field
+        name="firstname"
+        id="user-firstname"
+        label="Etunimi"
+        component={FormFieldText}
+      />
       <ErrorMessage name="firstname" component={FormErrorMessage} />
       <Field
         name="lastname"
-        id="user-surname"
+        id="user-lastname"
         label="Sukunimi"
         component={FormFieldText}
       />
@@ -43,41 +48,36 @@ const FormSellerDetails = () => {
       />
       <ErrorMessage name="address" component={FormErrorMessage} />
       <Field
-        name="zipCode"
-        id="user-zip-code"
+        name="zipcode"
+        id="user-zipcode"
         label="Postinumero"
         component={FormFieldText}
       />
-      <ErrorMessage name="zipCode" component={FormErrorMessage} />
+      <ErrorMessage name="zipcode" component={FormErrorMessage} />
+      <Field name="city" id="user-city" label="Kunta" component={FormFieldText} />
+      <ErrorMessage name="city" component={FormErrorMessage} />
       <Field
-        name="municipality"
-        id="user-municipality"
-        label="Kunta"
-        component={FormFieldText}
-      />
-      <ErrorMessage name="municipality" component={FormErrorMessage} />
-      <Field
-        name="businessId"
+        name="business_id"
         id="user-business-id"
         label="Y-tunnus"
         component={FormFieldText}
       />
-      <ErrorMessage name="businessId" component={FormErrorMessage} />
+      <ErrorMessage name="business_id" component={FormErrorMessage} />
       <Field
-        name="businessUrl"
-        id="user-business-url"
+        name="homepage"
+        id="user-homepage"
         label="www-sivut"
         component={FormFieldUrl}
       />
-      <ErrorMessage name="businessUrl" component={FormErrorMessage} />
+      <ErrorMessage name="homepage" component={FormErrorMessage} />
       <Field
-        name="businessInfo"
-        id="user-business-info"
+        name="description"
+        id="user-description"
         label="Oma esittely..."
         rows="3"
         component={FormFieldTextArea}
       />
-      <ErrorMessage name="businessInfo" component={FormErrorMessage} />
+      <ErrorMessage name="description" component={FormErrorMessage} />
     </Col>
   )
 }
