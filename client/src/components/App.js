@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
-import { logoutUser } from "../services/logout"
+import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
@@ -16,6 +16,7 @@ import AdminPage from "./AdminPage"
 
 const App = (props) => {
   const [sellerView, setSellerView] = useState(null)
+  const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
@@ -108,12 +109,9 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  const signUpWithFacebook = () => {
-    getUser()
-  }
-
   const registerUser = (user) => {
     setAuthedUser(user)
+    setSignUp(false)
   }
 
   // Remove current user form API and update state
@@ -133,25 +131,25 @@ const App = (props) => {
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (!authedUser)
+            if (!authedUser && !signUp) {
               return (
                 <LoginPage
                   handleFacebookLogin={getUser}
-                  handleFacebookSignUp={signUpWithFacebook}
+                  handleSigned={() => setSignUp(true)}
                   handleMockLogin={getMockUser}
                 />
               )
+            }
 
-            if (authedUser) {
-              if (!authedUser.phonenumber) {
-                return (
-                  <SignUpPage
-                    user={authedUser}
-                    handleSigned={logOut}
-                    handleRegisterUser={registerUser}
-                  />
-                )
-              }
+            if ((authedUser && !authedUser.phonenumber) || (!authedUser && signUp)) {
+              return (
+                <SignUpPage
+                  user={authedUser}
+                  handleSigned={() => setSignUp(false)}
+                  handleFacebookSignUp={getUser}
+                  handleRegisterUser={registerUser}
+                />
+              )
             }
 
             if (authedUser && sellerView === null)

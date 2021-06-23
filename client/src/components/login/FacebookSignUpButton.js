@@ -4,10 +4,10 @@ const FacebookSignUpButton = ({ handleFacebookSignUp }) => (
   <a href="api/auth/facebook">
     <Button
       onClick={handleFacebookSignUp}
-      variant="outline-primary"
+      variant="primary"
       size="lg"
-      type="submit"
-      className="w-100"
+      type="button"
+      className="w-100 mb-3"
     >
       Rekisteröidy Facebookilla
     </Button>

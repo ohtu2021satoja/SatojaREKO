@@ -6,8 +6,8 @@ const FacebookLoginButton = ({ handleFacebookLogin }) => (
       onClick={handleFacebookLogin}
       variant="primary"
       size="lg"
-      type="submit"
-      className="w-100 mb-4"
+      type="button"
+      className="w-100 mb-3"
     >
       Kirjaudu Facebookilla
     </Button>
