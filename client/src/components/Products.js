@@ -5,14 +5,11 @@ import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import productService from "../services/products"
 import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { setProducts } from "../reducers/products"
-
 const Products = () => {
-  const state = useSelector((state) => state)
-  var [productsei, setProductsei] = useState([])
-  const id = useState(state.authedUser.id)
-  console.log("state ", state)
+  const [productsei, setProductsei] = useState([])
+  const id = useSelector((state) => state.authedUser.id)
   console.log("id ", id)
 
   const dispatch = useDispatch()
