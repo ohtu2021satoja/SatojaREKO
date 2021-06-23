@@ -8,3 +8,9 @@ export const products = (state = [], action) => {
       return state
   }
 }
+
+export const setProducts = (products) => {
+  return async (dispatch) => {
+    dispatch({ type: "RECEIVE_PRODUCTS", products })
+  }
+}
