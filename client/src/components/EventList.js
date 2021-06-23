@@ -1,7 +1,7 @@
 import Col from "react-bootstrap/Col"
 import EventListItem from "./EventListItem"
 
-const EventList = ({ events }) => {
+const EventList = ({ events, linkTo }) => {
   const sortByTime = (eventsArray) => {
     return eventsArray.sort((a, b) => {
       return new Date(a.start) - new Date(b.start)
@@ -43,7 +43,12 @@ const EventList = ({ events }) => {
           <div key={index}>
             <p className="mt-4">{getDateString(eventsByDate[day][0])}</p>
             {eventsByDate[day].map((event, index) => (
-              <EventListItem market={event.market} event={event} key={index} />
+              <EventListItem
+                market={event.market}
+                event={event}
+                linkTo={linkTo}
+                key={index}
+              />
             ))}
           </div>
         )

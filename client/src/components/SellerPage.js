@@ -45,7 +45,15 @@ const SellerPage = (props) => {
         </div>
       </Col>
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-0">
-        <EventList events={sellerEvents} />
+        <EventList
+          events={sellerEvents}
+          linkTo={{
+            pathname: `/sellers/${seller.id}`,
+            state: {
+              seller: seller,
+            },
+          }}
+        />
       </Col>
     </Row>
   )
