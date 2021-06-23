@@ -14,7 +14,7 @@ const SellerPage = (props) => {
   const sellerEvents = useSelector((state) => state.sellerEvents)
   const sellers = useSelector((state) => state.mapPoints.Sellers)
 
-  const seller = props.location.state
+  const seller = props.location.state.seller
     ? props.location.state.seller
     : sellers.find((seller) => seller.id === Number(sellerID))
   const linkTo = props.location.state
