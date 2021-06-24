@@ -3,6 +3,9 @@ const ordersService = require("../services/orders")
 const ordersRepository = require("../repositories/orders")
 const productsService = require("../services/products")
 const productsRepository = require("../repositories/products")
+const usersRepository = require("../repositories/users")
+const eventsRepository = require("../repositories/events")
+const sellersRepository = require("../repositories/sellers")
 
 ordersRouter.post('/buyer/:id', async (req, res, next) => {
   const { id } = req.params
@@ -57,7 +60,7 @@ ordersRouter.delete("/seller/:seller_id/:order_id", async (req, res) => {
   if(!req.user || req.user.id != seller_id){
     res.status(401).send("Current user isn't the seller")
   } else {
-    await ordersService.removeSellersOrder(seller_id, order_id, ordersRepository, productsRepository)
+    await ordersService.removeSellersOrder(seller_id, order_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository)
     res.send(200).end()
   }
 })
@@ -67,7 +70,7 @@ ordersRouter.delete("/seller/:seller_id/:order_id/:size_id", async (req, res) =>
   if(!req.user || req.user.id != seller_id){
     res.status(401).send("Current user isn't the seller")
   } else {
-    await ordersService.removeProductFromSellersOrder(order_id, size_id, ordersRepository, productsRepository)
+    await ordersService.removeProductFromSellersOrder(seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository)
     res.send(200).end()
   }
 })

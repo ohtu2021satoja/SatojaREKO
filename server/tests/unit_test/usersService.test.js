@@ -1,5 +1,5 @@
-const usersService = require('../services/users')
-const mockUsersRepository = require('./mocks/mockUsersRepository')
+const usersService = require('../../services/users')
+const mockUsersRepository = require('../mocks/mockUsersRepository')
 
 const mockUsers = mockUsersRepository.getAllUsers()
 

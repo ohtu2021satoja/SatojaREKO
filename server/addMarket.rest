@@ -1,0 +1,8 @@
+POST http://localhost:3003/api/markets
+Content-Type: application/json
+
+{
+  "address": "Hämeentie 5",
+  "type": "reko_market",
+  "reko_areas": [1]
+}

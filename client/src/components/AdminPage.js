@@ -36,23 +36,21 @@ const EventForm = ({ setAddingEvent }) => {
   const handleSubmit = async ({ starting_time, end_time, date }) => {
     console.log(date)
     const current_date = new Date()
-    const current_year = current_date.getFullYear()
-    const [day, month] = date.split(".")
-
+    const current_year = current_date.getUTCFullYear()
+    const [day, monthA] = date.split(".")
+    const month = parseInt(monthA) - 1
     const starting_hour = starting_time.split(":")[0]
     const starting_minutes = starting_time.split(":")[1]
     const startingDateObject = new Date(
-      current_year,
-      month,
-      day,
-      starting_hour,
-      starting_minutes
+      Date.UTC(current_year, month, day, starting_hour, starting_minutes)
     )
 
     const end_hour = end_time.split(":")[0]
     const end_minutes = end_time.split(":")[1]
 
-    const endDateObject = new Date(current_year, month, day, end_hour, end_minutes)
+    const endDateObject = new Date(
+      Date.UTC(current_year, month, day, end_hour, end_minutes)
+    )
 
     await eventService.addEvent(startingDateObject, endDateObject, market.id)
 
@@ -279,6 +277,10 @@ const ModifyEvents = ({ setModifyingEvents }) => {
   })
   return (
     <div>
+      <Button variant="danger" onClick={() => setModifyingEvents(false)}>
+        {" "}
+        Peruuta{" "}
+      </Button>
       <EventListAdmin events={events} />
     </div>
   )
