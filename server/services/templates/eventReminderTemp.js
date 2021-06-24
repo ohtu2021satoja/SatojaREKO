@@ -16,7 +16,7 @@ const buyerMessage = (parameters) => {
     \
     <p>Tilaisuus: </p>\
     \
-    <p>${parameters.event.reko_name}, ${parameters.event.start}:${parameters.event.start}</p>\
+    <p>${parameters.event.reko_name}, ${new Date(parameters.event.start).getUTCHours()}:${ new Date(parameters.event.start).getUTCMinutes()}</p>\
     <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Erittely varatuista tuotteista löytyy osoitteesta:</p>\
@@ -41,7 +41,7 @@ const sellerMessage = (parameters) => {
     \
     <p>Tilaisuus: </p>\
     \
-    <<p>${parameters.event.reko_name}, ${parameters.event.start}:${parameters.event.start}</p>\
+    <<p>${parameters.event.reko_name}, ${new Date(parameters.event.start).getUTCHours()}:${ new Date(parameters.event.start).getUTCMinutes()}</p>\
     <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Tarkemmat tiedot varatuista tuotteista löydät osoitteesta:</p>\

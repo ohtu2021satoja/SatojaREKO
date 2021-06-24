@@ -5,11 +5,16 @@ const resetTemp = require('../services/templates/passwordResetTemp')
 const cancelTemp = require('../services/templates/orderCancelTemp')
 const reminderTemp = require('../services/templates/eventReminderTemp')
 
-const sendTestMail = async (mailOptions) =>  await sendMail(mailOptions, mailConfig.testMail)
+const sendTestMail = async (mailOptions) =>  {
+    console.log("sending test mail")
+    await sendMail(mailOptions, mailConfig.testMail)
+}
+
 const sendCustomerMail = async (mailOptions) => sendMail(mailOptions, mailConfig.customerServiceConfig)
 const sendAutomaticMail = async (mailOptions) => sendMail(mailOptions, mailConfig.notificationConfig)
 
 const sendMail = async (mailOptions, config) => {
+    console.log(mailOptions)
     const transporter = await nodemailer.createTransport(config)
     const mail = await transporter.sendMail(mailOptions)
     return mail
@@ -22,43 +27,35 @@ const initiateBuyerReminderMail = async (address, url, event, user) => await ini
 const initiateDeleteOrder = async (address, seller, user, event, batches) => await initiateTemplate(address, {seller, user, event, batches, url:"https://satoja-reko.herokuapp.com"}, cancelTemp, mailConfig.testMail)
 
 const initiateTemplate= async (address, parameters, template, config) => {
-    console.log("Building email")
-    console.log(parameters,"paremeters")
-    console.log(parameters.url)
     const text = await template.message(parameters)
-    console.log("LOL")
     const res = {
         from: config.auth.user,
         to: "puro.touko@gmail.com",
         subject: template.subject,
         html: text
     }
-    console.log(res)
     return res
 }
 
 const sendReminderMails = async (allevents) => {
     console.log(allevents)
-    // await allevents.forEach((eventObject) => {
-    //     sendEventReminderMails(eventObject.buyers, eventObject.sellers, eventObject.event)
-    // })
-    const event = allevents[2]
-    console.log(event.sellers[0].email)
-    await sendTestMail(initiateSellerReminderMail(event.sellers[0].email, "https://satoja-reko.herokuapp.com", event.event, event.sellers[0]))
+    await allevents.forEach((eventObject) => {
+        sendEventReminderMails(eventObject.buyers, eventObject.sellers, eventObject.event)
+     })
 }
 
 const sendEventReminderMails = async (buyers,sellers, event) => {
     if(buyers){
-        await buyers.forEach((buyer) => {
-            console.log("EMAIL", buyer.email)
-            sendTestMail(initiateBuyerReminderMail(buyer.email, "https://satoja-reko.herokuapp.com", event, buyer ))
-        })
+        for(const i in buyers){
+            buyer = buyers[i]
+            sendTestMail(await initiateBuyerReminderMail(buyer.email, "https://satoja-reko.herokuapp.com", event, buyer ))
+        }
     }
     if(sellers){
-        await sellers.forEach((seller) => {
-            console.log("EMAIL", seller.email)
-            sendTestMail(initiateSellerReminderMail(seller.email, "https://satoja-reko.herokuapp.com", event, seller ))
-        })
+        for(const i in sellers){
+            seller = sellers[i]
+            sendTestMail(await initiateBuyerReminderMail(seller.email, "https://satoja-reko.herokuapp.com", event, seller ))
+        }
     }
 
 }
