@@ -33,7 +33,7 @@
 ### Tilaisuus-sivun Noudot
 
 - Tuotteet näytetään tilakohtaisesti
-- + ja - merkit pois ja kappalemäärä tilalle
+- plus- ja miinus-merkit pois ja kappalemäärä tilalle
 
 
 # 07.06.21
