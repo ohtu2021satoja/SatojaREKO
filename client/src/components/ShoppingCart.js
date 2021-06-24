@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
 import EventInfoLabel from "./EventInfoLabel"
+import { Link } from "react-router-dom"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -14,18 +15,23 @@ const ShoppingCart = () => {
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
-    const total =
-      cart.reduce(
-        (acc, order) =>
-          acc +
-          order.batches.reduce(
-            (acc, batch) =>
-              acc + batch.order_quantity * batch.unit * batch.product.unit_price,
+    const getTotalPrice = () => {
+      const total =
+        Math.round(
+          cart.reduce(
+            (acc, order) =>
+              acc +
+              order.batches.reduce(
+                (acc, batch) =>
+                  acc + batch.order_quantity * batch.unit * batch.product.unit_price,
+                0
+              ),
             0
-          ),
-        0
-      ) / 100
-    setTotalPrice(total || 0)
+          ) * 100
+        ) / 10000
+      return total
+    }
+    setTotalPrice(getTotalPrice() || 0)
   }, [cart])
 
   const handleSubmitOrders = () => {
@@ -49,13 +55,33 @@ const ShoppingCart = () => {
     }
   }
 
+  const sortSizesByProduct = (order) => {
+    const sortedSizes = []
+    order.batches.map((batch) => {
+      const currentProduct = sortedSizes.find(
+        (size) => size.product.id === batch.product.id
+      )
+      if (batch.order_quantity > 0) {
+        if (currentProduct) {
+          return currentProduct.batches.push(batch)
+        } else {
+          return sortedSizes.push({
+            product: batch.product,
+            batches: [batch],
+          })
+        }
+      } else return null
+    })
+    return sortedSizes
+  }
+
   const orderHasSizes = (order) => {
     return order.batches.reduce((acc, batch) => acc + batch.order_quantity, 0) > 0
   }
 
   return (
-    <Row className="mt-5 mx-2">
-      <Col xs={{ span: 12, offset: 0 }} className="mb-4 text-center">
+    <Row>
+      <Col xs={12} className="mb-4 text-center">
         <h2 className="mb-4">Ostoskori</h2>
         {cart.map((order, index) => {
           if (orderHasSizes(order)) {
@@ -67,31 +93,15 @@ const ShoppingCart = () => {
                 <div className="mb-3">
                   <EventInfoLabel
                     event={order.event}
+                    market={order.event.market}
                     classes="mb-0 mt-0"
                     styles={{ fontSize: 16 }}
                   />
                 </div>
-                {(() => {
+                {
                   // Sort orders by product to render different sizes
                   // of same product on the same card
-                  const ordersByProduct = []
-
-                  order.batches.map((batch, index) => {
-                    const currentProduct = ordersByProduct.find(
-                      (order) => order.product.id === batch.product.id
-                    )
-                    if (batch.order_quantity > 0) {
-                      if (currentProduct) {
-                        return currentProduct.batches.push(batch)
-                      } else {
-                        return ordersByProduct.push({
-                          product: batch.product,
-                          batches: [batch],
-                        })
-                      }
-                    } else return null
-                  })
-                  return ordersByProduct.map((product, index) => {
+                  sortSizesByProduct(order).map((product, index) => {
                     return (
                       <ShoppingCartListItem
                         event={order.event}
@@ -101,18 +111,58 @@ const ShoppingCart = () => {
                       />
                     )
                   })
-                })()}
-                <br />
+                }
+                <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
+                  <h5>YHTEENSÄ</h5>{" "}
+                  <h5>
+                    {Math.round(
+                      order.batches.reduce(
+                        (acc, size) =>
+                          acc + size.order_quantity * size.unit * size.product.unit_price,
+                        0
+                      ) * 100
+                    ) / 10000}
+                    e
+                  </h5>
+                </Col>
+                <Col xs={12} className="d-flex justify-content-end mb-5 mt-1">
+                  <Button
+                    variant="success"
+                    as={Link}
+                    to={{
+                      pathname: `/events/${
+                        order.event.event_id ? order.event.event_id : order.event.id
+                      }`,
+                      state: {
+                        market: order.event.market,
+                        event: order.event,
+                        linkTo: {
+                          pathname: "/cart",
+                        },
+                      },
+                    }}
+                  >
+                    + Lisää tuotteita
+                  </Button>
+                </Col>
               </div>
             )
           } else return null
         })}
         {totalPrice > 0 ? (
-          <div>
-            <h3>Yhteensä: {totalPrice}e</h3>
-            <Button variant="success" onClick={handleSubmitOrders}>
-              Lähetä tilaus
-            </Button>
+          <div className="px-0 py-3 mx-0" style={{ backgroundColor: "#eefaa2" }}>
+            <Col xs={12} className="d-flex justify-content-start">
+              <h4>Varauskori</h4>
+            </Col>
+            <Col xs={12} className="d-flex justify-content-between">
+              <h5>YHTEENSÄ</h5>
+              <h5> {totalPrice}e</h5>
+            </Col>
+            <Col xs={12} className="mb-4 justify-content-center">
+              <Button variant="success" onClick={handleSubmitOrders} block>
+                Lähetä varaus
+              </Button>
+            </Col>
           </div>
         ) : (
           <p>Ostoskorisi on tyhjä</p>

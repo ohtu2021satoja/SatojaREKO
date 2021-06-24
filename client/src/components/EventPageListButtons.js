@@ -6,26 +6,25 @@ import { useState, useEffect } from "react"
 const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
   const cart = useSelector((state) => state.shoppingCart)
   const [inCart, setInCart] = useState(0)
+
   useEffect(() => {
     const updateCart = () => {
       const eventOrders = cart.find((order) => order.event_id === eventID)
       if (eventOrders) {
-        const batch = eventOrders.batches.find((batch) => batch.size_id === size.id)
+        const batch = eventOrders.batches.find((batch) => batch.size_id === size.size_id)
         if (batch) setInCart(batch.order_quantity)
         else setInCart(0)
       } else setInCart(0)
     }
     updateCart()
-  }, [cart, eventID, size.id])
+  }, [cart, eventID, size.size_id])
 
   return (
     <>
-      <Col xs={3} className="d-flex justify-content-center align-items-center">
-        <b>
-          {size.unit} {unit}
-        </b>
+      <Col xs={6} className="d-flex justify-content-center align-items-center">
+        <b>{size.price / 100}e / kpl</b>
       </Col>
-      <Col xs={5} className="d-flex justify-content-between align-items-center">
+      <Col xs={6} className="d-flex justify-content-around align-items-center">
         <Button
           size="sm"
           variant="light"

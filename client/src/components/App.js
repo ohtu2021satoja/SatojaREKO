@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
-import { logoutUser } from "../services/logout"
+import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
 import "./App.css"
 import Container from "react-bootstrap/Container"
@@ -9,14 +9,11 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import LoginPage from "./login/LoginPage"
 import SignUpPage from "./login/SignUpPage"
-import HomePage from "./HomePage"
-import AppSeller from "./AppSeller"
-import AppBuyer from "./AppBuyer"
 import AdminPage from "./AdminPage"
+import Routes from "./navigation/Routes"
 
 const App = (props) => {
-  return <AdminPage />
-  const [sellerView, setSellerView] = useState(null)
+  const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
@@ -109,12 +106,9 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  const signUpWithFacebook = () => {
+  const registerUser = () => {
     getUser()
-  }
-
-  const registerUser = (user) => {
-    setAuthedUser(user)
+    setSignUp(false)
   }
 
   // Remove current user form API and update state
@@ -122,8 +116,6 @@ const App = (props) => {
     logoutUser()
     setAuthedUser(null)
   }
-
-  const handleViewChange = (value) => setSellerView(value)
 
   return (
     <Container fluid>
@@ -134,47 +126,34 @@ const App = (props) => {
           style={{ backgroundColor: "white", paddingBottom: 70 }}
         >
           {(() => {
-            if (!authedUser)
+            if (!authedUser && !signUp) {
               return (
                 <LoginPage
-                  handleFacebookLogin={getUser}
-                  handleFacebookSignUp={signUpWithFacebook}
+                  handleLogin={getUser}
+                  handleSigned={() => setSignUp(true)}
                   handleMockLogin={getMockUser}
                 />
               )
-
-            if (authedUser) {
-              if (!authedUser.phonenumber) {
-                return (
-                  <SignUpPage
-                    user={authedUser}
-                    handleSigned={logOut}
-                    handleRegisterUser={registerUser}
-                  />
-                )
-              }
             }
 
-            if (authedUser && sellerView === null)
-              return <HomePage setSellerView={handleViewChange} logOut={logOut} />
-
-            if (sellerView === true)
+            if ((authedUser && !authedUser.phonenumber) || (!authedUser && signUp)) {
               return (
-                <AppSeller
+                <SignUpPage
                   user={authedUser}
-                  logOut={logOut}
-                  setSellerView={handleViewChange}
+                  handleSigned={() => setSignUp(false)}
+                  handleFacebookSignUp={getUser}
+                  handleRegisterUser={registerUser}
                 />
               )
+            }
 
-            if (sellerView === false)
+            if (authedUser) {
               return (
-                <AppBuyer
-                  user={authedUser}
-                  logOut={logOut}
-                  setSellerView={handleViewChange}
-                />
+                <>
+                  <Routes user={authedUser} logOut={logOut} />
+                </>
               )
+            }
           })()}
         </Col>
       </Row>
