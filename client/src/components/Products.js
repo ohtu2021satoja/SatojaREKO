@@ -3,32 +3,36 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
-
+import productService from "../services/products"
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { setProducts } from "../reducers/products"
 const Products = () => {
-  // example products
-  const tuotteet = [
-    {
-      name: "mansikka 5kg laatikko",
-      sold: 5,
-      soldlimit: 10,
-      price: 52,
-      image: "https://www.satotukku.fi//i/t/mansikka.8ee8a02c75.jpg",
-    },
-    {
-      name: "herne 1 litra",
-      sold: 3,
-      soldlimit: 15,
-      price: 23,
-      image: "http://www.hankkija.fi/Liitetiedostot/Pics/herneetw900.jpg",
-    },
-    {
-      name: "naudan sisäfile",
-      sold: 2,
-      soldlimit: 4,
-      price: 66,
-      image: "https://www.wotkins.fi/wp-content/uploads/2016/05/naudan_sisafilee.jpg",
-    },
-  ]
+  const [productsei, setProductsei] = useState([])
+  const id = useSelector((state) => state.authedUser.id)
+  console.log("id ", id)
+
+  const dispatch = useDispatch()
+  // for now with mock data from server
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const productsii = await productService.getTestiProducts()
+  //     setProductsei(productsii)
+  //   }
+  //   fetchData()
+  // }, [])
+  // dispatch(setProducts(productsei))
+
+  //when user has own products
+  console.log("id ", id)
+  useEffect(() => {
+    async function fetchData() {
+      const productsii = await productService.getSellerProducts(id)
+      setProductsei(productsii)
+    }
+    fetchData()
+  }, [])
+  dispatch(setProducts(productsei))
 
   const renderProducts = (product, index) => {
     return (
@@ -38,13 +42,17 @@ const Products = () => {
             <Card.Header>
               <h3>{product.name}</h3>
             </Card.Header>
-            <Card.Img src={product.image} />
+            <Card.Img src={product.image_url} />
             <Accordion.Collapse eventKey="0">
               <Card.Body className="text-center">
                 <Card.Text>
-                  myyty {product.sold}/{product.soldlimit}
+                  {product.description}
                   <br />
-                  Hinta {product.price}€
+                  Luomua: {product.organic ? "kyllä" : "ei"}
+                  <br />
+                  myyty {product.quantity_left}/{product.batch_quantity}
+                  <br />
+                  Kappalehinta {product.unit_price}€
                 </Card.Text>
               </Card.Body>
             </Accordion.Collapse>
@@ -58,7 +66,7 @@ const Products = () => {
       <Col xs={12} className="text-center mb-4">
         <h2>Tuotteet</h2>
       </Col>
-      <Col xs={12}>{tuotteet.map(renderProducts)}</Col>
+      <Col xs={12}>{productsei.map(renderProducts)}</Col>
     </Row>
   )
 }
