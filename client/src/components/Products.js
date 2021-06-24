@@ -41,11 +41,7 @@ const Products = () => {
             <Card.Header>
               <h3>{product.name}</h3>
             </Card.Header>
-            <Card.Img
-              src={
-                product.image_url ? product.image_url : "https://via.placeholder.com/500F"
-              }
-            />
+            <Card.Img src={product.image_url} />
             <Accordion.Collapse eventKey="0">
               <Card.Body className="text-center">
                 <Card.Text>
