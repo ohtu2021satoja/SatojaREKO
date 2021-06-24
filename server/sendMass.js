@@ -1,5 +1,6 @@
  const eventsRepository = require("./repositories/events")
  const db = require("./db")
+ const mailSender = require("./services/mail")
 
  const sendMass = async () => {
    const currentDate = new Date()
@@ -12,8 +13,10 @@
    })
    const eventIDs = todaysEvents.map(event => event.id)
    const allevents = await eventsRepository.getMassEmail(eventIDs)
-   console.log(allevents)
-   process.exit()
+   await mailSender.sendReminderMails(allevents)
+  //  process.exit()
 }
 
-sendMass()
+// sendMass()
+
+module.exports = sendMass
