@@ -31,7 +31,7 @@ const FacebookSignUpSchema = Yup.object().shape({
   password: Yup.string(),
 })
 
-const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
+const FormSignUp = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUser }) => {
   const [facebookUser, setFacebookUser] = useState(false)
 
   // if user is null, importing values from user data don't work unless...
@@ -68,11 +68,11 @@ const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
           }
 
           user = { ...user, ...newUser }
-          user === newUser
+          facebookUser === false
             ? createNewUser({ password: values.password, ...newUser })
             : createNewFacebookUser(user)
 
-          handleRegisterUser(user)
+          facebookUser === false ? handleSigned() : handleRegisterUser()
         }}
       >
         {() => (

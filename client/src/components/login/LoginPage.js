@@ -6,15 +6,15 @@ import FormLogin from "./FormLogin"
 import FacebookLoginButton from "./FacebookLoginButton"
 import MockLoginButton from "./MockLoginButton"
 
-const LoginPage = ({ handleFacebookLogin, handleSigned, handleMockLogin }) => (
+const LoginPage = ({ handleLogin, handleSigned, handleMockLogin }) => (
   <Row className="d-flex align-items-end h-100 mx-2">
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <div className="my-5 text-center">
         <img src={AppIcon} alt="Satoja" width="300" className="mb-2" />
         <h3 className="text-muted">Tunne tuottaja!</h3>
       </div>
-      <FormLogin handleSigned={handleSigned} />
-      <FacebookLoginButton handleFacebookLogin={handleFacebookLogin} />
+      <FormLogin handleSigned={handleSigned} handleLogin={handleLogin} />
+      <FacebookLoginButton handleLogin={handleLogin} />
       <MockLoginButton handleMockLogin={handleMockLogin} />
     </Col>
 
