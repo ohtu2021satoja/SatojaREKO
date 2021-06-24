@@ -33,9 +33,13 @@ export const removeProductFromCart = (product, size, event) => {
 export const submitOrders = (orders, buyerID) => {
   return async (dispatch) => {
     console.log("SUBMITTING: ", orders)
-    const res = await submitBuyerOrders(orders, buyerID)
-    console.log(res)
-    const success = res.status === 200
-    dispatch({ type: "SUBMIT_ORDERS", success })
+    try {
+      const res = await submitBuyerOrders(orders, buyerID)
+      console.log(res)
+      const success = res.status === 200
+      dispatch({ type: "SUBMIT_ORDERS", success })
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
