@@ -106,8 +106,8 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  const registerUser = (user) => {
-    setAuthedUser(user)
+  const registerUser = () => {
+    getUser()
     setSignUp(false)
   }
 
@@ -129,7 +129,7 @@ const App = (props) => {
             if (!authedUser && !signUp) {
               return (
                 <LoginPage
-                  handleFacebookLogin={getUser}
+                  handleLogin={getUser}
                   handleSigned={() => setSignUp(true)}
                   handleMockLogin={getMockUser}
                 />
