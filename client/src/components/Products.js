@@ -14,24 +14,25 @@ const Products = () => {
 
   const dispatch = useDispatch()
   // for now with mock data from server
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const productsii = await productService.getTestiProducts()
+  //     setProductsei(productsii)
+  //   }
+  //   fetchData()
+  // }, [])
+  // dispatch(setProducts(productsei))
+
+  //when user has own products
+  console.log("id ", id)
   useEffect(() => {
     async function fetchData() {
-      const productsii = await productService.getTestiProducts()
+      const productsii = await productService.getSellerProducts(id)
       setProductsei(productsii)
     }
     fetchData()
   }, [])
   dispatch(setProducts(productsei))
-
-  //when user has own products
-  // console.log("id ", id)
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const productsii = await productService.getSellerProducts(id)
-  //     setProductsei(productsii)
-  //   }
-  //   fetchData()
-  // }, [])
 
   const renderProducts = (product, index) => {
     return (
