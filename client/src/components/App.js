@@ -9,13 +9,10 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import LoginPage from "./login/LoginPage"
 import SignUpPage from "./login/SignUpPage"
-import HomePage from "./HomePage"
-import AppSeller from "./AppSeller"
-import AppBuyer from "./AppBuyer"
 import AdminPage from "./AdminPage"
+import Routes from "./navigation/Routes"
 
 const App = (props) => {
-  const [sellerView, setSellerView] = useState(null)
   const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
@@ -120,8 +117,6 @@ const App = (props) => {
     setAuthedUser(null)
   }
 
-  const handleViewChange = (value) => setSellerView(value)
-
   return (
     <Container fluid>
       <Row className="vh-100">
@@ -152,26 +147,13 @@ const App = (props) => {
               )
             }
 
-            if (authedUser && sellerView === null)
-              return <HomePage setSellerView={handleViewChange} logOut={logOut} />
-
-            if (sellerView === true)
+            if (authedUser) {
               return (
-                <AppSeller
-                  user={authedUser}
-                  logOut={logOut}
-                  setSellerView={handleViewChange}
-                />
+                <>
+                  <Routes user={authedUser} logOut={logOut} />
+                </>
               )
-
-            if (sellerView === false)
-              return (
-                <AppBuyer
-                  user={authedUser}
-                  logOut={logOut}
-                  setSellerView={handleViewChange}
-                />
-              )
+            }
           })()}
         </Col>
       </Row>
