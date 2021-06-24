@@ -30,7 +30,7 @@ const initiateTemplate= async (address, parameters, template, config) => {
     const text = await template.message(parameters)
     const res = {
         from: config.auth.user,
-        to: "puro.touko@gmail.com",
+        to: address,
         subject: template.subject,
         html: text
     }
@@ -48,16 +48,16 @@ const sendEventReminderMails = async (buyers,sellers, event) => {
     if(buyers){
         for(const i in buyers){
             buyer = buyers[i]
-            sendTestMail(await initiateBuyerReminderMail(buyer.email, "https://satoja-reko.herokuapp.com", event, buyer ))
+            sendAutomaticMail(await initiateBuyerReminderMail(buyer.email, "https://satoja-reko.herokuapp.com", event, buyer ))
         }
     }
     if(sellers){
         for(const i in sellers){
             seller = sellers[i]
-            sendTestMail(await initiateBuyerReminderMail(seller.email, "https://satoja-reko.herokuapp.com", event, seller ))
+            sendAutomaticMail(await initiateBuyerReminderMail(seller.email, "https://satoja-reko.herokuapp.com", event, seller ))
         }
     }
 
 }
 
-module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails}
+module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails, sendAutomaticMail}

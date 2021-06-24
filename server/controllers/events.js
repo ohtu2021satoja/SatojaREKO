@@ -26,8 +26,9 @@ eventsRouter.get('/seller/:id', async (req, res, next) => {
 
 eventsRouter.get("/:event_id/products/:product_id", async (req, res, next) => {
   const { event_id, product_id } = req.params
+  console.log(event_id, product_id)
   const product = await productsService.getEventProduct(event_id, product_id, productsRepository)
-  return(product)
+  res.send(product)
 })
 
 eventsRouter.get('/market/:id', async (req,res) => {
@@ -39,6 +40,20 @@ eventsRouter.get('/market/:id', async (req,res) => {
   }
   try {
     res.send(marketEvents)
+  } catch (err) {
+    next(err)
+  }
+})
+
+eventsRouter.get('/market/:market_id/:event_id', async (req,res) => {
+  const {market_id, event_id} = req.params
+  const marketEvent = await eventsService.getMarketEvent(market_id, event_id, eventsRepository)
+
+  if (!marketEvent) {
+    return res.status(404).send({ error: 'Market events not found' });
+  }
+  try {
+    res.send(marketEvent)
   } catch (err) {
     next(err)
   }

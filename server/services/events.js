@@ -8,6 +8,11 @@ const getMarketEvents = async (market_id, eventsRepository) => {
   return(marketEvents)
 }
 
+const getMarketEvent = async (market_id, event_id, eventsRepository) => {
+  const marketEvent = await eventsRepository.getMarketEvent(market_id, event_id)
+  return(marketEvent)
+}
+
 const getEventProductFeed = async (eventsRepository) => {
   const eventProductFeed = await eventsRepository.getEventsProductFeed()
   return eventProductFeed
@@ -25,4 +30,4 @@ const getEvents = async (eventsRepository) => {
   const events = await eventsRepository.getEvents()
   return events
 }
-module.exports = { getSellerEvents, getMarketEvents, getEventProductFeed, addEvent, getEvents, updateEvent }
+module.exports = { getSellerEvents, getMarketEvents, getEventProductFeed, addEvent, getEvents, updateEvent, getMarketEvent }

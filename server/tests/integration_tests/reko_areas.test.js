@@ -51,6 +51,8 @@ describe("can add reko_areas", () => {
       .set('cookie',cookie)
       .send(newRekoArea)
       .expect(200)
+
+
   })
 })
 
@@ -66,5 +68,3 @@ describe("can get reko_areas", () => {
     expect(reko_areas.body[0].name).toBe(newRekoArea.name)
   })
 })
-
-describe("")

@@ -64,7 +64,7 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
   if(!seller.seller_name){
     seller.seller_name = `${seller.firstname} ${seller.lastname}`
   }
-  await mailSender.sendTestMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
+  await mailSender.sendAutomaticMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 
@@ -80,7 +80,7 @@ const removeProductFromSellersOrder = async (seller_id, order_id, size_id, order
   const user = await usersRepository.getOrderUser(order_id)
   const event = await eventsRepository.getOrderEvent(order_id)
   const seller = await sellersRepository.getSeller(seller_id)
-  await mailSender.sendTestMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
+  await mailSender.sendAutomaticMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
 
   await ordersRepository.removeProductFromSellersOrder(order_id, size_id)
 }

@@ -46,7 +46,7 @@ authRouter.post("/email/register", async (req, res) => {
   } else{
     const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
     console.log(url)
-    await mailService.sendMail(mailService.initiateVerificationMail(email,url))
+    await mailService.sendAutomaticMail(mailService.initiateVerificationMail(email,url))
     res.send(`Verification email has been sent to ${email}`)
   }
 })
@@ -61,7 +61,7 @@ authRouter.post("/email/reset_password", async (req, res) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
     const url = `http://localhost:3003/api/users/${user.id}/reset_password?passwordHash=${passwordHash}`
-    await mailService.sendMail(mailService.initiatePasswordResetMail(email,url))
+    await mailService.sendAutomaticMail(mailService.initiatePasswordResetMail(email,url))
     res.send(`Palautus sähköposti on lähetetty osoitteeseen ${email}`)
   }
 })
