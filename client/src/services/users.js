@@ -3,15 +3,19 @@ import axios from "axios"
 const apiUrl = "/api/users"
 
 export const getAuthedUser = async () => {
-  const response = await axios.get(`${apiUrl}/current/user`)
-  console.log(response.data)
-  return response.data
+  try {
+    const response = await axios.get(`${apiUrl}/current/user`)
+    return response.data
+  } catch (err) {
+    console.log(err.message)
+  }
 }
 
-export const createNewUser = (newUser) => {
-  axios.post("/api/auth/email/register", { user_info: newUser })
-}
-
-export const createNewFacebookUser = (newUser) => {
-  axios.post(`${apiUrl}`, newUser)
+export const createNewFacebookUser = async (newUser) => {
+  try {
+    const response = await axios.post(`${apiUrl}`, newUser)
+    console.log(response.data)
+  } catch (err) {
+    console.log(err.message)
+  }
 }

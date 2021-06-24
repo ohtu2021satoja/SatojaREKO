@@ -5,8 +5,8 @@ const MockLoginButton = ({ handleMockLogin }) => (
     onClick={handleMockLogin}
     variant="outline-secondary"
     size="lg"
-    type="submit"
-    className="w-100 mt-4"
+    type="button"
+    className="w-100 mb-3"
   >
     Vapaa pääsy
   </Button>

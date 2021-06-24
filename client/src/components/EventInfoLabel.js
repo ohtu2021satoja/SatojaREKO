@@ -1,4 +1,4 @@
-const EventInfoLabel = ({ event, classes, styles, omitDate }) => {
+const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
   const startDate = new Date(event.start)
   const endDate = new Date(event.endtime)
 
@@ -28,23 +28,31 @@ const EventInfoLabel = ({ event, classes, styles, omitDate }) => {
   const startDay = weekdays[startDate.getUTCDay()]
 
   return (
-    <div className="d-flex flex-column">
-      <p className={classes} style={styles}>
-        {event.name} (REKO)
-      </p>
-      <p className={classes} style={styles}>
-        {" "}
-        {event.address}
-      </p>
-      {!omitDate && (
+    market && (
+      <div className="d-flex flex-column">
         <p className={classes} style={styles}>
-          {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+          {(() => {
+            let marketType = ""
+            if (market.type === "reko_market") marketType = " (REKO)"
+            if (market.reko_name) return market.reko_name + marketType
+            if (market.name) return market.name + marketType
+            else return "Noutotilaisuus" + marketType
+          })()}
         </p>
-      )}
-      <p className={classes} style={styles}>
-        {startTime}-{endTime}
-      </p>
-    </div>
+        <p className={classes} style={styles}>
+          {" "}
+          {market.address}
+        </p>
+        {!omitDate && (
+          <p className={classes} style={styles}>
+            {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+          </p>
+        )}
+        <p className={classes} style={styles}>
+          {startTime}-{endTime}
+        </p>
+      </div>
+    )
   )
 }
 
