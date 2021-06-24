@@ -1,17 +1,18 @@
 const subject = 'Muistutus tulevasta noutotilaisuudesta'
-const buyerMessage = (name, event) => {
+const buyerMessage = (parameters) => {
 
-    return (`<p>Hei ${name},</p>\
+    return (`<p>Hei ${parameters.users.name},</p>\
     \
     <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilausuudesta</p>\
     \
     <p>Tilaisuus: </p>\
     \
-    <p>market.address, event.start</p>\
+    <p>${parameters.event.market}, ${parameters.event.start}</p>\
+    <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Erittely varatuista tuotteista löytyy osoitteesta:</p>\
     \
-    <url>${profile url}</url>\
+    <url>${parameters.url}</url>\
     \
     <p>Maukkaita hetkiä!</p>\
     <p>Satoja Tiimi</p>\
@@ -23,19 +24,20 @@ const buyerMessage = (name, event) => {
 `)
 }
 
-const sellerMessage = (name, event) => {
+const sellerMessage = (parameters) => {
 
-    return (`<p>Hei ${name},</p>\
+    return (`<p>Hei ${parameters.users.name},</p>\
     \
     <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilausuudesta</p>\
     \
     <p>Tilaisuus: </p>\
     \
-    <p>market.address, event.start</p>\
+    <<p>${parameters.event.market}, ${parameters.event.start}</p>\
+    <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Tarkemmat tiedot varatuista tuotteista löydät osoitteesta:</p>\
     \
-    <url>${profile url}</url>
+    <url>${parameters.url}</url>
     
     <p>Hyviä noutohetkiä!</p>\
     <p>Satoja Tiimi</p>\

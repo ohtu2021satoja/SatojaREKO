@@ -19,6 +19,20 @@ const authRouter = require('./controllers/auth')
 const rekoAreasRoute = require('./controllers/reko_areas')
 const mailRouter = require('./controllers/mail')
 
+const testMail = require('./services/templates/orderCancelTemp')
+const mailSender = require('./services/mail')
+
+/*const run = async () => {
+
+  const template = await mailSender.initiateDeleteOrder('satojareko@gmail.com', {seller_name: "TestiPekka", email: "Testi@testi.org", phonenumber: "325532532", firstname: "Pekka", lastname: "Testipekka"},
+      {name: "Pekka"}, {reko_name: "Mikkeli", start: new Date(), address: "testikatu 5, 14124"},
+  [{name: "Mansikka", quantity: "3", price: "34"}, {name: "Mustikka", quantity: "4", price: "67"}])
+
+  await mailSender.sendTestMail(template)
+
+}
+
+run()*/
 
 server.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 server.use(express.json())
