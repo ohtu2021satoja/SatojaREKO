@@ -7,7 +7,7 @@
    const events = await eventsRepository.getEvents()
    const todaysEvents = events.filter((event)=> {
      return(
-       event.start.getUTCDate() === currentDate.getUTCDate() && event.start.getUTCMonth === currentDate.getUTCMonth()
+       event.start.getUTCDate() === 21 && event.start.getUTCMonth() === 5
      )
    })
    const eventIDs = todaysEvents.map(event => event.id)
