@@ -11,26 +11,28 @@ import FormSignUpTerms from "./FormSignUpTerms"
 import FacebookSignUpButton from "./FacebookSignUpButton"
 
 // Yup
-const SignUpSchema = (facebookUser) =>
-  Yup.object().shape({
-    showPassword: Yup.boolean(),
-    firstname: Yup.string().required(),
-    lastname: Yup.string().required(),
-    email: Yup.string().email("invalid email address").required(),
-    phonenumber: Yup.string().required(),
-    password:
-      facebookUser === false
-        ? Yup.string().min(8, "password must be at least 8 characters").required()
-        : Yup.string(),
-    terms_ok: Yup.boolean()
-      .test("consent", "you have to agree with our terms", (value) => value === true)
-      .required(),
-  })
+const SharedSchema = {
+  firstname: Yup.string().required(),
+  lastname: Yup.string().required(),
+  email: Yup.string().email("invalid email address").required(),
+  phonenumber: Yup.string().required(),
+  terms_ok: Yup.boolean()
+    .test("consent", "you have to agree with our terms", (value) => value === true)
+    .required(),
+}
 
-const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
-  // https://github.com/jquense/yup/issues/736
+const SignUpSchema = Yup.object().shape({
+  ...SharedSchema,
+  password: Yup.string().min(8, "password must be at least 8 characters").required(),
+})
+
+const FacebookSignUpSchema = Yup.object().shape({
+  ...SharedSchema,
+  password: Yup.string(),
+})
+
+const FormSignUp = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUser }) => {
   const [facebookUser, setFacebookUser] = useState(false)
-  const [schema, setSchema] = useState(() => SignUpSchema(facebookUser))
 
   // if user is null, importing values from user data don't work unless...
   // they are conditional ie. user ? user.name : ""
@@ -39,11 +41,10 @@ const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
   }
 
   useEffect(() => {
-    // update form, if user registered via Facebook
-    setSchema(SignUpSchema(facebookUser))
-    // set the user staatus
+    // if user registered via Facebook
+    // change schema and update the form
     user && user.facebook_id ? setFacebookUser(true) : setFacebookUser(false)
-  }, [user, setSchema, facebookUser])
+  }, [user, facebookUser])
 
   return (
     <Col xs={12} md={{ span: 8, offset: 2 }}>
@@ -57,7 +58,7 @@ const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
           terms_ok: false,
         }}
         enableReinitialize={true}
-        validationSchema={schema}
+        validationSchema={facebookUser === false ? SignUpSchema : FacebookSignUpSchema}
         onSubmit={(values) => {
           const newUser = {
             firstname: values.firstname,
@@ -67,11 +68,11 @@ const FormSignUp = ({ user, handleFacebookSignUp, handleRegisterUser }) => {
           }
 
           user = { ...user, ...newUser }
-          user === newUser
+          facebookUser === false
             ? createNewUser({ password: values.password, ...newUser })
             : createNewFacebookUser(user)
 
-          handleRegisterUser(user)
+          facebookUser === false ? handleSigned() : handleRegisterUser()
         }}
       >
         {() => (

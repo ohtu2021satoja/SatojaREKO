@@ -1,3 +1,4 @@
+import { useState } from "react"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { loginUser } from "../../services/auth"
@@ -15,7 +16,19 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().min(8, "password must be at least 8 characters").required(),
 })
 
-const FormLogin = ({ handleSigned }) => {
+const FormLogin = ({ handleSigned, handleLogin }) => {
+  const [fail, setFail] = useState(false)
+
+  const checkCredentials = async (obj) => {
+    const response = await loginUser(obj)
+    response === "error" ? setFail(true) : handleLogin()
+    // TODO: instead of setTimeout
+    // remove error message when input value changes
+    setTimeout(() => {
+      setFail(false)
+    }, 4000)
+  }
+
   return (
     <Row className="mb-3 py-3 px-1 border border-2 border-success rounded">
       <Col xs={12} className="mb-2 text-center">
@@ -34,7 +47,7 @@ const FormLogin = ({ handleSigned }) => {
               password: values.password,
             }
 
-            loginUser(credentials)
+            checkCredentials(credentials)
           }}
         >
           {() => (
@@ -53,6 +66,11 @@ const FormLogin = ({ handleSigned }) => {
                 component={FormFieldPassword}
               />
               <ErrorMessage name="password" component={FormErrorMessage} />
+              {fail === true && (
+                <p className="text-center text-danger">
+                  Virheellinen sähköposti tai salasana
+                </p>
+              )}
               <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
                 Kirjaudu
               </Button>

@@ -1,5 +1,5 @@
-const eventsService = require('../services/events')
-const mockEventsRepository = require('./mocks/mockEventRepository')
+const eventsService = require('../../services/events')
+const mockEventsRepository = require('../mocks/mockEventRepository')
 
 const mockEvents= mockEventsRepository.getAllEvents()
 
