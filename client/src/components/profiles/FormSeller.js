@@ -1,11 +1,13 @@
+import { useEffect } from "react"
 import * as Yup from "yup"
-import { Formik, Form } from "formik"
+import { useFormikContext, Formik, Form } from "formik"
+import { updateAuthedUser } from "../../services/users"
 import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
-import Button from "./react-bootstrap/Button"
+import Button from "react-bootstrap/Button"
 import FormSellerDetails from "./FormSellerDetails"
-import FormSellerGroups from "./FormSellerGroups"
+import FormSellerAreas from "./FormSellerAreas"
 import FormSellerSettings from "./FormSellerSettings"
 
 // Yup
@@ -21,11 +23,32 @@ const SellerSchema = Yup.object().shape({
   business_id: Yup.string(),
   homepage: Yup.string().url(),
   description: Yup.string(),
-  reko_areas: Yup.array(),
+  reko_areas: Yup.array().of(
+    Yup.object().shape({
+      belongs: Yup.boolean(),
+    })
+  ),
   salesreport_check: Yup.boolean(),
 })
 
-const FormSeller = ({ user }) => {
+const AutoSubmitForm = ({ user }) => {
+  // get values and submitForm from context
+  const { values, submitForm } = useFormikContext()
+
+  useEffect(() => {
+    const changedUser = { ...user, ...values }
+    // submit the form imperatively 5 seconds after values have changed
+    if (user !== changedUser) {
+      setTimeout(() => {
+        submitForm()
+      }, 5000)
+    }
+  }, [user, values, submitForm])
+
+  return null
+}
+
+const FormSeller = ({ user, handleUserUpdate }) => {
   return (
     <Col xs={12}>
       <Formik
@@ -41,28 +64,40 @@ const FormSeller = ({ user }) => {
           business_id: "",
           homepage: "",
           description: "",
-          reko_areas: [],
+          reko_areas: user.reko_areas,
           salesreport_check: false,
         }}
         enableReinitialize={true}
         validationSchema={SellerSchema}
-        onSubmit={console.log}
+        onSubmit={async (values) => {
+          const updatedUser = { ...user, ...values }
+          // push updatedUser to the server
+          const response = await updateAuthedUser(updatedUser)
+
+          if (response === "success") {
+            handleUserUpdate()
+          }
+
+          console.log("UPDATED_USER", updatedUser)
+        }}
       >
-        {() => (
+        {({ values }) => (
           <Form>
             <Row>
               <FormSellerDetails />
-              <FormSellerGroups areas={user.reko_areas} />
+              <FormSellerAreas areas={values.reko_areas} />
               <Col className="text-center mb-5">
                 <p>
                   Puuttuko ryhmä listalta?
-                  <Button as={Link} to="/contact" variant="link" className="px-0 py-1">
+                  <Button as={Link} to="/contact" variant="link" className="px-1 pt-1">
                     Ota yhteyttä
                   </Button>
                 </p>
               </Col>
               <FormSellerSettings />
+              <Button type="submit">Submit</Button>
             </Row>
+            <AutoSubmitForm user={user} />
           </Form>
         )}
       </Formik>

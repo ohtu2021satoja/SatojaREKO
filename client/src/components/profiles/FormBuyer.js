@@ -1,5 +1,7 @@
+import { useEffect } from "react"
 import * as Yup from "yup"
-import { Formik, Form } from "formik"
+import { useFormikContext, Formik, Form } from "formik"
+import { updateAuthedUser } from "../../services/users"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import FormBuyerDetails from "./FormBuyerDetails"
@@ -15,7 +17,24 @@ const BuyerSchema = Yup.object().shape({
   notification: Yup.boolean(),
 })
 
-const FormBuyer = ({ user }) => {
+const AutoSubmitForm = ({ user }) => {
+  // get values and submitForm from context
+  const { values, submitForm } = useFormikContext()
+
+  useEffect(() => {
+    const changedUser = { ...user, ...values }
+    // submit the form imperatively 5 seconds after values have changed
+    if (user !== changedUser) {
+      setTimeout(() => {
+        submitForm()
+      }, 5000)
+    }
+  }, [user, values, submitForm])
+
+  return null
+}
+
+const FormBuyer = ({ user, handleUserUpdate }) => {
   return (
     <Col xs={12}>
       <Formik
@@ -24,12 +43,22 @@ const FormBuyer = ({ user }) => {
           lastname: user.lastname || "",
           phonenumber: user.phonenumber || "",
           email: user.email || "",
-          newsletter: false,
-          notification: false,
+          newsletter_check: false,
+          cancel_notification_check: false,
         }}
         enableReinitialize={true}
         validationSchema={BuyerSchema}
-        onSubmit={console.log}
+        onSubmit={async (values) => {
+          const updatedUser = { ...user, ...values }
+          // push updatedUser to the server
+          const response = await updateAuthedUser(updatedUser)
+
+          if (response === "success") {
+            handleUserUpdate()
+          }
+
+          console.log("UPDATED_USER", updatedUser)
+        }}
       >
         {() => (
           <Form>
@@ -37,6 +66,7 @@ const FormBuyer = ({ user }) => {
               <FormBuyerDetails />
               <FormBuyerSettings />
             </Row>
+            <AutoSubmitForm user={user} />
           </Form>
         )}
       </Formik>

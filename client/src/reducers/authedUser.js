@@ -4,7 +4,7 @@ export const authedUser = (state = null, action) => {
   switch (action.type) {
     case SET_AUTHED_USER:
       console.log(action.user)
-      return action.user
+      return action.userr
     default:
       return state
   }
