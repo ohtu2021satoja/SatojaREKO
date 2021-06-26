@@ -5,12 +5,8 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Table from "react-bootstrap/Table"
 import Accordion from "react-bootstrap/Accordion"
-import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
-import ListGroup from "react-bootstrap/esm/ListGroup"
 import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
-import DownCaret from "../media/caret-down-fill.svg"
-import UpCaret from "../media/caret-up-fill.svg"
 
 const OrdersSellerBuyers = (props) => {
   const [deleteProductPopUp, setDeleteProductPopUp] = useState(false)
@@ -58,18 +54,23 @@ const OrdersSellerBuyers = (props) => {
         <td>{product.sold}</td>
         <td>{product.price * product.sold}</td>
         <td>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="10"
-            height="10"
-            fill="currentColor"
-            className="bi bi-x-circle-fill delete-link"
-            viewBox="0 0 16 16"
+          <Button
+            type="button"
+            variant="outline-light"
             area-label="Poista tuote"
             onClick={() => HandleDeleteProductButton(index)}
           >
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="10"
+              height="10"
+              fill="currentColor"
+              className="bi bi-x-circle-fill delete-link"
+              viewBox="0 0 16 16"
+            >
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+            </svg>
+          </Button>
         </td>
       </tr>
     )
@@ -93,21 +94,43 @@ const OrdersSellerBuyers = (props) => {
                 </Card.Text>
                 <Card.Text>{buyer.id}</Card.Text>
               </Col>
-              <Col xs={2} onClick={() => setOrderToggle(!orderToggle)}>
+              <Col xs={2}>
                 {orderToggle === true ? (
-                  <Card.Img
-                    src={UpCaret}
-                    width="32"
-                    height="32"
-                    alt="Sulje tilaajan tiedot"
-                  />
+                  <Button
+                    type="button"
+                    variant="outline-light"
+                    area-label="Sulje tilaajan tiedot"
+                    onClick={() => setOrderToggle(!orderToggle)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      width="24"
+                      height="24"
+                      class="bi bi-caret-up-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                    </svg>
+                  </Button>
                 ) : (
-                  <Card.Img
-                    src={DownCaret}
-                    width="32"
-                    height="32"
-                    alt="Katso tilaajan tiedot"
-                  />
+                  <Button
+                    type="button"
+                    variant="outline-light"
+                    area-label="Katso tilaajan tiedot"
+                    onClick={() => setOrderToggle(!orderToggle)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      width="24"
+                      height="24"
+                      class="bi bi-caret-down-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                    </svg>
+                  </Button>
                 )}
               </Col>
             </Row>
@@ -133,21 +156,28 @@ const OrdersSellerBuyers = (props) => {
                     </tr>
                   </tbody>
                 </Table>
-                <Row className="mb-2">
-                  <Col xs={10}>Poista koko tilaus:</Col>
+                <Row className="mb-2 align-items-center">
+                  <Col xs={10} className="text-right">
+                    Poista koko tilaus:
+                  </Col>
                   <Col xs={2}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-trash-fill delete-link"
-                      viewBox="0 0 16 16"
+                    <Button
+                      type="button"
+                      variant="outline-light"
                       area-label="Poista koko tilaus"
                       onClick={() => HandleDeleteOrderButton(index)}
                     >
-                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-trash-fill delete-link"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                      </svg>
+                    </Button>
                   </Col>
                 </Row>
               </div>
