@@ -22,34 +22,43 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
   const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
   return (
-    <div>
-      Tuotteen koko ({productType})
-      <Form.Control
-        value={unitSize}
-        onChange={(event) => {
-          const newsizes = sizes
-          newsizes[index] = parseFloat(event.target.value.replace(",", "."))
-          setFieldValue("sizes", newsizes)
-          dispatch(changeSize(event.target.value, index))
-        }}
-        type="text"
-        placeholder="0,0"
-      />
-      {unitSizeFloat === 0.0 && errors.sizes && touched.sizes ? (
-        <div>{errors.sizes}</div>
-      ) : null}
-      Varastoarvo
-      <Form.Control
-        value={storageQuantity}
-        onChange={(event) => handleQuantityChange(parseInt(event.target.value))}
-        type="number"
-        placeholder="0"
-      />
-      {storageQuantity < 1 && errors.quantities && touched.quantities ? (
-        <div>{errors.quantities}</div>
-      ) : null}
-      <p>Hinta: {priceFloat * unitSizeFloat}€</p>
-    </div>
+    <>
+      <Form.Group className="mb-3 text-center">
+        <Form.Label className="mb-0">Tuotteen koko ({productType})</Form.Label>
+        <Form.Control
+          value={unitSize}
+          onChange={(event) => {
+            const newsizes = sizes
+            newsizes[index] = parseFloat(event.target.value.replace(",", "."))
+            setFieldValue("sizes", newsizes)
+            dispatch(changeSize(event.target.value, index))
+          }}
+          type="text"
+          placeholder="0,0"
+          size="lg"
+          className="w-100"
+        />
+        {unitSizeFloat === 0.0 && errors.sizes && touched.sizes ? (
+          <div>{errors.sizes}</div>
+        ) : null}
+      </Form.Group>
+      <Form.Group className="mb-3 text-center">
+        <Form.Label className="mb-0">Varastoarvo</Form.Label>
+        <Form.Control
+          value={storageQuantity}
+          onChange={(event) => handleQuantityChange(parseInt(event.target.value))}
+          type="number"
+          placeholder="0"
+          size="lg"
+        />
+        {storageQuantity < 1 && errors.quantities && touched.quantities ? (
+          <div>{errors.quantities}</div>
+        ) : null}
+      </Form.Group>
+      <div className="w-100 mb-3 text-center">
+        <p>Hinta: {priceFloat * unitSizeFloat}€</p>
+      </div>
+    </>
   )
 }
 

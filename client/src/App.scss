@@ -38,8 +38,10 @@ p {
 	line-height: 1.35rem;
 }
 
-/* lessen rounding borders from cards, buttons and inputs */
-.card, .btn, .form-control { border-radius: 0.2rem; }
+/* lessen rounding borders from cards and buttons */
+.card, .btn {
+	border-radius: 0.2rem;
+}
 
 /**
 * BACKGROUNDS
@@ -48,6 +50,11 @@ p {
 .bg-purple {
 	padding-bottom: 70px;
 	background-color: rgb(108,99,255);
+}
+
+.bg-yellow {
+	padding-bottom: 70px;
+	background-color: rgb(232, 239, 66);
 }
 
 /* used for card button color */

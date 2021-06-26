@@ -1,6 +1,5 @@
 import Col from "react-bootstrap/esm/Col"
 import Image from "react-bootstrap/esm/Image"
-import Row from "react-bootstrap/esm/Row"
 
 const BuyerInfo = (props) => (
   <Col xs={{ span: 8, offset: 2 }} className="my-4 text-center">
