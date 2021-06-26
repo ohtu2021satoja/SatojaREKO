@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import * as Yup from "yup"
 import { Formik, Form } from "formik"
 import { createNewFacebookUser } from "../../services/users"
@@ -31,23 +30,21 @@ const FacebookSignUpSchema = Yup.object().shape({
   password: Yup.string(),
 })
 
-const FormSignUp = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUser }) => {
-  const [facebookUser, setFacebookUser] = useState(false)
-
+const FormSignUp = ({
+  user,
+  facebookUser,
+  handleSigned,
+  handleFacebookSignUp,
+  handleRegisterUser,
+}) => {
   // if user is null, importing values from user data don't work unless...
   // they are conditional ie. user ? user.name : ""
   if (!user) {
     user = {}
   }
 
-  useEffect(() => {
-    // if user registered via Facebook
-    // change schema and update the form
-    user && user.facebook_id ? setFacebookUser(true) : setFacebookUser(false)
-  }, [user, facebookUser])
-
   return (
-    <Col xs={12} md={{ span: 8, offset: 2 }}>
+    <Col xs={12} md={{ span: 8, offset: 2 }} className="mt-4">
       <Formik
         initialValues={{
           firstname: user.firstname || "",
@@ -77,17 +74,8 @@ const FormSignUp = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUs
       >
         {() => (
           <Form>
-            <Row>
-              <Col className="mb-4 text-center">
-                {facebookUser === false ? (
-                  <h3>Täydennä tietosi</h3>
-                ) : (
-                  <h3>Tarkista ja täydennä tietosi</h3>
-                )}
-              </Col>
-              <FormUserDetails facebookUser={facebookUser} />
-              <FormSignUpTerms />
-            </Row>
+            <FormUserDetails facebookUser={facebookUser} />
+            <FormSignUpTerms />
             <Button variant="success" size="lg" type="submit" className="w-100 mb-3">
               {facebookUser === false
                 ? "Rekisteröidy Sähköpostilla"

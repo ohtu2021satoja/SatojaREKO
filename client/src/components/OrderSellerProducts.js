@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row"
 import Accordion from "react-bootstrap/Accordion"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
+import RightCaret from "../media/caret-right-fill.svg"
 
 const OrdersSellerProducts = (props) => {
   const HandleSingleBuyerButton = () => {
@@ -13,12 +14,12 @@ const OrdersSellerProducts = (props) => {
 
   const renderOrders = (product, index) => {
     return (
-      <Accordion className="mb-2" key={index}>
+      <Accordion className="mb-1" key={index}>
         <Card>
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
-            <Row>
-              <Col>
-                <Card.Img src={product.image} alt="Generic placeholder" />
+            <Row className="flex-nowrap align-items-center">
+              <Col xs={4}>
+                <Card.Img src={product.image} alt="product image" />
               </Col>
               <Col xs={8} className="text-left">
                 <Card.Title>{product.name}</Card.Title>
@@ -29,17 +30,20 @@ const OrdersSellerProducts = (props) => {
             </Row>
             <Accordion.Collapse eventKey="0">
               <ListGroup>
-                <ListGroupItem>
-                  <Row>
-                    <Col>Esko Erkkilä</Col>
-                    <Col>
-                      <Card.Img onClick={HandleSingleBuyerButton} src="tilaajaan.jpg" />
-                      tilaajaan
+                <ListGroupItem className="border-0 px-0 pt-3 text-left">
+                  <Row clasName="flex-nowrap align-items-center">
+                    <Col xs={10}>
+                      <Card.Text className="mb-1">Esko Erkkilä</Card.Text>
+                      <Card.Text>Tilausnumero: 53214678</Card.Text>
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col>Tilausnumero: 53214678</Col>
-                    <Col></Col>
+                    <Col xs={2}>
+                      <Card.Img
+                        src={RightCaret}
+                        width="32"
+                        height="32"
+                        alt="Katso tilaajan tiedot"
+                      />
+                    </Col>
                   </Row>
                 </ListGroupItem>
               </ListGroup>

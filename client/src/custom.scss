@@ -1,0 +1,16 @@
+/* customizations */
+
+$theme-colors: (
+	"primary": rgb(108,99,255),
+	"secondary": rgb(206,212,218), /* same as form input borders */
+	"success": rgb(57,201,74),
+	"danger": rgb(255,72,39),
+	"dark": rgb(16,25,32),
+	"facebook": rgb(66,103,178),
+	"blue": rgb(57,73,171)
+);
+
+$btn-border-radius: 2px;
+
+/* import bootstrap to set changes */
+@import "../node_modules/bootstrap/scss/bootstrap";

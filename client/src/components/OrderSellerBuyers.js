@@ -1,27 +1,35 @@
+import { Link } from "react-router-dom"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
+import Table from "react-bootstrap/Table"
 import Accordion from "react-bootstrap/Accordion"
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
+import DownCaret from "../media/caret-down-fill.svg"
+import UpCaret from "../media/caret-up-fill.svg"
 
 const OrdersSellerBuyers = (props) => {
   const [deleteProductPopUp, setDeleteProductPopUp] = useState(false)
   const [deleteOrderPopUp, setDeleteOrderPopUp] = useState(false)
   const [productIndexi, setProductIndexi] = useState(null)
+  const [orderToggle, setOrderToggle] = useState(false)
 
-  const HandleDeleteProductButton = () => {
+  const HandleDeleteProductButton = (i) => {
     setDeleteProductPopUp(true)
+    setProductIndexi(i)
   }
-  const HandleDeleteOrderButton = () => {
+  const HandleDeleteOrderButton = (i) => {
     setDeleteOrderPopUp(true)
+    props.setBuyerIndexi(i)
     // event.stopPropagation()
   }
-  const HandleBuyerInfo = () => {
+  const HandleBuyerInfo = (i) => {
     props.setBuyerInfo(true)
+    props.setBuyerIndexi(i)
   }
 
   if (deleteOrderPopUp) {
@@ -45,119 +53,104 @@ const OrdersSellerBuyers = (props) => {
 
   const renderProducts = (product, index) => {
     return (
-      <ListGroupItem key={index}>
-        <Row>
-          <Col>{product.name}</Col>
-          <Col>{product.sold}</Col>
-          <Col>{product.price * product.sold}€</Col>
-          <Col>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-x-circle"
-              viewBox="0 0 16 16"
-              style={{ color: "red" }}
-              onClick={() => {
-                HandleDeleteProductButton()
-                setProductIndexi(index)
-              }}
-            >
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </Col>
-        </Row>
-      </ListGroupItem>
+      <tr key={index}>
+        <td>{product.name}</td>
+        <td>{product.sold}</td>
+        <td>{product.price * product.sold}</td>
+        <td>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="10"
+            fill="currentColor"
+            className="bi bi-x-circle-fill delete-link"
+            viewBox="0 0 16 16"
+            area-label="Poista tuote"
+            onClick={() => HandleDeleteProductButton(index)}
+          >
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+          </svg>
+        </td>
+      </tr>
     )
   }
 
   const renderBuyers = (buyer, index) => {
     return (
-      <Accordion
-        className="mb-2"
-        key={index}
-        onClick={() => {
-          props.setBuyerIndexi(index)
-        }}
-      >
+      <Accordion className="mb-1" key={index} onClick={() => props.setBuyerIndexi(index)}>
         <Card>
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
-            <Row>
-              <Col xs={8} className="text-left">
-                <Card.Title
-                  style={{ textDecorationLine: "underline" }}
-                  onClick={() => {
-                    HandleBuyerInfo()
-                    props.setBuyerIndexi(index)
-                  }}
-                >
+            <Row className="flex-nowrap align-items-center">
+              <Col
+                as={Link}
+                to="/orders/seller"
+                xs={10}
+                className="py-2 text-decoration-none text-left"
+                onClick={() => HandleBuyerInfo(index)}
+              >
+                <Card.Text className="mb-1 text-decoration-underline">
                   {buyer.name}
-                </Card.Title>
-                <Card.Title>{buyer.id}</Card.Title>
+                </Card.Text>
+                <Card.Text>{buyer.id}</Card.Text>
+              </Col>
+              <Col xs={2} onClick={() => setOrderToggle(!orderToggle)}>
+                {orderToggle === true ? (
+                  <Card.Img
+                    src={UpCaret}
+                    width="32"
+                    height="32"
+                    alt="Sulje tilaajan tiedot"
+                  />
+                ) : (
+                  <Card.Img
+                    src={DownCaret}
+                    width="32"
+                    height="32"
+                    alt="Katso tilaajan tiedot"
+                  />
+                )}
               </Col>
             </Row>
             <Accordion.Collapse eventKey="0">
-              <Col>
-                <ListGroup>
-                  <Row className="mt-5">
-                    <Col>
-                      <h6>Varauskori:</h6>
-                    </Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
-                  <Row>
-                    <Col>Tuote</Col>
-                    <Col>Määrä.</Col>
-                    <Col>Hinta</Col>
-                    <Col> </Col>
-                  </Row>
-                  {props.orderProducts.map(renderProducts)}
-                  <Row className="mt-5">
-                    <Col>
-                      <h6>YHTEENSÄ</h6>
-                    </Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
-                  <Row>
-                    <Col>xxx,xx€</Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
-                  <Row>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        fill="currentColor"
-                        className="bi bi-trash"
-                        viewBox="0 0 16 16"
-                        style={{ color: "red" }}
-                        onClick={() => {
-                          HandleDeleteOrderButton()
-                          props.setBuyerIndexi(index)
-                        }}
-                      >
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                        />
-                      </svg>
-                    </Col>
-                  </Row>
-                </ListGroup>
-              </Col>
+              <div className="pt-3 text-left">
+                <h5 className="mb-1">Varauskori:</h5>
+                <Table className="mt-2 text-left">
+                  <thead>
+                    <tr>
+                      <th>Tuote</th>
+                      <th>Määrä.</th>
+                      <th>Hinta</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {props.orderProducts.map(renderProducts)}
+                    <tr>
+                      <td>YHTEENSÄ</td>
+                      <td></td>
+                      <td>xxx,xx€</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </Table>
+                <Row className="mb-2">
+                  <Col xs={10}>Poista koko tilaus:</Col>
+                  <Col xs={2}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-trash-fill delete-link"
+                      viewBox="0 0 16 16"
+                      area-label="Poista koko tilaus"
+                      onClick={() => HandleDeleteOrderButton(index)}
+                    >
+                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                  </Col>
+                </Row>
+              </div>
             </Accordion.Collapse>
           </Accordion.Toggle>
         </Card>

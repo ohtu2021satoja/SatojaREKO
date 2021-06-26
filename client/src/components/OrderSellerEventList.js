@@ -19,12 +19,17 @@ const OrderSellerEventList = (props) => {
     }
     if (props.eventId === null) {
       return (
-        <div key={index}>
-          <Row>
-            <Col className="text-center">
-              {date1.getDate()}.{date1.getMonth() + 1}.{date1.getFullYear()}
-            </Col>
-          </Row>
+        <Col
+          key={index}
+          xs={12}
+          sm={{ span: 10, offset: 1 }}
+          md={{ span: 8, offset: 2 }}
+          lg={{ span: 6, offset: 3 }}
+          xl={{ span: 4, offset: 4 }}
+        >
+          <h4 className="mb-0 pt-3">
+            {date1.getDate()}.{date1.getMonth() + 1}.{date1.getFullYear()}
+          </h4>
           <OrdersSellerEvent
             index={index}
             Events={props.Events}
@@ -43,7 +48,7 @@ const OrderSellerEventList = (props) => {
             uniqueDates={props.uniqueDates}
             tapahtumat={tapahtumat}
           />
-        </div>
+        </Col>
       )
     }
   }
