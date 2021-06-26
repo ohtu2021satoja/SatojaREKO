@@ -38,6 +38,11 @@ p {
 	line-height: 1.35rem;
 }
 
+/* TODO: remove after finging where the 50px bottom margin has been applied */
+.container-fluid {
+	margin-bottom: -50px;
+}
+
 /* lessen rounding borders from cards and buttons */
 .card, .btn {
 	border-radius: 0.2rem;
@@ -134,6 +139,12 @@ p {
 /**
 * HOME PAGE
 */
+
+.bg-field {
+	background-image: url("./media/field.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 
 /* custom home buttons */
 .btn-blue {

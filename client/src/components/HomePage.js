@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
 
 const HomePage = ({ logOut }) => (
-  <Row className="vh-100 align-content-center text-center">
+  <Row className="h-100 bg-field align-content-center text-center">
     <Col xs={12} className="mb-4 mx-auto pt-3 w-50 home-sign">
       <p className="mb-0">Kun on satoja</p>
       <p>saa aikaan</p>
@@ -42,7 +42,7 @@ const HomePage = ({ logOut }) => (
         Ota yhteyttä
       </Button>
     </Col>
-    <Col xs={12} className="mb-4">
+    <Col xs={12} className="mt-auto mb-4">
       <Button
         onClick={logOut}
         variant="outline-danger"
