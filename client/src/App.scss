@@ -2,10 +2,10 @@
 
 body {
 	padding-bottom: 50px;
-    font-family: "Work Sans", sans-serif;
-    color: #4b4b4b;
-    font-size: 100%; /* 16px on default browser settings */
-    font-weight: 400;
+	font-family: "Work Sans", sans-serif;
+	color: #4b4b4b;
+	font-size: 100%; /* 16px on default browser settings */
+	font-weight: 400;
 }
 
 h1 {
@@ -57,7 +57,7 @@ p {
 	background-color: rgb(232, 239, 66);
 }
 
-/* used for card button color */
+/* used for card button color, do not add padding */
 .bg-light-gray {
 	background-color: rgb(217,217,217);
 }
