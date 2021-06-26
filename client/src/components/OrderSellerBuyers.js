@@ -85,7 +85,7 @@ const OrdersSellerBuyers = (props) => {
               <Col
                 as={Link}
                 to="/orders/seller"
-                xs={10}
+                xs={9}
                 className="py-2 text-decoration-none text-left"
                 onClick={() => HandleBuyerInfo(index)}
               >
@@ -94,7 +94,7 @@ const OrdersSellerBuyers = (props) => {
                 </Card.Text>
                 <Card.Text>{buyer.id}</Card.Text>
               </Col>
-              <Col xs={2}>
+              <Col xs={3}>
                 {orderToggle === true ? (
                   <Button
                     type="button"
@@ -157,10 +157,10 @@ const OrdersSellerBuyers = (props) => {
                   </tbody>
                 </Table>
                 <Row className="mb-2 align-items-center">
-                  <Col xs={10} className="text-right">
+                  <Col xs={9} className="text-right">
                     Poista koko tilaus:
                   </Col>
-                  <Col xs={2}>
+                  <Col xs={3}>
                     <Button
                       type="button"
                       variant="outline-light"

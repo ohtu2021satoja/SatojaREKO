@@ -33,11 +33,11 @@ const OrdersSellerProducts = (props) => {
               <ListGroup>
                 <ListGroupItem className="border-0 px-0 pt-3 text-left">
                   <Row clasName="flex-nowrap align-items-center">
-                    <Col xs={10}>
+                    <Col xs={9}>
                       <Card.Text className="mb-1">Esko Erkkilä</Card.Text>
                       <Card.Text>Tilausnumero: 53214678</Card.Text>
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={3}>
                       <Button
                         type="button"
                         variant="outline-light"
