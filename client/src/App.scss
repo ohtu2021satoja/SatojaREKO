@@ -1,7 +1,6 @@
 @import "custom";
 
 body {
-	padding-bottom: 50px;
 	font-family: "Work Sans", sans-serif;
 	color: #4b4b4b;
 	font-size: 100%; /* 16px on default browser settings */
@@ -38,11 +37,6 @@ p {
 	line-height: 1.35rem;
 }
 
-/* TODO: remove after finging where the 50px bottom margin has been applied */
-.container-fluid {
-	margin-bottom: -50px;
-}
-
 /* lessen rounding borders from cards and buttons */
 .card, .btn {
 	border-radius: 0.2rem;
@@ -53,13 +47,13 @@ p {
 */
 
 .bg-purple {
-	padding-bottom: 70px;
+	padding-bottom: 50px;
 	background-color: rgb(108,99,255);
 }
 
 .bg-yellow {
-	padding-bottom: 70px;
-	background-color: rgb(232, 239, 66);
+	padding-bottom: 50px;
+	background-color: rgb(158, 158, 149);
 }
 
 /* used for card button color, do not add padding */
@@ -90,7 +84,7 @@ p {
 }
 
 /* TODO: add the same to focus */
-.btn-rounded-top,,
+.btn-rounded-top,
 .btn-rounded-top .active {
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
