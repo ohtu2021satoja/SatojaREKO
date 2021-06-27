@@ -3,11 +3,15 @@ import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
 
 const ProfileHeaderBuyer = ({ user, openModal }) => (
-  <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
+  <Col
+    xs={{ span: 6, offset: 3 }}
+    lg={{ span: 4, offset: 4 }}
+    className="mb-4 text-center"
+  >
     <h2 className="mb-4">Omat tiedot</h2>
     <div className="mb-4">
       <Image
-        src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_300/${user.buyers_image_url}`}
+        src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${user.buyers_image_url}`}
         rounded
         fluid
         alt={`kuvassa ${user.firstname} ${user.lastname}`}
