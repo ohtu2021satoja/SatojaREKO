@@ -31,9 +31,9 @@ export const updateAuthedUser = async (user) => {
   }
 }
 
-export const updateSellerImage = async (id, file) => {
+export const updateSellerImage = async (id, url) => {
   try {
-    const response = await axios.put(`/api/sellers/${id}/image`, file)
+    const response = await axios.put(`/api/sellers/${id}/image`, url)
     console.log(response.data)
     return "success"
   } catch (err) {
@@ -42,9 +42,9 @@ export const updateSellerImage = async (id, file) => {
   }
 }
 
-export const updateBuyerImage = async (id, file) => {
+export const updateBuyerImage = async (id, url) => {
   try {
-    const response = await axios.put(`/api/buyers/${id}/image`, file)
+    const response = await axios.put(`/api/buyers/${id}/image`, url)
     console.log(response.data)
     return "success"
   } catch (err) {

@@ -1,18 +1,47 @@
 import { useState } from "react"
+import imageService from "../../services/images"
 import Row from "react-bootstrap/Row"
+import NotificationError from "../NotificationError"
 import FormBuyerImage from "./FormBuyerImage"
 import ProfileHeaderBuyer from "./ProfileHeaderBuyer"
 import FormBuyer from "./FormBuyer"
 
 const ProfilePageBuyer = ({ user, handleUserUpdate }) => {
-  const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [showError, setShowError] = useState(false)
+
+  // uploads the image to Cloudinary
+  // returns image path
+  const uploadImage = async (file) => {
+    try {
+      const response = await imageService.addImage(file)
+      return response.data.url
+    } catch (err) {
+      setShowError(true)
+    }
+  }
 
   return (
-    <Row className="mt-5 mx-2">
-      <FormBuyerImage user={user} show={show} handleClose={() => setShow(false)} />
-      <ProfileHeaderBuyer user={user} openModal={() => setShow(true)} />
-      <FormBuyer user={user} handleUserUpdate={handleUserUpdate} />
-    </Row>
+    <>
+      <NotificationError
+        show={showError}
+        handleClose={() => setShowError(false)}
+        delay={5000}
+        message="Kuvan lataaminen epäonnistui"
+      />
+      <Row className="mt-5 mx-2">
+        <FormBuyerImage
+          user={user}
+          show={showModal}
+          handleClose={() => setShowModal(false)}
+          handleUpload={uploadImage}
+          handleError={() => setShowError(true)}
+          handleUserUpdate={handleUserUpdate}
+        />
+        <ProfileHeaderBuyer user={user} openModal={() => setShowModal(true)} />
+        <FormBuyer user={user} handleUserUpdate={handleUserUpdate} />
+      </Row>
+    </>
   )
 }
 

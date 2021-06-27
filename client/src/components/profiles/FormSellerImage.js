@@ -1,8 +1,7 @@
 import { useEffect } from "react"
-import { addImage } from "../../services/images"
 import { updateSellerImage } from "../../services/users"
 import * as Yup from "yup"
-import { useFormikContext, Formik, Form, Field, ErrorMessage } from "formik"
+import { useFormikContext, Formik, Form, ErrorMessage } from "formik"
 import AddImageModal from "./AddImageModal"
 import FormFieldImageFile from "./FormFieldImageFile"
 import FormErrorMessage from "../FormErrorMessage"
@@ -12,12 +11,12 @@ const ImageSchema = Yup.object().shape({
   sellers_image_url: Yup.string(),
 })
 
-const AutoSubmitImage = ({ handleClose }) => {
+const AutoSubmitFrom = ({ handleClose }) => {
   // get values and submitForm from context
   const { values, submitForm } = useFormikContext()
 
   useEffect(() => {
-    // submit the form imperatively as soon as values change
+    // submit the form imperatively as soon as value change
     if (values.sellers_image_url !== "") {
       submitForm()
       handleClose()
@@ -27,16 +26,19 @@ const AutoSubmitImage = ({ handleClose }) => {
   return null
 }
 
-const FormSellerImage = ({ user, show, handleClose }) => {
-  const uploadImage = async (file) => {
-    // upload image to cloudinary
-    const response = await addImage(file)
-
-    // if image was uploaded successfully
-    // update seller image
-    if (response !== "error") {
-      updateSellerImage(user.id, file)
-    }
+const FormSellerImage = ({
+  user,
+  show,
+  handleClose,
+  handleUpload,
+  handleError,
+  handleUserUpdate,
+}) => {
+  // change the image for current user
+  const changeImage = async (url) => {
+    const response = await updateSellerImage(user.id, url)
+    // update current user (if successful)
+    response === "error" ? handleError() : handleUserUpdate()
   }
 
   return (
@@ -45,26 +47,28 @@ const FormSellerImage = ({ user, show, handleClose }) => {
         sellers_image_url: "",
       }}
       validationSchema={ImageSchema}
-      onSubmit={(values, { resetForm }) => {
-        // removes fakepath from chrome, opera, safari
-        var filename = values.sellers_image_url.replace(/^.*\\/, "")
+      onSubmit={async (values, { resetForm }) => {
+        const image_url = await handleUpload(values.sellers_image_url)
 
-        uploadImage(filename)
+        if (image_url !== "error") {
+          changeImage(image_url)
+        }
+
         resetForm()
       }}
     >
-      {() => (
+      {({ setFieldValue }) => (
         <Form>
           <AddImageModal show={show} handleClose={handleClose}>
-            <Field
-              name="sellers_image_url"
+            <FormFieldImageFile
               id="user-image-seller"
-              label="Lataa kuvatiedosto"
-              component={FormFieldImageFile}
+              name="sellers_image_url"
+              label="Lataa kuva laitteeltasi"
+              setFieldValue={setFieldValue}
             />
             <ErrorMessage name="sellers_image_url" component={FormErrorMessage} />
           </AddImageModal>
-          <AutoSubmitImage handleClose={handleClose} />
+          <AutoSubmitFrom handleClose={handleClose} />
         </Form>
       )}
     </Formik>

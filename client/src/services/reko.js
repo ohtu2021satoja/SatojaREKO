@@ -7,5 +7,6 @@ export const addRekoArea = async ({ name, area }) => {
     name,
     area,
   })
+
   console.log(response)
 }

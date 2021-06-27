@@ -43,8 +43,8 @@ const FormBuyer = ({ user, handleUserUpdate }) => {
           lastname: user.lastname || "",
           phonenumber: user.phonenumber || "",
           email: user.email || "",
-          newsletter_check: false,
-          cancel_notification_check: false,
+          newsletter_check: user.newsletter_check,
+          cancel_notification_check: user.cancel_notification_check,
         }}
         enableReinitialize={true}
         validationSchema={BuyerSchema}

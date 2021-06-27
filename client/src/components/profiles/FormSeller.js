@@ -12,7 +12,7 @@ import FormSellerSettings from "./FormSellerSettings"
 
 // Yup
 const SellerSchema = Yup.object().shape({
-  seller_name: Yup.string(),
+  name: Yup.string(),
   firstname: Yup.string().required(),
   lastname: Yup.string().required(),
   phonenumber: Yup.string().required(),
@@ -25,6 +25,8 @@ const SellerSchema = Yup.object().shape({
   description: Yup.string(),
   reko_areas: Yup.array().of(
     Yup.object().shape({
+      id: Yup.number(),
+      name: Yup.string(),
       belongs: Yup.boolean(),
     })
   ),
@@ -53,39 +55,56 @@ const FormSeller = ({ user, handleUserUpdate }) => {
     <Col xs={12}>
       <Formik
         initialValues={{
-          seller_name: "",
+          name: user.name || undefined,
           firstname: user.firstname || "",
           lastname: user.lastname || "",
           phonenumber: user.phonenumber || "",
           email: user.email || "",
-          address: "",
-          zipcode: "",
-          city: "",
-          business_id: "",
-          homepage: "",
-          description: "",
+          address: user.address || undefined,
+          zipcode: user.zipcode || undefined,
+          city: user.city || undefined,
+          business_id: user.business_id || undefined,
+          homepage: user.homepage || undefined,
+          description: user.description || undefined,
           reko_areas: user.reko_areas,
-          salesreport_check: false,
+          salesreport_check: user.salesreport_check,
         }}
         enableReinitialize={true}
         validationSchema={SellerSchema}
         onSubmit={async (values) => {
-          const updatedUser = { ...user, ...values }
+          // TODO: do this with a function
+          const resetValues = {
+            name: values.name === undefined ? null : values.name,
+            firstname: values.firstname,
+            lastname: values.lastname,
+            phonenumber: values.phonenumber,
+            email: values.email,
+            address: values.address === undefined ? null : values.address,
+            zipcode: values.zipcode === undefined ? null : values.zipcode,
+            city: values.city === undefined ? null : values.city,
+            business_id: values.business_id === undefined ? null : values.business_id,
+            homepage: values.homepage === undefined ? null : values.homepage,
+            description: values.description === undefined ? null : values.description,
+            reko_areas: values.reko_areas,
+            salesreport_check: values.salesreport_check,
+          }
+
+          const updatedUser = { ...user, ...resetValues }
+          console.log("UPDATED_USER", updatedUser)
+
           // push updatedUser to the server
           const response = await updateAuthedUser(updatedUser)
 
           if (response === "success") {
             handleUserUpdate()
           }
-
-          console.log("UPDATED_USER", updatedUser)
         }}
       >
         {({ values }) => (
           <Form>
             <Row>
               <FormSellerDetails />
-              <FormSellerAreas areas={values.reko_areas} />
+              <FormSellerAreas values={values} />
               <Col className="text-center mb-5">
                 <p>
                   Puuttuko ryhmä listalta?
@@ -95,7 +114,6 @@ const FormSeller = ({ user, handleUserUpdate }) => {
                 </p>
               </Col>
               <FormSellerSettings />
-              <Button type="submit">Submit</Button>
             </Row>
             <AutoSubmitForm user={user} />
           </Form>

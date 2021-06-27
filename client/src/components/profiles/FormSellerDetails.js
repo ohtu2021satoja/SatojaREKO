@@ -11,12 +11,12 @@ const FormSellerDetails = () => {
   return (
     <Col xs={12} className="mb-5">
       <Field
-        name="seller_name"
-        id="user-name"
+        name="name"
+        id="user-business-name"
         label="Yrityksen / Tilan nimi"
         component={FormFieldText}
       />
-      <ErrorMessage name="seller_name" component={FormErrorMessage} />
+      <ErrorMessage name="name" component={FormErrorMessage} />
       <Field
         name="firstname"
         id="user-firstname"

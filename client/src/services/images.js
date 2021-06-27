@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const addImage = async (image) => {
+const addImage = async (image) => {
   try {
     const formData = new FormData()
     formData.append("file", image)
