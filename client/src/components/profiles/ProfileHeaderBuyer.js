@@ -12,16 +12,16 @@ const ProfileHeaderBuyer = ({ user, openModal }) => (
         fluid
         alt={`kuvassa ${user.firstname} ${user.lastname}`}
       />
-      <Button
-        variant="outline-secondary"
-        size="lg"
-        type="button"
-        className="w-100"
-        onClick={openModal}
-      >
-        Vaihda kuva
-      </Button>
     </div>
+    <Button
+      variant="outline-secondary"
+      size="lg"
+      type="button"
+      className="w-100"
+      onClick={openModal}
+    >
+      Vaihda kuva
+    </Button>
   </Col>
 )
 
