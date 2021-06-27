@@ -15,7 +15,7 @@ const ProfilePageSeller = ({ user, handleUserUpdate }) => {
   const uploadImage = async (file) => {
     try {
       const response = await imageService.addImage(file)
-      return response.data.url
+      return response.data.public_id
     } catch (err) {
       setShowError(true)
     }

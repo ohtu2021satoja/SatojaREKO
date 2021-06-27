@@ -35,8 +35,8 @@ const FormBuyerImage = ({
   handleUserUpdate,
 }) => {
   // change the image for current user
-  const changeImage = async (url) => {
-    const response = await updateBuyerImage(user.id, url)
+  const changeImage = async (str) => {
+    const response = await updateBuyerImage(user.id, str)
     // update current user (if successful)
     response === "error" ? handleError() : handleUserUpdate()
   }
@@ -48,10 +48,10 @@ const FormBuyerImage = ({
       }}
       validationSchema={ImageSchema}
       onSubmit={async (values, { resetForm }) => {
-        const image_url = await handleUpload(values.buyers_image_url)
+        const image_public_id = await handleUpload(values.buyers_image_url)
 
-        if (image_url !== "error") {
-          changeImage(image_url)
+        if (image_public_id !== "error") {
+          changeImage(image_public_id)
         }
 
         resetForm()
