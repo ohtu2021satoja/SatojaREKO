@@ -23,7 +23,6 @@ eventsRouter.get('/seller/:id', async (req, res, next) => {
           next(err)
       }
     }
-
 })
 
 eventsRouter.get("/:event_id/products/:product_id", async (req, res, next) => {
