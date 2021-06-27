@@ -10,7 +10,7 @@ rekoAreasRouter.get('/', async (req, res) => {
 })
 
 rekoAreasRouter.post('/', async (req,res) => {
-  if(req.user && usersService.isAdmin(req.user.id, usersRepository)){
+  if(req.user && await usersService.isAdmin(req.user.id, usersRepository)){
     try {
       const newRekoArea = req.body
       rekoAreasService.addRekoAreas(newRekoArea, rekoAreasRepository)

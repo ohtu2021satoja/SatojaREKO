@@ -77,7 +77,7 @@ eventsRouter.get('/product/feed/', async (req,res) => {
 })
 
 eventsRouter.post('/', async (req,res) =>{
-  if(req.user && usersService.isAdmin(req.user.id, usersRepository)){
+  if(req.user && await usersService.isAdmin(req.user.id, usersRepository)){
     try{
       req.body.start = new Date(req.body.start)
       req.body.end = new Date(req.body.end)

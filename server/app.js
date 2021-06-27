@@ -58,7 +58,7 @@ app.use('/api/markets', marketsRoute)
 app.use('/api/reko_areas', rekoAreasRoute)
 app.use('/api/mail', mailRouter)
 if (process.env.NODE_ENV === 'test') {
-  const testingRouter = require('./controllers/test')
+  const testingRouter = require('./controllers/testController')
   app.use('/api/test', testingRouter)
 }
 

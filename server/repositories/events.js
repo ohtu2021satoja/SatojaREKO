@@ -17,6 +17,11 @@ const getEvents = () => {
   return events
 }
 
+const getOnlyEvents = async () => {
+  const events = await db.query("SELECT * from events")
+  return events
+}
+
 const getSellersEvents = async (seller_id) => {
   const query = "SELECT *, reko_areas.name, events.id FROM events INNER JOIN markets ON markets.id = events.market_id INNER JOIN reko_markets ON markets.id = reko_markets.market_id INNER JOIN reko_areas ON reko_markets.areas_id=reko_areas.id INNER JOIN sellers_reko ON sellers_reko.reko_area_id=reko_areas.id INNER JOIN sellers ON sellers.id = sellers_reko.seller_id WHERE sellers.id=$1"
   const sellerEvents = await  db.query(query,[seller_id])
@@ -70,4 +75,4 @@ const getMassEmail = async (events) => {
   return allevents[0].json_agg
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent, getMassEmail, getMarketEvent}
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent, getMassEmail, getMarketEvent, getOnlyEvents}
