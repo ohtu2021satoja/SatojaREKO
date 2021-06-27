@@ -87,7 +87,6 @@ const ProductForm = ({
                 label="Lisää kuva"
                 onChange={(event) => handleImage(event.currentTarget.files[0])}
               />
-              <div>{values.sizes}</div>
               {imageID ? <Image cloudName="dpk81nwou" publicId={imageID} /> : null}
               <Form.Control
                 id="title"
