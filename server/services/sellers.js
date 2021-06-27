@@ -33,4 +33,9 @@ getAllSellers = async (sellersRepository) => {
   return sellers
 }
 
-module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, getAllSellers }
+const getSeller = async (seller_id, sellersRepository) => {
+  const seller = await sellersRepository.getSeller(seller_id)
+  return seller
+}
+
+module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, getAllSellers, getSeller }

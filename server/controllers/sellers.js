@@ -26,6 +26,12 @@ sellersRouter.put('/:id/image', async (req, res) => {
 
 })
 
+sellersRouter.get('/:id', async (req, res) => {
+  const { id } = req.params
+  const seller = await sellersService.getSeller(id,sellersRepository)
+  res.send(seller)
+})
+
 sellersRouter.get("/events/:id", async (req, res) => {
   const { id } = req.params
   const events = await sellersService.getEventsSellerHasProducts(id, eventsRepository)
