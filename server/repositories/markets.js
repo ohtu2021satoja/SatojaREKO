@@ -16,4 +16,9 @@ const addMarkets = async (market, location) => {
     return result[0].id
 }
 
-module.exports = { getAllMarketsThatHaveEvents, addMarkets, getAllMarkets }
+const getMarket = async (id) => {
+    const market = await db.query("SELECT *, reko_areas.name AS reko_name from markets INNER JOIN reko_markets ON markets.id = reko_markets.market_id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id WHERE markets.id=$1", [id])
+    return market[0]
+}
+
+module.exports = { getAllMarketsThatHaveEvents, addMarkets, getAllMarkets, getMarket }
