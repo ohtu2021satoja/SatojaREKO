@@ -141,7 +141,7 @@ const OrderSeller = () => {
 
   if (eventId === null) {
     return (
-      <Row className="h-100 flex-column bg-purple">
+      <Row className="h-100 mb-5 flex-column bg-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           Events={Events}
@@ -164,7 +164,7 @@ const OrderSeller = () => {
   } else {
     if (buyerInfo) {
       return (
-        <Row className="h-100 flex-column g-purple">
+        <Row className="h-100 mb-5 flex-column">
           <OrderSellerNav
             navLink="/orders/seller"
             navHeader=""
@@ -181,7 +181,7 @@ const OrderSeller = () => {
       )
     }
     return (
-      <Row className="h-100 flex-column bg-purple">
+      <Row className="h-100 mb-5 flex-column bg-purple">
         <OrdersSellerSingleEvent
           Events={Events}
           Event={Events[eventId]}

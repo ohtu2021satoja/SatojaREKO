@@ -51,7 +51,7 @@ const ProductForm = ({
   })
 
   return (
-    <Row className="h-100 flex-column bg-yellow">
+    <Row className="h-100 mb-5 flex-column bg-yellow">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
         <h2>{FormTitle}</h2>
       </Col>
