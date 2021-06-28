@@ -54,6 +54,7 @@ const MapPage = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
+      window.scrollTo(0, 0)
       dispatch(getMapPoints())
       return
     }

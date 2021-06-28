@@ -28,7 +28,7 @@ const EventPage = (props) => {
   }, [dispatch, eventID])
 
   return eventProducts ? (
-    <Row>
+    <Row className="bg-yellow">
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>

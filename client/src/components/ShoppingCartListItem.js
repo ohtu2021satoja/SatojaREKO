@@ -45,14 +45,14 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
   }
 
   return (
-    <Card className="mb-1 py-2 px-2">
-      <Row as={Link} to={productPageLink}>
+    <Card className="mb-3 py-2 px-2 light-blue border-0">
+      <Row as={Link} to={productPageLink} className="unstyled-link">
         <Col xs={4}>
           <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle
-            className="d-flex justify-content-between text-muted"
+            className="d-flex justify-content-between text-muted unstyled-link"
             as={Link}
             to={sellerPageLink}
           >
@@ -64,7 +64,6 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
               ? product.name + " " + product.sizes[0].unit + " " + product.type
               : product.name + " " + product.unit_price / 100 + "e / " + product.type}
           </Card.Title>
-          <Card.Subtitle>{product.description}</Card.Subtitle>
         </Col>
       </Row>
       <Row>

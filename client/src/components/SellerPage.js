@@ -28,7 +28,7 @@ const SellerPage = (props) => {
   }, [dispatch, seller])
 
   return (
-    <Row className="mx-auto">
+    <Row>
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
