@@ -96,22 +96,20 @@ const EventForm = ({ setShow, event }) => {
     console.log(starting_time, end_time)
     const current_date = new Date()
     const current_year = current_date.getFullYear()
-    const [day, month] = date.split(".")
-
+    const [day, monthA] = date.split(".")
+    const month = parseInt(monthA) - 1
     const starting_hour = starting_time.split(":")[0]
     const starting_minutes = starting_time.split(":")[1]
     const startingDateObject = new Date(
-      current_year,
-      month,
-      day,
-      starting_hour,
-      starting_minutes
+      Date.UTC(current_year, month, day, starting_hour, starting_minutes)
     )
 
     const end_hour = end_time.split(":")[0]
     const end_minutes = end_time.split(":")[1]
 
-    const endDateObject = new Date(current_year, month, day, end_hour, end_minutes)
+    const endDateObject = new Date(
+      Date.UTC(current_year, month, day, end_hour, end_minutes)
+    )
 
     await eventService.updateEvent(startingDateObject, endDateObject, market.id, event.id)
 
@@ -130,7 +128,9 @@ const EventForm = ({ setShow, event }) => {
           end_time: `${new Date(event.endtime).getUTCHours()}:${new Date(
             event.endtime
           ).getMinutes()}`,
-          date: `${new Date(event.start).getDate()}.${new Date(event.start).getMonth()}`,
+          date: `${new Date(event.start).getUTCDate()}.${
+            new Date(event.start).getUTCMonth() + 1
+          }`,
           market_address: event.address,
         }}
         validationSchema={validationSchema}

@@ -17,6 +17,10 @@ export const getEventProducts = async (id) => {
   const response = await axios.get(`${apiUrl}/events/${id}`)
   return response.data
 }
+export const getTestiProducts = async () => {
+  const response = await axios.get(`${apiUrl}`)
+  return response.data
+}
 
 const getUserProducts = (id) => {
   const request = axios.get(`${apiUrl}/${id}`)
@@ -33,6 +37,7 @@ const addProduct = async (productObject) => {
 
 const updateProduct = async (product_id, productObject) => {
   const response = await axios.put(`${apiUrl}/${product_id}`, productObject)
+  console.log(response.data)
 }
 
 const getProductById = async (product_id) => {
@@ -47,4 +52,6 @@ export default {
   addProduct,
   updateProduct,
   getProductById,
+  getTestiProducts,
+  getSellerProducts,
 }

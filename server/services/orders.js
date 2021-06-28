@@ -1,4 +1,6 @@
 const db = require("../db")
+const mailSender = require("./mail")
+const helper = require("../utils/helper")
 
 const addBuyersOrders = async (buyer_id, orders, ordersRepository, productsRepository) => {
   try{
@@ -48,13 +50,38 @@ const getBuyersOrders = async (buyers_id, ordersRepository) => {
   return(orders)
 }
 
-const removeSellersOrder = async (seller_id, order_id, ordersRepository, productsRepository) => {
+
+const removeSellersOrder = async (seller_id, order_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository) => {
   await productsRepository.addQuantitiesToSizes(order_id, seller_id)
+  const order = await ordersRepository.getSellersOrder(seller_id, order_id)
+  const batches = order.batches
+  batches.forEach((batch) => {
+    batch.price = helper.parsePrice(batch.price)
+  })
+  const user = await usersRepository.getOrderUser(order_id)
+  const event = await eventsRepository.getOrderEvent(order_id)
+  const seller = await sellersRepository.getSeller(seller_id)
+  if(!seller.seller_name){
+    seller.seller_name = `${seller.firstname} ${seller.lastname}`
+  }
+  await mailSender.sendAutomaticMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
   await ordersRepository.removeSellersOrder(seller_id, order_id)
 }
 
-const removeProductFromSellersOrder = async (order_id, size_id, ordersRepository, productsRepository) => {
+
+const removeProductFromSellersOrder = async (seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository) => {
   await productsRepository.addQuantityToSize(order_id, size_id)
+
+  const order = await ordersRepository.getSellersOrderBySize(size_id, order_id)
+  const batches = order.batches
+  batches.forEach((batch) => {
+    batch.price = helper.parsePrice(batch.price)
+  })
+  const user = await usersRepository.getOrderUser(order_id)
+  const event = await eventsRepository.getOrderEvent(order_id)
+  const seller = await sellersRepository.getSeller(seller_id)
+  await mailSender.sendAutomaticMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
+
   await ordersRepository.removeProductFromSellersOrder(order_id, size_id)
 }
 

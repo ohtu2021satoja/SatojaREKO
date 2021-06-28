@@ -14,7 +14,8 @@ const Price = ({ setFieldValue, errors, touched }) => {
     dispatch(changePrice(newPrice))
   }
   return (
-    <div>
+    <Form.Group className="mb-3 text-center">
+      <Form.Label className="mb-0">Hinta</Form.Label>
       <Form.Control
         value={price}
         onChange={(event) => {
@@ -24,9 +25,11 @@ const Price = ({ setFieldValue, errors, touched }) => {
         type="text"
         onBlur={() => handlePrice(price)}
         placeholder="00,00€"
+        size="lg"
+        className="w-100"
       />
       {touched.price && errors.price ? <div>{errors.price}</div> : null}
-    </div>
+    </Form.Group>
   )
 }
 

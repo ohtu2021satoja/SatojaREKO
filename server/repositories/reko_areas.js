@@ -9,7 +9,7 @@ const getRekoAreas = async () => {
 const addRekoAreas = async (rekoArea) => {
   const dbParams = [rekoArea.name, rekoArea.area]
   const result = await db.query("INSERT INTO reko_areas VALUES(Default, $1, $2)", dbParams)
-  return results
+  return result
 }
 
 const addRekoMarkets = async (reko_areas, market_id) => {

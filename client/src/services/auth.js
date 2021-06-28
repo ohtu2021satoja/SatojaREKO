@@ -17,6 +17,7 @@ export const loginUser = async (credentials) => {
     console.log(response.data)
   } catch (err) {
     console.log(err.message)
+    return "error"
   }
 }
 
