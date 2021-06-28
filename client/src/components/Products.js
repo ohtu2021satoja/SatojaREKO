@@ -31,7 +31,7 @@ const Products = () => {
       setProductsei(productsii)
     }
     fetchData()
-  }, [])
+  }, [id])
   dispatch(setProducts(productsei))
 
   const renderProducts = (product, index) => {

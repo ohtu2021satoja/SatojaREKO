@@ -88,9 +88,12 @@ const EventForm = ({ setShow, event }) => {
   const [market, setMarket] = useState({ address: event.address, id: event.market_id })
   console.log(market)
 
-  useEffect(async () => {
-    const response = await axios.get("api/markets")
-    setMarkets(response.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("api/markets")
+      setMarkets(response.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ starting_time, end_time, date }) => {
     console.log(starting_time, end_time)

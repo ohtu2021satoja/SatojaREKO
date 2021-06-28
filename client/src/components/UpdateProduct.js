@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useParams } from "react-router-dom"
 
 import { useSelector, useDispatch } from "react-redux"
-import { resetPrice, changePrice } from "../reducers/priceReducer"
+import { changePrice } from "../reducers/priceReducer"
 import { setAlv } from "../reducers/alvReducer.js"
-import { resetProductSizes, initializeSizes } from "../reducers/productSizesReducer"
+import { initializeSizes } from "../reducers/productSizesReducer"
 import { initializeEvents } from "../reducers/eventChoicesReducer"
 import imageService from "../services/images"
 import eventService from "../services/events"
@@ -34,7 +34,6 @@ const UpdateProduct = () => {
   const [title, setTitle] = useState("")
   const [category, setCategory] = useState("Valitse kategoria")
   const [description, setDescription] = useState("")
-  const [preview, setPreview] = useState(false)
   const [imageID, setImageID] = useState(null)
   const [product, setProduct] = useState(null)
 
@@ -73,8 +72,7 @@ const UpdateProduct = () => {
       return "gm"
     }
   }
-
-  const initialSetUp = (product) => {
+  const initialSetUp = useCallback(() => {
     const priceString = String(product.unit_price)
     const start = priceString.substr(0, priceString.length - 2)
     const end = priceString.substr(priceString.length - 2)
@@ -92,16 +90,17 @@ const UpdateProduct = () => {
     console.log(product.events)
     dispatch(initializeEvents(product.events))
     setProduct(product)
-  }
+  }, [dispatch, product])
+
   useEffect(() => {
     async function fetchData() {
       const events = await eventService.getSellersUpcomingEvents(user.id)
       const res_product = await productService.getProductById(id)
-      initialSetUp(res_product)
       setEvents(events)
+      initialSetUp(res_product)
     }
     fetchData()
-  }, [])
+  }, [id, user.id, initialSetUp])
   const updateProduct = async ({ title, description, category }) => {
     const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
     const sizes = productSizes.map((unitSize) => {
