@@ -30,4 +30,4 @@ const ProfileHeader = ({ user, openModal }) => (
   </Col>
 )
 
-export default 
+export default ProfileHeader
