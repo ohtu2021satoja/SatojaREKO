@@ -71,7 +71,13 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
                   Virheellinen sähköposti tai salasana
                 </p>
               )}
-              <Button type="submit" variant="success" size="lg" className="w-100 mb-2">
+              <Button
+                type="submit"
+                variant="success"
+                size="lg"
+                className="w-100 mb-2"
+                id="login-button"
+              >
                 Kirjaudu
               </Button>
               <SignUpButton handleSigned={handleSigned} />

@@ -35,6 +35,7 @@ const HomePage = ({ logOut }) => (
         size="lg"
         type="button"
         className="w-75"
+        id="logout-button"
       >
         Kirjaudu ulos
       </Button>

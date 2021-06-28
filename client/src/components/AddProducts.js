@@ -48,6 +48,7 @@ const AddProducts = () => {
   const dispatch = useDispatch()
   const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
+  const user = useSelector((state) => state.authedUser)
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
   const productType = useSelector((state) => state.currentProduct.product.type)
   const productSizes = useSelector((state) => state.productSizes)
@@ -78,7 +79,7 @@ const AddProducts = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const events = await eventService.getSellersUpcomingEvents(1)
+      const events = await eventService.getSellersUpcomingEvents(user.id)
       setEvents(events)
     }
     Reset()

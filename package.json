@@ -8,6 +8,7 @@
     "build": "cd client && npm install && rm .eslintignore && rm .eslintrc && rm .prettierrc && npm run build && cp -r build ../server",
     "build_local": "cd client && npm run build && cp -r build ../server",
     "start": "node server/index.js",
-    "fixlint": "cd client && npm run fixlint"
+    "fixlint": "cd client && npm run fixlint",
+    "run_job": "cd server && node sendMass.js"
   }
 }

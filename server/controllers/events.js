@@ -5,6 +5,8 @@ const productsService = require("../services/products")
 const productsRepository = require("../repositories/products")
 const usersService = require("../services/users")
 const usersRepository = require("../repositories/users")
+const marketService = require("../services/markets")
+const marketsRepository = require("../repositories/markets")
 
 eventsRouter.get('/seller/:id', async (req, res, next) => {
     const { id } = req.params
@@ -48,12 +50,14 @@ eventsRouter.get('/market/:id', async (req,res) => {
 eventsRouter.get('/market/:market_id/:event_id', async (req,res) => {
   const {market_id, event_id} = req.params
   const marketEvent = await eventsService.getMarketEvent(market_id, event_id, eventsRepository)
+  const products = await productsService.getEventProducts(event_id, productsRepository)
+  const market = await marketService.getMarket(market_id, marketsRepository)
 
   if (!marketEvent) {
     return res.status(404).send({ error: 'Market events not found' });
   }
   try {
-    res.send(marketEvent)
+    res.json({"event": marketEvent, "products": products, "market": market })
   } catch (err) {
     next(err)
   }

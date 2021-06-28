@@ -28,7 +28,6 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
 }
 
 const getEventProduct = async (event_id, product_id, productsRepository) => {
-  console.log("NJOFNSJONSFJO")
   const product = await productsRepository.getEventProduct(event_id, product_id)
   return(product)
 }

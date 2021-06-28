@@ -57,6 +57,10 @@ app.use('/api/orders', ordersRoute)
 app.use('/api/markets', marketsRoute)
 app.use('/api/reko_areas', rekoAreasRoute)
 app.use('/api/mail', mailRouter)
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/test')
+  app.use('/api/test', testingRouter)
+}
 
 // Routes
 app.get('/', middleware.authCheck, (req, res) => {
