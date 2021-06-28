@@ -4,7 +4,7 @@ const FacebookLoginButton = ({ handleLogin }) => (
   <a href="api/auth/facebook">
     <Button
       onClick={handleLogin}
-      variant="primary"
+      variant="facebook"
       size="lg"
       type="button"
       className="w-100 mb-3"

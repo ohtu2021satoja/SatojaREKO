@@ -30,9 +30,9 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
   }
 
   return (
-    <Row className="mb-3 py-3 px-1 border border-2 border-success rounded">
+    <Row className="mb-3 py-3 px-1 border border-1 border-success rounded">
       <Col xs={12} className="mb-2 text-center">
-        <h4 className="text-success">Kirjaudu sisään</h4>
+        <h3>Kirjaudu palveluun</h3>
       </Col>
       <Col xs={12}>
         <Formik

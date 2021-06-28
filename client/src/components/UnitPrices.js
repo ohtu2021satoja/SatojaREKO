@@ -1,4 +1,6 @@
 import React from "react"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import Alv from "./Alv"
 import Price from "./Price"
 import Button from "react-bootstrap/Button"
@@ -62,16 +64,32 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
     }
   }
   return (
-    <div>
+    <Col xs={{ span: 8, offset: 2 }} className="mb-3">
       <Alv />
       {parseType(productType)}
       <Price setFieldValue={setFieldValue} errors={errors} touched={touched} />
       {productrows}
-      <Button onClick={deleteProductRow} variant="danger">
-        Poista tuoterivi
-      </Button>
-      <Button onClick={addProductRow}>Lisää tuoterivi</Button>
-    </div>
+      <Row>
+        <Button
+          type="button"
+          variant="danger"
+          size="lg"
+          className="mb-3"
+          onClick={deleteProductRow}
+        >
+          Poista tuoterivi
+        </Button>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          className="mb-3"
+          onClick={addProductRow}
+        >
+          Lisää tuoterivi
+        </Button>
+      </Row>
+    </Col>
   )
 }
 
