@@ -11,6 +11,7 @@ import LoginPage from "./login/LoginPage"
 import SignUpPage from "./login/SignUpPage"
 import AdminPage from "./AdminPage"
 import Routes from "./navigation/Routes"
+import RoutesB from "./navigation/RoutesB"
 
 const App = (props) => {
   const [signUp, setSignUp] = useState(false)
@@ -128,11 +129,9 @@ const App = (props) => {
           {(() => {
             if (!authedUser && !signUp) {
               return (
-                <LoginPage
-                  handleLogin={getUser}
-                  handleSigned={() => setSignUp(true)}
-                  handleMockLogin={getMockUser}
-                />
+                <>
+                  <RoutesB handleLogin={getUser} handleSigned={() => setSignUp(true)} />
+                </>
               )
             }
 

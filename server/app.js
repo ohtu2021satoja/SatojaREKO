@@ -40,7 +40,7 @@ const passportStrategy = require('./services/auth')
 app.use(express.static(path.join(__dirname, "build")))
 
 // add endpoint here if refreshing problems
-app.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/products"], function(req, res) {
+app.get(["/", "/profile", "/events", "/home", "/orders", "/add", "/cart", "/products", "/admin"], function(req, res) {
   res.sendFile(path.join(__dirname, "/build", "index.html"), function(err) {
     if (err) {
       res.status(500).send(err)

@@ -17,6 +17,7 @@ const LoginPage = ({ handleLogin, handleSigned, handleMockLogin }) => (
       <FormLogin handleSigned={handleSigned} handleLogin={handleLogin} />
       <FacebookLoginButton handleLogin={handleLogin} />
       <MockLoginButton handleMockLogin={handleMockLogin} />
+      <PasswordResetButton />
     </Col>
 
     <Col xs={12} className="mt-auto text-center">

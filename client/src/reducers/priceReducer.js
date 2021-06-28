@@ -1,11 +1,11 @@
-const reducer = (state = "00,00€", action) => {
+const reducer = (state = "", action) => {
   switch (action.type) {
     case "CHANGEPRICE":
       return action.newprice
     default:
       return state
     case "RESETPRICE":
-      return "00,00€"
+      return ""
   }
 }
 

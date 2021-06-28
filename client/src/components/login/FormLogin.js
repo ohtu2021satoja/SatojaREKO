@@ -21,6 +21,7 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
 
   const checkCredentials = async (obj) => {
     const response = await loginUser(obj)
+    console.log("RESPONSE", response)
     response === "error" ? setFail(true) : handleLogin()
     // TODO: instead of setTimeout
     // remove error message when input value changes

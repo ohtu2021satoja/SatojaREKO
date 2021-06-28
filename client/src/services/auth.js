@@ -14,7 +14,7 @@ export const createNewUser = async (newUser) => {
 export const loginUser = async (credentials) => {
   try {
     const response = await axios.post(`${baseUrl}/email`, credentials)
-    console.log(response.data)
+    return response
   } catch (err) {
     console.log(err.message)
     return "error"

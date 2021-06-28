@@ -34,7 +34,7 @@ const ProductForm = ({
 
     productType: yup.string().notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
 
-    price: yup.string().notOneOf(["00,00€"], "Aseta hinta"),
+    price: yup.string().notOneOf(["00,00€", ""], "Aseta hinta"),
 
     sizes: yup
       .array()
@@ -48,7 +48,7 @@ const ProductForm = ({
 
     category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
   })
-
+  console.log("PRICE", price)
   return (
     <div style={{ marginBottom: 100 }}>
       <Form.Label as="h3" className="my-4 text-center">
@@ -79,7 +79,11 @@ const ProductForm = ({
           touched,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
+            <ChooseCategory
+              category={values.category}
+              setFieldValue={setFieldValue}
+              id="choose-category"
+            />
             {touched.category && errors.category ? <div>{errors.category}</div> : null}
             <Form.Group>
               <Form.File
@@ -111,6 +115,7 @@ const ProductForm = ({
               <Form.Check
                 type="checkbox"
                 label="Tuote on luomua"
+                id="organic-checkbox"
                 onChange={() => setOrganic(!organic)}
                 checked={organic}
               />
@@ -118,6 +123,7 @@ const ProductForm = ({
               <ChooseProductType
                 productType={values.productType}
                 setFieldValue={setFieldValue}
+                id="choose-product-type"
               />
               {touched.productType && errors.productType ? (
                 <div>{errors.productType}</div>
@@ -134,6 +140,7 @@ const ProductForm = ({
                 type="range"
                 value={deleteBeforeEvent}
                 onChange={(event) => setDeleteBeforeEvent(event.target.value)}
+                id="close-before-event"
               />
               <p>Tilaus sulkeutuu {deleteBeforeEvent} ennen noutotilaisuuden alkua</p>
               {events ? <Events events={events} isChoice={true} /> : null}
