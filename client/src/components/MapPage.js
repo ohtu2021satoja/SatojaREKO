@@ -16,15 +16,16 @@ const MapInstance = (props) => {
   const map = useMapEvents({
     load: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
     },
     zoomend: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
     },
     moveend: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
+    },
+    locationfound: (e) => {
+      console.log(e)
+      map.setView(e.latlng, 9)
     },
   })
 
@@ -39,9 +40,10 @@ const MapPage = () => {
   const [visibleMarkets, setVisibleMarkets] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
-  const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
   const [mapInstance, setMapInstance] = useState(null)
+
+  const defaultLocation = [61.59229896416896, 27.256461799773678]
 
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
@@ -53,11 +55,10 @@ const MapPage = () => {
     if (firstRender.current) {
       firstRender.current = false
       dispatch(getMapPoints())
-
       return
     }
 
-    if (mapPoints.Markets) {
+    if (mapPoints.Markets && mapBounds) {
       const updateMapStatus = () => {
         const visibleMarkets = mapPoints.Markets.filter((market) => {
           if (!market.location || !market.location.lat || !market.location.lon)
@@ -83,10 +84,6 @@ const MapPage = () => {
 
   const handleBoundsChange = (value) => {
     setMapBounds(value)
-  }
-
-  const handleCenterChange = (value) => {
-    setMapCenter(value)
   }
 
   const getMapInstance = (map) => {
@@ -121,12 +118,17 @@ const MapPage = () => {
     <>
       <div className="map-container">
         <MapContainer
-          center={mapCenter}
           scrollWheelZoom={true}
-          zoom={10}
+          zoom={9}
+          center={defaultLocation}
           whenCreated={(map) => {
-            setMapBounds(map.getBounds())
-            setMapCenter(map.getCenter())
+            try {
+              //map.locate({ setView: true, enableHighAccuracy: true, maxZoom: 12 })
+              map.locate()
+              //map.setZoom(9)
+            } catch (e) {
+              console.log(e)
+            }
           }}
         >
           <TileLayer
@@ -135,7 +137,6 @@ const MapPage = () => {
           />
           <MapInstance
             setMapBounds={handleBoundsChange}
-            setMapCenter={handleCenterChange}
             setMapInstance={getMapInstance}
           />
           {markMarkets}
