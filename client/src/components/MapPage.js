@@ -58,21 +58,26 @@ const MapPage = () => {
       return
     }
 
-    if (mapPoints.Markets && mapBounds) {
+    if (Object.keys(mapPoints).length > 0 && mapBounds) {
       const updateMapStatus = () => {
-        const visibleMarkets = mapPoints.Markets.filter((market) => {
-          if (!market.location || !market.location.lat || !market.location.lon)
-            return null
-          const location = [Number(market.location.lat), Number(market.location.lon)]
-          return mapBounds.contains(location)
-        })
+        const visibleMarkets = mapPoints.Markets
+          ? mapPoints.Markets.filter((market) => {
+              if (!market.location || !market.location.lat || !market.location.lon)
+                return null
+              const location = [Number(market.location.lat), Number(market.location.lon)]
+              return mapBounds.contains(location)
+            })
+          : []
 
-        const visibleSellers = mapPoints.Sellers.filter((seller) => {
-          if (!seller.location || !seller.location.lat || !seller.location.lon)
-            return null
-          const location = [Number(seller.location.lat), Number(seller.location.lon)]
-          return mapBounds.contains(location)
-        })
+        const visibleSellers = mapPoints.Sellers
+          ? mapPoints.Sellers.filter((seller) => {
+              if (!seller.location || !seller.location.lat || !seller.location.lon)
+                return null
+              const location = [Number(seller.location.lat), Number(seller.location.lon)]
+              return mapBounds.contains(location)
+            })
+          : []
+
         setTotalVisible(visibleMarkets.length)
         setVisibleMarkets(visibleMarkets)
         setVisibleSellers(visibleSellers)
