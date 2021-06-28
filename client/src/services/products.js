@@ -7,11 +7,10 @@ export const getSellerProducts = async (id) => {
   return response.data
 }
 
-// TODO: add product
-
-// TODO: delete product
-
-// TODO: update product
+export const DeleteProduct = async (id) => {
+  const response = await axios.delete(`${apiUrl}/${id}`)
+  return response.data
+}
 
 export const getEventProducts = async (id) => {
   const response = await axios.get(`${apiUrl}/events/${id}`)
@@ -37,6 +36,7 @@ const addProduct = async (productObject) => {
 
 const updateProduct = async (product_id, productObject) => {
   const response = await axios.put(`${apiUrl}/${product_id}`, productObject)
+  return response.data
 }
 
 const getProductById = async (product_id) => {
@@ -48,6 +48,7 @@ const getProductById = async (product_id) => {
 export default {
   getUserProducts,
   getEventProducts,
+  DeleteProduct,
   addProduct,
   updateProduct,
   getProductById,
