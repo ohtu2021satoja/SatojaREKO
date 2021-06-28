@@ -34,4 +34,9 @@ const getAllSellers = async () => {
   return sellers
 }
 
-module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, getAllSellers, createSeller }
+const getSeller = async (seller_id) => {
+  const seller = await db.query("SELECT *, sellers.name AS seller_name FROM sellers INNER JOIN users ON users.id= sellers.id WHERE sellers.id=$1",[seller_id])
+  return seller[0]
+}
+
+module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, getAllSellers, createSeller, getSeller }

@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react"
-import Form from "react-bootstrap/Form"
-import Button from "react-bootstrap/Button"
-import Col from "react-bootstrap/Col"
+import React, { useState, useEffect, useCallback } from "react"
+//import Form from "react-bootstrap/Form"
+//import Button from "react-bootstrap/Button"
+//import Col from "react-bootstrap/Col"
 import { useSelector, useDispatch } from "react-redux"
 import { resetPrice } from "../reducers/priceReducer"
 import { setAlv } from "../reducers/alvReducer.js"
 import { resetProductSizes } from "../reducers/productSizesReducer"
-import { Image } from "cloudinary-react"
+//import { Image } from "cloudinary-react"
 import imageService from "../services/images"
 import eventService from "../services/events"
-import ChooseCategory from "./ChooseCategory"
-import ChooseProductType from "./ChooseProductType"
-import Events from "./Events"
-import UnitPrices from "./UnitPrices"
+// import ChooseCategory from "./ChooseCategory"
+// import ChooseProductType from "./ChooseProductType"
+// import Events from "./Events"
+// import UnitPrices from "./UnitPrices"
 import Preview from "./Preview"
-import { Formik } from "formik"
-import * as yup from "yup"
+// import { Formik } from "formik"
+// import * as yup from "yup"
 import "./App.css"
 import ProductForm from "./ProductForm"
 import { setProductType } from "../reducers/currentProduct"
 
+/*
 const validationSchema = yup.object().shape({
   title: yup.string().required("Vaadittu"),
 
@@ -41,11 +42,13 @@ const validationSchema = yup.object().shape({
 
   category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
 })
+*/
 
 const AddProducts = () => {
   const dispatch = useDispatch()
   const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
+  const user = useSelector((state) => state.authedUser)
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)
   const productType = useSelector((state) => state.currentProduct.product.type)
   const productSizes = useSelector((state) => state.productSizes)
@@ -61,7 +64,7 @@ const AddProducts = () => {
     setImageID(response.data.public_id)
   }
 
-  const Reset = () => {
+  const Reset = useCallback(() => {
     setTitle("")
     setDescription("")
     setOrganic(false)
@@ -72,16 +75,16 @@ const AddProducts = () => {
     dispatch(setProductType("Valitse yksikkö"))
     dispatch(setAlv("14%"))
     dispatch(resetProductSizes())
-  }
+  }, [dispatch])
 
   useEffect(() => {
     async function fetchData() {
-      const events = await eventService.getSellersUpcomingEvents(1)
-      setEvents(events)
+      const events = await eventService.getSellersUpcomingEvents(user.id)
+      await setEvents(events)
+      Reset()
     }
-    Reset()
     fetchData()
-  }, [])
+  }, [Reset, user.id])
 
   const goToPreview = ({ title, description, productType, category }) => {
     setTitle(title)

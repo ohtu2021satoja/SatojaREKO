@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import LoginPage from "./login/LoginPage"
 import SignUpPage from "./login/SignUpPage"
-//import AdminPage from "./AdminPage"
+// import AdminPage from "./AdminPage"
 import Routes from "./navigation/Routes"
 
 const App = (props) => {
@@ -122,11 +122,7 @@ const App = (props) => {
   return (
     <Container fluid>
       <Row className="vh-100">
-        <Col
-          xs={12}
-          sm={{ span: 8, offset: 2 }}
-          style={{ backgroundColor: "white", paddingBottom: 70 }}
-        >
+        <Col xs={12} sm={{ span: 8, offset: 2 }}>
           {(() => {
             if (!authedUser && !signUp) {
               return (

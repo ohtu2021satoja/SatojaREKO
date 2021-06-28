@@ -25,6 +25,7 @@ const createUser = async (params) => {
   const user_id = await db.query("INSERT INTO users VALUES (DEFAULT, $1, $2, $9, $3, $4, $5, $6, $7, $8) Returning id;", [params.firstname, params.lastname, params.phonenumber, params.email, params.password, false, false, params.facebook_id, current_date])
   return(user_id[0].id)
 }
+
 const setAsBuyer = async (id) => {
   await db.query("UPDATE users SET is_buyer=true WHERE id=$1", [id])
 }
@@ -46,4 +47,15 @@ const getUserByEmailOrId = async (id, email) => {
   return (user[0])
 }
 
-module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId}
+const isAdmin = async (user) => {
+  const isAdmin = await db.query("select users.id IN (select id from admins) AS is_admin from users WHERE users.id=$1;", [user])
+  console.log(isAdmin)
+  return(isAdmin[0].is_admin)
+}
+
+const getOrderUser = async (order_id) => {
+  const user = await db.query("SELECT * from buyers INNER JOIN orders ON buyers.id = orders.buyers_id INNER JOIN users ON buyers.id = users.id WHERE orders.id=$1", [order_id])
+  return(user[0])
+}
+
+module.exports = { getUser, updateUsersInfo, createUser, setAsBuyer, setAsSeller, getUserByEmail, getUserById, deleteUser, setUserPassword, getUserByEmailOrId, isAdmin, getOrderUser}
