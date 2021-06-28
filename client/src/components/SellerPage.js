@@ -13,7 +13,7 @@ const SellerPage = (props) => {
   const dispatch = useDispatch()
   const sellerEvents = useSelector((state) => state.sellerEvents)
   const sellers = useSelector((state) => state.mapPoints.Sellers)
-  console.log("STATE: ", props.location.state)
+
   const seller = props.location.state.seller
     ? props.location.state.seller
     : sellers.find((seller) => seller.id === Number(sellerID))
@@ -28,7 +28,7 @@ const SellerPage = (props) => {
   }, [dispatch, seller])
 
   return (
-    <Row className="bg-light-blue">
+    <Row className={sellerEvents.length > 0 ? "bg-light-blue" : "bg-light-blue vh-100"}>
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
@@ -38,7 +38,7 @@ const SellerPage = (props) => {
           <h4>{seller.name}</h4>
           <p className="mb-0">{seller.address}</p>
           <p className="mb-0">
-            {seller.county} {seller.zipcode}
+            {seller.city} {seller.zipcode}
           </p>
           <p className="mb-4">{seller.phonenumber}</p>
           <h4>Myyntipisteet</h4>

@@ -83,7 +83,11 @@ const ShoppingCart = () => {
 
   return (
     <>
-      <Row className="mb-0 pb-0 bg-light-blue">
+      <Row
+        className={
+          totalPrice === 0 ? "mb-0 pb-0 bg-light-blue vh-100" : "mb-0 pb-0 bg-light-blue"
+        }
+      >
         <Col xs={12} className="mb-3 pb-0 mt-5 text-center " styles={{ marginBottom: 0 }}>
           <h2 className="mb-4">Ostoskori</h2>
           {cart.map((order, index) => {
