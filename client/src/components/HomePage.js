@@ -15,6 +15,7 @@ const HomePage = ({ logOut }) => (
         size="lg"
         type="button"
         className="w-75"
+        id="buyer-button"
       >
         Ostan lähiruokaa
       </Button>
@@ -29,12 +30,19 @@ const HomePage = ({ logOut }) => (
         size="lg"
         type="button"
         className="w-75"
+        id="seller-button"
       >
         Myyn lähiruokaa
       </Button>
     </Col>
     <Col xs={12} className="mb-4">
-      <Button variant="outline-success" size="lg" type="button" className="w-75">
+      <Button
+        variant="outline-success"
+        size="lg"
+        type="button"
+        className="w-75"
+        id="contact-button"
+      >
         Ota yhteyttä
       </Button>
     </Col>
@@ -45,6 +53,7 @@ const HomePage = ({ logOut }) => (
         size="lg"
         type="button"
         className="w-75"
+        id="logout-button"
       >
         Kirjaudu ulos
       </Button>

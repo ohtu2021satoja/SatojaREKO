@@ -95,7 +95,7 @@ const UpdateProduct = () => {
   }
   useEffect(() => {
     async function fetchData() {
-      const events = await eventService.getSellersUpcomingEvents(26)
+      const events = await eventService.getSellersUpcomingEvents(user.id)
       const res_product = await productService.getProductById(id)
       initialSetUp(res_product)
       setEvents(events)

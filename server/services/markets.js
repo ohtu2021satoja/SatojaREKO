@@ -17,4 +17,9 @@ const getAllMarkets = (marketsRepository) => {
     return markets
 }
 
-module.exports = {getAllMarketsThatHaveEvents, addMarkets, getAllMarkets}
+const getMarket = async (id, marketsRepository) => {
+    const market = await marketsRepository.getMarket(id)
+    return market
+}
+
+module.exports = {getAllMarketsThatHaveEvents, addMarkets, getAllMarkets, getMarket}
