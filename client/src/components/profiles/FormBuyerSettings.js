@@ -6,14 +6,14 @@ const FormBuyerSettings = () => (
   <Col xs={{ span: 10, offset: 1 }}>
     <h5 className="mb-4 text-center">Sähköpostiasetukset</h5>
     <Field
-      name="newsletter"
+      name="newsletter_check"
       id="user-newsletter"
       label="Uutiskirje (max. 1 per viikko)"
       component={FormFieldCheckbox}
     />
     <Field
-      name="notification"
-      id="user-notification"
+      name="cancel_notification_check"
+      id="user-cancel-notification"
       label="Ilmoitus, jos myyjä peruu tilauksen"
       component={FormFieldCheckbox}
     />

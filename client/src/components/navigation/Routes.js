@@ -18,7 +18,7 @@ import ProfilePageBuyer from "../profiles/ProfilePageBuyer"
 import NavigationBarBuyer from "./NavigationBarBuyer"
 import NavigationBarSeller from "./NavigationBarSeller"
 
-const Routes = ({ user, logOut }) => (
+const Routes = ({ user, logOut, handleUserUpdate }) => (
   <Switch>
     <Route exact path="/">
       <HomePage logOut={logOut} />
@@ -50,7 +50,7 @@ const Routes = ({ user, logOut }) => (
     </Route>
     <Route path="/profile/seller">
       <NavigationBarSeller />
-      <ProfilePageSeller user={user} />
+      <ProfilePageSeller user={user} handleUserUpdate={handleUserUpdate} />
     </Route>
     <Route exact path="/contact">
       <NavigationBarSeller />
@@ -71,7 +71,7 @@ const Routes = ({ user, logOut }) => (
     </Route>
     <Route exact path="/profile/buyer">
       <NavigationBarBuyer />
-      <ProfilePageBuyer user={user} />
+      <ProfilePageBuyer user={user} handleUserUpdate={handleUserUpdate} />
     </Route>
     <Route
       path="/events/:eventID"

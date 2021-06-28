@@ -148,7 +148,7 @@ const App = (props) => {
             if (authedUser) {
               return (
                 <>
-                  <Routes user={authedUser} logOut={logOut} />
+                  <Routes user={authedUser} logOut={logOut} handleUserUpdate={getUser} />
                 </>
               )
             }
