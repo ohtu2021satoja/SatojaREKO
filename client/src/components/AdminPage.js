@@ -274,7 +274,7 @@ const ModifyEvents = ({ setModifyingEvents }) => {
       setEvents(events.data)
     }
     fetchData()
-  })
+  }, [])
   return (
     <div>
       <Button variant="danger" onClick={() => setModifyingEvents(false)}>

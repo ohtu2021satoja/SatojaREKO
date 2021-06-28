@@ -14,6 +14,7 @@ import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
 
 const App = (props) => {
+  return <AdminPage />
   const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
