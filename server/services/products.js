@@ -28,7 +28,7 @@ const addProduct = async (product, eventChoices, sizes, productsRepository, even
 }
 
 const getEventProduct = async (event_id, product_id, productsRepository) => {
-  const product = await productsRepository.getProductById(event_id, product_id)
+  const product = await productsRepository.getEventProduct(event_id, product_id)
   return(product)
 }
 

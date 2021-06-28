@@ -1,8 +1,10 @@
 import { useState } from "react"
+import Row from "react-bootstrap/esm/Row"
 import OrderSellerEventList from "./OrderSellerEventList"
 import OrdersSellerSingleEvent from "./OrdersSellerSingleEvent"
 import OrdersSellerTitle from "./OrdersSellerTitle"
 import BuyerInfo from "./BuyerInfo"
+import OrderSellerNav from "./OrderSellerNav"
 
 const OrderSeller = () => {
   // example products
@@ -133,9 +135,13 @@ const OrderSeller = () => {
     setEventId(null)
   }
 
+  const HandleBuyerInfoButton = () => {
+    setBuyerInfo(false)
+  }
+
   if (eventId === null) {
     return (
-      <div>
+      <Row className="h-100 mb-5 flex-column bg-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           Events={Events}
@@ -153,21 +159,29 @@ const OrderSeller = () => {
           HandleOrderButton={HandleOrderButton}
           uniqueDates={uniqueDates}
         />
-      </div>
+      </Row>
     )
   } else {
     if (buyerInfo) {
       return (
-        <BuyerInfo
-          HandleBackButton={HandleBackButton}
-          setBuyerInfo={setBuyerInfo}
-          buyerIndexi={buyerIndexi}
-          orderers={orderers}
-        />
+        <Row className="h-100 mb-5 flex-column">
+          <OrderSellerNav
+            navLink="/orders/seller"
+            navHeader=""
+            altText="Palaa tilaajalistalle"
+            HandleBackButton={HandleBuyerInfoButton}
+          />
+          <BuyerInfo
+            HandleBackButton={HandleBackButton}
+            setBuyerInfo={setBuyerInfo}
+            buyerIndexi={buyerIndexi}
+            orderers={orderers}
+          />
+        </Row>
       )
     }
     return (
-      <div>
+      <Row className="h-100 mb-5 flex-column bg-purple">
         <OrdersSellerSingleEvent
           Events={Events}
           Event={Events[eventId]}
@@ -186,7 +200,7 @@ const OrderSeller = () => {
           buyerIndexi={buyerIndexi}
           setBuyerIndexi={setBuyerIndexi}
         />
-      </div>
+      </Row>
     )
   }
 }

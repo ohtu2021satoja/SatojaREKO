@@ -1,6 +1,5 @@
-import Col from "react-bootstrap/esm/Col"
-import OrdersSellerTitle from "./OrdersSellerTitle"
-import OrderSellerBackButton from "./OrderSellerBackButton"
+import Col from "react-bootstrap/Col"
+import OrderSellerNav from "./OrderSellerNav"
 import OrderSellerNavigationBar from "./OrderSellerNavigationbar"
 import OrderSellerTimeHeader from "./OrderSellerTimeHeader"
 import OrdersSellerBuyers from "./OrderSellerBuyers"
@@ -43,56 +42,38 @@ const OrdersSellerSingleEvent = (props) => {
   }
   if (props.eventId === null) {
     return (
-      <div>
-        <OrdersSellerEvent tapahtumat={props.tapahtumat} setEventId={props.setEventId} />
-      </div>
+      <OrdersSellerEvent tapahtumat={props.tapahtumat} setEventId={props.setEventId} />
     )
   } else {
-    if (props.ListView) {
-      return (
-        <div>
-          <OrdersSellerTitle />
-          <OrderSellerBackButton HandleBackButton={props.HandleBackButton} />
-          <OrderSellerTimeHeader
-            datepaiva={datepaiva}
-            dateHour={dateHour}
-            dateMinutes={dateMinutes}
-            month={month}
-            thisDate={thisDate}
-            x={x}
+    return (
+      <>
+        <OrderSellerNav
+          navLink="/orders/seller"
+          navHeader="Tilaukset"
+          altText="Palaa tapahtumiin"
+          HandleBackButton={props.HandleBackButton}
+        />
+        <OrderSellerTimeHeader
+          datepaiva={datepaiva}
+          dateHour={dateHour}
+          dateMinutes={dateMinutes}
+          month={month}
+          thisDate={thisDate}
+          x={x}
+        />
+        <Col xs={12}>
+          <OrderSellerNavigationBar
+            HandleProductButton={props.HandleProductButton}
+            HandleOrderButton={props.HandleOrderButton}
           />
-          <Col xs={12}>
-            <OrderSellerNavigationBar
-              HandleProductButton={props.HandleProductButton}
-              HandleOrderButton={props.HandleOrderButton}
-            />
+          {props.ListView ? (
             <OrderSellerProducts
               orderProducts={props.orderProducts}
               orderers={props.orderers}
               setBuyerInfo={props.setBuyerInfo}
               buyerInfo={props.buyerInfo}
             />
-          </Col>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <OrdersSellerTitle />
-          <OrderSellerBackButton HandleBackButton={props.HandleBackButton} />
-          <OrderSellerTimeHeader
-            datepaiva={datepaiva}
-            dateHour={dateHour}
-            dateMinutes={dateMinutes}
-            month={month}
-            thisDate={thisDate}
-            x={x}
-          />
-          <Col xs={12}>
-            <OrderSellerNavigationBar
-              HandleProductButton={props.HandleProductButton}
-              HandleOrderButton={props.HandleOrderButton}
-            />
+          ) : (
             <OrdersSellerBuyers
               orderProducts={props.orderProducts}
               orderers={props.orderers}
@@ -101,10 +82,10 @@ const OrdersSellerSingleEvent = (props) => {
               buyerIndexi={props.buyerIndexi}
               setBuyerIndexi={props.setBuyerIndexi}
             />
-          </Col>
-        </div>
-      )
-    }
+          )}
+        </Col>
+      </>
+    )
   }
 }
 

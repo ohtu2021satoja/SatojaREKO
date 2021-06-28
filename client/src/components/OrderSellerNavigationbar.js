@@ -1,27 +1,26 @@
-import Nav from "react-bootstrap/esm/Nav"
+import Nav from "react-bootstrap/Nav"
 
-const OrderSellerNavigationBar = (props) => {
-  return (
-    <Nav fill variant="tabs" defaultActiveKey="product">
-      <Nav.Item>
-        <Nav.Link
-          onClick={props.HandleProductButton}
-          eventKey={"product"}
-          style={{ textDecoration: "none" }}
-        >
-          Tuotteet
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link
-          onClick={props.HandleOrderButton}
-          eventKey={"order"}
-          style={{ textDecoration: "none" }}
-        >
-          Tilaajat
-        </Nav.Link>
-      </Nav.Item>
-    </Nav>
-  )
-}
+const OrderSellerNavigationBar = (props) => (
+  <Nav fill variant="tabs" defaultActiveKey="product" className="mx-1">
+    <Nav.Item className="bg-light-gray btn-rounded-top">
+      <Nav.Link
+        onClick={props.HandleProductButton}
+        eventKey={"product"}
+        className="text-decoration-none"
+      >
+        Tuotteet
+      </Nav.Link>
+    </Nav.Item>
+    <Nav.Item className="bg-light-gray btn-rounded-top">
+      <Nav.Link
+        onClick={props.HandleOrderButton}
+        eventKey={"order"}
+        className="text-decoration-none"
+      >
+        Tilaajat
+      </Nav.Link>
+    </Nav.Item>
+  </Nav>
+)
+
 export default OrderSellerNavigationBar

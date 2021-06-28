@@ -18,13 +18,13 @@ const Event = ({ event, isChoice }) => {
     }
   }
   const startTime = new Date(event.start)
-  const startHour = startTime.getHours()
-  const startMinute = startTime.getMinutes()
+  const startHour = startTime.getUTCHours()
+  const startMinute = startTime.getUTCMinutes()
   const endTime = new Date(event.endtime)
-  const endHour = endTime.getHours()
-  const endMinute = endTime.getMinutes()
-  const Month = startTime.getMonth()
-  const EventDate = startTime.getDate()
+  const endHour = endTime.getUTCHours()
+  const endMinute = endTime.getUTCMinutes()
+  const Month = startTime.getUTCMonth() + 1
+  const EventDate = startTime.getUTCDate()
   return (
     <div>
       <h4>

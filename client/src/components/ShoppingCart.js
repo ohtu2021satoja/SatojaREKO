@@ -11,7 +11,8 @@ import { Link } from "react-router-dom"
 const ShoppingCart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.shoppingCart)
-  const buyerID = 4
+  const user = useSelector((state) => state.authedUser)
+
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const ShoppingCart = () => {
       }
     })
     if (orders.length > 0) {
-      dispatch(submitOrders({ orders: orders }, buyerID))
+      dispatch(submitOrders({ orders: orders }, user.id))
     }
   }
 

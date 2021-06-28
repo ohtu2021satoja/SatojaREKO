@@ -44,9 +44,15 @@ const updateOldPassword = async (user, old_password, new_password, usersReposito
   }
 }
 
-const updateUsersInfo = async (id, user_info) => {
+const updateUsersInfo = async (id, user_info, usersRepository) => {
   await usersRepository.updateUsersInfo(id, user_info)
 }
 
+const isAdmin = async (user, usersRepository) => {
+  const isAdmin =  await usersRepository.isAdmin(user)
+  console.log("BOOL", isAdmin)
+  return isAdmin
+}
 
-module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword, setUserPasswordHash, updateUsersInfo }
+
+module.exports = { getUser, createUser, deleteUser, getUserByEmail, setUserPassword, updateOldPassword, setUserPasswordHash, updateUsersInfo, isAdmin }

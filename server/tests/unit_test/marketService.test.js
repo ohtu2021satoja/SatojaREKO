@@ -1,5 +1,5 @@
-const marketsService = require("../services/markets")
-const mockMarketsRepository = require("./mocks/mockMarketsRepository")
+const marketsService = require("../../services/markets")
+const mockMarketsRepository = require("../mocks/mockMarketsRepository")
 
 const mockMarkets= mockMarketsRepository.getAllMarkets()
 
