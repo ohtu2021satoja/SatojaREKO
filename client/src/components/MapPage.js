@@ -72,7 +72,7 @@ const MapPage = () => {
           const location = [Number(seller.location.lat), Number(seller.location.lon)]
           return mapBounds.contains(location)
         })
-        setTotalVisible(visibleMarkets.length + visibleSellers.length)
+        setTotalVisible(visibleMarkets.length)
         setVisibleMarkets(visibleMarkets)
         setVisibleSellers(visibleSellers)
       }
@@ -151,7 +151,12 @@ const MapPage = () => {
           >
             Näytä lista
           </Button>
-          <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
+          <p>
+            Kartan alueelta löytyi{" "}
+            {totalVisible === 1
+              ? totalVisible + " noutopiste"
+              : totalVisible + " noutopistettä"}
+          </p>
           <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>
