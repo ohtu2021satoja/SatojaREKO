@@ -157,7 +157,7 @@ const ShoppingCart = () => {
         </Col>
         {totalPrice > 0 && (
           <div
-            class="card sticky-top pt-1 pb-3 px-0 mb-0"
+            className="card sticky-top pt-1 pb-3 px-0 mb-0"
             style={{
               bottom: 55,
               zIndex: 1,

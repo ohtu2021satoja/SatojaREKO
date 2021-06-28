@@ -39,11 +39,11 @@ const ProductPage = (props) => {
   }
 
   return (
-    <Row className="mx-auto">
+    <Row className="bg-yellow vh-100" style={{ paddingBottom: 100 }}>
       <BackButtonHeader linkTo={linkTo} />
       <Col
         xs={12}
-        className="d-flex justify-content-start align-items-center mb-4"
+        className="d-flex justify-content-start align-items-center mb-4 seller-link"
         as={Link}
         to={sellerPageLink}
       >
@@ -71,7 +71,6 @@ const ProductPage = (props) => {
         </Col>
       )}
       {product.sizes.map((size, index) => {
-        console.log("PRODUCTPAGE SIZE: ", size)
         return (
           <ProductPageListButtons
             addToCart={handleAddToCart}

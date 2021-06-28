@@ -15,16 +15,15 @@ const MapMarkerMarket = ({ market, icon, mapInstance }) => {
       }}
     >
       <Popup className="map-popup" autoPan={false}>
-        <div className="mt-2 px-1 py-1 border">
+        <div className="mt-2 px-1 py-1 border-0 popup-text">
           <EventInfoLabel
             market={market}
             event={market.market_events[0]}
-            classes="mb-0 mt-0"
-            styles={{ fontSize: 14 }}
+            classes="mb-0 mt-0 popup-text"
           />
           <Button
-            block
             className="btn btn-success btn-sm popup-button mt-1"
+            block
             style={{ color: "white" }}
             variant="success"
             as={Link}

@@ -1,4 +1,3 @@
-import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
@@ -144,21 +143,19 @@ const MapPage = () => {
           {markSellers}
         </MapContainer>
       </div>
-      <Row className="mt-0 mx-2">
-        <Col xs={12} className="mb-4 text-center">
-          <Button
-            className="btn btn-sm"
-            variant="outline-success"
-            onClick={scrollIntoPanel}
-          >
+      <Row className="mt-0 mb-0 mx-0 px-0">
+        <Col xs={12} className="mb-0 text-center px-0">
+          <Button className="btn btn-sm list-button" onClick={scrollIntoPanel}>
             Näytä lista
           </Button>
-          <p>
+          <p className="py-1 p-visible-locations">
             Kartan alueelta löytyi{" "}
             {totalVisible === 1
               ? totalVisible + " noutopiste"
               : totalVisible + " noutopistettä"}
           </p>
+        </Col>
+        <Col xs={12} className="mb-4 mt-0 pt-4 text-center bg-yellow">
           <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>
