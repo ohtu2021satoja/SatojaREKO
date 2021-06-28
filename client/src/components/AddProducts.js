@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 //import Form from "react-bootstrap/Form"
 //import Button from "react-bootstrap/Button"
 //import Col from "react-bootstrap/Col"
@@ -64,7 +64,7 @@ const AddProducts = () => {
     setImageID(response.data.public_id)
   }
 
-  const Reset = () => {
+  const Reset = useCallback(() => {
     setTitle("")
     setDescription("")
     setOrganic(false)
@@ -75,17 +75,16 @@ const AddProducts = () => {
     dispatch(setProductType("Valitse yksikkö"))
     dispatch(setAlv("14%"))
     dispatch(resetProductSizes())
-  }
+  }, [dispatch])
 
   useEffect(() => {
     async function fetchData() {
       const events = await eventService.getSellersUpcomingEvents(user.id)
-      setEvents(events)
+      await setEvents(events)
+      Reset()
     }
-    Reset()
     fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [Reset, user.id])
 
   const goToPreview = ({ title, description, productType, category }) => {
     setTitle(title)
