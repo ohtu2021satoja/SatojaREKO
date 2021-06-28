@@ -13,7 +13,7 @@ const SellerPage = (props) => {
   const dispatch = useDispatch()
   const sellerEvents = useSelector((state) => state.sellerEvents)
   const sellers = useSelector((state) => state.mapPoints.Sellers)
-
+  console.log("STATE: ", props.location.state)
   const seller = props.location.state.seller
     ? props.location.state.seller
     : sellers.find((seller) => seller.id === Number(sellerID))
@@ -28,7 +28,7 @@ const SellerPage = (props) => {
   }, [dispatch, seller])
 
   return (
-    <Row className="mx-auto">
+    <Row className="bg-light-blue">
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
@@ -44,7 +44,7 @@ const SellerPage = (props) => {
           <h4>Myyntipisteet</h4>
         </div>
       </Col>
-      <Col xs={12} className="d-flex justify-content-center align-items-center mb-0">
+      <Col xs={12} className="d-flex justify-content-center align-items-center mb-5">
         <EventList
           events={sellerEvents}
           linkTo={{

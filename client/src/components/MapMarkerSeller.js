@@ -14,25 +14,28 @@ const MapMarkerSeller = ({ seller, icon, mapInstance }) => {
       }}
     >
       <Popup autoPan={false}>
-        {seller.name} <br />
-        {seller.address} <br />
-        <Button
-          className="btn btn-success btn-sm popup-button"
-          style={{ color: "white" }}
-          variant="success"
-          as={Link}
-          to={{
-            pathname: `/sellers/${seller.id}`,
-            state: {
-              seller: seller,
-              linkTo: {
-                pathname: "/map",
+        <div className="mt-2 px-1 py-1 border-0 popup-text">
+          {seller.name} <br />
+          {seller.address} <br />
+          <Button
+            style={{ color: "white" }}
+            variant="success"
+            size="sm"
+            block
+            as={Link}
+            to={{
+              pathname: `/sellers/${seller.id}`,
+              state: {
+                seller: seller,
+                linkTo: {
+                  pathname: "/map",
+                },
               },
-            },
-          }}
-        >
-          Tuottajan sivulle
-        </Button>
+            }}
+          >
+            Tuottajan sivulle
+          </Button>
+        </div>
       </Popup>
     </Marker>
   )
