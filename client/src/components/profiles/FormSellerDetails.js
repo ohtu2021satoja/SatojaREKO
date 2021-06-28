@@ -20,25 +20,30 @@ const FormSellerDetails = () => {
       <Field
         name="firstname"
         id="user-firstname"
-        label="Etunimi"
+        label="Etunimi*"
         component={FormFieldText}
       />
       <ErrorMessage name="firstname" component={FormErrorMessage} />
       <Field
         name="lastname"
         id="user-lastname"
-        label="Sukunimi"
+        label="Sukunimi*"
         component={FormFieldText}
       />
       <ErrorMessage name="lastname" component={FormErrorMessage} />
       <Field
         name="phonenumber"
         id="user-phone"
-        label="Puhelinnumero"
+        label="Puhelinnumero*"
         component={FormFieldPhone}
       />
       <ErrorMessage name="phonenumber" component={FormErrorMessage} />
-      <Field name="email" id="user-email" label="Sähköposti" component={FormFieldEmail} />
+      <Field
+        name="email"
+        id="user-email"
+        label="Sähköposti*"
+        component={FormFieldEmail}
+      />
       <ErrorMessage name="email" component={FormErrorMessage} />
       <Field
         name="address"

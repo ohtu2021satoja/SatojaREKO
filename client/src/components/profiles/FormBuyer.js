@@ -9,10 +9,22 @@ import FormBuyerSettings from "./FormBuyerSettings"
 
 // Yup
 const BuyerSchema = Yup.object().shape({
-  firstname: Yup.string().required(),
-  lastname: Yup.string().required(),
-  phonenumber: Yup.string().required(),
-  email: Yup.string().email("invalid email address").required(),
+  firstname: Yup.string()
+    .max(20, "Maksimipituus 20 kirjainta")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
+    .required("Etunimi edellytetään"),
+  lastname: Yup.string()
+    .min(2, "Minimipituus 2 kirjainta")
+    .max(20, "Maksimipituus 20 kirjainta")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
+    .required("Sukunimi edellytetään"),
+  phonenumber: Yup.string()
+    .min(6, "Minimipituus 6 numeroa")
+    .max(14, "Maksimipituus 14 numeroa")
+    .required("Puhelinnumero edellytetään"),
+  email: Yup.string()
+    .email("Virheellinen sähköposti")
+    .required("Sähköposti edellytetään"),
   newsletter: Yup.boolean(),
   notification: Yup.boolean(),
 })
@@ -34,7 +46,7 @@ const AutoSubmitForm = ({ user }) => {
   return null
 }
 
-const FormBuyer = ({ user, handleUserUpdate }) => {
+const FormBuyer = ({ user, handleUserUpdate, handleError }) => {
   return (
     <Col xs={12}>
       <Formik
@@ -50,14 +62,13 @@ const FormBuyer = ({ user, handleUserUpdate }) => {
         validationSchema={BuyerSchema}
         onSubmit={async (values) => {
           const updatedUser = { ...user, ...values }
+          console.log("UPDATED_USER", updatedUser)
+
           // push updatedUser to the server
           const response = await updateAuthedUser(updatedUser)
 
-          if (response === "success") {
-            handleUserUpdate()
-          }
-
-          console.log("UPDATED_USER", updatedUser)
+          // if successful, update store, else show error
+          response !== "error" ? handleUserUpdate() : handleError()
         }}
       >
         {() => (

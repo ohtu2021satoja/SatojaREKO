@@ -9,6 +9,7 @@ import FormSeller from "./FormSeller"
 const ProfilePageSeller = ({ user, handleUserUpdate }) => {
   const [showModal, setShowModal] = useState(false)
   const [showError, setShowError] = useState(false)
+  const [showUpdateError, setShowUpdateError] = useState(false)
 
   // uploads the image to Cloudinary
   // returns image path
@@ -29,6 +30,12 @@ const ProfilePageSeller = ({ user, handleUserUpdate }) => {
         delay={5000}
         message="Kuvan lataaminen epäonnistui"
       />
+      <NotificationError
+        show={showUpdateError}
+        handleClose={() => setShowUpdateError(false)}
+        delay={5000}
+        message="Profiilin päivitys epäonnistui"
+      />
       <Row className="mt-5 mx-2">
         <FormSellerImage
           user={user}
@@ -39,7 +46,11 @@ const ProfilePageSeller = ({ user, handleUserUpdate }) => {
           handleUserUpdate={handleUserUpdate}
         />
         <ProfileHeaderSeller user={user} openModal={() => setShowModal(true)} />
-        <FormSeller user={user} handleUserUpdate={handleUserUpdate} />
+        <FormSeller
+          user={user}
+          handleUserUpdate={handleUserUpdate}
+          handleError={() => setShowUpdateError(true)}
+        />
       </Row>
     </>
   )

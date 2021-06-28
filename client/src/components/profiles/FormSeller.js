@@ -12,17 +12,39 @@ import FormSellerSettings from "./FormSellerSettings"
 
 // Yup
 const SellerSchema = Yup.object().shape({
-  name: Yup.string(),
-  firstname: Yup.string().required(),
-  lastname: Yup.string().required(),
-  phonenumber: Yup.string().required(),
-  email: Yup.string().email("invalid email address").required(),
-  address: Yup.string(),
-  zipcode: Yup.string(),
-  city: Yup.string(),
-  business_id: Yup.string(),
-  homepage: Yup.string().url(),
-  description: Yup.string(),
+  name: Yup.string()
+    .min(2, "Minimipituus 2 kirjainta")
+    .max(25, "Maksimipituus 25 kirjainta")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+  firstname: Yup.string()
+    .max(25, "Maksimipituus 25 kirjainta")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
+    .required("Etunimi edellytetään"),
+  lastname: Yup.string()
+    .min(2, "Minimipituus 2 kirjainta")
+    .max(25, "Maksimipituus 25 kirjainta")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
+    .required("Sukunimi edellytetään"),
+  phonenumber: Yup.string()
+    .min(6, "Minimipituus 6 numeroa")
+    .max(14, "Maksimipituus 14 numeroa")
+    .required("Puhelinnumero edellytetään"),
+  email: Yup.string()
+    .email("Virheellinen sähköposti")
+    .required("Sähköposti edellytetään"),
+  address: Yup.string().max(40, "Maksimipituus 40 merkkiä"),
+  zipcode: Yup.string()
+    .min(5, "Minimipituus 5 merkkiä")
+    .max(7, "Maksimipituus 7 merkkiä"),
+  city: Yup.string()
+    .min(2, "Minimipituus 2 merkkiä")
+    .max(30, "Maksimipituus 30 merkkiä")
+    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+  business_id: Yup.string()
+    .min(6, "Minimipituus 6 numeroa")
+    .max(14, "Maksimipituus 14 numeroa"),
+  homepage: Yup.string().url("Täytyy olla URL-osoite"),
+  description: Yup.string().max(400, "Maksimipituus 400 merkkiä"),
   reko_areas: Yup.array().of(
     Yup.object().shape({
       id: Yup.number(),
@@ -50,7 +72,7 @@ const AutoSubmitForm = ({ user }) => {
   return null
 }
 
-const FormSeller = ({ user, handleUserUpdate }) => {
+const FormSeller = ({ user, handleUserUpdate, handleError }) => {
   return (
     <Col xs={12}>
       <Formik
@@ -95,9 +117,8 @@ const FormSeller = ({ user, handleUserUpdate }) => {
           // push updatedUser to the server
           const response = await updateAuthedUser(updatedUser)
 
-          if (response === "success") {
-            handleUserUpdate()
-          }
+          // if successful, update store, else show error
+          response !== "error" ? handleUserUpdate() : handleError()
         }}
       >
         {({ values }) => (
@@ -124,73 +145,3 @@ const FormSeller = ({ user, handleUserUpdate }) => {
 }
 
 export default FormSeller
-
-/*
-const user = {
-      id: "75",
-      firstname: "Satoja",
-      lastname: "Reko",
-      created_at: "2021-06-21T11:57:16.859Z",
-      phonenumber: "9++043024",
-      email: "satojareko@gmail.com",
-      password: null,
-      is_buyer: false,
-      is_seller: false,
-      facebook_id: "108265444800905",
-      newsletter_check: false,
-      cancel_notification_check: false,
-      image_url: "profile-blank_or75kg",
-      name: null,
-      homepage: null,
-      address: null,
-      zipcode: null,
-      city: null,
-      salesreport_check: false,
-      description: null,
-      location: null,
-      sellers_image_url: "profile-blank_or75kg",
-      buyers_image_url: "profile-blank_or75kg",
-      reko_areas: [
-        {
-          id: 1,
-          name: "Ristiina",
-          belongs: false,
-        },
-        {
-          id: 2,
-          name: "Mikkeli",
-          belongs: false,
-        },
-        {
-          id: 3,
-          name: "Mäntyharju",
-          belongs: false,
-        },
-        {
-          id: 4,
-          name: "Puumala",
-          belongs: false,
-        },
-        {
-          id: 5,
-          name: "Pertunmaa",
-          belongs: false,
-        },
-        {
-          id: 6,
-          name: "Pieksämäki",
-          belongs: false,
-        },
-        {
-          id: 7,
-          name: "Juva",
-          belongs: false,
-        },
-        {
-          id: 8,
-          name: "testi",
-          belongs: false,
-        },
-      ],
-    }
-*/
