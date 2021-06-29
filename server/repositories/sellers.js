@@ -39,4 +39,9 @@ const getSeller = async (seller_id) => {
   return seller[0]
 }
 
-module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, getAllSellers, createSeller, getSeller }
+const getSellersRekoAreasIds = async (seller_id) => {
+  const rekoIDs = await db.query("SELECT array_agg(reko_area_id) from sellers_reko WHERE seller_id=$1", [seller_id])
+  return rekoIDs[0].array_agg
+}
+
+module.exports = { updateSalesReportCheck, updateSellersImage, addRekoAreas, deleteRekoAreas, updateSellersInfo, getAllSellers, createSeller, getSeller, getSellersRekoAreasIds }
