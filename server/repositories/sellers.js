@@ -30,7 +30,7 @@ const createSeller = async (id, params) => {
 }
 
 const getAllSellers = async () => {
-  const sellers = db.query("SELECT * FROM sellers")
+  const sellers = db.query("SELECT sellers.id, * FROM sellers INNER JOIN users ON users.id = sellers.id")
   return sellers
 }
 
