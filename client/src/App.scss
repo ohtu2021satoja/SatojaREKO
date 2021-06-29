@@ -302,7 +302,7 @@ p {
 
 .cart-panel {
   bottom: 55px;
-  z-index: 1;
+  z-index: 2;
   width: "100%";
 }
 
@@ -393,9 +393,9 @@ p {
 
 .organic-label-wrapper {
   position: absolute;
-  bottom: 65px;
-  left: 15px;
-  z-index: 1000;
+  bottom: 70%;
+  left: 5%;
+  z-index: 1;
 }
 
 .organic-label {
@@ -411,9 +411,9 @@ p {
 
 .organic-label-wrapper-pp {
   position: absolute;
-  bottom: 165px;
-  left: 90px;
-  z-index: 1000;
+  bottom: 80%;
+  left: 25%;
+  z-index: 1;
 }
 
 .organic-label-pp {

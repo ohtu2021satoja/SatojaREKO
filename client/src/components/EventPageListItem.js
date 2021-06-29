@@ -52,11 +52,13 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
     <Card className="mb-1 pt-2 px-2 ">
       <Row>
         <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
-          <Card.Img
-            src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
-            alt="Generic placeholder"
-          />
-          {product.organic && <OrganicLabel />}
+          <div style={{ position: "relative " }}>
+            <Card.Img
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
+              alt="Generic placeholder"
+            />
+            {product.organic && <OrganicLabel />}
+          </div>
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle
