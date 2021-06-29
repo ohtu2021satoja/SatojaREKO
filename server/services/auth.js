@@ -11,13 +11,10 @@ const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
 passport.serializeUser((user, done) => {
-    console.log('serialize =====> ', user)
-    console.log('serialize id =====> ', user.id)
     done(null, user)
 })
 
 passport.deserializeUser(async (user, done) => {
-    console.log("DESERIALIZE USER", user)
     const userInDB = await usersRepository.getUserById(user.id)
     if(userInDB){
       done(null, userInDB)
@@ -27,16 +24,12 @@ passport.deserializeUser(async (user, done) => {
 })
 
 const authenticateUser = async (email, password, done) => {
-  console.log("yeet")
   const user = await usersRepository.getUserByEmail(email)
-  console.log("USEEER",user)
   if (!user){
     return done(null, false, { message: "No user with that email"})
   }
   const correct = await bcrypt.compare(password, user.password)
-  console.log(correct)
   if(correct){
-    console.log("success")
     return done(null, user)
   } else {
     return done(null, false, { message: "Incorrect password" })
@@ -73,7 +66,6 @@ passport.use(new FacebookStrategy({
       email: email
     }
 
-    console.log("userData",userData)
     
     // await usersService.createUser(userData, usersRepository, sellersRepository, buyersRepository)
     

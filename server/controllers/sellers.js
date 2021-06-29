@@ -16,11 +16,12 @@ sellersRouter.delete('/:id/image', async (req, res) => {
 })
 
 sellersRouter.put('/:id/image', async (req, res) => {
+  console.log("REQ BODY",req.body)
   const { id } = req.params
   if(!req.user || req.user.id != id){
     res.status(401).send("Current user doesn't match")
   } else{
-    await sellersService.updateSellerImage(id, req.body.image_url, sellersRepository)
+    await sellersService.updateSellerImage(id, req.body.image_id, sellersRepository)
     return res.sendStatus(200).end()
   }
 

@@ -36,6 +36,7 @@ const FormSellerImage = ({
 }) => {
   // change the image for current user
   const changeImage = async (str) => {
+    console.log("RUNNING SUBMITTING IMAGE")
     const response = await updateSellerImage(user.id, str)
     // update current user (if successful)
     response === "error" ? handleError() : handleUserUpdate()
