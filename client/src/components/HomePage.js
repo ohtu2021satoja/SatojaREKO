@@ -24,7 +24,14 @@ const HomePage = ({ logOut }) => (
       </Button>
     </Col>
     <Col xs={12} sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }} className="mb-4">
-      <Button variant="success" size="lg" type="button" className="w-75">
+      <Button
+        as={Link}
+        to="/contact"
+        variant="success"
+        size="lg"
+        type="button"
+        className="w-75"
+      >
         Ota yhteyttä
       </Button>
     </Col>

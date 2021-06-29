@@ -7,7 +7,7 @@ import FormErrorMessage from "../FormErrorMessage"
 
 const FormBuyerDetails = () => {
   return (
-    <Col xs={12} className="mb-5">
+    <Col xs={12} className="mb-4">
       <Field name="firstname" id="user-name" label="Etunimi*" component={FormFieldText} />
       <ErrorMessage name="firstname" component={FormErrorMessage} />
       <Field

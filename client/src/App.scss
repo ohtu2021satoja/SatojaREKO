@@ -47,14 +47,8 @@ p {
 * BACKGROUNDS
 */
 
-.bg-purple {
-  padding-bottom: 50px;
-  background-color: rgb(108, 99, 255);
-}
-
-.bg-yellow {
-  padding-bottom: 50px;
-  background-color: rgb(232, 239, 66);
+.bg-basic {
+  padding-bottom: 80px;
 }
 
 .bg-light-blue {
@@ -62,8 +56,23 @@ p {
   background-color: rgb(190, 230, 255);
 }
 
-/* used for card button color, do not add padding */
+.bg-light-yellow {
+  padding-bottom: 50px;
+  background-color: rgb(255,250,193);
+}
+
+.bg-light-green {
+  padding-bottom: 50px;
+  background-color: rgb(178,255,187);
+}
+
+.bg-light-purple {
+  padding-bottom: 50px;
+  background-color: rgb(194,183,255);
+}
+
 .bg-light-gray {
+  padding-bottom: 50px;
   background-color: rgb(217, 217, 217);
 }
 
@@ -71,9 +80,14 @@ p {
 * BUTTONS
 */
 
-.btn-success {
+.btn-success,
+.btn-danger {
   color: #fff;
-  border-color: #9fa2a4;
+  border: 1px solid #4b4b4b;
+}
+
+.btn-primary {
+  border: 1px solid #4b4b4b;
 }
 
 .btn-outline-secondary {
@@ -81,19 +95,17 @@ p {
 }
 
 .btn-success:hover,
+.btn-danger:hover,
 .btn-outline-success:hover {
   color: #fff;
-}
-
-.btn-outline-success:hover {
-  border-color: #9fa2a4;
+  border: 1px solid #4b4b4b;
 }
 
 /* TODO: add the same to focus */
-.btn-rounded-top,
-.btn-rounded-top .active {
+.btn-rounded-top {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  background-color: #fff;
 }
 
 /**
@@ -128,6 +140,7 @@ p {
   padding: 0.75rem 0.75rem;
 }
 
+/*
 .card.bg-light-gray {
   background-color: rgb(217, 217, 217);
 }
@@ -135,13 +148,13 @@ p {
 .card.bg-light-gray:hover {
   background-color: rgb(255, 255, 255);
 }
-
+*/
 /**
 * HOME PAGE
 */
 
 .bg-field {
-  background-image: url("./media/field.jpg");
+  background-image: url("./media/bg-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

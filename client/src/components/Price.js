@@ -15,7 +15,7 @@ const Price = ({ setFieldValue, errors, touched }) => {
   }
   return (
     <Form.Group className="mb-3 text-center">
-      <Form.Label className="mb-0">Hinta</Form.Label>
+      <Form.Label className="mb-0">Hinta (sis. alv)</Form.Label>
       <Form.Control
         value={price}
         onChange={(event) => {

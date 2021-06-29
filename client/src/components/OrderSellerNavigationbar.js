@@ -2,7 +2,7 @@ import Nav from "react-bootstrap/Nav"
 
 const OrderSellerNavigationBar = (props) => (
   <Nav fill variant="tabs" defaultActiveKey="product" className="mx-1">
-    <Nav.Item className="bg-light-gray btn-rounded-top">
+    <Nav.Item className="btn-rounded-top">
       <Nav.Link
         onClick={props.HandleProductButton}
         eventKey={"product"}
@@ -11,7 +11,7 @@ const OrderSellerNavigationBar = (props) => (
         Tuotteet
       </Nav.Link>
     </Nav.Item>
-    <Nav.Item className="bg-light-gray btn-rounded-top">
+    <Nav.Item className="btn-rounded-top">
       <Nav.Link
         onClick={props.HandleOrderButton}
         eventKey={"order"}

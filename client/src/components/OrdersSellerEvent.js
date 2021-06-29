@@ -12,7 +12,7 @@ const OrdersSellerEvent = (props) => {
     return (
       <Card
         key={index}
-        className="mb-1 bg-light-gray"
+        className="mb-1 bg-light-gray border border-1 border-secondary"
         onClick={() => props.setEventId(tapahtuma.id)}
       >
         <Card.Body>

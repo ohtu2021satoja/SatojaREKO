@@ -21,7 +21,7 @@ import NavigationBarSeller from "./NavigationBarSeller"
 const Routes = ({ user, logOut, handleUserUpdate }) => (
   <Switch>
     <Route exact path="/">
-      <HomePage logOut={logOut} />
+      <HomePage />
     </Route>
     {/* SELLER ROUTES */}
     <Route exact path="/home">
@@ -50,7 +50,11 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
     </Route>
     <Route path="/profile/seller">
       <NavigationBarSeller />
-      <ProfilePageSeller user={user} handleUserUpdate={handleUserUpdate} />
+      <ProfilePageSeller
+        user={user}
+        handleUserUpdate={handleUserUpdate}
+        logOut={logOut}
+      />
     </Route>
     <Route exact path="/contact">
       <NavigationBarSeller />
@@ -71,7 +75,7 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
     </Route>
     <Route exact path="/profile/buyer">
       <NavigationBarBuyer />
-      <ProfilePageBuyer user={user} handleUserUpdate={handleUserUpdate} />
+      <ProfilePageBuyer user={user} handleUserUpdate={handleUserUpdate} logOut={logOut} />
     </Route>
     <Route
       path="/events/:eventID"

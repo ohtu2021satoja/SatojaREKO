@@ -30,7 +30,7 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
   }
 
   return (
-    <Row className="mb-3 py-3 px-1 border border-1 border-success rounded">
+    <Row className="mb-3 py-3 px-1 bg-white border border-1 border-secondary rounded">
       <Col xs={12} className="mb-2 text-center">
         <h3>Kirjaudu palveluun</h3>
       </Col>

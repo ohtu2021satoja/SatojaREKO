@@ -141,7 +141,7 @@ const OrderSeller = () => {
 
   if (eventId === null) {
     return (
-      <Row className="h-100 mb-5 flex-column bg-purple">
+      <Row className="h-100 mb-5 flex-column bg-light-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           Events={Events}
@@ -181,7 +181,7 @@ const OrderSeller = () => {
       )
     }
     return (
-      <Row className="h-100 mb-5 flex-column bg-purple">
+      <Row className="h-100 mb-5 flex-column bg-light-purple">
         <OrdersSellerSingleEvent
           Events={Events}
           Event={Events[eventId]}

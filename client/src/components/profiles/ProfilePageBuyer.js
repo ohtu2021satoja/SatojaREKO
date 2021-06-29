@@ -1,12 +1,14 @@
 import { useState } from "react"
 import imageService from "../../services/images"
 import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 import NotificationError from "../NotificationError"
 import FormBuyerImage from "./FormBuyerImage"
 import ProfileHeaderBuyer from "./ProfileHeaderBuyer"
 import FormBuyer from "./FormBuyer"
 
-const ProfilePageBuyer = ({ user, handleUserUpdate }) => {
+const ProfilePageBuyer = ({ user, handleUserUpdate, logOut }) => {
   const [showModal, setShowModal] = useState(false)
   const [showError, setShowError] = useState(false)
   const [showUpdateError, setShowUpdateError] = useState(false)
@@ -36,7 +38,7 @@ const ProfilePageBuyer = ({ user, handleUserUpdate }) => {
         delay={5000}
         message="Profiilin päivitys epäonnistui"
       />
-      <Row className="mt-5 mx-2">
+      <Row className="bg-basic mt-5 mx-2">
         <FormBuyerImage
           user={user}
           show={showModal}
@@ -51,6 +53,18 @@ const ProfilePageBuyer = ({ user, handleUserUpdate }) => {
           handleUserUpdate={handleUserUpdate}
           handleError={() => setShowUpdateError(true)}
         />
+        <Col xs={12} className="py-3">
+          <Button
+            onClick={logOut}
+            variant="outline-danger"
+            size="lg"
+            type="button"
+            className="w-100"
+            id="logout-button"
+          >
+            Kirjaudu ulos
+          </Button>
+        </Col>
       </Row>
     </>
   )

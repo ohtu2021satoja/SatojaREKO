@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button"
 
 const ProfileHeaderBuyer = ({ user, openModal }) => (
   <Col
-    xs={{ span: 6, offset: 3 }}
-    lg={{ span: 4, offset: 4 }}
+    xs={{ span: 10, offset: 1 }}
+    sm={{ span: 8, offset: 2 }}
+    md={{ span: 6, offset: 3 }}
     className="mb-4 text-center"
   >
     <h2 className="mb-4">Omat tiedot</h2>
