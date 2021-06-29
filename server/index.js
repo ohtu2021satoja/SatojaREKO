@@ -2,27 +2,27 @@ const app = require('./app')
 const http = require('http')
 const config = require('./utils/config')
 const server = http.createServer(app)
-const eventsRepository = require("./repositories/events")
+const usersRepository = require("./repositories/users")
+const bcrypt = require("bcrypt")
+const db = require("./db")
 
-//   const functioN = async () => {
-//   const seller = await eventsRepository.getOrderEvent(80)
-//   console.log(seller)
-// }
+const func = async () => {
+  const saltRounds = 10
+  const password = await bcrypt.hash("12345678", saltRounds)
+  await db.query("delete from admins")
+  await db.query("delete from users")
+  const admin = {
+    firstname: "Touko",
+    lastname: "Puro",
+    email: "puro.touko@gmail.com",
+    phonenumber: "+358854353",
+    password
+  }
 
-const testMail = require('./services/templates/orderCancelTemp')
-const mailSender = require('./services/mail')
-
-/*const run = async () => {
-
-  const template = await mailSender.initiateDeleteOrder('satojareko@gmail.com', {seller_name: "TestiPekka", email: "Testi@testi.org", phonenumber: "325532532", firstname: "Pekka", lastname: "Testipekka"},
-      {name: "Pekka"}, {reko_name: "Mikkeli", start: new Date(), address: "testikatu 5, 14124"},
-  [{name: "Mansikka", quantity: "3", price: "34"}, {name: "Mustikka", quantity: "4", price: "67"}])
-
-  await mailSender.sendTestMail(template)
-
+  await usersRepository.createUser(admin)
 }
 
-run()*/
+func()
 
 
 server.listen(config.PORT, () => {
