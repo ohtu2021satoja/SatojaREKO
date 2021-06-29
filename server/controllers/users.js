@@ -46,11 +46,12 @@ usersRouter.put('/:id', async (req, res) => {
   if(! req.user || req.user.id != id){
     res.status(401).send("Current user doesn't match")
   } else{
-    if(req.body.seller_update){
-      await sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
-    } else {
-      await buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
-    }
+      if(req.body.seller_info){
+        await sellersService.updateSellersInfo(id, req.body, sellersRepository, usersRepository)
+      } else {
+        await buyersService.updateBuyersInfo(id, req.body, buyersRepository, usersRepository)
+      }
+    console.log("REG BODY", req.body)
     await usersRepository.updateUsersInfo(id, req.body.user_info)
     res.sendStatus(200).end()
   }
@@ -72,7 +73,9 @@ usersRouter.delete("/:id", async (req, res) => {
 
 usersRouter.post("/", async (req, res) => {
   const saltRounds = 10
-  req.body.password = await bcrypt.hash(req.body.password, saltRounds)
+  if(req.body.password){
+    req.body.password = await bcrypt.hash(req.body.password, saltRounds)
+  }
   await usersService.createUser(req.body, usersRepository, sellersRepository, buyersRepository )
   res.sendStatus(200)
 })

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import * as Yup from "yup"
 import { useFormikContext, Formik, Form } from "formik"
-import { updateAuthedUser } from "../../services/users"
+import { updateAuthedSeller } from "../../services/users"
 import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button"
 import FormSellerDetails from "./FormSellerDetails"
 import FormSellerAreas from "./FormSellerAreas"
 import FormSellerSettings from "./FormSellerSettings"
+import { isEqual } from "lodash"
 
 // Yup
 const SellerSchema = Yup.object().shape({
@@ -36,10 +37,7 @@ const SellerSchema = Yup.object().shape({
   zipcode: Yup.string()
     .min(5, "Minimipituus 5 merkkiä")
     .max(7, "Maksimipituus 7 merkkiä"),
-  city: Yup.string()
-    .min(2, "Minimipituus 2 merkkiä")
-    .max(30, "Maksimipituus 30 merkkiä")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+  city: Yup.string().min(2, "Minimipituus 2 merkkiä").max(30, "Maksimipituus 30 merkkiä"),
   business_id: Yup.string()
     .min(6, "Minimipituus 6 numeroa")
     .max(14, "Maksimipituus 14 numeroa"),
@@ -60,13 +58,42 @@ const AutoSubmitForm = ({ user }) => {
   const { values, submitForm } = useFormikContext()
 
   useEffect(() => {
-    const changedUser = { ...user, ...values }
-    // submit the form imperatively 5 seconds after values have changed
-    if (user !== changedUser) {
-      setTimeout(() => {
-        submitForm()
-      }, 5000)
+    const doStuff = async () => {
+      const changedUser = { ...user, ...values }
+      changedUser.business_id =
+        changedUser.business_id === undefined ? null : changedUser.business_id
+      changedUser.name = changedUser.name === undefined ? null : changedUser.name
+      changedUser.firstname =
+        changedUser.firstname === undefined ? null : changedUser.firstname
+      changedUser.lastname =
+        changedUser.lastname === undefined ? null : changedUser.lastname
+      changedUser.phonenumber =
+        changedUser.phonenumber === undefined ? null : changedUser.phonenumber
+      changedUser.email = changedUser.email === undefined ? null : changedUser.email
+      changedUser.address = changedUser.address === undefined ? null : changedUser.address
+      changedUser.zipcode = changedUser.zipcode === undefined ? null : changedUser.zipcode
+      changedUser.city = changedUser.city === undefined ? null : changedUser.city
+      changedUser.homepage =
+        changedUser.homepage === undefined ? null : changedUser.homepage
+      changedUser.description =
+        changedUser.description === undefined ? null : changedUser.description
+      changedUser.reko_areas =
+        changedUser.reko_areas === undefined ? null : changedUser.reko_areas
+      changedUser.salesreport_check =
+        changedUser.salesreport_check === undefined ? null : changedUser.salesreport_check
+      console.log("USER", user)
+      console.log("CHANGEDUSER", changedUser)
+      // submit the form imperatively 5 seconds after values have changed
+      const isSame = await isEqual(user, changedUser)
+      console.log("isSame", isSame)
+      if (!isSame) {
+        console.log("NOT THE SAME")
+        setTimeout(() => {
+          submitForm()
+        }, 5000)
+      }
     }
+    doStuff()
   }, [user, values, submitForm])
 
   return null
@@ -115,7 +142,7 @@ const FormSeller = ({ user, handleUserUpdate, handleError }) => {
           console.log("UPDATED_USER", updatedUser)
 
           // push updatedUser to the server
-          const response = await updateAuthedUser(updatedUser)
+          const response = await updateAuthedSeller(updatedUser)
 
           // if successful, update store, else show error
           response !== "error" ? handleUserUpdate() : handleError()

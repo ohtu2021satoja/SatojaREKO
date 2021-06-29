@@ -11,8 +11,17 @@ import SignUpPage from "./login/SignUpPage"
 // import AdminPage from "./AdminPage"
 import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
+import { isEqual } from "lodash"
 
 const App = (props) => {
+  const func = async () => {
+    const bool = await isEqual(
+      { name: "lol", objects: [{ name: "lol" }] },
+      { name: "lol", objects: [{ name: "lol" }] }
+    )
+    console.log("BOOL", bool)
+  }
+  func()
   const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
@@ -62,7 +71,7 @@ const App = (props) => {
                 <SignUpPage
                   user={authedUser}
                   handleSigned={() => setSignUp(false)}
-                  handleFacebookSignUp={getUser}
+                  handleFacebookSignUp={logOut}
                   handleRegisterUser={registerUser}
                 />
               )

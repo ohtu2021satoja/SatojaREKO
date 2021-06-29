@@ -21,7 +21,7 @@ buyersRouter.put('/:id/image', async (req, res) => {
   if(! req.user || req.user.id != id){
     res.status(401).send("Current user isn't the buyer")
   } else {
-    await buyersService.updateBuyerImage(id, req.body.image_url, buyersRepository)
+    await buyersService.updateBuyerImage(id, req.body.image_id, buyersRepository)
     return res.sendStatus(200).end()
   }
 
