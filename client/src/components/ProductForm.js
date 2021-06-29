@@ -35,7 +35,7 @@ const ProductForm = ({
 
     productType: yup.string().notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
 
-    price: yup.string().notOneOf(["00,00€"], "Aseta hinta"),
+    price: yup.string().notOneOf(["00,00€", ""], "Aseta hinta"),
 
     sizes: yup
       .array()
@@ -49,7 +49,7 @@ const ProductForm = ({
 
     category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
   })
-
+  console.log("PRICE", price)
   return (
     <Row className="h-100 mb-5 bg-light-yellow flex-column">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
@@ -165,7 +165,14 @@ const ProductForm = ({
                     />
                     <p className="mb-0">Tilaus sulkeutuu {deleteBeforeEvent} tuntia</p>
                     <p>ennen noutotilaisuuden alkua</p>
-                    {events ? <Events events={events} isChoice={true} /> : null}
+                    {events.length > 0 ? (
+                      <Events events={events} isChoice={true} />
+                    ) : (
+                      <p>
+                        Reko-alueilla, joihin kuulut ei ole tulossa uusia tapahtumia. Voit
+                        lisätä itsesi uusiin Reko-alueisiin myyjän profiilista{" "}
+                      </p>
+                    )}
                   </Col>
                 </Form.Row>
               </Form.Group>

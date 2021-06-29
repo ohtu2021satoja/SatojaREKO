@@ -1,7 +1,6 @@
 import Col from "react-bootstrap/Col"
 import React, { useEffect, useState } from "react"
 import Card from "react-bootstrap/Card"
-import EventInfoLabel from "./EventInfoLabel"
 import Button from "react-bootstrap/Button"
 import * as Yup from "yup"
 import axios from "axios"
@@ -70,7 +69,7 @@ const EventListItemAdmin = ({ event }) => {
   return (
     <Card className="mb-1 py-2 px-2">
       <Button onClick={() => setShow(true)}>Muokkaa</Button>
-      <EventInfoLabel event={event} classes="mb-0" omitDate={true} />
+      <EventInfoLabelAdmin event={event} classes="mb-0" omitDate={true} />
       {show ? <EventForm setShow={setShow} event={event} /> : null}
     </Card>
   )
@@ -182,6 +181,47 @@ const EventFormDetails = () => {
       <Field name="date" id="date" label="Päivä" component={FormFieldText} />
       <ErrorMessage name="date" component={FormErrorMessage} />
     </Col>
+  )
+}
+
+const EventInfoLabelAdmin = ({ event }) => {
+  const startDate = new Date(event.start)
+  const endDate = new Date(event.endtime)
+
+  const weekdays = [
+    "Sunnuntai",
+    "Maanantai",
+    "Tiistai",
+    "Keskiviikko",
+    "Torstai",
+    "Perjantai",
+    "Lauantai",
+  ]
+
+  const startTime =
+    startDate.getUTCHours() +
+    ":" +
+    (startDate.getUTCMinutes() < 10
+      ? "0" + startDate.getUTCMinutes()
+      : startDate.getUTCMinutes())
+  const endTime =
+    endDate.getUTCHours() +
+    ":" +
+    (endDate.getUTCMinutes() < 10
+      ? "0" + endDate.getUTCMinutes()
+      : endDate.getUTCMinutes())
+
+  const startDay = weekdays[startDate.getUTCDay()]
+
+  return (
+    <div>
+      <p>
+        {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+      </p>
+      <p>
+        {startTime}-{endTime}
+      </p>
+    </div>
   )
 }
 

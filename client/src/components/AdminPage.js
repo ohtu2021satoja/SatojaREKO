@@ -215,7 +215,7 @@ const MarketForm = ({ setAddingMarket }) => {
   const [rekoChoices, setRekoChoices] = useState([])
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("https://satoja-reko.herokuapp.com/api/reko_areas")
+      const result = await axios.get("/api/reko_areas")
       setRekoAreas(result.data)
     }
     fetchData()
@@ -280,7 +280,7 @@ const ModifyEvents = ({ setModifyingEvents }) => {
       setEvents(events.data)
     }
     fetchData()
-  })
+  }, [])
   return (
     <div>
       <Button variant="danger" onClick={() => setModifyingEvents(false)}>

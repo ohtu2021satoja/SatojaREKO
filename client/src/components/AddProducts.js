@@ -123,7 +123,7 @@ const AddProducts = () => {
       setOrganic={setOrganic}
       title={title}
       category={category}
-      price={price}
+      price={""}
       description={description}
       productSizes={productSizes}
       FormTitle="Uusi ilmoitus"

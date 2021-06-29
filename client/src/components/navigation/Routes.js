@@ -1,5 +1,5 @@
 import React from "react"
-import { Switch, Route } from "react-router-dom"
+import { Switch, Route, Redirect } from "react-router-dom"
 import HomePage from "../HomePage"
 import HomePageSeller from "../HomePageSeller"
 import ProfilePageSeller from "../profiles/ProfilePageSeller"
@@ -17,12 +17,15 @@ import SellerPage from "../SellerPage"
 import ProfilePageBuyer from "../profiles/ProfilePageBuyer"
 import NavigationBarBuyer from "./NavigationBarBuyer"
 import NavigationBarSeller from "./NavigationBarSeller"
+import AdminPage from "../AdminPage"
 
 const Routes = ({ user, logOut, handleUserUpdate }) => (
   <Switch>
     <Route exact path="/">
       <HomePage />
     </Route>
+    {/* ADMIN ROUTES */}
+    <Route path="/admin">{user.is_admin ? <AdminPage /> : <Redirect to="/" />}</Route>
     {/* SELLER ROUTES */}
     <Route exact path="/home">
       <NavigationBarSeller />

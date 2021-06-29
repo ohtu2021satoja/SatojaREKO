@@ -10,19 +10,19 @@ const sendTestMail = async (mailOptions) =>  {
     await sendMail(mailOptions, mailConfig.testMail)
 }
 
-const sendCustomerMail = async (mailOptions) => sendMail(mailOptions, mailConfig.customerServiceConfig)
-const sendAutomaticMail = async (mailOptions) => sendMail(mailOptions, mailConfig.notificationConfig)
+const sendCustomerMail = async (mailOptions) =>  await sendMail(mailOptions, mailConfig.customerServiceConfig)
+const sendAutomaticMail = async (mailOptions) => await sendMail(mailOptions, mailConfig.notificationConfig)
 
 const sendMail = async (mailOptions, config) => {
     console.log("sending")
-    console.log(mailOptions)
+    console.log("MailOptions",mailOptions)
     const transporter = await nodemailer.createTransport(config)
     const mail = await transporter.sendMail(mailOptions)
     return mail
 }
 
-const initiateVerificationMail = (address, url) => initiateTemplate(address, { url }, mailTemp, mailConfig.notificationConfig)
-const initiatePasswordResetMail = (address, url) => initiateTemplate(address, { url }, resetTemp, mailConfig.notificationConfig)
+const initiateVerificationMail = async (address, url) => await initiateTemplate(address, { url }, mailTemp, mailConfig.notificationConfig)
+const initiatePasswordResetMail = async (address, url) => await initiateTemplate(address, { url }, resetTemp, mailConfig.notificationConfig)
 const initiateSellerReminderMail = async (address, url, event, user) => await initiateTemplate(address, {is_seller: true, url, event, user}, reminderTemp, mailConfig.notificationConfig)
 const initiateBuyerReminderMail = async (address, url, event, user) => await initiateTemplate(address, {is_seller: false, url, event, user}, reminderTemp, mailConfig.notificationConfig)
 const initiateDeleteOrder = async (address, seller, user, event, batches) => await initiateTemplate(address, {seller, user, event, batches, url:"https://satoja-reko.herokuapp.com"}, cancelTemp, mailConfig.testMail)
@@ -67,4 +67,4 @@ const sendEventReminderMails = async (buyers,sellers, event) => {
 }
 
 
-module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails}
+module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails, sendAutomaticMail}

@@ -2,9 +2,11 @@ import React from "react"
 import Form from "react-bootstrap/Form"
 import { changePrice } from "../reducers/priceReducer"
 import { useSelector, useDispatch } from "react-redux"
+import { Placeholder } from "cloudinary-react"
 
 const Price = ({ setFieldValue, errors, touched }) => {
   const price = useSelector((state) => state.price)
+  console.log("PRICE", price)
   const dispatch = useDispatch()
   const handlePrice = (newPrice) => {
     const lastchar = newPrice.slice(-1)
@@ -22,7 +24,9 @@ const Price = ({ setFieldValue, errors, touched }) => {
           setFieldValue("price", event.target.value)
           dispatch(changePrice(event.target.value))
         }}
+        placeholder="00,00€"
         type="text"
+        id="unit_price"
         onBlur={() => handlePrice(price)}
         placeholder="00,00€"
         size="lg"
