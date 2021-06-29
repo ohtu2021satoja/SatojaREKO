@@ -411,18 +411,19 @@ p {
 
 .organic-label-wrapper-pp {
   position: absolute;
-  bottom: 170px;
+  bottom: 165px;
   left: 90px;
   z-index: 1000;
 }
 
 .organic-label-pp {
-  border-radius: 50%;
-  width: 32px;
+  border-radius: 15%;
+  width: 72px;
   height: 32px;
-  padding: 4px;
+  padding: 2px;
   background: rgb(232, 239, 66);
+  border: 2px solid #fff;
   color: rgb(75, 75, 75);
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
 }

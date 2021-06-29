@@ -2,7 +2,7 @@ const OrganicLabel = ({ onProductPage }) => {
   if (onProductPage) {
     return (
       <div className="organic-label-wrapper-pp">
-        <div className="organic-label-pp">L</div>
+        <div className="organic-label-pp">Luomu</div>
       </div>
     )
   } else {
