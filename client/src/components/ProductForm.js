@@ -165,7 +165,14 @@ const ProductForm = ({
                     />
                     <p className="mb-0">Tilaus sulkeutuu {deleteBeforeEvent} tuntia</p>
                     <p>ennen noutotilaisuuden alkua</p>
-                    {events ? <Events events={events} isChoice={true} /> : null}
+                    {events.length > 0 ? (
+                      <Events events={events} isChoice={true} />
+                    ) : (
+                      <p>
+                        Reko-alueilla, joihin kuulut ei ole tulossa uusia tapahtumia. Voit
+                        lisätä itsesi uusiin Reko-alueisiin myyjän profiilista{" "}
+                      </p>
+                    )}
                   </Col>
                 </Form.Row>
               </Form.Group>
