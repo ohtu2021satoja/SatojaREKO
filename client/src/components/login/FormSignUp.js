@@ -10,12 +10,7 @@ import FacebookSignUpButton from "./FacebookSignUpButton"
 import { useSelector } from "react-redux"
 import { logoutUser } from "../../services/auth"
 import { setAuthedUser } from "../../actions/authedUser"
-
-const createNewFacebook = async (user) => {
-  await createNewFacebookUser(user)
-  await logoutUser()
-  await setAuthedUser(null)
-}
+import { useHistory } from "react-router-dom"
 
 // Yup
 const SharedSchema = {
@@ -44,6 +39,15 @@ const FormSignUp = ({
   handleFacebookSignUp,
   handleRegisterUser,
 }) => {
+  const history = useHistory()
+
+  const createNewFacebook = async (user) => {
+    await createNewFacebookUser(user)
+    await logoutUser()
+    await setAuthedUser(null)
+    await history.push("/")
+    await window.location.reload()
+  }
   let user = useSelector((state) => state.authedUser)
   // if user is null, importing values from user data don't work unless...
   // they are conditional ie. user ? user.name : ""
