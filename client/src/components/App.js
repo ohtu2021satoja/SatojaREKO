@@ -71,7 +71,7 @@ const App = (props) => {
                 <SignUpPage
                   user={authedUser}
                   handleSigned={() => setSignUp(false)}
-                  handleFacebookSignUp={getUser}
+                  handleFacebookSignUp={logOut}
                   handleRegisterUser={registerUser}
                 />
               )
