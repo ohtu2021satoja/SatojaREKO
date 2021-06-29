@@ -6,7 +6,7 @@ const RoutesB = ({ handleLogin, handleSigned }) => {
   console.log("handleLogin", handleLogin)
   return (
     <Switch>
-      <Route path exact="/">
+      <Route exact path="/">
         <LoginPage handleLogin={handleLogin} handleSigned={handleSigned} />
       </Route>
       <Route path="/passwordreset">
