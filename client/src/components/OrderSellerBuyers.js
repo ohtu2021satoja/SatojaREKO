@@ -1,64 +1,94 @@
-import { Link } from "react-router-dom"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
-import Table from "react-bootstrap/Table"
 import Accordion from "react-bootstrap/Accordion"
+import { Link } from "react-router-dom"
+import Table from "react-bootstrap/Table"
 import OrderDeletePopUp from "./OrderDeletePopUp"
 import { useState } from "react"
+import { useSelector } from "react-redux"
+import { deleteProductOrder, deleteOrder } from "../services/orders"
 
 const OrdersSellerBuyers = (props) => {
   const [deleteProductPopUp, setDeleteProductPopUp] = useState(false)
   const [deleteOrderPopUp, setDeleteOrderPopUp] = useState(false)
   const [productIndexi, setProductIndexi] = useState(null)
+  const [productName, setProductName] = useState("")
   const [orderToggle, setOrderToggle] = useState(false)
+  const [orderId, setOrderId] = useState(null)
+  const [sizeId, setSizeId] = useState(null)
 
-  const HandleDeleteProductButton = (i) => {
-    setDeleteProductPopUp(true)
-    setProductIndexi(i)
+  const Order = props.Order
+  const sellerId = useSelector((state) => state.authedUser.id)
+
+  async function DeleteProductOrder() {
+    const response = await deleteProductOrder(sellerId, orderId, sizeId)
+    console.log("response ", response)
   }
-  const HandleDeleteOrderButton = (i) => {
+
+  async function DeleteOrder() {
+    const response = await deleteOrder(sellerId, orderId)
+    console.log("response ", response)
+  }
+
+  const HandleDeleteProductButton = () => {
+    setDeleteProductPopUp(true)
+  }
+  const HandleDeleteOrderButton = () => {
     setDeleteOrderPopUp(true)
-    props.setBuyerIndexi(i)
     // event.stopPropagation()
   }
-  const HandleBuyerInfo = (i) => {
+  const HandleBuyerInfo = () => {
     props.setBuyerInfo(true)
-    props.setBuyerIndexi(i)
   }
 
   if (deleteOrderPopUp) {
+    console.log("productIndexi ", productIndexi)
     return (
-      <OrderDeletePopUp setPopUp={setDeleteOrderPopUp}>
-        Oletko varma että haluat poistaa {props.orderers[props.buyerIndexi].name}{" "}
-        tilauksen
+      <OrderDeletePopUp
+        setPopUp={setDeleteOrderPopUp}
+        DeleteOrder={DeleteOrder}
+        deleteOrderPopUp={deleteOrderPopUp}
+      >
+        Oletko varma että haluat poistaa {props.Order[productIndexi].users_firstname}{" "}
+        {props.Order[productIndexi].users_lastname} tilauksen
       </OrderDeletePopUp>
     )
   }
 
   if (deleteProductPopUp) {
     return (
-      <OrderDeletePopUp setPopUp={setDeleteProductPopUp}>
-        Oletko varma että haluat poistaa {props.orderProducts[productIndexi].name}{" "}
-        henkilön {props.orderers[props.buyerIndexi].name} tilauksesta
+      <OrderDeletePopUp
+        setPopUp={setDeleteProductPopUp}
+        DeleteProductOrder={DeleteProductOrder}
+        deleteProductPopUp={deleteProductPopUp}
+      >
+        Oletko varma että haluat poistaa henkilön{" "}
+        {props.Order[productIndexi].users_firstname}{" "}
+        {props.Order[productIndexi].users_lastname} tilauksesta {productName}
       </OrderDeletePopUp>
     )
   }
-  console.log("buyerinfo ", props.buyerInfo)
 
   const renderProducts = (product, index) => {
     return (
       <tr key={index}>
-        <td>{product.name}</td>
-        <td>{product.sold}</td>
-        <td>{product.price * product.sold}</td>
+        <td>{product.product_name}</td>
+        <td>{product.quantity}</td>
+        <td>{(product.price * product.quantity) / 100}€</td>
         <td>
           <Button
             type="button"
             variant="outline-light"
             area-label="Poista tuote"
-            onClick={() => HandleDeleteProductButton(index)}
+            onClick={() => {
+              HandleDeleteProductButton()
+              setProductIndexi(index)
+              setProductName(product.product_name)
+              setSizeId(product.size_id)
+              DeleteProductOrder()
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,10 +105,22 @@ const OrdersSellerBuyers = (props) => {
       </tr>
     )
   }
+  const OverallPrice = (Order) => {
+    var price = 0
+    for (let i = 0; i < Order.user_orders.length; i++) {
+      price = (Order.user_orders[i].quantity * Order.user_orders[i].price) / 100 + price
+    }
+    return price
+  }
 
   const renderBuyers = (buyer, index) => {
+    const overallPrice = OverallPrice(buyer)
     return (
-      <Accordion className="mb-1" key={index} onClick={() => props.setBuyerIndexi(index)}>
+      <Accordion
+        className="mb-1"
+        key={index}
+        onClick={() => props.setBuyerIndexi(buyer.user_id)}
+      >
         <Card>
           <Accordion.Toggle as={Button} variant="text" eventKey="0">
             <Row className="flex-nowrap align-items-center">
@@ -87,12 +129,15 @@ const OrdersSellerBuyers = (props) => {
                 to="/orders/seller"
                 xs={9}
                 className="py-2 text-decoration-none text-left"
-                onClick={() => HandleBuyerInfo(index)}
+                onClick={() => {
+                  HandleBuyerInfo()
+                  props.setBuyerIndexi(index)
+                }}
               >
-                <Card.Text className="mb-1 text-decoration-underline">
-                  {buyer.name}
+                <Card.Text style={{ textDecorationLine: "underline" }}>
+                  {buyer.users_firstname} {buyer.users_lastname}
                 </Card.Text>
-                <Card.Text>{buyer.id}</Card.Text>
+                <Card.Title>{buyer.order_id}</Card.Title>
               </Col>
               <Col xs={3}>
                 {orderToggle === true ? (
@@ -107,7 +152,7 @@ const OrdersSellerBuyers = (props) => {
                       fill="currentColor"
                       width="24"
                       height="24"
-                      class="bi bi-caret-up-fill"
+                      className="bi bi-caret-up-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
@@ -118,14 +163,17 @@ const OrdersSellerBuyers = (props) => {
                     type="button"
                     variant="outline-light"
                     area-label="Katso tilaajan tiedot"
-                    onClick={() => setOrderToggle(!orderToggle)}
+                    onClick={() => {
+                      setOrderToggle(!orderToggle)
+                      setOrderId(buyer.order_id)
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
                       width="24"
                       height="24"
-                      class="bi bi-caret-down-fill"
+                      className="bi bi-caret-down-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
@@ -143,15 +191,14 @@ const OrdersSellerBuyers = (props) => {
                       <th>Tuote</th>
                       <th>Määrä.</th>
                       <th>Hinta</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {props.orderProducts.map(renderProducts)}
+                    {buyer.user_orders.map(renderProducts)}
                     <tr>
                       <td>YHTEENSÄ</td>
                       <td></td>
-                      <td>xxx,xx€</td>
+                      <td>{overallPrice}€</td>
                       <td></td>
                     </tr>
                   </tbody>
@@ -165,7 +212,10 @@ const OrdersSellerBuyers = (props) => {
                       type="button"
                       variant="outline-light"
                       area-label="Poista koko tilaus"
-                      onClick={() => HandleDeleteOrderButton(index)}
+                      onClick={() => {
+                        HandleDeleteOrderButton()
+                        setProductIndexi(index)
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +238,7 @@ const OrdersSellerBuyers = (props) => {
     )
   }
 
-  return <div>{props.orderers.map(renderBuyers)}</div>
+  return <div>{Order.map(renderBuyers)}</div>
 }
 
 export default OrdersSellerBuyers

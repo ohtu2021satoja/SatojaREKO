@@ -1,5 +1,6 @@
-import Col from "react-bootstrap/Col"
-import OrderSellerNav from "./OrderSellerNav"
+import Col from "react-bootstrap/esm/Col"
+import OrdersSellerTitle from "./OrdersSellerTitle"
+import OrderSellerBackButton from "./OrderSellerBackButton"
 import OrderSellerNavigationBar from "./OrderSellerNavigationbar"
 import OrderSellerTimeHeader from "./OrderSellerTimeHeader"
 import OrdersSellerBuyers from "./OrderSellerBuyers"
@@ -8,84 +9,115 @@ import OrdersSellerEvent from "./OrdersSellerEvent"
 
 const OrdersSellerSingleEvent = (props) => {
   // date manipulations, disgusting I know  --Yoda
-  const x = props.Events.find((y) => y.id === props.eventId)
-  const date = new Date(x.date)
-  const dateHour = date.getHours()
-  var dateMinutes = date.getMinutes()
-  const month = date.getMonth() + 1
-  const thisDate = date.getDate()
-  var paiva = date.getDay()
+  const foundEvent = props.Orderasd.find((x) => x.event_id === props.eventId)
+
+  const dateStart = new Date(foundEvent.event_start)
+  const dateEnd = new Date(foundEvent.event_endtime)
+
+  const dateHourEnd = dateEnd.getHours()
+  var dateMinutesEnd = dateEnd.getMinutes()
+  const dateHourStart = dateStart.getHours()
+  var dateMinutesStart = dateStart.getMinutes()
+  const Month = dateStart.getMonth() + 1
+  const thisDate = dateStart.getDate()
+  var paivaStart = dateStart.getDay()
+
   var datepaiva
-  if (paiva === 1) {
+  if (paivaStart === 1) {
     datepaiva = "Maanantai"
   }
-  if (paiva === 2) {
+  if (paivaStart === 2) {
     datepaiva = "Tiistai"
   }
-  if (paiva === 3) {
+  if (paivaStart === 3) {
     datepaiva = "Keskiviikko"
   }
-  if (paiva === 4) {
+  if (paivaStart === 4) {
     datepaiva = "Torstai"
   }
-  if (paiva === 5) {
+  if (paivaStart === 5) {
     datepaiva = "Perjantai"
   }
-  if (paiva === 6) {
+  if (paivaStart === 6) {
     datepaiva = "Lauantai"
   }
-  if (paiva === 7) {
+  if (paivaStart === 7) {
     datepaiva = "Sunnuntai"
   }
-  if (dateMinutes === 0) {
-    dateMinutes = "00"
+  if (dateMinutesStart === 0) {
+    dateMinutesStart = "00"
+  }
+  if (dateMinutesEnd === 0) {
+    dateMinutesEnd = "00"
   }
   if (props.eventId === null) {
     return (
-      <OrdersSellerEvent tapahtumat={props.tapahtumat} setEventId={props.setEventId} />
+      <div>
+        <OrdersSellerEvent tapahtumat={props.tapahtumat} setEventId={props.setEventId} />
+      </div>
     )
   } else {
-    return (
-      <>
-        <OrderSellerNav
-          navLink="/orders/seller"
-          navHeader="Tilaukset"
-          altText="Palaa tapahtumiin"
-          HandleBackButton={props.HandleBackButton}
-        />
-        <OrderSellerTimeHeader
-          datepaiva={datepaiva}
-          dateHour={dateHour}
-          dateMinutes={dateMinutes}
-          month={month}
-          thisDate={thisDate}
-          x={x}
-        />
-        <Col xs={12}>
-          <OrderSellerNavigationBar
-            HandleProductButton={props.HandleProductButton}
-            HandleOrderButton={props.HandleOrderButton}
+    if (props.ListView) {
+      return (
+        <div>
+          <OrdersSellerTitle />
+          <OrderSellerBackButton HandleBackButton={props.HandleBackButton} />
+          <OrderSellerTimeHeader
+            datepaiva={datepaiva}
+            dateHourStart={dateHourStart}
+            dateMinutesStart={dateMinutesStart}
+            month={Month}
+            dateHourEnd={dateHourEnd}
+            dateMinutesEnd={dateMinutesEnd}
+            thisDate={thisDate}
+            Order={foundEvent}
           />
-          {props.ListView ? (
+          <Col xs={12}>
+            <OrderSellerNavigationBar
+              HandleProductButton={props.HandleProductButton}
+              HandleOrderButton={props.HandleOrderButton}
+            />
             <OrderSellerProducts
-              orderProducts={props.orderProducts}
-              orderers={props.orderers}
               setBuyerInfo={props.setBuyerInfo}
               buyerInfo={props.buyerInfo}
+              Order={foundEvent}
+              setListView={props.setListView}
             />
-          ) : (
+          </Col>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <OrdersSellerTitle />
+          <OrderSellerBackButton HandleBackButton={props.HandleBackButton} />
+          <OrderSellerTimeHeader
+            datepaiva={datepaiva}
+            dateHourStart={dateHourStart}
+            dateMinutesStart={dateMinutesStart}
+            month={Month}
+            dateHourEnd={dateHourEnd}
+            dateMinutesEnd={dateMinutesEnd}
+            thisDate={thisDate}
+            Order={foundEvent}
+          />
+          <Col xs={12}>
+            <OrderSellerNavigationBar
+              HandleProductButton={props.HandleProductButton}
+              HandleOrderButton={props.HandleOrderButton}
+            />
             <OrdersSellerBuyers
-              orderProducts={props.orderProducts}
-              orderers={props.orderers}
+              Order={foundEvent.events_orders}
               setBuyerInfo={props.setBuyerInfo}
               buyerInfo={props.buyerInfo}
               buyerIndexi={props.buyerIndexi}
               setBuyerIndexi={props.setBuyerIndexi}
+              SellerId={props.SellerId}
             />
-          )}
-        </Col>
-      </>
-    )
+          </Col>
+        </div>
+      )
+    }
   }
 }
 

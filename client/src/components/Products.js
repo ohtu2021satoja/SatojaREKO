@@ -2,6 +2,7 @@ import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
+import Nav from "react-bootstrap/Nav"
 import Accordion from "react-bootstrap/Accordion"
 import productService from "../services/products"
 import { useState, useEffect } from "react"
@@ -10,18 +11,8 @@ import { setProducts } from "../reducers/products"
 const Products = () => {
   const [productsei, setProductsei] = useState([])
   const id = useSelector((state) => state.authedUser.id)
-  console.log("id ", id)
 
   const dispatch = useDispatch()
-  // for now with mock data from server
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const productsii = await productService.getTestiProducts()
-  //     setProductsei(productsii)
-  //   }
-  //   fetchData()
-  // }, [])
-  // dispatch(setProducts(productsei))
 
   //when user has own products
   console.log("id ", id)
@@ -31,7 +22,7 @@ const Products = () => {
       setProductsei(productsii)
     }
     fetchData()
-  }, [id])
+  }, [])
   dispatch(setProducts(productsei))
 
   const renderProducts = (product, index) => {
@@ -54,6 +45,17 @@ const Products = () => {
                   <br />
                   Kappalehinta {product.unit_price}€
                 </Card.Text>
+                <Nav>
+                  <Nav.Link
+                    as={Button}
+                    variant="outline-secondary"
+                    size="lg"
+                    className="w-100"
+                    href={`/update/${product.id}`}
+                  >
+                    muokkaa tuotetta
+                  </Nav.Link>
+                </Nav>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
