@@ -13,18 +13,12 @@ import { isEqual } from "lodash"
 
 // Yup
 const SellerSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Minimipituus 2 kirjainta")
-    .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+  name: Yup.string().max(25, "Maksimipituus 25 kirjainta"),
   firstname: Yup.string()
     .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Etunimi edellytetään"),
   lastname: Yup.string()
-    .min(2, "Minimipituus 2 kirjainta")
     .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Sukunimi edellytetään"),
   phonenumber: Yup.string()
     .min(6, "Minimipituus 6 numeroa")
@@ -34,13 +28,9 @@ const SellerSchema = Yup.object().shape({
     .email("Virheellinen sähköposti")
     .required("Sähköposti edellytetään"),
   address: Yup.string().max(40, "Maksimipituus 40 merkkiä"),
-  zipcode: Yup.string()
-    .min(5, "Minimipituus 5 merkkiä")
-    .max(7, "Maksimipituus 7 merkkiä"),
-  city: Yup.string().min(2, "Minimipituus 2 merkkiä").max(30, "Maksimipituus 30 merkkiä"),
-  business_id: Yup.string()
-    .min(6, "Minimipituus 6 numeroa")
-    .max(14, "Maksimipituus 14 numeroa"),
+  zipcode: Yup.string().max(7, "Maksimipituus 7 merkkiä"),
+  city: Yup.string().max(30, "Maksimipituus 30 merkkiä"),
+  business_id: Yup.string().max(14, "Maksimipituus 14 numeroa"),
   homepage: Yup.string().url("Täytyy olla URL-osoite"),
   description: Yup.string().max(400, "Maksimipituus 400 merkkiä"),
   reko_areas: Yup.array().of(

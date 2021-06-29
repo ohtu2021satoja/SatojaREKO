@@ -12,15 +12,11 @@ import { isEqual } from "lodash"
 const BuyerSchema = Yup.object().shape({
   firstname: Yup.string()
     .max(20, "Maksimipituus 20 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Etunimi edellytetään"),
   lastname: Yup.string()
-    .min(2, "Minimipituus 2 kirjainta")
     .max(20, "Maksimipituus 20 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Sukunimi edellytetään"),
   phonenumber: Yup.string()
-    .min(6, "Minimipituus 6 numeroa")
     .max(14, "Maksimipituus 14 numeroa")
     .required("Puhelinnumero edellytetään"),
   email: Yup.string()

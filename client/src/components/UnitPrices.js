@@ -74,7 +74,7 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
           <Button
             type="button"
             variant="danger"
-            className="mb-3 w-75"
+            className="mb-3 w-100"
             onClick={deleteProductRow}
           >
             Poista tuoterivi
@@ -84,7 +84,7 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
           <Button
             type="button"
             variant="primary"
-            className="w-75 mb-3"
+            className="w-100 mb-3"
             onClick={addProductRow}
           >
             Lisää tuoterivi
