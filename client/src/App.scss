@@ -302,7 +302,7 @@ p {
 
 .cart-panel {
   bottom: 55px;
-  z-index: 1;
+  z-index: 2;
   width: "100%";
 }
 
@@ -379,4 +379,51 @@ p {
   color: #fff;
   width: "100%";
   font-size: 12px;
+}
+
+.market-popup {
+  background-color: rgb(255, 250, 193);
+}
+/*
+.leaflet-popup-content-wrapper,
+.leaflet-popup.tip,
+.market-popup {
+}
+*/
+
+.organic-label-wrapper {
+  position: absolute;
+  bottom: 70%;
+  left: 5%;
+  z-index: 1;
+}
+
+.organic-label {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  padding: 0px;
+  background: rgb(232, 239, 66);
+  color: rgb(75, 75, 75);
+  text-align: center;
+  font-weight: 500;
+}
+
+.organic-label-wrapper-pp {
+  position: absolute;
+  bottom: 80%;
+  left: 25%;
+  z-index: 1;
+}
+
+.organic-label-pp {
+  border-radius: 15%;
+  width: 72px;
+  height: 32px;
+  padding: 2px;
+  background: rgb(232, 239, 66);
+  border: 2px solid #fff;
+  color: rgb(75, 75, 75);
+  text-align: center;
+  font-weight: 500;
 }

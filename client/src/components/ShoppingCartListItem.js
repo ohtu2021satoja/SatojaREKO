@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import ShoppingCartListButtons from "./ShoppingCartListButtons"
+import OrganicLabel from "./OrganicLabel"
 import { Link } from "react-router-dom"
 
 const ShoppingCartListItem = ({ event, sizes, product }) => {
@@ -48,7 +49,13 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
     <Card className="mb-3 py-2 px-2 light-blue border-0">
       <Row>
         <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
-          <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
+          <div style={{ position: "relative" }}>
+            <Card.Img
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
+              alt="Generic placeholder"
+            />
+            {product.organic && <OrganicLabel />}
+          </div>
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle
@@ -56,7 +63,11 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
             as={Link}
             to={sellerPageLink}
           >
-            <p>{product.seller_name}</p>
+            <p>
+              {product.seller_name
+                ? product.seller_name
+                : product.seller_firstname + " " + product.seller_lastname}
+            </p>
             <i className="bi bi-chevron-right"></i>
           </Card.Subtitle>
           <Card.Title

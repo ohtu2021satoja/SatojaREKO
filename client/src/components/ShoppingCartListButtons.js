@@ -12,7 +12,7 @@ const ShoppingCartListButtons = ({
   singleSize,
 }) => {
   const cart = useSelector((state) => state.shoppingCart)
-  console.log("SIZE: ", size)
+
   const [inCart, setInCart] = useState(0)
   useEffect(() => {
     const updateCart = () => {

@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 
 const HomePageSeller = () => (
   <div>
-    <Row style={{ paddingTop: 70, paddingBottom: 70 }}>
+    <Row style={{ paddingTop: 30, paddingBottom: 70 }}>
       <Col
         xs={12}
         sm={{ span: 10, offset: 1 }}
@@ -12,8 +12,35 @@ const HomePageSeller = () => (
         xl={{ span: 4, offset: 4 }}
       >
         <Row>
-          <Col xs={12} className="mb-4 text-center">
-            Täällä taas!
+          <Col xs={12} className="mb-4 text-start">
+            <p>Tervetuloa!</p>
+
+            <p>Satoja.fi on palvelu, jonka avulla voit ostaa ja myydä lähiruokaa.</p>
+
+            <p>
+              Täällä tuottaja puolella voit luoda myynti-ilmoituksia Reko-tilaisuuksiin.
+            </p>
+
+            <p>
+              Palvelun kautta pääset muokkaamaan jo luotuja myynti-ilmoituksia. Voit myös
+              helposti tarkistaa tilaisuus kohtaisesti tuotteiden varaustilanteen ja
+              ostajat.
+            </p>
+
+            <p>
+              Tutustu myös palvelun ostopuoleen varaamalla tuotteita muilta tuottajilta.
+            </p>
+
+            <p>
+              Jos tarvitset apua tai lisätietoa liittyen palvelun toimintaan tai
+              Reko-tilaisuuksiin, niin ota yhteyttä:{" "}
+              <a href="mailto:​asiakaspalvelu@satoja.fi">asiakaspalvelu@satoja.fi</a>
+            </p>
+
+            <p>
+              Kesäisin terveisin! <br />
+              Team Satoja
+            </p>
           </Col>
         </Row>
       </Col>
