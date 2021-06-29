@@ -1,10 +1,9 @@
 PUT http://localhost:3003/api/users/76
 Content-Type: application/json
 
-{
-  "seller_update": true,
-  "reko_areas": [1,2],
+{ 
   "seller_info": {
+    "reko_areas": [{"id": 1, "belongs": false}],
     "address": "Hämeentie 1",
     "name": "Terpan tila"
   },
