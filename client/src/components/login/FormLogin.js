@@ -9,6 +9,7 @@ import FormFieldEmail from "../FormFieldEmail"
 import FormFieldPassword from "../FormFieldPassword"
 import FormErrorMessage from "../FormErrorMessage"
 import SignUpButton from "./SignUpButton"
+import PasswordResetButton from "./PasswordResetButton"
 
 // Yup
 const LoginSchema = Yup.object().shape({
@@ -67,6 +68,7 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
                 component={FormFieldPassword}
               />
               <ErrorMessage name="password" component={FormErrorMessage} />
+              <PasswordResetButton />
               {fail === true && (
                 <p className="text-center text-danger">
                   Virheellinen sähköposti tai salasana
