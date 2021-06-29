@@ -31,6 +31,8 @@ export const updateAuthedSeller = async (seller) => {
         description: seller.description,
         salesreport_check: seller.salesreport_check,
         homepage: seller.homepage,
+        name: seller.name,
+        zipcode: seller.zipcode,
       },
       user_info: {
         lastname: seller.lastname,
@@ -75,7 +77,8 @@ export const updateAuthedBuyer = async (buyer) => {
 
 export const updateSellerImage = async (id, image_id) => {
   try {
-    const response = await axios.put(`/api/sellers/${id}/image`, image_id)
+    const object = { image_id }
+    const response = await axios.put(`/api/sellers/${id}/image`, object)
     console.log(response.data)
     return "success"
   } catch (err) {
@@ -86,7 +89,8 @@ export const updateSellerImage = async (id, image_id) => {
 
 export const updateBuyerImage = async (id, image_id) => {
   try {
-    const response = await axios.put(`/api/buyers/${id}/image`, image_id)
+    const object = { image_id }
+    const response = await axios.put(`/api/buyers/${id}/image`, object)
     console.log(response.data)
     return "success"
   } catch (err) {

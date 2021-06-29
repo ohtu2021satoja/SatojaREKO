@@ -12,7 +12,7 @@ const ProfileHeaderSeller = ({ user, openModal }) => (
     <h2 className="mb-4">Omat tiedot</h2>
     <div className="mb-4">
       <Image
-        src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${user.buyers_image_url}`}
+        src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${user.sellers_image_url}`}
         rounded
         fluid
         alt={`kuvassa ${user.firstname} ${user.lastname}`}

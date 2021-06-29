@@ -33,7 +33,7 @@ const removeSellerImage = async (id, sellersRepository) => {
 }
 
 const updateSellerImage = async(id, image_url, sellersRepository) => {
-  await sellerRepository.updateSellersImage(id, image_url)
+  await sellersRepository.updateSellersImage(id, image_url)
 }
 
 getEventsSellerHasProducts = async (id, eventsRepository) => {

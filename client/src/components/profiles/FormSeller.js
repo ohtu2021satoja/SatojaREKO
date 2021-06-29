@@ -37,10 +37,7 @@ const SellerSchema = Yup.object().shape({
   zipcode: Yup.string()
     .min(5, "Minimipituus 5 merkkiä")
     .max(7, "Maksimipituus 7 merkkiä"),
-  city: Yup.string()
-    .min(2, "Minimipituus 2 merkkiä")
-    .max(30, "Maksimipituus 30 merkkiä")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+  city: Yup.string().min(2, "Minimipituus 2 merkkiä").max(30, "Maksimipituus 30 merkkiä"),
   business_id: Yup.string()
     .min(6, "Minimipituus 6 numeroa")
     .max(14, "Maksimipituus 14 numeroa"),
