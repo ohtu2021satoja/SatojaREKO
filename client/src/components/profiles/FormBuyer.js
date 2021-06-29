@@ -26,6 +26,8 @@ const BuyerSchema = Yup.object().shape({
   notification: Yup.boolean(),
 })
 
+let timer
+
 const AutoSubmitForm = ({ user }) => {
   // get values and submitForm from context
   const { values, submitForm } = useFormikContext()
@@ -34,8 +36,9 @@ const AutoSubmitForm = ({ user }) => {
     const changedUser = { ...user, ...values }
     // submit the form imperatively 5 seconds after values have changed
     const isSame = isEqual(user, changedUser)
+    clearTimeout(timer)
     if (!isSame) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         submitForm()
       }, 5000)
     }

@@ -30,7 +30,7 @@ const createSeller = async (id, params) => {
 }
 
 const getAllSellers = async () => {
-  const sellers = db.query("SELECT sellers.id, * FROM sellers INNER JOIN users ON users.id = sellers.id")
+  const sellers = db.query("SELECT CAST (users.id AS INTEGER) AS id, sellers.name, sellers.homepage, sellers.address, sellers.zipcode, sellers.city, sellers.description, sellers.image_url, sellers.location, sellers.business_id, users.firstname, users.lastname, users.phonenumber, users.email FROM sellers INNER JOIN users ON users.id = sellers.id")
   return sellers
 }
 
