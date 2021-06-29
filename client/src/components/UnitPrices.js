@@ -64,30 +64,32 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
     }
   }
   return (
-    <Col xs={{ span: 8, offset: 2 }} className="mb-3">
+    <Col xs={{ span: 8, offset: 2 }} className="pt-1 mb-3">
       <Alv />
       {parseType(productType)}
       <Price setFieldValue={setFieldValue} errors={errors} touched={touched} />
       {productrows}
-      <Row>
-        <Button
-          type="button"
-          variant="danger"
-          size="lg"
-          className="mb-3"
-          onClick={deleteProductRow}
-        >
-          Poista tuoterivi
-        </Button>
-        <Button
-          type="button"
-          variant="primary"
-          size="lg"
-          className="mb-3"
-          onClick={addProductRow}
-        >
-          Lisää tuoterivi
-        </Button>
+      <Row className="flex-column align-content-center text-center">
+        <Col>
+          <Button
+            type="button"
+            variant="danger"
+            className="mb-3 w-75"
+            onClick={deleteProductRow}
+          >
+            Poista tuoterivi
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            type="button"
+            variant="primary"
+            className="w-75 mb-3"
+            onClick={addProductRow}
+          >
+            Lisää tuoterivi
+          </Button>
+        </Col>
       </Row>
     </Col>
   )

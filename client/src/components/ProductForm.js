@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import { Image } from "cloudinary-react"
+import Image from "react-bootstrap/Image"
 
 const ProductForm = ({
   organic,
@@ -51,7 +51,7 @@ const ProductForm = ({
   })
 
   return (
-    <Row className="h-100 mb-5 flex-column bg-yellow">
+    <Row className="h-100 mb-5 bg-light-yellow flex-column">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
         <h2>{FormTitle}</h2>
       </Col>
@@ -83,14 +83,21 @@ const ProductForm = ({
             <Form onSubmit={handleSubmit} className="mx-3">
               <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
               {touched.category && errors.category ? <div>{errors.category}</div> : null}
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-3">
                 <Form.File
                   id="exampleFormControlFile1"
                   label="Lisää kuva"
                   onChange={(event) => handleImage(event.currentTarget.files[0])}
                 />
-                <span>{values.sizes}</span>
-                {imageID ? <Image cloudName="dpk81nwou" publicId={imageID} /> : null}
+                {imageID ? (
+                  <div className="py-2">
+                    <Image
+                      src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${imageID}`}
+                      alt="Tuotekuva"
+                      fluid
+                    />
+                  </div>
+                ) : null}
               </Form.Group>
               <Form.Group>
                 <Form.Control
@@ -99,7 +106,7 @@ const ProductForm = ({
                   value={values.title}
                   onChange={handleChange}
                   type="text"
-                  placeholder="Otsikko"
+                  placeholder="Otsikko*"
                   size="lg"
                   className="mb-2"
                 />
@@ -112,7 +119,7 @@ const ProductForm = ({
                   value={values.description}
                   onChange={handleChange}
                   type="text"
-                  placeholder="Tuotekuvaus"
+                  placeholder="Tuotekuvaus*"
                   size="lg"
                   className="mb-2"
                 />
@@ -149,15 +156,15 @@ const ProductForm = ({
                     productType={productType}
                   />
                   <Col className="text-center">
+                    <h4>Aseta sulkeutumisajankohta</h4>
                     <input
                       type="range"
                       value={deleteBeforeEvent}
                       className="w-100"
                       onChange={(event) => setDeleteBeforeEvent(event.target.value)}
                     />
-                    <p>
-                      Tilaus sulkeutuu {deleteBeforeEvent} ennen noutotilaisuuden alkua
-                    </p>
+                    <p className="mb-0">Tilaus sulkeutuu {deleteBeforeEvent} tuntia</p>
+                    <p>ennen noutotilaisuuden alkua</p>
                     {events ? <Events events={events} isChoice={true} /> : null}
                   </Col>
                 </Form.Row>

@@ -126,10 +126,16 @@ const FormSeller = ({ user, handleUserUpdate, handleError }) => {
             <Row>
               <FormSellerDetails />
               <FormSellerAreas values={values} />
-              <Col className="text-center mb-5">
+              <Col className="text-center mb-3">
                 <p>
                   Puuttuko ryhmä listalta?
-                  <Button as={Link} to="/contact" variant="link" className="px-1 pt-1">
+                  <Button
+                    as={Link}
+                    to="/contact"
+                    variant="link"
+                    size="lg"
+                    className="px-1 pt-1"
+                  >
                     Ota yhteyttä
                   </Button>
                 </p>

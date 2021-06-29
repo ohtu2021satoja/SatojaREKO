@@ -1,11 +1,14 @@
 import React, { useState } from "react"
-import { Image } from "cloudinary-react"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
+import Row from "react-bootstrap/Row"
+import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
+import Nav from "react-bootstrap/Nav"
 import Events from "./Events"
 import { useSelector } from "react-redux"
 import productService from "../services/products"
+import Image from "react-bootstrap/Image"
 
 const PreviewSize = ({ size }) => {
   return (
@@ -27,7 +30,7 @@ const PreviewSize = ({ size }) => {
 
 const PublishedHeader = ({ Reset }) => {
   return (
-    <div style={{ backgroundColor: "green" }}>
+    <div className="bg-light-green">
       <h2>Julkaistu</h2>
       <h3>Kerro kavereille</h3>
       <Button onClick={() => Reset()}>Luo uusi ilmoitus</Button>
@@ -135,47 +138,90 @@ const Preview = ({
     setPublished(true)
   }
   return (
-    <div>
-      {published ? <PublishedHeader Reset={Reset} /> : <h2>Esikatselu</h2>}
-      <Button variant="primary" onClick={() => setPreview(false)}>
-        Back
-      </Button>
-      <br />
-      {imageID ? <Image cloudName="dpk81nwou" publicId={imageID} /> : "Ei kuvaa"}
-      <br />
-      <Button variant={organic ? "success" : "danger"}>
-        {organic ? "Luomua" : "Ei luomua"}
-      </Button>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <h4>
-        {price}/{parseType(productType)}
-      </h4>
-      <p>Alv: {alv}</p>
-      <p>Varastoarvo {batch_quantity}</p>
-      {isPackage ? (
-        <p>Hinta: {priceFloat * parseFloat(productSizes[0].size.replace(",", "."))}€</p>
-      ) : null}
-      {isPackage ? null : <PreviewSizes sizes={sizes} />}
-      <h4>Noutotapahtumat</h4>
-      <Events events={previewEvents} isChoice={false} />
-      <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
-      {published ? null : (
-        <Button
-          style={{ width: "100%" }}
-          variant="success"
-          size="lg"
-          onClick={PublishProduct}
-        >
-          Julkaise
-        </Button>
-      )}
+    <Row className="h-100 mb-5 bg-light-yellow flex-column">
       {published ? (
-        <p>
-          Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
-        </p>
-      ) : null}
-    </div>
+        <PublishedHeader Reset={Reset} />
+      ) : (
+        <Col xs={12}>
+          <Nav className="mt-2 py-2 flex-nowrap align-items-center">
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to="./add"
+                aria-label="Palaa lisää tuote sivulle"
+                onClick={() => setPreview(false)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-arrow-left-square-fill back-link"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
+                </svg>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item
+              className="flex-grow-1 pt-2 text-center"
+              style={{ paddingRight: 52 }}
+            >
+              <h2>Esikatselu</h2>
+            </Nav.Item>
+          </Nav>
+        </Col>
+      )}
+      <Col xs={12} className="pt-2 mb-2 text-center">
+        {imageID ? (
+          <Image
+            src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${imageID}`}
+            alt="Tuotekuva"
+            fluid
+          />
+        ) : (
+          <p>Ei kuvaa</p>
+        )}
+      </Col>
+      <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
+        <Button variant={organic ? "success" : "danger"} className="w-50">
+          {organic ? "Luomua" : "Ei luomua"}
+        </Button>
+      </Col>
+      <Col xs={12} className="mb-2 text-center">
+        <h3>{title}</h3>
+        <p>{description}</p>
+        <h4>
+          {price}/{parseType(productType)}
+        </h4>
+        <p>Alv: {alv}</p>
+        <p>Varastoarvo {batch_quantity}</p>
+        {isPackage ? (
+          <p>Hinta: {priceFloat * parseFloat(productSizes[0].size.replace(",", "."))}€</p>
+        ) : null}
+        {isPackage ? null : <PreviewSizes sizes={sizes} />}
+      </Col>
+      <Col xs={{ span: 10, offset: 1 }} className="mb-4 text-center">
+        <h4>Noutotapahtumat</h4>
+        <Events events={previewEvents} isChoice={false} />
+        <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
+        {published ? null : (
+          <Button
+            style={{ width: "100%" }}
+            variant="success"
+            size="lg"
+            onClick={PublishProduct}
+          >
+            Julkaise
+          </Button>
+        )}
+        {published ? (
+          <p>
+            Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
+          </p>
+        ) : null}
+      </Col>
+    </Row>
   )
 }
 

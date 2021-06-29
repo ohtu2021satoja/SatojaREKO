@@ -3,8 +3,6 @@ import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
 import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
-//mport "./App.css"
-// sass with Bootstrap CSS
 import "../App.scss"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
