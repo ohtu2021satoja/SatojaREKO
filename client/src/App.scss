@@ -390,3 +390,39 @@ p {
 .market-popup {
 }
 */
+
+.organic-label-wrapper {
+  position: absolute;
+  bottom: 65px;
+  left: 15px;
+  z-index: 1000;
+}
+
+.organic-label {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  padding: 0px;
+  background: rgb(232, 239, 66);
+  color: rgb(75, 75, 75);
+  text-align: center;
+  font-weight: 500;
+}
+
+.organic-label-wrapper-pp {
+  position: absolute;
+  bottom: 170px;
+  left: 90px;
+  z-index: 1000;
+}
+
+.organic-label-pp {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  background: rgb(232, 239, 66);
+  color: rgb(75, 75, 75);
+  text-align: center;
+  font-weight: 600;
+}

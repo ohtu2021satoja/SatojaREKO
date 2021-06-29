@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import EventPageListButtons from "./EventPageListButtons"
+import OrganicLabel from "./OrganicLabel"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
@@ -55,6 +56,7 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
             src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
             alt="Generic placeholder"
           />
+          {product.organic && <OrganicLabel />}
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle

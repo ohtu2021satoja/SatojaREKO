@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
 import ProductPageListButtons from "./ProductPageListButtons"
 import BackButtonHeader from "./BackButtonHeader"
+import OrganicLabel from "./OrganicLabel"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { Link } from "react-router-dom"
@@ -52,13 +53,18 @@ const ProductPage = (props) => {
           src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.seller_image_url}`}
           alt="Generic placeholder"
         />{" "}
-        <h4 className="mt-2 ml-2">{product.seller_name}</h4>
+        <h4 className="mt-2 ml-2">
+          {product.seller_name
+            ? product.seller_name
+            : product.seller_firstname + " " + product.seller_lastname}
+        </h4>
       </Col>
       <Col xs={12} className="text-center mb-2">
         <Image
           src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_200/${product.image_url}`}
           alt="Generic placeholder"
         />{" "}
+        {product.organic && <OrganicLabel onProductPage={true} />}
       </Col>
       <Col xs={12} className="text-center mb-0">
         <h4>

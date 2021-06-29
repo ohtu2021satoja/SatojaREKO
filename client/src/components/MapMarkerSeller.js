@@ -1,7 +1,6 @@
 import { Marker, Popup } from "react-leaflet"
 import { Link } from "react-router-dom"
 import Button from "react-bootstrap/Button"
-import Image from "react-bootstrap/Image"
 
 const MapMarkerSeller = ({ seller, icon, mapInstance }) => {
   return (

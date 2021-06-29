@@ -1,6 +1,7 @@
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
+import Spinner from "react-bootstrap/Spinner"
 import EventList from "./EventList"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch, useSelector } from "react-redux"
@@ -17,7 +18,7 @@ const SellerPage = (props) => {
 
   const seller = props.location.state.seller
     ? props.location.state.seller
-    : sellers.find((seller) => seller.id === Number(sellerID))
+    : sellers.find((seller) => Number(seller.id) === Number(sellerID))
   const linkTo = props.location.state.linkTo
     ? props.location.state.linkTo
     : {
@@ -27,8 +28,8 @@ const SellerPage = (props) => {
   useEffect(() => {
     dispatch(receiveSellerEvents(seller.id))
   }, [dispatch, seller])
-  console.log(seller)
-  return (
+
+  return seller ? (
     <Row className={sellerEvents.length > 0 ? "bg-light-blue" : "bg-light-blue vh-100"}>
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
@@ -73,6 +74,10 @@ const SellerPage = (props) => {
         </Col>
       )}
     </Row>
+  ) : (
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
   )
 }
 

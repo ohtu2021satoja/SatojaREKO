@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import ShoppingCartListButtons from "./ShoppingCartListButtons"
+import OrganicLabel from "./OrganicLabel"
 import { Link } from "react-router-dom"
 
 const ShoppingCartListItem = ({ event, sizes, product }) => {
@@ -52,6 +53,7 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
             src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
             alt="Generic placeholder"
           />
+          {product.organic && <OrganicLabel />}
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle
