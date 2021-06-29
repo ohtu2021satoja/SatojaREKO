@@ -103,4 +103,4 @@ const removeSizeFromSellersOrder = async (seller_id, order_id, size_id, ordersRe
 
 
 
-module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder, removeProductFromSellersOrder }
+module.exports = { addBuyersOrders, getSellersOrders, getBuyersOrders, removeSellersOrder, removeProductFromSellersOrder, removeSizeFromSellersOrder }
