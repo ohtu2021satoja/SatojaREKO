@@ -5,10 +5,8 @@ import Image from "react-bootstrap/Image"
 import AppIcon from "../../media/satoja-logo.png"
 import FormLogin from "./FormLogin"
 import FacebookLoginButton from "./FacebookLoginButton"
-import MockLoginButton from "./MockLoginButton"
-import PasswordResetButton from "./PasswordResetButton"
 
-const LoginPage = ({ handleLogin, handleSigned, handleMockLogin }) => (
+const LoginPage = ({ handleLogin, handleSigned }) => (
   <Row className="h-100 bg-light-yellow px-2 align-items-end">
     <Col xs={12} md={{ span: 8, offset: 2 }}>
       <div className="my-3 text-center">
@@ -17,8 +15,6 @@ const LoginPage = ({ handleLogin, handleSigned, handleMockLogin }) => (
       </div>
       <FormLogin handleSigned={handleSigned} handleLogin={handleLogin} />
       <FacebookLoginButton handleLogin={handleLogin} />
-      <MockLoginButton handleMockLogin={handleMockLogin} />
-      <PasswordResetButton />
     </Col>
 
     <Col xs={12} className="mt-auto text-center">

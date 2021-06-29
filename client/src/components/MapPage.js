@@ -130,6 +130,7 @@ const MapPage = () => {
             try {
               //map.locate({ setView: true, enableHighAccuracy: true, maxZoom: 12 })
               map.locate()
+              setMapBounds(map.getBounds())
               //map.setZoom(9)
             } catch (e) {
               console.log(e)

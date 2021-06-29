@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import Spinner from "react-bootstrap/Spinner"
 import EventInfoLabel from "./EventInfoLabel"
 import EventPageListItem from "./EventPageListItem"
-import BackButtonHeader from "./BackButtonHeader"
+import TemplateTopNav from "./TemplateTopNav"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveEventProducts } from "../actions/eventProducts"
 import { useEffect } from "react"
@@ -29,9 +29,12 @@ const EventPage = (props) => {
 
   return eventProducts ? (
     <Row className="bg-light-yellow event-row">
-      <BackButtonHeader linkTo={linkTo} />
+      <TemplateTopNav
+        navHeader="Noutotilaisuus"
+        navLink={linkTo}
+        aria-label="Takaisin karttaan"
+      />
       <Col xs={12} className="text-center mb-4">
-        <h2 className="mb-4">Noutotilaisuus</h2>
         <EventInfoLabel
           market={market}
           event={event}

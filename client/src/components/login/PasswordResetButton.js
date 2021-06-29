@@ -3,8 +3,13 @@ import Button from "react-bootstrap/Button"
 
 const PasswordResetButton = () => (
   <Link to="/passwordreset">
-    <Button variant="outline-primary" size="lg" type="submit" className="w-100">
-      Palauta salasana
+    <Button
+      variant="link"
+      type="button"
+      size="lg"
+      className="m-0 pl-1 py-1 text-decoration-none"
+    >
+      Unohtuiko salasana?
     </Button>
   </Link>
 )
