@@ -6,6 +6,7 @@ import AppIcon from "../../media/satoja-logo.png"
 import FormLogin from "./FormLogin"
 import FacebookLoginButton from "./FacebookLoginButton"
 import MockLoginButton from "./MockLoginButton"
+import PasswordResetButton from "./PasswordResetButton"
 
 const LoginPage = ({ handleLogin, handleSigned, handleMockLogin }) => (
   <Row className="h-100 bg-light-yellow px-2 align-items-end">
