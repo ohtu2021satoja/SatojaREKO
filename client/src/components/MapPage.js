@@ -160,7 +160,7 @@ const MapPage = () => {
               : totalVisible + " noutopistettä"}
           </p>
         </Col>
-        <Col xs={12} className="mb-4 mt-0 pt-4 text-center bg-yellow">
+        <Col xs={12} className="mb-4 mt-0 pt-0 text-center">
           <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>

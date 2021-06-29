@@ -1,7 +1,6 @@
 import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Toast from "react-bootstrap/Toast"
 import { submitOrders } from "../actions/shoppingCart"
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
@@ -160,15 +159,7 @@ const ShoppingCart = () => {
           {!(totalPrice > 0) && <p>Ostoskorisi on tyhjä</p>}
         </Col>
         {totalPrice > 0 && (
-          <div
-            className="card sticky-top pt-1 pb-3 px-0 mb-0"
-            style={{
-              bottom: 55,
-              zIndex: 1,
-              width: "100%",
-              backgroundColor: "#eefaa2",
-            }}
-          >
+          <div className="card sticky-top pt-1 pb-3 px-0 mb-0 light-yellow cart-panel">
             <Col xs={12} className="d-flex justify-content-start">
               <h4>Varauskori</h4>
             </Col>

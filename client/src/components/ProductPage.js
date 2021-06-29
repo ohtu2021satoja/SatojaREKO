@@ -39,7 +39,7 @@ const ProductPage = (props) => {
   }
 
   return (
-    <Row className="bg-yellow vh-100" style={{ paddingBottom: 100 }}>
+    <Row className="bg-light-yellow product-page-row" style={{ paddingBottom: 100 }}>
       <BackButtonHeader linkTo={linkTo} />
       <Col
         xs={12}

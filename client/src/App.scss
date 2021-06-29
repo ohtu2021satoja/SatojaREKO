@@ -58,17 +58,17 @@ p {
 
 .bg-light-yellow {
   padding-bottom: 50px;
-  background-color: rgb(255,250,193);
+  background-color: rgb(255, 250, 193);
 }
 
 .bg-light-green {
   padding-bottom: 50px;
-  background-color: rgb(178,255,187);
+  background-color: rgb(178, 255, 187);
 }
 
 .bg-light-purple {
   padding-bottom: 50px;
-  background-color: rgb(194,183,255);
+  background-color: rgb(194, 183, 255);
 }
 
 .bg-light-gray {
@@ -298,16 +298,28 @@ p {
   height: 100%;
 }
 
+/* CART */
+
+.cart-panel {
+  bottom: 55px;
+  z-index: 1;
+  width: "100%";
+}
+
 /* PRODUCT PAGE */
 
 .seller-link {
   color: rgb(75, 75, 75);
 }
 
+.product-page-row {
+  height: 100%;
+}
+
 /* MAP PAGE */
 
-.yellow {
-  background-color: rgb(232, 239, 66);
+.light-yellow {
+  background-color: rgb(255, 250, 193);
 }
 
 .leaflet-div-icon {
