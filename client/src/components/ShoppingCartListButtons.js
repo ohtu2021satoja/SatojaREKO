@@ -43,6 +43,7 @@ const ShoppingCartListButtons = ({
       </Col>
       <Col xs={6} className="d-flex justify-content-between align-items-center">
         <Button
+          className="cart-button"
           size="sm"
           variant="light"
           onClick={(e) => {
@@ -50,11 +51,12 @@ const ShoppingCartListButtons = ({
           }}
         >
           <h4>
-            <i className="bi bi-cart-dash" style={{ fontSize: 28 }} />
+            <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>{" "}
         <h5>{inCart} </h5>
         <Button
+          className="cart-button"
           size="sm"
           variant="light"
           onClick={(e) => {
@@ -62,7 +64,7 @@ const ShoppingCartListButtons = ({
           }}
         >
           <h4>
-            <i className="bi bi-cart-plus" style={{ fontSize: 28 }} />
+            <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>
       </Col>

@@ -7,9 +7,9 @@ const FormSellerSettings = () => {
     <Col xs={{ span: 10, offset: 1 }}>
       <h5 className="mb-4 text-center">Sähköpostiasetukset</h5>
       <Field
-        name="emailReport"
+        name="salesreport_check"
         id="user-settings"
-        label="Lähetä tilaisuuskohtainen myyntiraportti, kun tilausaika on umpeutunut"
+        label="Lähetä tilaisuuskohtainen myyntiraportti, kun tilausaika on päättynyt"
         component={FormFieldCheckbox}
       />
     </Col>

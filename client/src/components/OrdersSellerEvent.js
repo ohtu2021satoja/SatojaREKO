@@ -1,4 +1,3 @@
-import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
 
 const OrdersSellerEvent = (props) => {
@@ -12,20 +11,17 @@ const OrdersSellerEvent = (props) => {
 
     return (
       <Card
-        as={Col}
         key={index}
-        xs={12}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 8, offset: 2 }}
-        lg={{ span: 6, offset: 3 }}
-        xl={{ span: 4, offset: 4 }}
+        className="mb-1 bg-light-gray border border-1 border-secondary"
         onClick={() => props.setEventId(tapahtuma.id)}
       >
-        <div>{tapahtuma.name}</div>
-        {tapahtuma.address}
-        <div>
-          aika {date.getHours()}:{dateMinutes}-
-        </div>
+        <Card.Body>
+          <Card.Text className="mb-0">{tapahtuma.name}</Card.Text>
+          <Card.Text className="mb-0">{tapahtuma.address}</Card.Text>
+          <Card.Text className="mb-0">
+            {date.getHours()}:{dateMinutes} -
+          </Card.Text>
+        </Card.Body>
       </Card>
     )
   }

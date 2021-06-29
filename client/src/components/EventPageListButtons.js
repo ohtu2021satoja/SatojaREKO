@@ -34,7 +34,7 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
           }}
         >
           <h4>
-            <i className="bi bi-cart-dash" style={{ fontSize: 28 }} />
+            <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>{" "}
         <h5>{inCart} </h5>
@@ -47,7 +47,7 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
           }}
         >
           <h4>
-            <i className="bi bi-cart-plus" style={{ fontSize: 28 }} />
+            <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>
       </Col>

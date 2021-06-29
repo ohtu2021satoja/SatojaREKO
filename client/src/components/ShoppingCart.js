@@ -81,77 +81,85 @@ const ShoppingCart = () => {
   }
 
   return (
-    <Row>
-      <Col xs={12} className="mb-4 text-center">
-        <h2 className="mb-4">Ostoskori</h2>
-        {cart.map((order, index) => {
-          if (orderHasSizes(order)) {
-            return (
-              <div key={index}>
-                <h6>
-                  <u>Noutotilaisuus</u>
-                </h6>
-                <div className="mb-3">
-                  <EventInfoLabel
-                    event={order.event}
-                    market={order.event.market}
-                    classes="mb-0 mt-0"
-                    styles={{ fontSize: 16 }}
-                  />
-                </div>
-                {
-                  // Sort orders by product to render different sizes
-                  // of same product on the same card
-                  sortSizesByProduct(order).map((product, index) => {
-                    return (
-                      <ShoppingCartListItem
-                        event={order.event}
-                        product={product.product}
-                        sizes={product.batches}
-                        key={index}
-                      />
-                    )
-                  })
-                }
-                <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
-                  <h5>YHTEENSÄ</h5>{" "}
-                  <h5>
-                    {Math.round(
-                      order.batches.reduce(
-                        (acc, size) =>
-                          acc + size.order_quantity * size.unit * size.product.unit_price,
-                        0
-                      ) * 100
-                    ) / 10000}
-                    e
-                  </h5>
-                </Col>
-                <Col xs={12} className="d-flex justify-content-end mb-5 mt-1">
-                  <Button
-                    variant="success"
-                    as={Link}
-                    to={{
-                      pathname: `/events/${
-                        order.event.event_id ? order.event.event_id : order.event.id
-                      }`,
-                      state: {
-                        market: order.event.market,
-                        event: order.event,
-                        linkTo: {
-                          pathname: "/cart",
+    <>
+      <Row
+        className={
+          totalPrice === 0 ? "mb-0 pb-0 bg-light-blue vh-100" : "mb-0 pb-0 bg-light-blue"
+        }
+      >
+        <Col xs={12} className="mb-3 pb-0 mt-5 text-center " styles={{ marginBottom: 0 }}>
+          <h2 className="mb-4">Ostoskori</h2>
+          {cart.map((order, index) => {
+            if (orderHasSizes(order)) {
+              return (
+                <div key={index}>
+                  <h6>
+                    <u>Noutotilaisuus</u>
+                  </h6>
+                  <div className="mb-3">
+                    <EventInfoLabel
+                      event={order.event}
+                      market={order.event.market}
+                      classes="mb-0 mt-0"
+                      styles={{ fontSize: 16 }}
+                    />
+                  </div>
+                  {
+                    // Sort orders by product to render different sizes
+                    // of same product on the same card
+                    sortSizesByProduct(order).map((product, index) => {
+                      return (
+                        <ShoppingCartListItem
+                          event={order.event}
+                          product={product.product}
+                          sizes={product.batches}
+                          key={index}
+                        />
+                      )
+                    })
+                  }
+                  <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
+                    <h5>YHTEENSÄ</h5>{" "}
+                    <h5>
+                      {Math.round(
+                        order.batches.reduce(
+                          (acc, size) =>
+                            acc +
+                            size.order_quantity * size.unit * size.product.unit_price,
+                          0
+                        ) * 100
+                      ) / 10000}
+                      e
+                    </h5>
+                  </Col>
+                  <Col xs={12} className="d-flex justify-content-end mb-5 mt-1">
+                    <Button
+                      variant="success"
+                      as={Link}
+                      to={{
+                        pathname: `/events/${
+                          order.event.event_id ? order.event.event_id : order.event.id
+                        }`,
+                        state: {
+                          market: order.event.market,
+                          event: order.event,
+                          linkTo: {
+                            pathname: "/cart",
+                          },
                         },
-                      },
-                    }}
-                  >
-                    + Lisää tuotteita
-                  </Button>
-                </Col>
-              </div>
-            )
-          } else return null
-        })}
-        {totalPrice > 0 ? (
-          <div className="px-0 py-3 mx-0" style={{ backgroundColor: "#eefaa2" }}>
+                      }}
+                    >
+                      + Lisää tuotteita
+                    </Button>
+                  </Col>
+                </div>
+              )
+            } else return null
+          })}
+          {!(totalPrice > 0) && <p>Ostoskorisi on tyhjä</p>}
+        </Col>
+        {totalPrice > 0 && (
+          <div className="card sticky-top pt-1 pb-3 px-0 mb-0 light-yellow cart-panel">
             <Col xs={12} className="d-flex justify-content-start">
               <h4>Varauskori</h4>
             </Col>
@@ -159,17 +167,15 @@ const ShoppingCart = () => {
               <h5>YHTEENSÄ</h5>
               <h5> {totalPrice}e</h5>
             </Col>
-            <Col xs={12} className="mb-4 justify-content-center">
+            <Col xs={12} className="mb-0 pb-0 justify-content-center">
               <Button variant="success" onClick={handleSubmitOrders} block>
                 Lähetä varaus
               </Button>
             </Col>
           </div>
-        ) : (
-          <p>Ostoskorisi on tyhjä</p>
         )}
-      </Col>
-    </Row>
+      </Row>
+    </>
   )
 }
 

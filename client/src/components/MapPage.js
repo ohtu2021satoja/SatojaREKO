@@ -1,4 +1,3 @@
-import "./MapPage.css"
 import { useRef, useEffect, useState } from "react"
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet"
 import MapBottomPanel from "./MapBottomPanel"
@@ -16,15 +15,16 @@ const MapInstance = (props) => {
   const map = useMapEvents({
     load: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
     },
     zoomend: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
     },
     moveend: () => {
       props.setMapBounds(map.getBounds())
-      props.setMapCenter(map.getCenter())
+    },
+    locationfound: (e) => {
+      console.log(e)
+      map.setView(e.latlng, 9)
     },
   })
 
@@ -39,9 +39,10 @@ const MapPage = () => {
   const [visibleMarkets, setVisibleMarkets] = useState([])
   const [visibleSellers, setVisibleSellers] = useState([])
   const [totalVisible, setTotalVisible] = useState(0)
-  const [mapCenter, setMapCenter] = useState([61.59229896416896, 27.256461799773678])
   const [mapBounds, setMapBounds] = useState(null)
   const [mapInstance, setMapInstance] = useState(null)
+
+  const defaultLocation = [61.59229896416896, 27.256461799773678]
 
   const firstRender = useRef(true)
   const bottomPanelRef = useRef(null)
@@ -52,27 +53,32 @@ const MapPage = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
+      window.scrollTo(0, 0)
       dispatch(getMapPoints())
-
       return
     }
 
-    if (mapPoints.Markets) {
+    if (Object.keys(mapPoints).length > 0 && mapBounds) {
       const updateMapStatus = () => {
-        const visibleMarkets = mapPoints.Markets.filter((market) => {
-          if (!market.location || !market.location.lat || !market.location.lon)
-            return null
-          const location = [Number(market.location.lat), Number(market.location.lon)]
-          return mapBounds.contains(location)
-        })
+        const visibleMarkets = mapPoints.Markets
+          ? mapPoints.Markets.filter((market) => {
+              if (!market.location || !market.location.lat || !market.location.lon)
+                return null
+              const location = [Number(market.location.lat), Number(market.location.lon)]
+              return mapBounds.contains(location)
+            })
+          : []
 
-        const visibleSellers = mapPoints.Sellers.filter((seller) => {
-          if (!seller.location || !seller.location.lat || !seller.location.lon)
-            return null
-          const location = [Number(seller.location.lat), Number(seller.location.lon)]
-          return mapBounds.contains(location)
-        })
-        setTotalVisible(visibleMarkets.length + visibleSellers.length)
+        const visibleSellers = mapPoints.Sellers
+          ? mapPoints.Sellers.filter((seller) => {
+              if (!seller.location || !seller.location.lat || !seller.location.lon)
+                return null
+              const location = [Number(seller.location.lat), Number(seller.location.lon)]
+              return mapBounds.contains(location)
+            })
+          : []
+
+        setTotalVisible(visibleMarkets.length)
         setVisibleMarkets(visibleMarkets)
         setVisibleSellers(visibleSellers)
       }
@@ -83,10 +89,6 @@ const MapPage = () => {
 
   const handleBoundsChange = (value) => {
     setMapBounds(value)
-  }
-
-  const handleCenterChange = (value) => {
-    setMapCenter(value)
   }
 
   const getMapInstance = (map) => {
@@ -118,42 +120,51 @@ const MapPage = () => {
   ))
 
   return mapPoints ? (
-    <div className="map-container">
-      <MapContainer
-        center={mapCenter}
-        scrollWheelZoom={true}
-        zoom={10}
-        whenCreated={(map) => {
-          setMapBounds(map.getBounds())
-          setMapCenter(map.getCenter())
-        }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MapInstance
-          setMapBounds={handleBoundsChange}
-          setMapCenter={handleCenterChange}
-          setMapInstance={getMapInstance}
-        />
-        {markMarkets}
-        {markSellers}
-      </MapContainer>
-      <Row className="mt-1 mx-2">
-        <Col xs={12} className="mb-4 text-center">
-          <Button
-            className="btn btn-sm"
-            variant="outline-success"
-            onClick={scrollIntoPanel}
-          >
+    <>
+      <div className="map-container">
+        <MapContainer
+          scrollWheelZoom={true}
+          zoom={9}
+          center={defaultLocation}
+          whenCreated={(map) => {
+            try {
+              //map.locate({ setView: true, enableHighAccuracy: true, maxZoom: 12 })
+              map.locate()
+              //map.setZoom(9)
+            } catch (e) {
+              console.log(e)
+            }
+          }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <MapInstance
+            setMapBounds={handleBoundsChange}
+            setMapInstance={getMapInstance}
+          />
+          {markMarkets}
+          {markSellers}
+        </MapContainer>
+      </div>
+      <Row className="mt-0 mb-0 mx-0 px-0">
+        <Col xs={12} className="mb-0 text-center px-0">
+          <Button className="btn btn-sm list-button" onClick={scrollIntoPanel}>
             Näytä lista
           </Button>
-          <p>Kartan alueelta löytyi {totalVisible} noutopistettä</p>
+          <p className="py-1 p-visible-locations">
+            Kartan alueelta löytyi{" "}
+            {totalVisible === 1
+              ? totalVisible + " noutopiste"
+              : totalVisible + " noutopistettä"}
+          </p>
+        </Col>
+        <Col xs={12} className="mb-4 mt-0 pt-0 text-center">
           <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
         </Col>
       </Row>
-    </div>
+    </>
   ) : (
     <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>
