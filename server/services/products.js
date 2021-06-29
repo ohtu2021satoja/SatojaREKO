@@ -1,4 +1,17 @@
 const BLANK_IMAGE = "profile-blank_or75kg"
+const BLANK_IMAGE_MEAT = ""
+const BLANK_IMAGE_BREAD_AND_BAKING = "leivat-leivonta_2x_ozueux"
+const BLANK_IMAGE_DRINKS = "juomat_2x_slczgk"
+const BLANK_IMAGE_EGGS = "munat_2x_zo3xnq"
+const BLANK_IMAGE_VEGETABLES = "vihannekset_2x_o482nl"
+const BLANK_IMAGE_OTHERS = "muut_2x_cxusjk"
+const BLANK_IMAGE_FISH_AND_MEAT = "liha-kala_2x_ja6fny"
+const BLANK_IMAGE_FRUIT_AND_BERRIES = "hedelmat-marjat_2x_zfyftv"
+const BLANK_IMAGE_DAIRY = "maitotuotteet_zfrkwu"
+const BLANK_IMAGE_HERBS_AND_SPICES = "yrtit-mausteet_yvekbb"
+const BLANK_IMAGE_FOOD = "ruokaa_2x_nzvn3e"
+
+
 
 const getAllProducts = async (productsRepository) => {
     const products = productsRepository.getAllProducts()
@@ -49,7 +62,40 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
     }
     console.log(product.sizes)
     if(!new_product.image_url){
-      new_product.image_url = BLANK_IMAGE
+      if(new_product.category="Vihannekset"){
+        new_product.image_url = BLANK_IMAGE_VEGETABLES
+      }
+      if(new_product.category="Liha & kala"){
+        new_product.image_url = BLANK_IMAGE_FISH_AND_MEAT
+      }
+      if(new_product.category="Liha & kala"){
+        new_product.image_url = BLANK_IMAGE_FISH_AND_MEAT
+      }
+      if(new_product.category="Munat"){
+        new_product.image_url = BLANK_IMAGE_EGGS
+      }
+      if(new_product.category="Hedelmät & marjat"){
+        new_product.image_url = BLANK_IMAGE_FRUIT_AND_BERRIES
+      }
+      if(new_product.category="Maitotuotteet"){
+        new_product.image_url = BLANK_IMAGE_DAIRY
+      }
+      if(new_product.category="Leivät & leivonta"){
+        new_product.image_url = BLANK_IMAGE_BREAD_AND_BAKING
+      }
+      if(new_product.category="Yrtit & mausteet"){
+        new_product.image_url = BLANK_IMAGE_HERBS_AND_SPICES
+      }
+      if(new_product.category="Ruokaa"){
+        new_product.image_url = BLANK_IMAGE_FOOD
+      }
+      if(new_product.category="Juomaa"){
+        new_product.image_url = BLANK_IMAGE_DRINKS
+      }
+      if(new_product.category="Muut"){
+        new_product.image_url = BLANK_IMAGE_OTHERS
+      }
+
     }
 
     for(i in new_sizes){

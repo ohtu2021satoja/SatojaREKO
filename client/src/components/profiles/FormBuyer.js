@@ -1,11 +1,12 @@
 import { useEffect } from "react"
 import * as Yup from "yup"
 import { useFormikContext, Formik, Form } from "formik"
-import { updateAuthedUser } from "../../services/users"
+import { updateAuthedBuyer } from "../../services/users"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import FormBuyerDetails from "./FormBuyerDetails"
 import FormBuyerSettings from "./FormBuyerSettings"
+import { isEqual } from "lodash"
 
 // Yup
 const BuyerSchema = Yup.object().shape({
@@ -36,7 +37,8 @@ const AutoSubmitForm = ({ user }) => {
   useEffect(() => {
     const changedUser = { ...user, ...values }
     // submit the form imperatively 5 seconds after values have changed
-    if (user !== changedUser) {
+    const isSame = isEqual(user, changedUser)
+    if (!isSame) {
       setTimeout(() => {
         submitForm()
       }, 5000)
@@ -65,7 +67,7 @@ const FormBuyer = ({ user, handleUserUpdate, handleError }) => {
           console.log("UPDATED_USER", updatedUser)
 
           // push updatedUser to the server
-          const response = await updateAuthedUser(updatedUser)
+          const response = await updateAuthedBuyer(updatedUser)
 
           // if successful, update store, else show error
           response !== "error" ? handleUserUpdate() : handleError()

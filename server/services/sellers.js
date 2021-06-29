@@ -4,7 +4,9 @@ const geoap = require("../geoap")
 const BLANK_IMAGE = "profile-blank_or75kg"
 
 const updateSellersInfo= async (seller_id, req_body, sellersRepository, usersRepository) => {
-  const new_reko_areas = req_body.reko_areas
+  let reko_areas = req_body.seller_info.reko_areas
+  reko_areas = reko_areas.filter(reko_area => reko_area.belongs === true)
+  const new_reko_areas = reko_areas.map(reko_area => reko_area.id)
   const old_reko_areas = await sellersRepository.getSellersRekoAreasIds(seller_id)
   console.log("OLD REKO ARES", old_reko_areas)
   const delete_reko_areas = old_reko_areas.filter(reko_area => ! new_reko_areas.includes(reko_area) )
