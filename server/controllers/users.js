@@ -73,7 +73,9 @@ usersRouter.delete("/:id", async (req, res) => {
 
 usersRouter.post("/", async (req, res) => {
   const saltRounds = 10
-  req.body.password = await bcrypt.hash(req.body.password, saltRounds)
+  if(req.body.password){
+    req.body.password = await bcrypt.hash(req.body.password, saltRounds)
+  }
   await usersService.createUser(req.body, usersRepository, sellersRepository, buyersRepository )
   res.sendStatus(200)
 })
