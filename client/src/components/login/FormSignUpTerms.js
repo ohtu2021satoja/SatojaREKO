@@ -9,7 +9,7 @@ const FormSignUpTerms = () => (
     <Field
       name="terms_ok"
       id="user-terms"
-      label="Jatkamalla sitoudut noudattamaan"
+      label="Hyväksyn"
       component={FormFieldCheckboxInline}
     />
     <a
@@ -18,7 +18,7 @@ const FormSignUpTerms = () => (
       rel="noreferrer"
     >
       <Button variant="link" className="px-0 py-1">
-        käyttöehtojamme
+        käyttöehdot
       </Button>
     </a>
     <ErrorMessage name="terms_ok" component={FormErrorMessage} />

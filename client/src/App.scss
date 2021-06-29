@@ -1,0 +1,382 @@
+@import "custom";
+
+body {
+  font-family: "Work Sans", sans-serif;
+  color: #4b4b4b;
+  font-size: 100%; /* 16px on default browser settings */
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 1.55rem;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+h3 a {
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+p {
+  font-size: 1.25rem;
+  line-height: 1.35rem;
+}
+
+/* lessen rounding borders from cards and buttons */
+.card,
+.btn {
+  border-radius: 0.2rem;
+}
+
+/**
+* BACKGROUNDS
+*/
+
+.bg-basic {
+  padding-bottom: 80px;
+}
+
+.bg-light-blue {
+  padding-bottom: 50px;
+  background-color: rgb(190, 230, 255);
+}
+
+.bg-light-yellow {
+  padding-bottom: 50px;
+  background-color: rgb(255, 250, 193);
+}
+
+.bg-light-green {
+  padding-bottom: 50px;
+  background-color: rgb(178, 255, 187);
+}
+
+.bg-light-purple {
+  padding-bottom: 50px;
+  background-color: rgb(194, 183, 255);
+}
+
+.bg-light-gray {
+  padding-bottom: 50px;
+  background-color: rgb(217, 217, 217);
+}
+
+/**
+* BUTTONS
+*/
+
+.btn-success,
+.btn-danger {
+  color: #fff;
+  border: 1px solid #4b4b4b;
+}
+
+.btn-primary {
+  border: 1px solid #4b4b4b;
+}
+
+.btn-outline-secondary {
+  color: #4b4b4b;
+}
+
+.btn-success:hover,
+.btn-danger:hover,
+.btn-outline-success:hover {
+  color: #fff;
+  border: 1px solid #4b4b4b;
+}
+
+/* TODO: add the same to focus */
+.btn-rounded-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #fff;
+}
+
+/**
+* ICON LINKS
+*/
+
+/* https://css-tricks.com/adding-shadows-to-svg-icons-with-css-and-svg-filters/ */
+.back-link {
+  transform: scale(2);
+  fill: rgb(255, 255, 255);
+  filter: drop-shadow(1px 2px 1px rgb(75, 75, 75));
+}
+
+.back-link:hover {
+  fill: rgb(217, 217, 217);
+}
+
+.delete-link {
+  transform: scale(2);
+  fill: red;
+}
+
+.delete-link:hover {
+  fill: rgb(217, 217, 217);
+}
+
+/**
+* CARDS
+*/
+
+.card-body {
+  padding: 0.75rem 0.75rem;
+}
+
+/*
+.card.bg-light-gray {
+  background-color: rgb(217, 217, 217);
+}
+
+.card.bg-light-gray:hover {
+  background-color: rgb(255, 255, 255);
+}
+*/
+/**
+* HOME PAGE
+*/
+
+.bg-field {
+  background-image: url("./media/bg-image.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-sign {
+  max-width: 14rem;
+  background-color: rgb(93, 64, 55);
+  color: #fff;
+  border: 0.5rem solid #fff;
+  border-radius: 0.5rem;
+}
+
+/* custom home signs */
+.point-left {
+  display: inline-block;
+  width: 16rem;
+  height: 4rem;
+  padding-top: 0.5rem;
+  padding-left: 0.25rem;
+  position: relative;
+  background: #fff;
+  cursor: pointer;
+}
+
+.point-left::before {
+  content: "";
+  position: absolute;
+  left: -2rem;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-right: 2rem solid #fff;
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent;
+}
+
+.point-left-inner {
+  display: inline-block;
+  width: 15.25rem;
+  height: 3rem;
+  position: relative;
+  background: rgb(57, 73, 171);
+}
+
+.point-left-inner::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: -1.5rem;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-right: 1.5rem solid rgb(57, 73, 171);
+  border-top: 1.5rem solid transparent;
+  border-bottom: 1.5rem solid transparent;
+}
+
+.point-right {
+  display: inline-block;
+  width: 16rem;
+  height: 4rem;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  position: relative;
+  background: #fff;
+}
+
+.point-right::after {
+  content: "";
+  position: absolute;
+  right: -2rem;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 2rem solid #fff;
+  border-top: 2rem solid transparent;
+  border-bottom: 2em solid transparent;
+}
+
+.point-right-inner {
+  display: inline-block;
+  width: 15.25rem;
+  height: 3rem;
+  position: relative;
+  background: rgb(57, 73, 171);
+}
+
+.point-right-inner::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  right: -1.5rem;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 1.5rem solid rgb(57, 73, 171);
+  border-top: 1.5rem solid transparent;
+  border-bottom: 1.5rem solid transparent;
+}
+
+.point-content {
+  position: relative;
+  color: #fff;
+  top: 0.5rem;
+}
+
+.btn.point-left,
+.btn.point-right {
+  border: none;
+}
+
+.point-left:hover,
+.point-right:hover {
+  background: rgb(57, 73, 171);
+}
+
+/* PRODUCT LISTS */
+
+.cart-button:hover,
+.cart-button:active,
+.cart-button:focus {
+  background-color: rgb(190, 230, 255);
+}
+
+.unstyled-link {
+  text-decoration: none !important;
+  color: rgb(75, 75, 75);
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.light-blue {
+  background-color: rgb(190, 230, 255);
+}
+
+.event-row {
+  height: 100%;
+}
+
+/* CART */
+
+.cart-panel {
+  bottom: 55px;
+  z-index: 1;
+  width: "100%";
+}
+
+/* PRODUCT PAGE */
+
+.seller-link {
+  color: rgb(75, 75, 75);
+}
+
+.product-page-row {
+  height: 100%;
+}
+
+/* MAP PAGE */
+
+.light-yellow {
+  background-color: rgb(255, 250, 193);
+}
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+.map-container {
+  padding-top: 10px;
+  margin-bottom: 0px;
+  height: 80%;
+}
+
+.marker-event {
+  color: rgb(70, 143, 3);
+}
+
+.marker-event:hover,
+.marker-event:active {
+  color: rgb(124, 231, 124);
+}
+
+.marker-seller {
+  color: rgb(17, 17, 110);
+}
+
+.marker-seller:hover,
+.marker-seller:active {
+  color: rgb(154, 154, 230);
+}
+
+.popup-button {
+  color: #fff;
+}
+
+.popup-card {
+  border-width: 0;
+}
+
+.popup-text {
+  font-family: "Work Sans", sans-serif;
+  font-size: 14px;
+}
+
+.list-button {
+  background-color: rgb(75, 75, 75);
+  color: #fff;
+}
+
+.p-visible-locations {
+  background-color: rgb(75, 75, 75);
+  color: #fff;
+  width: "100%";
+  font-size: 12px;
+}

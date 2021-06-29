@@ -29,9 +29,12 @@ const EventForm = ({ setAddingEvent }) => {
   ])
   const [market, setMarket] = useState(null)
 
-  useEffect(async () => {
-    const response = await axios.get("api/markets")
-    setMarkets(response.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("api/markets")
+      setMarkets(response.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ starting_time, end_time, date }) => {
     console.log(date)
@@ -210,9 +213,12 @@ const MarketForm = ({ setAddingMarket }) => {
     { id: 2, name: "Mikkeli" },
   ])
   const [rekoChoices, setRekoChoices] = useState([])
-  useEffect(async () => {
-    const result = await axios.get("/api/reko_areas")
-    setRekoAreas(result.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("/api/reko_areas")
+      setRekoAreas(result.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ address }) => {
     console.log(address)

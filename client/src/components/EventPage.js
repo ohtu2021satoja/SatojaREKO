@@ -28,7 +28,7 @@ const EventPage = (props) => {
   }, [dispatch, eventID])
 
   return eventProducts ? (
-    <Row>
+    <Row className="bg-light-yellow event-row">
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="text-center mb-4">
         <h2 className="mb-4">Noutotilaisuus</h2>
@@ -39,7 +39,7 @@ const EventPage = (props) => {
           styles={{ fontSize: 16 }}
         />
       </Col>
-      <Col xs={12} className="mx-auto">
+      <Col xs={12} className="mb-5">
         {eventProducts.map((product, index) => (
           <EventPageListItem
             product={product}

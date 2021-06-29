@@ -5,11 +5,11 @@ import { Link } from "react-router-dom"
 const EventListItem = ({ market, event, linkTo }) => {
   return (
     <Card
-      className="mb-1 py-2 px-2"
+      className="mb-1 py-2 px-2 unstyled-link"
       as={Link}
       to={{
         pathname: event.id ? `/events/${event.id}` : `/events/${event.event_id}`,
-        state: { event: event, market: market, linkTo: linkTo || null },
+        state: { event: event, market: market, linkTo: linkTo },
       }}
     >
       <EventInfoLabel market={market} event={event} classes="mb-0" omitDate={true} />

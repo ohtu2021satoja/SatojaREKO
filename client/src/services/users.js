@@ -19,3 +19,36 @@ export const createNewFacebookUser = async (newUser) => {
     console.log(err.message)
   }
 }
+
+export const updateAuthedUser = async (user) => {
+  try {
+    const response = await axios.put(`${apiUrl}/${user.id}`, user)
+    console.log(response.data)
+    return "success"
+  } catch (err) {
+    console.log(err.message)
+    return "error"
+  }
+}
+
+export const updateSellerImage = async (id, image_id) => {
+  try {
+    const response = await axios.put(`/api/sellers/${id}/image`, image_id)
+    console.log(response.data)
+    return "success"
+  } catch (err) {
+    console.log(err.message)
+    return "error"
+  }
+}
+
+export const updateBuyerImage = async (id, image_id) => {
+  try {
+    const response = await axios.put(`/api/buyers/${id}/image`, image_id)
+    console.log(response.data)
+    return "success"
+  } catch (err) {
+    console.log(err.message)
+    return "error"
+  }
+}

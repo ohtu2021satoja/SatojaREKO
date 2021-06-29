@@ -3,13 +3,13 @@ import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
 import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
-import "./App.css"
+import "../App.scss"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import LoginPage from "./login/LoginPage"
 import SignUpPage from "./login/SignUpPage"
-import AdminPage from "./AdminPage"
+// import AdminPage from "./AdminPage"
 import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
 
@@ -121,11 +121,7 @@ const App = (props) => {
   return (
     <Container fluid>
       <Row className="vh-100">
-        <Col
-          xs={12}
-          sm={{ span: 8, offset: 2 }}
-          style={{ backgroundColor: "white", paddingBottom: 70 }}
-        >
+        <Col xs={12} sm={{ span: 8, offset: 2 }}>
           {(() => {
             if (!authedUser && !signUp) {
               return (
@@ -149,7 +145,7 @@ const App = (props) => {
             if (authedUser) {
               return (
                 <>
-                  <Routes user={authedUser} logOut={logOut} />
+                  <Routes user={authedUser} logOut={logOut} handleUserUpdate={getUser} />
                 </>
               )
             }

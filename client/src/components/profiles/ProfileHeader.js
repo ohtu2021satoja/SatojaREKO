@@ -1,5 +1,5 @@
 import Col from "react-bootstrap/Col"
-import Image from "react-bootstrap/Image"
+// import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
 
 const ProfileHeader = ({ user, openModal }) => (
