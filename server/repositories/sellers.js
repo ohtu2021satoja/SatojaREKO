@@ -26,7 +26,7 @@ const deleteRekoAreas = async (seller_id, reko_areas) => {
 }
 
 const createSeller = async (id, params) => {
-  await db.query("INSERT INTO sellers VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",[id, params.seller_name, params.homepage, params.address, params.zipcode, params.city, false, params.description, params.image_url, params.location ? `{"lat":"${params.location[0]}","lon":"${params.location[1]}"}` : null])
+  await db.query("INSERT INTO sellers VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",[id, params.seller_name, params.homepage, params.address, params.zipcode, params.city, false, params.description, params.image_url, params.location ? `{"lat":"${params.location[0]}","lon":"${params.location[1]}"}` : null, params.business_id])
 }
 
 const getAllSellers = async () => {
