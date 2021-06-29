@@ -12,12 +12,10 @@ import { isEqual } from "lodash"
 const BuyerSchema = Yup.object().shape({
   firstname: Yup.string()
     .max(20, "Maksimipituus 20 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Etunimi edellytetään"),
   lastname: Yup.string()
     .min(2, "Minimipituus 2 kirjainta")
     .max(20, "Maksimipituus 20 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Sukunimi edellytetään"),
   phonenumber: Yup.string()
     .min(6, "Minimipituus 6 numeroa")
@@ -30,6 +28,8 @@ const BuyerSchema = Yup.object().shape({
   notification: Yup.boolean(),
 })
 
+let timer
+
 const AutoSubmitForm = ({ user }) => {
   // get values and submitForm from context
   const { values, submitForm } = useFormikContext()
@@ -38,8 +38,9 @@ const AutoSubmitForm = ({ user }) => {
     const changedUser = { ...user, ...values }
     // submit the form imperatively 5 seconds after values have changed
     const isSame = isEqual(user, changedUser)
+    clearTimeout(timer)
     if (!isSame) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         submitForm()
       }, 5000)
     }

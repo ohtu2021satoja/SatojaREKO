@@ -11,20 +11,19 @@ import FormSellerAreas from "./FormSellerAreas"
 import FormSellerSettings from "./FormSellerSettings"
 import { isEqual } from "lodash"
 
+let timer
+
 // Yup
 const SellerSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Minimipituus 2 kirjainta")
-    .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia"),
+    .max(25, "Maksimipituus 25 kirjainta"),
   firstname: Yup.string()
     .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Etunimi edellytetään"),
   lastname: Yup.string()
     .min(2, "Minimipituus 2 kirjainta")
     .max(25, "Maksimipituus 25 kirjainta")
-    .matches(/^[aA-zZ\s]+$/, "Voi sisältää vain kirjaimia")
     .required("Sukunimi edellytetään"),
   phonenumber: Yup.string()
     .min(6, "Minimipituus 6 numeroa")
@@ -86,9 +85,10 @@ const AutoSubmitForm = ({ user }) => {
       // submit the form imperatively 5 seconds after values have changed
       const isSame = await isEqual(user, changedUser)
       console.log("isSame", isSame)
+      clearTimeout(timer)
       if (!isSame) {
         console.log("NOT THE SAME")
-        setTimeout(() => {
+        timer = setTimeout(() => {
           submitForm()
         }, 5000)
       }
