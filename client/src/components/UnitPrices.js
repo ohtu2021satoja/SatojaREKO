@@ -46,27 +46,9 @@ const UnitPrices = ({ setFieldValue, errors, touched, sizes, quantities }) => {
       dispatch(removeQuantity())
     }
   }
-  const parseType = (productType) => {
-    if (productType === "Kg") {
-      return "Aseta kilohinta (sis alv)"
-    }
-    if (productType === "Kuutio") {
-      return "Aseta kuutiohinta (sis alv)"
-    }
-    if (productType === "Litra") {
-      return "Aseta litrahinta (sis alv)"
-    }
-    if (productType === "Motti") {
-      return "Aseta mottihinta (sis alv)"
-    }
-    if (productType === "Gramma") {
-      return "Aseta grammahinta (sis alv)"
-    }
-  }
   return (
     <Col xs={{ span: 8, offset: 2 }} className="pt-1 mb-3">
       <Alv />
-      {parseType(productType)}
       <Price setFieldValue={setFieldValue} errors={errors} touched={touched} />
       {productrows}
       <Row className="flex-column align-content-center text-center">

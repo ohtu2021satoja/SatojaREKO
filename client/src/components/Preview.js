@@ -118,6 +118,9 @@ const Preview = ({
     if (productType === "Gramma") {
       return "gm"
     }
+    if (productType === "Kappale") {
+      return "pc"
+    }
   }
   const PublishProduct = async () => {
     const type = parseType(productType)
