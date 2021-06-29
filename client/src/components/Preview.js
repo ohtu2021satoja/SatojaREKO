@@ -19,22 +19,26 @@ const PreviewSize = ({ size }) => {
       md={{ span: 8, offset: 2 }}
       lg={{ span: 6, offset: 3 }}
       xl={{ span: 4, offset: 4 }}
+      className="mb-2 py-2"
     >
-      <div>Koko: {size.unit}</div>
+      <Card.Text className="mb-0">Koko: {size.unit}</Card.Text>
       Varastoarvo {size.quantity}
-      <div>Hinta: {size.price}€</div>
-      <div></div>
+      <Card.Text>Hinta: {size.price}€</Card.Text>
     </Card>
   )
 }
 
 const PublishedHeader = ({ Reset }) => {
   return (
-    <div className="bg-light-green">
-      <h2>Julkaistu</h2>
-      <h3>Kerro kavereille</h3>
-      <Button onClick={() => Reset()}>Luo uusi ilmoitus</Button>
-    </div>
+    <Row className="bg-light-green my-2">
+      <Col sm={{ span: 10, offset: 1 }} className="text-center">
+        <h2>Julkaistu</h2>
+        <h3>Kerro kavereille</h3>
+        <Button onClick={() => Reset()} variant="success" className="w-100">
+          Luo uusi ilmoitus
+        </Button>
+      </Col>
+    </Row>
   )
 }
 
@@ -183,8 +187,8 @@ const Preview = ({
           <p>Ei kuvaa</p>
         )}
       </Col>
-      <Col xs={{ span: 8, offset: 2 }} className="mb-4 text-center">
-        <Button variant={organic ? "success" : "danger"} className="w-50">
+      <Col xs={{ span: 10, offset: 1 }} className="mb-4 text-center">
+        <Button variant={organic ? "success" : "danger"} className="w-75">
           {organic ? "Luomua" : "Ei luomua"}
         </Button>
       </Col>
@@ -201,10 +205,12 @@ const Preview = ({
         ) : null}
         {isPackage ? null : <PreviewSizes sizes={sizes} />}
       </Col>
-      <Col xs={{ span: 10, offset: 1 }} className="mb-4 text-center">
-        <h4>Noutotapahtumat</h4>
+      <Col xs={12} className="mb-4 text-center">
+        <h4>Noutotapahtumat:</h4>
         <Events events={previewEvents} isChoice={false} />
-        <p>Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.</p>
+        <p className="text-muted">
+          Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.
+        </p>
         {published ? null : (
           <Button
             style={{ width: "100%" }}

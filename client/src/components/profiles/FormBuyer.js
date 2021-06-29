@@ -14,11 +14,9 @@ const BuyerSchema = Yup.object().shape({
     .max(20, "Maksimipituus 20 kirjainta")
     .required("Etunimi edellytetään"),
   lastname: Yup.string()
-    .min(2, "Minimipituus 2 kirjainta")
     .max(20, "Maksimipituus 20 kirjainta")
     .required("Sukunimi edellytetään"),
   phonenumber: Yup.string()
-    .min(6, "Minimipituus 6 numeroa")
     .max(14, "Maksimipituus 14 numeroa")
     .required("Puhelinnumero edellytetään"),
   email: Yup.string()

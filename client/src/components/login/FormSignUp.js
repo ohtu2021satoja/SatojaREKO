@@ -14,18 +14,30 @@ import { useHistory } from "react-router-dom"
 
 // Yup
 const SharedSchema = {
-  firstname: Yup.string().required(),
-  lastname: Yup.string().required(),
-  email: Yup.string().email("invalid email address").required(),
+  firstname: Yup.string()
+    .max(25, "Maksimipituus 25 kirjainta")
+    .required("Etunimi edellytetään"),
+  lastname: Yup.string()
+    .max(25, "Maksimipituus 25 kirjainta")
+    .required("Sukunimi edellytetään"),
+  email: Yup.string()
+    .email("Virheellinen sähköposti")
+    .required("Sähköposti edellytetään"),
   phonenumber: Yup.string().required(),
   terms_ok: Yup.boolean()
-    .test("consent", "you have to agree with our terms", (value) => value === true)
-    .required(),
+    .test(
+      "consent",
+      "Edellytämme, että hyväksyt käyttöehtomme",
+      (value) => value === true
+    )
+    .required("Tämä on oltava valittuna"),
 }
 
 const SignUpSchema = Yup.object().shape({
   ...SharedSchema,
-  password: Yup.string().min(8, "password must be at least 8 characters").required(),
+  password: Yup.string()
+    .min(8, "Salasanan minimipituus on 8 merkkiä")
+    .required("Salasana edellytetään"),
 })
 
 const FacebookSignUpSchema = Yup.object().shape({

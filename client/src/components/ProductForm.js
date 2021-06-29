@@ -163,15 +163,18 @@ const ProductForm = ({
                       className="w-100"
                       onChange={(event) => setDeleteBeforeEvent(event.target.value)}
                     />
-                    <p className="mb-0">Tilaus sulkeutuu {deleteBeforeEvent} tuntia</p>
-                    <p>ennen noutotilaisuuden alkua</p>
+                    <p className="mb-3 pb-0 text-muted">
+                      Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen tilaisuuden alkua
+                    </p>
                     {events.length > 0 ? (
                       <Events events={events} isChoice={true} />
                     ) : (
-                      <p>
-                        Reko-alueilla, joihin kuulut ei ole tulossa uusia tapahtumia. Voit
-                        lisätä itsesi uusiin Reko-alueisiin myyjän profiilista{" "}
-                      </p>
+                      <>
+                        <p className="mb-3">
+                          Valisemillasi Reko-alueilla ei ole uusia tapahtumia
+                        </p>
+                        <p>Voit valita uusia Reko-alueita profiilisivulla</p>
+                      </>
                     )}
                   </Col>
                 </Form.Row>

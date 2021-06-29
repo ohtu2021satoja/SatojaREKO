@@ -13,8 +13,10 @@ import PasswordResetButton from "./PasswordResetButton"
 
 // Yup
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email("invalid email address").required(),
-  password: Yup.string().min(8, "password must be at least 8 characters").required(),
+  email: Yup.string()
+    .email("Virheellinen sähköposti")
+    .required("Sähköposti edellytetään"),
+  password: Yup.string().required("Salasana edellytetään"),
 })
 
 const FormLogin = ({ handleSigned, handleLogin }) => {
