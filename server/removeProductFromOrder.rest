@@ -1,1 +1,1 @@
-DELETE http://localhost:3003/api/orders/seller/76/80/81
+DELETE http://localhost:3003/api/orders/seller/137/93/size/98
