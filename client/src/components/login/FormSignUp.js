@@ -7,6 +7,15 @@ import Button from "react-bootstrap/Button"
 import FormUserDetails from "./FormUserDetails"
 import FormSignUpTerms from "./FormSignUpTerms"
 import FacebookSignUpButton from "./FacebookSignUpButton"
+import { useSelector } from "react-redux"
+import { logoutUser } from "../../services/auth"
+import { setAuthedUser } from "../../actions/authedUser"
+
+const createNewFacebook = async (user) => {
+  await createNewFacebookUser(user)
+  await logoutUser()
+  await setAuthedUser(null)
+}
 
 // Yup
 const SharedSchema = {
@@ -30,12 +39,12 @@ const FacebookSignUpSchema = Yup.object().shape({
 })
 
 const FormSignUp = ({
-  user,
   facebookUser,
   handleSigned,
   handleFacebookSignUp,
   handleRegisterUser,
 }) => {
+  let user = useSelector((state) => state.authedUser)
   // if user is null, importing values from user data don't work unless...
   // they are conditional ie. user ? user.name : ""
   if (!user) {
@@ -66,7 +75,7 @@ const FormSignUp = ({
           user = { ...user, ...newUser }
           facebookUser === false
             ? createNewUser({ password: values.password, ...newUser })
-            : createNewFacebookUser(user)
+            : createNewFacebook(user)
 
           facebookUser === false ? handleSigned() : handleRegisterUser()
         }}
