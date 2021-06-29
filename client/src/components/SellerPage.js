@@ -1,5 +1,6 @@
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Image from "react-bootstrap/Image"
 import EventList from "./EventList"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch, useSelector } from "react-redux"
@@ -26,25 +27,35 @@ const SellerPage = (props) => {
   useEffect(() => {
     dispatch(receiveSellerEvents(seller.id))
   }, [dispatch, seller])
-
+  console.log(seller)
   return (
     <Row className={sellerEvents.length > 0 ? "bg-light-blue" : "bg-light-blue vh-100"}>
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
-        <img src="https://via.placeholder.com/80" alt="Generic placeholder" />{" "}
+        <Image
+          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_80/${seller.image_url}`}
+          alt="Generic placeholder"
+          fluid
+        />
       </Col>
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-0">
         <div className="d-flex flex-column text-center mb-0">
-          <h4>{seller.name}</h4>
+          <h4>{seller.name ? seller.name : seller.firstname + " " + seller.lastname}</h4>
           <p className="mb-0">{seller.address}</p>
           <p className="mb-0">
             {seller.city} {seller.zipcode}
           </p>
-          <p className="mb-4">{seller.phonenumber}</p>
-          <h4>Myyntipisteet</h4>
+          {seller.phonenumber && <p>{seller.phonenumber}</p>}
+          {seller.business_id && <p>Y-tunnus: {seller.business_id}</p>}
+          {seller.homepage && (
+            <a href={seller.homepage} className="mb-4">
+              {seller.homepage}
+            </a>
+          )}
+          {sellerEvents.length > 0 && <h4>Myyntipisteet</h4>}
         </div>
       </Col>
-      <Col xs={12} className="d-flex justify-content-center align-items-center mb-5">
+      <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
         <EventList
           events={sellerEvents}
           linkTo={{
@@ -55,6 +66,12 @@ const SellerPage = (props) => {
           }}
         />
       </Col>
+      {seller.description && (
+        <Col xs={12} className="mb-5 mx-3">
+          <h4>Kuka olemme?</h4>
+          <div>{seller.description}</div>
+        </Col>
+      )}
     </Row>
   )
 }

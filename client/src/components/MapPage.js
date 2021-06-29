@@ -23,7 +23,7 @@ const MapInstance = (props) => {
       props.setMapBounds(map.getBounds())
     },
     locationfound: (e) => {
-      console.log(e)
+      console.log("LOCATION FOUND: ", e)
       map.setView(e.latlng, 9)
     },
   })

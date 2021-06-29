@@ -1,5 +1,6 @@
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Image from "react-bootstrap/Image"
 import ProductPageListButtons from "./ProductPageListButtons"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch } from "react-redux"
@@ -12,7 +13,7 @@ const ProductPage = (props) => {
   const market = props.location.state.market
   const linkTo = props.location.state.linkTo
   const singleSize = product.sizes.length === 1
-
+  console.log(product)
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {
@@ -47,11 +48,17 @@ const ProductPage = (props) => {
         as={Link}
         to={sellerPageLink}
       >
-        <img src="https://via.placeholder.com/60" alt="Generic placeholder" />{" "}
+        <Image
+          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.seller_image_url}`}
+          alt="Generic placeholder"
+        />{" "}
         <h4 className="mt-2 ml-2">{product.seller_name}</h4>
       </Col>
       <Col xs={12} className="text-center mb-2">
-        <img src="https://via.placeholder.com/150" alt="Generic placeholder" />{" "}
+        <Image
+          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_200/${product.image_url}`}
+          alt="Generic placeholder"
+        />{" "}
       </Col>
       <Col xs={12} className="text-center mb-0">
         <h4>

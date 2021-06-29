@@ -1,6 +1,7 @@
 import { Marker, Popup } from "react-leaflet"
 import { Link } from "react-router-dom"
 import Button from "react-bootstrap/Button"
+import Image from "react-bootstrap/Image"
 
 const MapMarkerSeller = ({ seller, icon, mapInstance }) => {
   return (
@@ -13,8 +14,8 @@ const MapMarkerSeller = ({ seller, icon, mapInstance }) => {
         },
       }}
     >
-      <Popup autoPan={false}>
-        <div className="mt-2 px-1 py-1 border-0 popup-text">
+      <Popup autoPan={false} keepInView={true}>
+        <div className="mt-2 px-1 py-1 border-0">
           {seller.name} <br />
           {seller.address} <br />
           <Button
