@@ -29,30 +29,31 @@ const EventForm = ({ setAddingEvent }) => {
   ])
   const [market, setMarket] = useState(null)
 
-  useEffect(async () => {
-    const response = await axios.get("api/markets")
-    setMarkets(response.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("api/markets")
+      setMarkets(response.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ starting_time, end_time, date }) => {
     console.log(date)
     const current_date = new Date()
-    const current_year = current_date.getFullYear()
-    const [day, month] = date.split(".")
-
+    const current_year = current_date.getUTCFullYear()
+    const [day, monthA] = date.split(".")
+    const month = parseInt(monthA) - 1
     const starting_hour = starting_time.split(":")[0]
     const starting_minutes = starting_time.split(":")[1]
     const startingDateObject = new Date(
-      current_year,
-      month,
-      day,
-      starting_hour,
-      starting_minutes
+      Date.UTC(current_year, month, day, starting_hour, starting_minutes)
     )
 
     const end_hour = end_time.split(":")[0]
     const end_minutes = end_time.split(":")[1]
 
-    const endDateObject = new Date(current_year, month, day, end_hour, end_minutes)
+    const endDateObject = new Date(
+      Date.UTC(current_year, month, day, end_hour, end_minutes)
+    )
 
     await eventService.addEvent(startingDateObject, endDateObject, market.id)
 
@@ -212,9 +213,12 @@ const MarketForm = ({ setAddingMarket }) => {
     { id: 2, name: "Mikkeli" },
   ])
   const [rekoChoices, setRekoChoices] = useState([])
-  useEffect(async () => {
-    const result = await axios.get("https://satoja-reko.herokuapp.com/api/reko_areas")
-    setRekoAreas(result.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("/api/reko_areas")
+      setRekoAreas(result.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ address }) => {
     console.log(address)
@@ -276,9 +280,13 @@ const ModifyEvents = ({ setModifyingEvents }) => {
       setEvents(events.data)
     }
     fetchData()
-  })
+  }, [])
   return (
     <div>
+      <Button variant="danger" onClick={() => setModifyingEvents(false)}>
+        {" "}
+        Peruuta{" "}
+      </Button>
       <EventListAdmin events={events} />
     </div>
   )

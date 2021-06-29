@@ -24,7 +24,7 @@ const getSellersEvents = async (seller_id) => {
 }
 
 const getEventsSellerHasProducts = async (seller_id) => {
-  const query = "SELECT events.id AS event_id, events.start, events.endtime, events.market_id, (SELECT json_build_object('id', markets.id, 'address', markets.address, 'location', markets.location, 'type', markets.type, 'reko_name', reko_areas.name) from markets INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id  where markets.id=events.market_id) AS market from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1 GROUP BY (events.id, events.start, events.endtime)"
+  const query = "SELECT events.id AS event_id, events.start, events.endtime, events.market_id, (SELECT json_build_object('id', markets.id, 'address', markets.address, 'location', markets.location, 'type', markets.type, 'reko_name', reko_areas.name) from markets INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id  where markets.id=events.market_id) AS market from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1 AND products.removed=false GROUP BY (events.id, events.start, events.endtime)"
   const sellerEvents = await  db.query(query,[seller_id])
   return(sellerEvents)
 }
@@ -33,6 +33,12 @@ const getMarketEvents = async (market_id) => {
   const query = "SELECT * FROM events WHERE market_id=$1 ORDER BY start"
   const marketEvents = await db.query(query,[market_id])
   return(marketEvents)
+}
+
+const getMarketEvent = async (market_id, event_id) => {
+  const query = "SELECT * FROM events WHERE market_id=$1 AND id=$2 ORDER BY start"
+  const marketEvents = await db.query(query,[market_id, event_id])
+  return(marketEvents[0])
 }
 
 const getEventsProductFeed = async () => {
@@ -48,8 +54,20 @@ const addEvent = async (event) => {
   return(result[0].id)
 }
 
+const getOrderEvent = async (order_id) => {
+  const query = "SELECT events.id, events.start, events.endtime, markets.address, reko_areas.name AS reko_name FROM events INNER JOIN orders ON orders.event_id = events.id INNER JOIN markets ON events.market_id = markets.id INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id WHERE orders.id=$1"
+  const event = await db.query(query, [order_id])
+  return(event[0])
+}
+
 const updateEvent = async (event, event_id) => {
   await db.query("UPDATE events set market_id=$1, start=$2, endtime=$3 where id=$4", [event.market_id, event.start, event.end, event_id])
 }
 
-module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent}
+const getMassEmail = async (events) => {
+  const query = "SELECT json_agg(json_build_object('event', json_build_object('id', events.id, 'start', events.start, 'address', markets.address, 'area', reko_areas.area, 'reko_name', reko_areas.name), 'buyers',(SELECT jsonb_agg(DISTINCT jsonb_build_object('firstname', users.firstname, 'lastname', users.lastname, 'email', users.email)) FROM users INNER JOIN buyers ON buyers.id = users.id INNER JOIN orders ON orders.buyers_id = buyers.id WHERE orders.event_id=events.id),'sellers', (SELECT jsonb_agg(DISTINCT jsonb_build_object('firstname', users.firstname, 'lastname', users.lastname, 'seller_name', sellers.name, 'email', users.email )) from sellers INNER JOIN products ON products.sellers_id=sellers.id INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN users ON users.id = sellers.id WHERE products_events.id_event=events.id))) FROM events INNER JOIN markets ON events.market_id = markets.id INNER JOIN reko_markets ON reko_markets.market_id = markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id WHERE events.id=ANY($1::int[]) "
+  const allevents = await db.query(query, [events])
+  return allevents[0].json_agg
+}
+
+module.exports = { addProductToEvents, getSellersEvents, getMarketEvents, getEventsProductFeed, getEventsSellerHasProducts, addEvent, removeProductFromEvents, getEvents, updateEvent, getOrderEvent, getMassEmail, getMarketEvent}

@@ -2,17 +2,17 @@ import Card from "react-bootstrap/Card"
 import EventInfoLabel from "./EventInfoLabel"
 import { Link } from "react-router-dom"
 
-const EventListItem = ({ event }) => {
+const EventListItem = ({ market, event, linkTo }) => {
   return (
     <Card
-      className="mb-1 py-2 px-2"
+      className="mb-1 py-2 px-2 unstyled-link"
       as={Link}
       to={{
-        pathname: `/events/${event.id}`,
-        state: { event: event },
+        pathname: event.id ? `/events/${event.id}` : `/events/${event.event_id}`,
+        state: { event: event, market: market, linkTo: linkTo },
       }}
     >
-      <EventInfoLabel event={event} classes="mb-0" omitDate={true} />
+      <EventInfoLabel market={market} event={event} classes="mb-0" omitDate={true} />
     </Card>
   )
 }

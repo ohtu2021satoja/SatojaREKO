@@ -1,5 +1,6 @@
 import { Field, ErrorMessage } from "formik"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 import FormFieldCheckboxInline from "../FormFieldCheckboxInline"
 import FormErrorMessage from "../FormErrorMessage"
 
@@ -8,10 +9,18 @@ const FormSignUpTerms = () => (
     <Field
       name="terms_ok"
       id="user-terms"
-      label="Jatkamalla sitoudut noudattamaan"
+      label="Hyväksyn"
       component={FormFieldCheckboxInline}
     />
-    <a href="/">käyttöehtojamme</a>
+    <a
+      href="https://satoja.fi/dokumentit/tietosuojaseloste.html"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <Button variant="link" className="px-0 py-1">
+        käyttöehdot
+      </Button>
+    </a>
     <ErrorMessage name="terms_ok" component={FormErrorMessage} />
   </Col>
 )

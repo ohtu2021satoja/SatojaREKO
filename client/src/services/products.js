@@ -37,6 +37,7 @@ const addProduct = async (productObject) => {
 const updateProduct = async (product_id, productObject) => {
   const response = await axios.put(`${apiUrl}/${product_id}`, productObject)
   return response.data
+  console.log(response.data)
 }
 
 const getProductById = async (product_id) => {

@@ -3,9 +3,16 @@ import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
-const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, unit }) => {
+const ShoppingCartListButtons = ({
+  eventID,
+  addToCart,
+  removeFromCart,
+  size,
+  unit,
+  singleSize,
+}) => {
   const cart = useSelector((state) => state.shoppingCart)
-
+  console.log("SIZE: ", size)
   const [inCart, setInCart] = useState(0)
   useEffect(() => {
     const updateCart = () => {
@@ -24,11 +31,19 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
     <>
       <Col xs={6} className="d-flex justify-content-center align-items-center">
         <b>
-          {size.unit} {unit}
+          {singleSize
+            ? (size.product.unit_price * size.unit) / 100 + "e / kpl"
+            : size.unit +
+              " " +
+              unit +
+              " / " +
+              (size.product.unit_price * size.unit) / 100 +
+              "e"}
         </b>
       </Col>
       <Col xs={6} className="d-flex justify-content-between align-items-center">
         <Button
+          className="cart-button"
           size="sm"
           variant="light"
           onClick={(e) => {
@@ -36,11 +51,12 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
           }}
         >
           <h4>
-            <i className="bi bi-cart-dash" style={{ fontSize: 28 }} />
+            <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>{" "}
         <h5>{inCart} </h5>
         <Button
+          className="cart-button"
           size="sm"
           variant="light"
           onClick={(e) => {
@@ -48,7 +64,7 @@ const ShoppingCartListButtons = ({ eventID, addToCart, removeFromCart, size, uni
           }}
         >
           <h4>
-            <i className="bi bi-cart-plus" style={{ fontSize: 28 }} />
+            <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
           </h4>
         </Button>
       </Col>

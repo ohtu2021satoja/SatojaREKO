@@ -4,11 +4,22 @@ const geoap = require("../geoap")
 const BLANK_IMAGE = "profile-blank_or75kg"
 
 const updateSellersInfo= async (seller_id, req_body, sellersRepository, usersRepository) => {
-  const delete_reko_areas = req_body.reko_areas.delete
-  await sellersRepository.deleteRekoAreas(seller_id, delete_reko_areas)
+  const new_reko_areas = req_body.reko_areas
+  const old_reko_areas = await sellersRepository.getSellersRekoAreasIds(seller_id)
+  console.log("OLD REKO ARES", old_reko_areas)
+  const delete_reko_areas = old_reko_areas.filter(reko_area => ! new_reko_areas.includes(reko_area) )
+  if(delete_reko_areas.length >0){
+    await sellersRepository.deleteRekoAreas(seller_id, delete_reko_areas)
+  }
+  const add_reko_areas = new_reko_areas.filter(reko_area => ! old_reko_areas.includes(reko_area) )
 
-  const add_reko_areas = req_body.reko_areas.add
-  await sellersRepository.addRekoAreas(seller_id, add_reko_areas)
+  if(add_reko_areas.length >0){
+    await sellersRepository.addRekoAreas(seller_id, add_reko_areas)
+  }
+  
+
+  
+ 
 
   req_body.seller_info.location = await geoap.getAddressInfo(req_body.seller_info.address)
 
@@ -33,4 +44,9 @@ getAllSellers = async (sellersRepository) => {
   return sellers
 }
 
-module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, getAllSellers }
+const getSeller = async (seller_id, sellersRepository) => {
+  const seller = await sellersRepository.getSeller(seller_id)
+  return seller
+}
+
+module.exports = { removeSellerImage, getEventsSellerHasProducts, updateSellersInfo, updateSellerImage, getAllSellers, getSeller }

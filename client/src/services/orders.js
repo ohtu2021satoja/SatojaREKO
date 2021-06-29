@@ -12,7 +12,7 @@ export const getBuyerOrders = async (id) => {
   return response.data
 }
 
-const submitBuyerOrders = async (orders, buyerID) => {
+export const submitBuyerOrders = async (orders, buyerID) => {
   const response = await axios.post(`${apiUrl}/buyer/${buyerID}`, orders)
   return response
 }
@@ -27,4 +27,4 @@ export const DeleteProductOrder = async (order_Id, seller_Id, size_Id) => {
   return response.data
 }
 
-export default { getSellerOrders, getBuyerOrders, submitBuyerOrders }
+export default { getSellerOrders, getBuyerOrders }

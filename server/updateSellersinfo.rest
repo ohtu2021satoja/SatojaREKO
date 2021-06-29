@@ -3,10 +3,7 @@ Content-Type: application/json
 
 {
   "seller_update": true,
-  "reko_areas": {
-    "delete": [2],
-    "add": [2]
-  },
+  "reko_areas": [1,2],
   "seller_info": {
     "address": "Hämeentie 1",
     "name": "Terpan tila"

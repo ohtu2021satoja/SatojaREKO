@@ -1,58 +1,93 @@
-/* CURRENTLY NOT IN USE
 import { useState } from "react"
+import * as Yup from "yup"
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import { loginUser } from "../../services/auth"
+import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
+import FormFieldEmail from "../FormFieldEmail"
+import FormFieldPassword from "../FormFieldPassword"
+import FormErrorMessage from "../FormErrorMessage"
+import SignUpButton from "./SignUpButton"
 
-const FormLogin = ({ handleLogin }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+// Yup
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("invalid email address").required(),
+  password: Yup.string().min(8, "password must be at least 8 characters").required(),
+})
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+const FormLogin = ({ handleSigned, handleLogin }) => {
+  const [fail, setFail] = useState(false)
 
-    handleLogin(email, password)
-
-    setEmail("")
-    setPassword("")
+  const checkCredentials = async (obj) => {
+    const response = await loginUser(obj)
+    console.log("RESPONSE", response)
+    response === "error" ? setFail(true) : handleLogin()
+    // TODO: instead of setTimeout
+    // remove error message when input value changes
+    setTimeout(() => {
+      setFail(false)
+    }, 4000)
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Label as="h3" className="my-4 text-center">
-        Kirjaudu palveluun
-      </Form.Label>
-      <Form.Group>
-        <Form.Control
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          size="lg"
-          type="email"
-          placeholder="Sähköposti"
-          className="mb-3"
-        />
+    <Row className="mb-3 py-3 px-1 bg-white border border-1 border-secondary rounded">
+      <Col xs={12} className="mb-2 text-center">
+        <h3>Kirjaudu palveluun</h3>
+      </Col>
+      <Col xs={12}>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={LoginSchema}
+          onSubmit={(values) => {
+            const credentials = {
+              email: values.email,
+              password: values.password,
+            }
 
-        <Form.Control
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          size="lg"
-          type="password"
-          placeholder="Salasana"
-        />
-      </Form.Group>
-      <Form.Row className="mb-3">
-        <Col>
-          <Button style={{ width: "100%" }} variant="success" size="lg" type="submit">
-            Kirjaudu sisään
-          </Button>
-        </Col>
-      </Form.Row>
-      <div>
-        <a href="/">Salasana unohtunut?</a>
-      </div>
-    </Form>
+            checkCredentials(credentials)
+          }}
+        >
+          {() => (
+            <Form>
+              <Field
+                name="email"
+                id="user-email"
+                label="Sähköposti"
+                component={FormFieldEmail}
+              />
+              <ErrorMessage name="email" component={FormErrorMessage} />
+              <Field
+                name="password"
+                id="user-password"
+                label="Salasana"
+                component={FormFieldPassword}
+              />
+              <ErrorMessage name="password" component={FormErrorMessage} />
+              {fail === true && (
+                <p className="text-center text-danger">
+                  Virheellinen sähköposti tai salasana
+                </p>
+              )}
+              <Button
+                type="submit"
+                variant="success"
+                size="lg"
+                className="w-100 mb-2"
+                id="login-button"
+              >
+                Kirjaudu
+              </Button>
+              <SignUpButton handleSigned={handleSigned} />
+            </Form>
+          )}
+        </Formik>
+      </Col>
+    </Row>
   )
 }
 
 export default FormLogin
-*/

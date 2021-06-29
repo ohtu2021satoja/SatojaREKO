@@ -1,5 +1,41 @@
 ## Notes from the weekly meeting
 
+# 21.06.21
+
+### Yleistä
+
+- Katsottiin sovellus näyttö näytöltä ja keskusteltiin mitä muutoksia niihin pitää tehdä
+- Ehdotettiin, että saatasiin joku lyhyt sivustoa esittelevä määritelmä, joka näkyy hakukoneissa (description)
+- Sovittiin, että testikäyttäjät voisivat testaat sovellusta keskiviikkona iltapäivällä (siirrettiin myöhemmälle)
+- Keskusteltiin, mitä kysymyksiä tai tehtäviä testikäyttäjille voitaisiin antaa
+
+### Kirjautumissivu
+
+- Lisätään 'Tunne tuottaja' logon alle
+
+### Myyjän tilaukset -sivu
+
+- Tilaushistoria voidaan jättää tästä versiosta
+
+### Ostajan tilaukset -sivu
+
+- Ei näy Safarilla
+- Selvennetään, milloin tilaus poistetaan kokonaan ja milloin poistetaan vain tuote
+
+### Lisää tuote -sivu
+
+- ALV 24% valittuna
+
+### Myyjän profiilisivu
+
+- Tehdään Ota yhteyttä -linkistä selvempi
+
+### Tilaisuus-sivun Noudot
+
+- Tuotteet näytetään tilakohtaisesti
+- plus- ja miinus-merkit pois ja kappalemäärä tilalle
+
+
 # 07.06.21
 
 ### Yleistä

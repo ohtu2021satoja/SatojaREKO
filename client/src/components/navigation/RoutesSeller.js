@@ -35,7 +35,7 @@ const RoutesSeller = ({ user, logOut, setSellerView }) => (
     <Route path="/profile">
       <ProfilePageSeller user={user} />
     </Route>
-    <Route exact path="/contact">
+    <Route exact path="/profile">
       <ContactPage user={user} />
     </Route>
     <Route>Not found</Route>

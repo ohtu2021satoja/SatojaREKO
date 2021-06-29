@@ -1,7 +1,6 @@
 import Col from "react-bootstrap/Col"
 import React, { useEffect, useState } from "react"
 import Card from "react-bootstrap/Card"
-import EventInfoLabel from "./EventInfoLabel"
 import Button from "react-bootstrap/Button"
 import * as Yup from "yup"
 import axios from "axios"
@@ -70,7 +69,7 @@ const EventListItemAdmin = ({ event }) => {
   return (
     <Card className="mb-1 py-2 px-2">
       <Button onClick={() => setShow(true)}>Muokkaa</Button>
-      <EventInfoLabel event={event} classes="mb-0" omitDate={true} />
+      <EventInfoLabelAdmin event={event} classes="mb-0" omitDate={true} />
       {show ? <EventForm setShow={setShow} event={event} /> : null}
     </Card>
   )
@@ -88,30 +87,31 @@ const EventForm = ({ setShow, event }) => {
   const [market, setMarket] = useState({ address: event.address, id: event.market_id })
   console.log(market)
 
-  useEffect(async () => {
-    const response = await axios.get("api/markets")
-    setMarkets(response.data)
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("api/markets")
+      setMarkets(response.data)
+    }
+    fetchData()
   }, [])
   const handleSubmit = async ({ starting_time, end_time, date }) => {
     console.log(starting_time, end_time)
     const current_date = new Date()
     const current_year = current_date.getFullYear()
-    const [day, month] = date.split(".")
-
+    const [day, monthA] = date.split(".")
+    const month = parseInt(monthA) - 1
     const starting_hour = starting_time.split(":")[0]
     const starting_minutes = starting_time.split(":")[1]
     const startingDateObject = new Date(
-      current_year,
-      month,
-      day,
-      starting_hour,
-      starting_minutes
+      Date.UTC(current_year, month, day, starting_hour, starting_minutes)
     )
 
     const end_hour = end_time.split(":")[0]
     const end_minutes = end_time.split(":")[1]
 
-    const endDateObject = new Date(current_year, month, day, end_hour, end_minutes)
+    const endDateObject = new Date(
+      Date.UTC(current_year, month, day, end_hour, end_minutes)
+    )
 
     await eventService.updateEvent(startingDateObject, endDateObject, market.id, event.id)
 
@@ -130,7 +130,9 @@ const EventForm = ({ setShow, event }) => {
           end_time: `${new Date(event.endtime).getUTCHours()}:${new Date(
             event.endtime
           ).getMinutes()}`,
-          date: `${new Date(event.start).getDate()}.${new Date(event.start).getMonth()}`,
+          date: `${new Date(event.start).getUTCDate()}.${
+            new Date(event.start).getUTCMonth() + 1
+          }`,
           market_address: event.address,
         }}
         validationSchema={validationSchema}
@@ -179,6 +181,47 @@ const EventFormDetails = () => {
       <Field name="date" id="date" label="Päivä" component={FormFieldText} />
       <ErrorMessage name="date" component={FormErrorMessage} />
     </Col>
+  )
+}
+
+const EventInfoLabelAdmin = ({ event }) => {
+  const startDate = new Date(event.start)
+  const endDate = new Date(event.endtime)
+
+  const weekdays = [
+    "Sunnuntai",
+    "Maanantai",
+    "Tiistai",
+    "Keskiviikko",
+    "Torstai",
+    "Perjantai",
+    "Lauantai",
+  ]
+
+  const startTime =
+    startDate.getUTCHours() +
+    ":" +
+    (startDate.getUTCMinutes() < 10
+      ? "0" + startDate.getUTCMinutes()
+      : startDate.getUTCMinutes())
+  const endTime =
+    endDate.getUTCHours() +
+    ":" +
+    (endDate.getUTCMinutes() < 10
+      ? "0" + endDate.getUTCMinutes()
+      : endDate.getUTCMinutes())
+
+  const startDay = weekdays[startDate.getUTCDay()]
+
+  return (
+    <div>
+      <p>
+        {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+      </p>
+      <p>
+        {startTime}-{endTime}
+      </p>
+    </div>
   )
 }
 
