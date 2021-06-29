@@ -44,7 +44,7 @@ authRouter.post("/email/register", async (req, res) => {
       res.send("We found user with your email and added password to that")
     }
   } else{
-    const url = `http://localhost:3003/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
+    const url = `http://satoja-reko.herokuapp.com/api/auth/email/verify?firstname=${firstname}&lastname=${lastname}&email=${email}&password=${passwordHash}&phonenumber=${phonenumber}`
     console.log(url)
     const template = await mailService.initiateVerificationMail(email,url)
     await mailService.sendAutomaticMail(template)
@@ -61,7 +61,7 @@ authRouter.post("/email/reset_password", async (req, res) => {
     console.log("USER",user)
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
-    const url = `http://localhost:3003/api/users/${user.id}/reset_password?passwordHash=${passwordHash}`
+    const url = `http://satoja-reko.herokuapp.com/api/users/${user.id}/reset_password?passwordHash=${passwordHash}`
     const template = await mailService.initiatePasswordResetMail(email,url)
     await mailService.sendAutomaticMail(template)
     res.send(`Palautus sähköposti on lähetetty osoitteeseen ${email}`)
