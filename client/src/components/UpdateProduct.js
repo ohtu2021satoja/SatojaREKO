@@ -53,6 +53,9 @@ const UpdateProduct = () => {
     if (productType === "gm") {
       return "Gramma"
     }
+    if (productType === "pc") {
+      return "Kappale"
+    }
   }
 
   const parseTypeBack = (productType) => {
@@ -70,6 +73,9 @@ const UpdateProduct = () => {
     }
     if (productType === "Gramma") {
       return "gm"
+    }
+    if (productType === "Kappale") {
+      return "pc"
     }
   }
   const initialSetUp = useCallback(() => {
