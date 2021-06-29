@@ -65,6 +65,10 @@ const addQuantitiesToSizes = async (order_id, sellers_id) => {
 const addQuantityToSize = async (order_id, size_id) => {
   await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches WHERE batches.order_id=$1 AND batches.sizes_id=$2", [order_id, size_id])
 }
+
+const addQuantityToProduct = async (order_id, product_id) => {
+  await db.query("UPDATE sizes set quantity=sizes.quantity+batches.quantity from batches WHERE batches.order_id=$1 AND batches.sizes_id = sizes.id AND sizes.product_id = $2", [order_id, product_id])
+}
 const addUsersOrdersQuantitiesToSizes = async (id) => {
   await db.query("UDPATE sizes SET quantity=sizes.quantity+batches.quantity FROM batches,orders WHERE batches.sizes_id=sizes.id AND AND batches.order_id = orders.id AND orders.buyers_id=$1",[id])
 }
@@ -89,4 +93,4 @@ const removeSizes = async (product_id, removed_sizes) => {
   db.query("DELETE from sizes WHERE id=ANY($1::int[])",[IDs])  
 }
 
-module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes, getEventProduct, addUsersOrdersQuantitiesToSizes, addQuantityToSize }
+module.exports = { getAllProducts, getSellersProducts, addProduct, addProductSizes, getEventProducts, removeQuantitiesFromSizes, getSellersEventProducts, removeProduct, removeProductBatches, addQuantitiesToSizes, getProductById, updateOldPricedProduct, updateProduct, updateOldProductSizes, removeSizes, getEventProduct, addUsersOrdersQuantitiesToSizes, addQuantityToSize, addQuantityToProduct }
