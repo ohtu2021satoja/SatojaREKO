@@ -69,7 +69,23 @@ const removeSellersOrder = async (seller_id, order_id, ordersRepository, product
 }
 
 
-const removeProductFromSellersOrder = async (seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository) => {
+const removeProductFromSellersOrder = async (seller_id, order_id, product_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository) => {
+  await productsRepository.addQuantityToProduct(order_id, product_id)
+
+  const order = await ordersRepository.getSellersOrderByProduct(product_id, order_id)
+  const batches = order.batches
+  batches.forEach((batch) => {
+    batch.price = helper.parsePrice(batch.price)
+  })
+  const user = await usersRepository.getOrderUser(order_id)
+  const event = await eventsRepository.getOrderEvent(order_id)
+  const seller = await sellersRepository.getSeller(seller_id)
+  await mailSender.sendAutomaticMail(await mailSender.initiateDeleteOrder(user.email, seller, user, event, batches))
+
+  await ordersRepository.removeProductFromSellersOrder(order_id, product_id)
+}
+
+const removeSizeFromSellersOrder = async (seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository) => {
   await productsRepository.addQuantityToSize(order_id, size_id)
 
   const order = await ordersRepository.getSellersOrderBySize(size_id, order_id)
