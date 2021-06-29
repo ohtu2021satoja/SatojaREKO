@@ -211,7 +211,7 @@ const MarketForm = ({ setAddingMarket }) => {
   ])
   const [rekoChoices, setRekoChoices] = useState([])
   useEffect(async () => {
-    const result = await axios.get("https://satoja-reko.herokuapp.com/api/reko_areas")
+    const result = await axios.get("/api/reko_areas")
     setRekoAreas(result.data)
   }, [])
   const handleSubmit = async ({ address }) => {
