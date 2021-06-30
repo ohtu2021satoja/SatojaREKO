@@ -1,5 +1,4 @@
 const BLANK_IMAGE = "profile-blank_or75kg"
-const BLANK_IMAGE_MEAT = ""
 const BLANK_IMAGE_BREAD_AND_BAKING = "leivat-leivonta_2x_ozueux"
 const BLANK_IMAGE_DRINKS = "juomat_2x_slczgk"
 const BLANK_IMAGE_EGGS = "munat_2x_zo3xnq"
@@ -26,9 +25,40 @@ const getSellersProducts = async (id, productsRepository) => {
 const addProduct = async (product, eventChoices, sizes, productsRepository, eventsRepository, db) => {
   try{
     await db.beginTransaction()
+    console.log("CATEGORY", product.category)
     if(!product.imageURL){
-      product.imageURL = BLANK_IMAGE
-    }
+        if(product.category==="Vihannekset"){
+          product.imageURL = BLANK_IMAGE_VEGETABLES
+        }
+        if(product.category==="Liha & kala"){
+          product.imageURL = BLANK_IMAGE_FISH_AND_MEAT
+        }
+        if(product.category==="Munat"){
+          product.imageURL = BLANK_IMAGE_EGGS
+        }
+        if(product.category==="Hedelmät & marjat"){
+          product.imageURL = BLANK_IMAGE_FRUIT_AND_BERRIES
+        }
+        if(product.category==="Maitotuotteet"){
+          product.imageURL = BLANK_IMAGE_DAIRY
+        }
+        if(product.category==="Leivät & leivonta"){
+          product.imageURL = BLANK_IMAGE_BREAD_AND_BAKING
+        }
+        if(product.category==="Yrtit & mausteet"){
+          product.imageURL = BLANK_IMAGE_HERBS_AND_SPICES
+        }
+        if(product.category==="Ruokaa"){
+          product.imageURL = BLANK_IMAGE_FOOD
+        }
+        if(product.category==="Juomaa"){
+          product.imageURL = BLANK_IMAGE_DRINKS
+        }
+        if(product.category==="Muut"){
+          product.imageURL = BLANK_IMAGE_OTHERS
+        }
+  
+      }
     const product_id  = await productsRepository.addProduct(product)
     await productsRepository.addProductSizes(product_id, sizes)
     await eventsRepository.addProductToEvents(product_id, eventChoices)
@@ -62,37 +92,37 @@ const updateProduct = async (product_id, new_product, new_event_choices, new_siz
     }
     console.log(product.sizes)
     if(!new_product.image_url){
-      if(new_product.category="Vihannekset"){
+      if(new_product.category==="Vihannekset"){
         new_product.image_url = BLANK_IMAGE_VEGETABLES
       }
-      if(new_product.category="Liha & kala"){
+      if(new_product.category==="Liha & kala"){
         new_product.image_url = BLANK_IMAGE_FISH_AND_MEAT
       }
-      if(new_product.category="Liha & kala"){
+      if(new_product.category==="Liha & kala"){
         new_product.image_url = BLANK_IMAGE_FISH_AND_MEAT
       }
-      if(new_product.category="Munat"){
+      if(new_product.category==="Munat"){
         new_product.image_url = BLANK_IMAGE_EGGS
       }
-      if(new_product.category="Hedelmät & marjat"){
+      if(new_product.category==="Hedelmät & marjat"){
         new_product.image_url = BLANK_IMAGE_FRUIT_AND_BERRIES
       }
-      if(new_product.category="Maitotuotteet"){
+      if(new_product.category==="Maitotuotteet"){
         new_product.image_url = BLANK_IMAGE_DAIRY
       }
-      if(new_product.category="Leivät & leivonta"){
+      if(new_product.category==="Leivät & leivonta"){
         new_product.image_url = BLANK_IMAGE_BREAD_AND_BAKING
       }
-      if(new_product.category="Yrtit & mausteet"){
+      if(new_product.category==="Yrtit & mausteet"){
         new_product.image_url = BLANK_IMAGE_HERBS_AND_SPICES
       }
-      if(new_product.category="Ruokaa"){
+      if(new_product.category==="Ruokaa"){
         new_product.image_url = BLANK_IMAGE_FOOD
       }
-      if(new_product.category="Juomaa"){
+      if(new_product.category==="Juomaa"){
         new_product.image_url = BLANK_IMAGE_DRINKS
       }
-      if(new_product.category="Muut"){
+      if(new_product.category==="Muut"){
         new_product.image_url = BLANK_IMAGE_OTHERS
       }
 
