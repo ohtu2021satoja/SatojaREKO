@@ -26,8 +26,8 @@ const Event = ({ event, isChoice }) => {
   const Month = startTime.getUTCMonth() + 1
   const EventDate = startTime.getUTCDate()
   return (
-    <div>
-      <h4>
+    <div className="mb-2">
+      <h4 className="mb-0 pt-3">
         {EventDate}.{Month}
       </h4>
       <Card
@@ -37,6 +37,7 @@ const Event = ({ event, isChoice }) => {
         md={{ span: 8, offset: 2 }}
         lg={{ span: 6, offset: 3 }}
         xl={{ span: 4, offset: 4 }}
+        className="py-2"
       >
         <div>{event.name} (REKO)</div>
         {event.address}

@@ -73,6 +73,7 @@ p {
 
 // do not add padding
 .bg-light-gray {
+  padding-bottom: 50px;
   background-color: rgb(217, 217, 217);
 }
 
@@ -138,6 +139,7 @@ p {
 
 .card-body {
   padding: 0.75rem 0.75rem;
+  cursor: pointer;
 }
 
 /*
@@ -154,6 +156,7 @@ p {
 */
 
 .bg-field {
+  background-color: rgb(217, 217, 217);
   background-image: url("./media/bg-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
