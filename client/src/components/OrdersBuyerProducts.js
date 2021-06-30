@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import OrdersBuyerNav from "./OrdersBuyerNav"
 import EventInfoLabel from "./EventInfoLabel"
+import OrganicLabel from "./OrganicLabel"
 
 const OrdersBuyerProducts = (props) => {
   const event = props.location.state.event
@@ -17,6 +18,7 @@ const OrdersBuyerProducts = (props) => {
               alt="Generic placeholder"
               rounded="true"
             />
+            {product.organic && <OrganicLabel onOrdersPage={true} />}
           </Col>
           <Col xs={8} className="mb-3 text-left">
             <Card.Subtitle className="mb-2 text-muted">
