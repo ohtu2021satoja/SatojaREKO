@@ -5,7 +5,12 @@ import Button from "react-bootstrap/Button"
 
 const DeleteOrderPopUp = (props) => {
   const handleDeleteButton = () => {
-    console.log("delete this product")
+    if (props.deleteProductPopUp) {
+      props.DeleteProductOrder()
+    }
+    if (props.deleteOrderPopUp) {
+      props.DeleteOrder()
+    }
   }
   return (
     <div className="popup">

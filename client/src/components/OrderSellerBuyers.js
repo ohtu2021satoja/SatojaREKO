@@ -87,7 +87,6 @@ const OrdersSellerBuyers = (props) => {
               setProductIndexi(index)
               setProductName(product.product_name)
               setSizeId(product.size_id)
-              DeleteProductOrder()
             }}
           >
             <svg

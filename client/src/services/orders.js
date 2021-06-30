@@ -21,6 +21,7 @@ export const deleteOrder = async (seller_Id, order_Id) => {
   return response.data
 }
 export const deleteProductOrder = async (seller_Id, order_Id, size_Id) => {
+  console.log("SIZE ID", size_Id)
   const response = await axios.delete(
     `${apiUrl}/seller/${seller_Id}/${order_Id}/size/${size_Id}`
   )

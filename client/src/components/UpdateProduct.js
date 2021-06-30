@@ -98,7 +98,7 @@ const UpdateProduct = () => {
       dispatch(initializeEvents(product.events))
       setProduct(product)
     },
-    [dispatch, product]
+    [dispatch]
   )
 
   useEffect(() => {
