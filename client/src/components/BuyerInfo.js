@@ -3,17 +3,19 @@ import Image from "react-bootstrap/esm/Image"
 
 const BuyerInfo = (props) => (
   <Col xs={{ span: 8, offset: 2 }} className="my-4 text-center">
-    <h3>{props.orderers[props.buyerIndexi].name}</h3>
+    <h3>
+      {props.user.users_firstname} {props.user.users_lastname}
+    </h3>
     <div className="mb-4">
       <Image
-        src={props.orderers[props.buyerIndexi].buyers_image_url}
+        src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${props.user.users_image_url}`}
         rounded
         fluid
-        alt={`Kuvassa ${props.orderers[props.buyerIndexi].name}`}
+        alt={`Kuvassa ${props.user.users_firstname}`}
       />
     </div>
-    <p className="mb-1">nimi@domain.fi</p>
-    <p>040 6333 63333</p>
+    <p className="mb-1">{props.user.users_email}</p>
+    <p>{props.user.users_phonenumber}</p>
   </Col>
 )
 
