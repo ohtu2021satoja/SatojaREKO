@@ -34,7 +34,22 @@ const OrdersSellerEvent = (props) => {
       </Card>
     )
   }
-  return <div>{props.Orderasd.map(RenderEvents)}</div>
+  var date = []
+  var date2 = []
+  var lista = []
+  props.Orderasd.map((single) => {
+    date = new Date(single.event_start)
+    date2 = new Date(props.tapahtumat[0])
+    if (
+      date.getDay() === date2.getDay() &&
+      date.getMonth() === date2.getMonth() &&
+      date.getFullYear() === date2.getFullYear()
+    ) {
+      lista.push(single)
+    }
+  })
+
+  return <div>{lista.map(RenderEvents)}</div>
 }
 
 export default OrdersSellerEvent

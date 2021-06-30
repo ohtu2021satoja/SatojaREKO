@@ -6,16 +6,15 @@ const OrderSellerEventList = (props) => {
     // sorting events by date
     const tapahtumat = []
     for (let i = 0; i < props.paivamaarat.length; i++) {
-      var date2 = new Date(props.paivamaarat[i].date)
+      var date2 = props.paivamaarat[i]
       if (
         date2.getDate() === date.getDate() &&
         date2.getMonth() === date.getMonth() &&
         date2.getFullYear() === date.getFullYear()
       ) {
-        tapahtumat.push(props.paivamaarat[i])
+        tapahtumat.push(date)
       }
     }
-
     if (props.eventId === null) {
       return (
         <Col
@@ -29,7 +28,11 @@ const OrderSellerEventList = (props) => {
           <h4 className="mb-0 pt-3">
             {date.getDate()}.{date.getMonth() + 1}.
           </h4>
-          <OrdersSellerEvent setEventId={props.setEventId} Orderasd={props.Orderasd} />
+          <OrdersSellerEvent
+            setEventId={props.setEventId}
+            Orderasd={props.Orderasd}
+            tapahtumat={tapahtumat}
+          />
         </Col>
       )
     }

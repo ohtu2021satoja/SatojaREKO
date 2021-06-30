@@ -34,7 +34,7 @@ const OrderSeller = () => {
       if (
         paivamaarat[i].getDay() !== date.getDay() &&
         paivamaarat[i].getMonth() !== date.getMonth() &&
-        paivamaarat[i].getFullYear() !== date.getFullYear()
+        paivamaarat[i].getFullYear() === date.getFullYear()
       ) {
         paivamaarat.push(date)
       }
