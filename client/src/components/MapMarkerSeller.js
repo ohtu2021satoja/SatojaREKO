@@ -14,7 +14,7 @@ const MapMarkerSeller = ({ seller, icon, mapInstance }) => {
       }}
     >
       <Popup autoPan={false}>
-        <div className="mt-2 px-1 py-1 border-0 popup-text">
+        <div className="mt-2 px-1 py-1 border-0">
           {seller.name} <br />
           {seller.address} <br />
           <Button

@@ -53,6 +53,9 @@ const UpdateProduct = () => {
     if (productType === "gm") {
       return "Gramma"
     }
+    if (productType === "pc") {
+      return "Kappale"
+    }
   }
 
   const parseTypeBack = (productType) => {
@@ -71,26 +74,32 @@ const UpdateProduct = () => {
     if (productType === "Gramma") {
       return "gm"
     }
+    if (productType === "Kappale") {
+      return "pc"
+    }
   }
-  const initialSetUp = useCallback(() => {
-    const priceString = String(product.unit_price)
-    const start = priceString.substr(0, priceString.length - 2)
-    const end = priceString.substr(priceString.length - 2)
-    const resString = `${start},${end}`
-    dispatch(changePrice(resString))
-    dispatch(setAlv(`${product.vat}%`))
-    setCategory(product.category)
-    setTitle(product.name)
-    setDescription(product.description)
-    setOrganic(product.organic)
-    dispatch(setProductType(parseType(product.type)))
-    setDeleteBeforeEvent(product.close_before_event)
-    dispatch(initializeSizes(product.sizes))
-    setImageID(product.image_url)
-    console.log(product.events)
-    dispatch(initializeEvents(product.events))
-    setProduct(product)
-  }, [dispatch, product])
+  const initialSetUp = useCallback(
+    (product) => {
+      const priceString = String(product.unit_price)
+      const start = priceString.substr(0, priceString.length - 2)
+      const end = priceString.substr(priceString.length - 2)
+      const resString = `${start},${end}`
+      dispatch(changePrice(resString))
+      dispatch(setAlv(`${product.vat}%`))
+      setCategory(product.category)
+      setTitle(product.name)
+      setDescription(product.description)
+      setOrganic(product.organic)
+      dispatch(setProductType(parseType(product.type)))
+      setDeleteBeforeEvent(product.close_before_event)
+      dispatch(initializeSizes(product.sizes))
+      setImageID(product.image_url)
+      console.log(product.events)
+      dispatch(initializeEvents(product.events))
+      setProduct(product)
+    },
+    [dispatch, product]
+  )
 
   useEffect(() => {
     async function fetchData() {

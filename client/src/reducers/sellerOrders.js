@@ -8,3 +8,9 @@ export const sellerOrders = (state = [], action) => {
       return state
   }
 }
+
+export const getSellerOrders = (orders) => {
+  return async (dispatch) => {
+    dispatch({ type: "RECEIVE_SELLER_ORDERS", orders })
+  }
+}

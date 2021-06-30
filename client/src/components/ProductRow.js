@@ -21,6 +21,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
   const price = useSelector((state) => state.price)
   const priceFloat = parseFloat(price.substring(0, price.length).replace(",", "."))
   const unitSizeFloat = parseFloat(unitSize.replace(",", "."))
+  console.log(priceFloat * unitSizeFloat)
   return (
     <>
       <Form.Group className="mb-3 text-center">
@@ -56,7 +57,9 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
         ) : null}
       </Form.Group>
       <div className="w-100 mb-3 text-center">
-        <p>Hinta: {priceFloat * unitSizeFloat}€</p>
+        <p>
+          Hinta: {isNaN(priceFloat * unitSizeFloat) ? 0 : priceFloat * unitSizeFloat}€
+        </p>
       </div>
     </>
   )

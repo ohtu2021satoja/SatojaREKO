@@ -14,8 +14,8 @@ const MapMarkerMarket = ({ market, icon, mapInstance }) => {
         },
       }}
     >
-      <Popup className="map-popup" autoPan={false}>
-        <div className="mt-2 px-1 py-1 border-0 popup-text">
+      <Popup className="market-popup" autoPan={false}>
+        <div className="mx-0 my-0 px-0 py-0 border-0 popup-text">
           <EventInfoLabel
             market={market}
             event={market.market_events[0]}

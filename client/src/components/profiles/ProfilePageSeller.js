@@ -7,11 +7,18 @@ import NotificationError from "../NotificationError"
 import FormSellerImage from "./FormSellerImage"
 import ProfileHeaderSeller from "./ProfileHeaderSeller"
 import FormSeller from "./FormSeller"
+import { useHistory } from "react-router-dom"
 
 const ProfilePageSeller = ({ user, handleUserUpdate, logOut }) => {
   const [showModal, setShowModal] = useState(false)
   const [showError, setShowError] = useState(false)
   const [showUpdateError, setShowUpdateError] = useState(false)
+  const history = useHistory()
+
+  const logOutProfile = async () => {
+    await logOut()
+    await history.push("/")
+  }
 
   // uploads the image to Cloudinary
   // returns image path
@@ -55,7 +62,7 @@ const ProfilePageSeller = ({ user, handleUserUpdate, logOut }) => {
         />
         <Col xs={12} className="py-3">
           <Button
-            onClick={logOut}
+            onClick={logOutProfile}
             variant="outline-danger"
             size="lg"
             type="button"

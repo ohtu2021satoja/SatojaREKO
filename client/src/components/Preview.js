@@ -30,11 +30,14 @@ const PreviewSize = ({ size }) => {
 
 const PublishedHeader = ({ Reset }) => {
   return (
-    <Row className="bg-light-green my-2">
-      <Col sm={{ span: 10, offset: 1 }} className="text-center">
+    <Row className="bg-light-green show-topmost" style={{ marginTop: -25 }}>
+      <Col sm={{ span: 10, offset: 1 }} className="mt-3 text-center">
         <h2>Julkaistu</h2>
-        <h3>Kerro kavereille</h3>
-        <Button onClick={() => Reset()} variant="success" className="w-100">
+        <h4>Kerro kavereille!</h4>
+        <p>
+          Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
+        </p>
+        <Button onClick={() => Reset()} size="lg" variant="success" className="w-100">
           Luo uusi ilmoitus
         </Button>
       </Col>
@@ -122,6 +125,9 @@ const Preview = ({
     if (productType === "Gramma") {
       return "gm"
     }
+    if (productType === "Kappale") {
+      return "pc"
+    }
   }
   const PublishProduct = async () => {
     const type = parseType(productType)
@@ -142,40 +148,33 @@ const Preview = ({
     setPublished(true)
   }
   return (
-    <Row className="h-100 mb-5 bg-light-yellow flex-column">
-      {published ? (
-        <PublishedHeader Reset={Reset} />
-      ) : (
-        <Col xs={12}>
-          <Nav className="mt-2 py-2 flex-nowrap align-items-center">
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="./add"
-                aria-label="Palaa lisää tuote sivulle"
-                onClick={() => setPreview(false)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-arrow-left-square-fill back-link"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
-                </svg>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item
-              className="flex-grow-1 pt-2 text-center"
-              style={{ paddingRight: 52 }}
+    <Row className="h-100 bg-light-yellow flex-column">
+      <Col xs={12}>
+        <Nav className="mt-2 py-2 flex-nowrap align-items-center">
+          <Nav.Item>
+            <Nav.Link
+              as={Link}
+              to="./add"
+              aria-label="Palaa lisää tuote sivulle"
+              onClick={() => setPreview(false)}
             >
-              <h2>Esikatselu</h2>
-            </Nav.Item>
-          </Nav>
-        </Col>
-      )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="bi bi-arrow-left-square-fill back-link"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
+              </svg>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item className="flex-grow-1 pt-2 text-center" style={{ paddingRight: 52 }}>
+            <h2>Esikatselu</h2>
+          </Nav.Item>
+        </Nav>
+      </Col>
       <Col xs={12} className="pt-2 mb-2 text-center">
         {imageID ? (
           <Image
@@ -192,40 +191,38 @@ const Preview = ({
           {organic ? "Luomua" : "Ei luomua"}
         </Button>
       </Col>
-      <Col xs={12} className="mb-2 text-center">
+      <Col xs={12} className="mb-4 text-center">
         <h3>{title}</h3>
         <p>{description}</p>
         <h4>
           {price}/{parseType(productType)}
         </h4>
-        <p>Alv: {alv}</p>
+        <p className="mb-1">Alv: {alv}</p>
         <p>Varastoarvo {batch_quantity}</p>
         {isPackage ? (
           <p>Hinta: {priceFloat * parseFloat(productSizes[0].size.replace(",", "."))}€</p>
         ) : null}
         {isPackage ? null : <PreviewSizes sizes={sizes} />}
       </Col>
-      <Col xs={12} className="mb-4 text-center">
+      <Col xs={12} className="text-center">
         <h4>Noutotapahtumat:</h4>
         <Events events={previewEvents} isChoice={false} />
-        <p className="text-muted">
-          Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.
-        </p>
         {published ? null : (
-          <Button
-            style={{ width: "100%" }}
-            variant="success"
-            size="lg"
-            onClick={PublishProduct}
-          >
-            Julkaise
-          </Button>
+          <>
+            <p className="text-muted">
+              Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen noutotilaisuuden alkua.
+            </p>
+            <Button
+              variant="success"
+              size="lg"
+              onClick={PublishProduct}
+              className="w-100 mb-3"
+            >
+              Julkaise
+            </Button>
+          </>
         )}
-        {published ? (
-          <p>
-            Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
-          </p>
-        ) : null}
+        {published ? <PublishedHeader Reset={Reset} /> : null}
       </Col>
     </Row>
   )

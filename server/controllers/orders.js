@@ -65,12 +65,22 @@ ordersRouter.delete("/seller/:seller_id/:order_id", async (req, res) => {
   }
 })
 
-ordersRouter.delete("/seller/:seller_id/:order_id/:product_id", async (req, res) => {
+ordersRouter.delete("/seller/:seller_id/:order_id/product/:product_id", async (req, res) => {
   const {seller_id, order_id, product_id} = req.params
   if(!req.user || req.user.id != seller_id){
     res.status(401).send("Current user isn't the seller")
   } else {
     await ordersService.removeProductFromSellersOrder(seller_id, order_id, product_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository)
+    res.send(200).end()
+  }
+})
+
+ordersRouter.delete("/seller/:seller_id/:order_id/size/:size_id", async (req, res) => {
+  const {seller_id, order_id, size_id} = req.params
+  if(!req.user || req.user.id != seller_id){
+    res.status(401).send("Current user isn't the seller")
+  } else {
+    await ordersService.removeSizeFromSellersOrder(seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository)
     res.send(200).end()
   }
 })

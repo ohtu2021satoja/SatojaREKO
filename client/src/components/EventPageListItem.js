@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import EventPageListButtons from "./EventPageListButtons"
+import OrganicLabel from "./OrganicLabel"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
@@ -51,7 +52,13 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
     <Card className="mb-1 pt-2 px-2 ">
       <Row>
         <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
-          <Card.Img src="https://via.placeholder.com/50" alt="Generic placeholder" />
+          <div style={{ position: "relative " }}>
+            <Card.Img
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
+              alt="Generic placeholder"
+            />
+            {product.organic && <OrganicLabel />}
+          </div>
         </Col>
         <Col xs={8} className="text-left">
           <Card.Subtitle
@@ -59,7 +66,11 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
             as={Link}
             to={sellerPageLink}
           >
-            <p>{product.seller_name}</p>
+            <p>
+              {product.seller_name
+                ? product.seller_name
+                : product.seller_firstname + " " + product.seller_lastname}
+            </p>
             <i className="bi bi-chevron-right"></i>
           </Card.Subtitle>
           <Card.Title

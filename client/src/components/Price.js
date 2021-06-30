@@ -2,9 +2,28 @@ import React from "react"
 import Form from "react-bootstrap/Form"
 import { changePrice } from "../reducers/priceReducer"
 import { useSelector, useDispatch } from "react-redux"
-import { Placeholder } from "cloudinary-react"
 
 const Price = ({ setFieldValue, errors, touched }) => {
+  const productType = useSelector((state) => state.currentProduct.product.type)
+
+  const parseType = (productType) => {
+    if (productType === "Kg") {
+      return "Aseta kilohinta (sis alv)"
+    } else if (productType === "Kuutio") {
+      return "Aseta kuutiohinta (sis alv)"
+    } else if (productType === "Litra") {
+      return "Aseta litrahinta (sis alv)"
+    } else if (productType === "Motti") {
+      return "Aseta mottihinta (sis alv)"
+    } else if (productType === "Gramma") {
+      return "Aseta grammahinta (sis alv)"
+    } else if (productType === "Kappale") {
+      return "Aseta kappalehinta (sis alv)"
+    } else {
+      return "Aseta hinta (sis alv)"
+    }
+  }
+
   const price = useSelector((state) => state.price)
   console.log("PRICE", price)
   const dispatch = useDispatch()
@@ -17,7 +36,7 @@ const Price = ({ setFieldValue, errors, touched }) => {
   }
   return (
     <Form.Group className="mb-3 text-center">
-      <Form.Label className="mb-0">Hinta (sis. alv)</Form.Label>
+      <Form.Label className="mb-0">{parseType(productType)}</Form.Label>
       <Form.Control
         value={price}
         onChange={(event) => {
