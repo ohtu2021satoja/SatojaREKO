@@ -11,7 +11,7 @@ const Events = ({ events, setEventChoices, eventChoices, isChoice }) => {
       isChoice={isChoice}
     />
   ))
-  return <div>{displayEvents}</div>
+  return <div className="pb-4">{displayEvents}</div>
 }
 
 export default Events

@@ -4,6 +4,8 @@ import OrderSellerEventList from "./OrderSellerEventList"
 import OrdersSellerSingleEvent from "./OrdersSellerSingleEvent"
 import Row from "react-bootstrap/esm/Row"
 import OrdersSellerTitle from "./OrdersSellerTitle"
+import OrderSellerNav from "./OrderSellerNav"
+
 import BuyerInfo from "./BuyerInfo"
 import orderService from "../services/orders"
 import { getSellerOrders } from "../reducers/sellerOrders"
@@ -78,12 +80,13 @@ const OrderSeller = () => {
     if (buyerInfo) {
       return (
         <Row className="h-100 mb-5 flex-column">
-          <BuyerInfo
+          <OrderSellerNav
+            navLink="/orders/seller"
+            navHeader=""
+            altText="Palaa tilaajalistalle"
             HandleBackButton={HandleBackButton}
-            setBuyerInfo={setBuyerInfo}
-            buyerIndexi={buyerIndexi}
-            user={user}
           />
+          <BuyerInfo setBuyerInfo={setBuyerInfo} buyerIndexi={buyerIndexi} user={user} />
         </Row>
       )
     }

@@ -21,6 +21,16 @@ const sendMail = async (mailOptions, config) => {
     return mail
 }
 
+const initiateCustomerMail = (params) => {
+    const mailOptions = {
+        from: mailConfig.customerServiceConfig.auth.user,
+        to: mailConfig.customerServiceConfig.auth.user,
+        subject: `Message from ${params.subject}: ${params.name}: ${params.email}`,
+        text: params.message
+    }
+    return mailOptions
+}
+
 const initiateVerificationMail = async (address, url) => await initiateTemplate(address, { url }, mailTemp, mailConfig.notificationConfig)
 const initiatePasswordResetMail = async (address, url) => await initiateTemplate(address, { url }, resetTemp, mailConfig.notificationConfig)
 const initiateSellerReminderMail = async (address, url, event, user) => await initiateTemplate(address, {is_seller: true, url, event, user}, reminderTemp, mailConfig.notificationConfig)
@@ -67,4 +77,4 @@ const sendEventReminderMails = async (buyers,sellers, event) => {
 }
 
 
-module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails, sendAutomaticMail}
+module.exports = {initiateVerificationMail, initiatePasswordResetMail, initiateDeleteOrder, sendTestMail, sendReminderMails, sendAutomaticMail, initiateCustomerMail, sendCustomerMail}

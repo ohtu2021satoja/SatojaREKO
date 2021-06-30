@@ -18,7 +18,7 @@ const OrdersSellerEvent = (props) => {
     return (
       <Card
         key={index}
-        className="mb-1 bg-light-gray border border-1 border-secondary"
+        className="mb-1 border border-1 border-secondary"
         onClick={() => {
           props.setEventId(event.event_id)
         }}

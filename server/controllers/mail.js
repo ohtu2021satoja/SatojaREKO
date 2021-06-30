@@ -4,15 +4,12 @@ const mailConfig = require('../utils/mailConfig')
 
 
 mailRouter.post('/contact', async (req, res) => {
-    const mailOptions = {
-        from: 'satojareko@gmail.com',
-        to: 'satojareko@gmail.com',
-        subject: `Message from ${req.body.subject}: ${req.body.name}: ${req.body.email}`,
-        text: req.body.message
+    if(!req.user){
+        res.status(401).send("Not logged in")
     }
-    
     try {
-        await mailService.initiateCustomerServiceMail(mailOptions)
+        const mailOptions = await mailService.initiateCustomerMail(req.body)
+        await mailService.sendCustomerMail(mailOptions)
         res.send("success").end()
     } catch(err) {
         res.status(404).send("error").end()

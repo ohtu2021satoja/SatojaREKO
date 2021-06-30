@@ -10,7 +10,8 @@ import UpdateProduct from "../UpdateProduct"
 import ContactPage from "../ContactPage"
 import MapPage from "../MapPage"
 import ShoppingCart from "../ShoppingCart"
-import OrdersBuyers from "../OrdersBuyers"
+import OrdersBuyer from "../OrdersBuyer"
+import OrdersBuyerProducts from "../OrdersBuyerProducts"
 import EventPage from "../EventPage"
 import ProductPage from "../ProductPage"
 import SellerPage from "../SellerPage"
@@ -66,7 +67,7 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
     {/* BUYER ROUTES */}
     <Route exact path="/orders/buyer">
       <NavigationBarBuyer />
-      <OrdersBuyers />
+      <OrdersBuyer />
     </Route>
     <Route exact path="/map">
       <NavigationBarBuyer />
@@ -89,6 +90,18 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
           <>
             <NavigationBarBuyer />
             <EventPage {...props} />
+          </>
+        )
+      }}
+    />
+    <Route
+      path="/orders/buyer/:eventID"
+      exact={true}
+      render={(props) => {
+        return (
+          <>
+            <NavigationBarBuyer />
+            <OrdersBuyerProducts {...props} />
           </>
         )
       }}

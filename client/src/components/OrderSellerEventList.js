@@ -15,6 +15,7 @@ const OrderSellerEventList = (props) => {
         tapahtumat.push(date)
       }
     }
+
     if (props.eventId === null) {
       return (
         <Col

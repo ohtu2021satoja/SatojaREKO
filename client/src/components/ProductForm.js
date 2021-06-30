@@ -35,7 +35,7 @@ const ProductForm = ({
 
     productType: yup.string().notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
 
-    price: yup.string().notOneOf(["00,00€", ""], "Aseta hinta"),
+    price: yup.string().notOneOf(["00,00€", "", "€"], "Aseta hinta"),
 
     sizes: yup
       .array()
