@@ -64,7 +64,7 @@ const OrderSeller = () => {
 
   if (eventId === null) {
     return (
-      <Row className="mb-5 flex-column bg-light-purple">
+      <Row className="h-100 mb-5 flex-column bg-light-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           paivamaarat={paivamaarat}
