@@ -4,16 +4,15 @@ import OrdersSellerEvent from "./OrdersSellerEvent"
 const OrderSellerEventList = (props) => {
   const Paivamaarat = (date, index) => {
     // sorting events by date
-    var date1 = new Date(date)
     const tapahtumat = []
-    for (let i = 0; i < props.Events.length; i++) {
-      var date2 = new Date(props.Events[i].date)
+    for (let i = 0; i < props.paivamaarat.length; i++) {
+      var date2 = props.paivamaarat[i]
       if (
-        date2.getDate() === date1.getDate() &&
-        date2.getMonth() === date1.getMonth() &&
-        date2.getFullYear() === date1.getFullYear()
+        date2.getDate() === date.getDate() &&
+        date2.getMonth() === date.getMonth() &&
+        date2.getFullYear() === date.getFullYear()
       ) {
-        tapahtumat.push(props.Events[i])
+        tapahtumat.push(date)
       }
     }
     if (props.eventId === null) {
@@ -27,30 +26,17 @@ const OrderSellerEventList = (props) => {
           xl={{ span: 4, offset: 4 }}
         >
           <h4 className="mb-0 pt-3">
-            {date1.getDate()}.{date1.getMonth() + 1}.{date1.getFullYear()}
+            {date.getDate()}.{date.getMonth() + 1}.
           </h4>
           <OrdersSellerEvent
-            index={index}
-            Events={props.Events}
-            Event={props.Events[props.eventId]}
             setEventId={props.setEventId}
-            eventId={props.eventId}
-            setListView={props.setListView}
-            ListView={props.ListView}
-            orderProducts={props.orderProducts}
-            orderers={props.orderers}
-            setBuyerInfo={props.setBuyerInfo}
-            buyerInfo={props.buyerInfo}
-            HandleBackButton={props.HandleBackButton}
-            HandleProductButton={props.HandleProductButton}
-            HandleOrderButton={props.HandleOrderButton}
-            uniqueDates={props.uniqueDates}
+            Orderasd={props.Orderasd}
             tapahtumat={tapahtumat}
           />
         </Col>
       )
     }
   }
-  return props.uniqueDates.map(Paivamaarat)
+  return props.paivamaarat.map(Paivamaarat)
 }
 export default OrderSellerEventList
