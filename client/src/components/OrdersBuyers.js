@@ -1,10 +1,8 @@
-
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import { useState } from "react"
 import OrdersBuyersProducts from "./OrdersBuyersProducts"
-import OrdersBuyersNav from "./OrdersBuyersNav"
 
 const OrdersBuyers = () => {
   // example events
@@ -51,6 +49,18 @@ const OrdersBuyers = () => {
       date: "2021-8-1 17:30:00",
       id: 6,
     },
+    {
+      name: "testi7 (REKO)",
+      address: "väinö tannerintie 12",
+      date: "2021-6-1 17:30:00",
+      id: 7,
+    },
+    {
+      name: "testi8 (REKO)",
+      address: "Braku 3",
+      date: "2021-7-22 12:30:00",
+      id: 8,
+    },
   ]
   // dates to array
   let Dates = [Events[0].date]
@@ -79,17 +89,20 @@ const OrdersBuyers = () => {
     if (eventId === null) {
       return (
         <Card
+          as={Col}
           key={index}
-          className="mb-1 border border-1 border-secondary"
+          xs={12}
+          sm={{ span: 10, offset: 1 }}
+          md={{ span: 8, offset: 2 }}
+          lg={{ span: 6, offset: 3 }}
+          xl={{ span: 4, offset: 4 }}
           onClick={() => setEventId(tapahtuma.id)}
         >
-          <Card.Body>
-            <Card.Text className="mb-0">{tapahtuma.name}</Card.Text>
-            <Card.Text className="mb-0">{tapahtuma.address}</Card.Text>
-            <Card.Text className="mb-0">
-              {date.getHours()}:{date.getMinutes()} -
-            </Card.Text>
-          </Card.Body>
+          <div>tapahtuma {tapahtuma.name}</div>
+          {tapahtuma.address}
+          <div>
+            aika {date.getHours()}:{date.getMinutes()}-
+          </div>
         </Card>
       )
     }
@@ -111,31 +124,30 @@ const OrdersBuyers = () => {
     }
     if (eventId === null) {
       return (
-        <Col
-          key={index}
-          xs={12}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
-          xl={{ span: 4, offset: 4 }}
-        >
-          <h4 className="mb-0 pt-3">
-            {date1.getDate()}.{date1.getMonth() + 1}.{date1.getFullYear()}
-          </h4>
+        <div key={index}>
+          <Row className="mt-3">
+            <Col className="text-center">
+              <h6>
+                {date1.getDate()}.{date1.getMonth() + 1}.{date1.getFullYear()}
+              </h6>
+            </Col>
+          </Row>
           {tapahtumat.map(RenderEvents)}
-        </Col>
+        </div>
       )
     }
   }
   if (eventId === null) {
     return (
-      <Row className="h-100 mb-5 flex-column bg-light-green">
-        <Col xs={12} className="mt-5 mb-2 py-2 text-center">
+      <div>
+        <Col xs={12} className="text-center mb-4">
           <h2>Noudot</h2>
-          <h3>Tulevat noudot</h3>
+        </Col>
+        <Col className="text-center mb-4">
+          <h4>Tulevat noudot</h4>
         </Col>
         {uniqueDates.map(Paivamaarat)}
-      </Row>
+      </div>
     )
   } else {
     const x = Events.find((y) => y.id === eventId)
@@ -175,24 +187,48 @@ const OrdersBuyers = () => {
     console.log("paiva ", paiva)
     console.log("datepaiva ", datepaiva)
     return (
-      <Row className="h-100 mb-5 flex-column bg-light-green">
-        <OrdersBuyersNav
-          navLink="/orders/buyer"
-          navHeader="Tilaisuus"
-          altText="Palaa noutoihin"
-          HandleBackButton={HandleBackButton}
-        />
-        <Col xs={12} className="py-4 text-center">
-          <h4 className="mb-0">{x.name}</h4>
-          <p className="mb-0">
+      <Row className="mt-5">
+        <Col xs={12} className="text-center mb-4">
+          <h2>Tilaisuus</h2>
+        </Col>
+        <Col xs={12} className="text-left">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fillRule="currentColor"
+            className="bi bi-arrow-left-circle"
+            onClick={HandleBackButton}
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              className="bi bi-arrow-left-circle"
+              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+            />
+          </svg>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h6>{x.name}</h6>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h6>
             {datepaiva} {thisDate}.{month}.
-          </p>
-          <p className="mb-0">
-            {dateHour}:{dateMinutes} -
-          </p>
-          <p>{x.address}</p>
-          <p className="mb-0">Tilausnumero</p>
-          <p>5243522</p>
+          </h6>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h6>
+            {dateHour}:{dateMinutes}-
+          </h6>
+        </Col>
+        <Col xs={12} className="text-center mb-4">
+          <h6>{x.address}</h6>
+        </Col>
+        <Col xs={12} className="text-center">
+          <h5>Tilausnumero</h5>
+        </Col>
+        <Col xs={12} className="text-center mb-4">
+          <h5>5243522</h5>
         </Col>
         <Col xs={12}>
           <OrdersBuyersProducts
