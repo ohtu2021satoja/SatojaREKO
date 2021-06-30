@@ -5,6 +5,7 @@ import OrdersSellerSingleEvent from "./OrdersSellerSingleEvent"
 import Row from "react-bootstrap/esm/Row"
 import OrdersSellerTitle from "./OrdersSellerTitle"
 import OrderSellerNav from "./OrderSellerNav"
+
 import BuyerInfo from "./BuyerInfo"
 import orderService from "../services/orders"
 import { getSellerOrders } from "../reducers/sellerOrders"
@@ -35,7 +36,7 @@ const OrderSeller = () => {
       if (
         paivamaarat[i].getDay() !== date.getDay() &&
         paivamaarat[i].getMonth() !== date.getMonth() &&
-        paivamaarat[i].getFullYear() !== date.getFullYear()
+        paivamaarat[i].getFullYear() === date.getFullYear()
       ) {
         paivamaarat.push(date)
       }
@@ -63,7 +64,7 @@ const OrderSeller = () => {
 
   if (eventId === null) {
     return (
-      <Row className="h-100 mb-5 flex-column bg-light-purple">
+      <Row className="mb-5 flex-column bg-light-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           paivamaarat={paivamaarat}
