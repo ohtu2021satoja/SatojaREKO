@@ -15,7 +15,6 @@ let timer
 
 // Yup
 const SellerSchema = Yup.object().shape({
-
   name: Yup.string().max(25, "Maksimipituus 25 kirjainta"),
   firstname: Yup.string()
     .max(25, "Maksimipituus 25 kirjainta")
