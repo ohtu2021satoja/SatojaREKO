@@ -1,13 +1,10 @@
-import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Spinner from "react-bootstrap/Spinner"
-import { useState, useEffect } from "react"
-import OrdersBuyerProducts from "./OrdersBuyerProducts"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveBuyerOrders } from "../actions/buyerOrders"
-import EventListItemOrder from "./EventListItemOrder"
-import EventList from "./EventList"
+import { useEffect } from "react"
+import OrdersBuyerEventListItem from "./OrdersBuyerEventListItem"
 
 const OrdersBuyer = () => {
   const dispatch = useDispatch()
@@ -30,8 +27,17 @@ const OrdersBuyer = () => {
     const eventsByDate = {}
     sortedArray.forEach((event) => {
       const date = new Date(event.event_start)
+
       const dateKey =
-        "" + date.getUTCFullYear() + (date.getUTCMonth() + 1) + date.getUTCDate()
+        "" +
+        date.getUTCFullYear() +
+        (date.getUTCMonth() + 1 < 10
+          ? "0" + (date.getUTCMonth() + 1)
+          : date.getUTCMonth() + 1) +
+        (date.getUTCDate() + 1 < 10
+          ? "0" + (date.getUTCDate() + 1)
+          : date.getUTCDate() + 1)
+
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
         : [event]
@@ -40,8 +46,6 @@ const OrdersBuyer = () => {
   }
 
   const eventsByDate = getEventsByDate(events)
-
-  console.log(eventsByDate)
 
   const getDateString = (event) => {
     const date = new Date(event.event_start)
@@ -67,7 +71,7 @@ const OrdersBuyer = () => {
             <div key={index}>
               <p className="mt-4">{getDateString(eventsByDate[day][0])}</p>
               {eventsByDate[day].map((event, index) => (
-                <EventListItemOrder
+                <OrdersBuyerEventListItem
                   event={event}
                   linkTo={{
                     pathname: `/orders/buyer/${event.event_id}`,

@@ -13,8 +13,17 @@ const EventList = ({ events, linkTo }) => {
     const eventsByDate = {}
     sortedArray.forEach((event) => {
       const date = new Date(event.start)
+
       const dateKey =
-        "" + date.getUTCFullYear() + (date.getUTCMonth() + 1) + date.getUTCDate()
+        "" +
+        date.getUTCFullYear() +
+        (date.getUTCMonth() + 1 < 10
+          ? "0" + (date.getUTCMonth() + 1)
+          : date.getUTCMonth() + 1) +
+        (date.getUTCDate() + 1 < 10
+          ? "0" + (date.getUTCDate() + 1)
+          : date.getUTCDate() + 1)
+
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
         : [event]

@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card"
 import EventInfoLabel from "./EventInfoLabel"
 import { Link } from "react-router-dom"
 
-const EventListItemOrder = ({ event }) => {
+const OrdersBuyerEventListItem = ({ event }) => {
   return (
     <Card
       className="mb-1 py-2 px-2 unstyled-link"
@@ -22,4 +22,4 @@ const EventListItemOrder = ({ event }) => {
   )
 }
 
-export default EventListItemOrder
+export default OrdersBuyerEventListItem
