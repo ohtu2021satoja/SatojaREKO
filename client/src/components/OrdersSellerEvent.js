@@ -19,20 +19,37 @@ const OrdersSellerEvent = (props) => {
       <Card
         key={index}
         className="mb-1 border border-1 border-secondary"
-        onClick={() => props.setEventId(event.event_id)}
+        onClick={() => {
+          props.setEventId(event.event_id)
+        }}
       >
         <Card.Body>
           <Card.Text className="mb-0">{event.reko_name} (REKO)</Card.Text>
           <Card.Text className="mb-0">{event.event_address}</Card.Text>
           <Card.Text className="mb-0">
-            aika {dateStart.getHours()}:{dateMinutesStart} - {dateEnd.getHours()}:
+            aika {dateStart.getHours()}:{dateMinutesStart}-{dateEnd.getHours()}:
             {dateMinutesEnd}
           </Card.Text>
         </Card.Body>
       </Card>
     )
   }
-  return <div>{props.Orderasd.map(RenderEvents)}</div>
+  var date = []
+  var date2 = []
+  var lista = []
+  props.Orderasd.map((single) => {
+    date = new Date(single.event_start)
+    date2 = new Date(props.tapahtumat[0])
+    if (
+      date.getDay() === date2.getDay() &&
+      date.getMonth() === date2.getMonth() &&
+      date.getFullYear() === date2.getFullYear()
+    ) {
+      lista.push(single)
+    }
+  })
+
+  return <div>{lista.map(RenderEvents)}</div>
 }
 
 export default OrdersSellerEvent
