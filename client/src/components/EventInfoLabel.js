@@ -1,6 +1,6 @@
 const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
-  const startDate = new Date(event.start)
-  const endDate = new Date(event.endtime)
+  const startDate = new Date(event.start ? event.start : event.event_start)
+  const endDate = new Date(event.endtime ? event.endtime : event.event_endtime)
 
   const weekdays = [
     "Sunnuntai",
