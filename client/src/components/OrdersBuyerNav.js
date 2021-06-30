@@ -2,16 +2,11 @@ import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
 
-const OrderaBuyersNav = ({ navLink, navHeader, altText, HandleBackButton }) => (
+const OrdersBuyerNav = ({ navLink, navHeader, altText }) => (
   <Col xs={12}>
     <Nav className="mt-2 py-2 flex-nowrap align-items-center">
       <Nav.Item>
-        <Nav.Link
-          as={Link}
-          to={navLink}
-          aria-label={altText}
-          onClick={() => HandleBackButton()}
-        >
+        <Nav.Link as={Link} to={navLink} aria-label={altText}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -31,4 +26,4 @@ const OrderaBuyersNav = ({ navLink, navHeader, altText, HandleBackButton }) => (
   </Col>
 )
 
-export default OrderaBuyersNav
+export default OrdersBuyerNav
