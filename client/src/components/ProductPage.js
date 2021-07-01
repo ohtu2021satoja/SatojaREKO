@@ -7,14 +7,19 @@ import OrganicLabel from "./OrganicLabel"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { Link } from "react-router-dom"
+import { getEventProduct } from "../services/events"
+import { useParams } from "react-router-dom"
 
 const ProductPage = (props) => {
+  const { eventID } = useParams()
+  const { productID } = useParams()
+
   const product = props.location.state.product
   const event = props.location.state.event
   const market = props.location.state.market
   const linkTo = props.location.state.linkTo
   const singleSize = product.sizes.length === 1
-  console.log(product)
+
   const dispatch = useDispatch()
 
   const handleAddToCart = (size) => {

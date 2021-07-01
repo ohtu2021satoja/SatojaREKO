@@ -2,12 +2,12 @@ import axios from "axios"
 
 const apiUrl = "/api/events"
 
-/*
-const getEvents = async () => {
+export const getEvents = async () => {
   const response = await axios.get(apiUrl)
   return response.data
 }
 
+/*
 const getSellerEvents = async (id) => {
   const response = await axios.get(`${apiUrl}/seller/${id}`)
   return response.data
@@ -17,6 +17,11 @@ const getSellerEvents = async (id) => {
 export const getSellersUpcomingEventsWithProducts = (id) => {
   const request = axios.get(`/api/sellers/events/${id}`)
   return request.then((response) => response.data)
+}
+
+export const getEventProduct = async (eventID, productID) => {
+  const response = await axios.get(`${apiUrl}/${eventID}/products/${productID}`)
+  return response
 }
 
 const getSellersUpcomingEvents = (id) => {
