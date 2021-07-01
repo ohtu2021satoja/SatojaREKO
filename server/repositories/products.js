@@ -25,8 +25,8 @@ const getSellersProducts = async (id) => {
 
 const addProduct = async (product) => {
   const current_date = new Date()
-  const dbParams = [product.name, product.unit_price, product.organic, product.sellers_id, product.category, product.type,  product.batch_quantity, product.description, product.deleteBeforeEvent, product.vat, product.imageURL, current_date]
-  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $12, $8, $9, $10, $11) RETURNING id", dbParams)
+  const dbParams = [product.name, product.unit_price, product.organic, product.sellers_id, product.category, product.type, product.description, product.deleteBeforeEvent, product.vat, product.imageURL, current_date]
+  const result= await db.query("INSERT INTO products VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $11, $7, $8, $9, $10) RETURNING id", dbParams)
   return(result[0].id)
 }
 

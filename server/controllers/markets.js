@@ -30,11 +30,11 @@ marketsRouter.get("/", async (req, res, next) => {
 })
 
 
-marketsRouter.post('/', async (req, res) => {
+marketsRouter.post('/reko_market', async (req, res) => {
     if(req.user && await usersService.isAdmin(req.user.id, usersRepository)){
         try {
             const marketData = req.body
-            await marketsService.addMarkets(marketData,req.body.reko_areas, marketsRepository, rekoAreasRepository)
+            await marketsService.addRekoMarket(marketData,req.body.reko_areas, marketsRepository, rekoAreasRepository)
             res.sendStatus(200).end()
         } catch (err) {
             console.log(err)

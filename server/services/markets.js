@@ -5,11 +5,11 @@ const getAllMarketsThatHaveEvents = async (marketsRepository) => {
     return(markets)
 }
 
-const addMarkets = async (market, reko_areas, marketsRepository, rekoAreasRepository) => {
+const addRekoMarket = async (market, reko_areas, marketsRepository, rekoAreasRepository) => {
     const location = await geoap.getAddressInfo(market.address)
-    const newMarket = await marketsRepository.addMarkets(market, location)
+    const newMarket = await marketsRepository.addRekoMarket(market, location)
     console.log(reko_areas)
-    const newRekoMarket = await rekoAreasRepository.addRekoMarkets(reko_areas, newMarket)
+    const newRekoMarket = await rekoAreasRepository.addMarketToRekoAreas(reko_areas, newMarket)
 }
 
 const getAllMarkets = (marketsRepository) => {
@@ -22,4 +22,4 @@ const getMarket = async (id, marketsRepository) => {
     return market
 }
 
-module.exports = {getAllMarketsThatHaveEvents, addMarkets, getAllMarkets, getMarket}
+module.exports = {getAllMarketsThatHaveEvents, addRekoMarket, getAllMarkets, getMarket}
