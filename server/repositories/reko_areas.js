@@ -12,10 +12,10 @@ const addRekoAreas = async (rekoArea) => {
   return result
 }
 
-const addRekoMarkets = async (reko_areas, market_id) => {
+const addMarketToRekoAreas = async (reko_areas, market_id) => {
   const rekoMarkets = reko_areas.map(reko_areas => [reko_areas, market_id])
   const query = format("INSERT INTO reko_markets (areas_id,market_id) VALUES %L", rekoMarkets)
   await db.query(query, [])
 }
 
-module.exports = { getRekoAreas, addRekoAreas, addRekoMarkets }
+module.exports = { getRekoAreas, addRekoAreas, addMarketToRekoAreas }

@@ -4,9 +4,8 @@ const apiUrl = "api/markets"
 
 const addMarket = async (address, rekoChoices) => {
   console.log(address, rekoChoices)
-  const response = await axios.post(`${apiUrl}`, {
+  const response = await axios.post(`${apiUrl}/reko_market`, {
     address,
-    type: "reko_market",
     reko_areas: rekoChoices,
   })
   console.log(response)
