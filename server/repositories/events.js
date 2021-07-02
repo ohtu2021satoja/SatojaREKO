@@ -24,7 +24,7 @@ const getSellersEvents = async (seller_id) => {
 }
 
 const getEventsSellerHasProducts = async (seller_id) => {
-  const query = "SELECT events.id AS event_id, events.start, events.endtime, events.market_id, (SELECT json_build_object('id', markets.id, 'address', markets.address, 'location', markets.location, 'type', markets.type, 'reko_name', reko_areas.name) from markets INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id  where markets.id=events.market_id) AS market from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1 AND products.removed=false GROUP BY (events.id, events.start, events.endtime)"
+  const query = "SELECT events.id AS event_id, events.start, events.endtime, events.market_id, (SELECT json_build_object('id', markets.id, 'address', markets.address, 'location', markets.location, 'reko_name', reko_areas.name) from markets INNER JOIN reko_markets ON reko_markets.market_id=markets.id INNER JOIN reko_areas ON reko_areas.id = reko_markets.areas_id  where markets.id=events.market_id) AS market from products INNER JOIN products_events ON products.id = products_events.id_product INNER JOIN events ON products_events.id_event = events.id WHERE products.sellers_id=$1 AND products.removed=false GROUP BY (events.id, events.start, events.endtime)"
   const sellerEvents = await  db.query(query,[seller_id])
   return(sellerEvents)
 }
