@@ -127,7 +127,7 @@ const Preview = ({
       return "gm"
     }
     if (productType === "Kappale") {
-      return "pc"
+      return "kpl"
     }
   }
   const PublishProduct = async () => {

@@ -1,7 +1,13 @@
 const geoap = require("../geoap")
 
 const getAllMarketsThatHaveEvents = async (marketsRepository) => {
-    const markets = marketsRepository.getAllMarketsThatHaveEvents()
+    const markets = await marketsRepository.getAllMarketsThatHaveEvents()
+    console.log("MARKET_EVENTS",markets[0].market_events)
+    markets.forEach(market => {
+        market.market_events = market.market_events.filter(event => {
+            return(new Date(event.endtime) > new Date())
+        })
+    })
     return(markets)
 }
 

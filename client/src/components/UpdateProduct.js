@@ -53,7 +53,7 @@ const UpdateProduct = () => {
     if (productType === "gm") {
       return "Gramma"
     }
-    if (productType === "pc") {
+    if (productType === "kpl") {
       return "Kappale"
     }
   }
