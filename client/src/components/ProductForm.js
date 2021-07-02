@@ -33,7 +33,7 @@ const ProductForm = ({
 
     description: yup.string().required("Vaadittu"),
 
-    productType: yup.string().notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
+    productType: yup.string().notOneOf([""], "Valitse yksikkö"),
 
     price: yup.string().notOneOf(["00,00€", "", "€"], "Aseta hinta"),
 

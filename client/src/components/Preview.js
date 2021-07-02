@@ -72,6 +72,7 @@ const Preview = ({
   const [published, setPublished] = useState(false)
   const user = useSelector((state) => state.authedUser)
   console.log(user)
+  console.log("productType", productType)
   const alv = useSelector((state) => state.alv)
   const vat = parseInt(alv.slice(0, -1))
   console.log(vat)
