@@ -35,6 +35,33 @@
 - Tuotteet näytetään tilakohtaisesti
 - plus- ja miinus-merkit pois ja kappalemäärä tilalle
 
+# 14.06.21
+
+- Sähköposti - Ei kriittinen asia - mutta hyvä saada jos pystyy mukaan
+- Priorisointi tärkeä, ydin toiminnallisuudet kuntoon ja viilattu.
+
+## Tuotelistaus. 
+
+- Kaksi erilaista tuotenäkymää lihoille ja muille, avautuva kortti komponentti menee epäselvän näköiseksi jos kaikki samassa klikattavassa komponentissa
+- Eli +/- jos samaa tuotekokoa on useampi kuin 1, muuten omalle sivulle missä jokainen “lihakimpale” näkyy erikseen.
+- listauksessa ostajat/tuotteet aakkosjärjestys alkajaisiksi. muut sorttaukset (low priority)
+
+## Tuotteet
+- Tuotteen muokkaus - kriittinen asia, minimissään admin voi muokata.
+- Tekstin muokkaus helppo
+- Luodaan uusi tuote jos hinta vaihtuu
+- Luomutietoa ei voi muokata vielä
+
+## tekninen 
+
+- web socket ensi version ongelma, ei kosketa siihen nytten
+- tekninen keskustelu Redux Viljamin kanssa. (perjantai)
+- EI IKINÄ REFRESH BUTTON
+- autorisointi, voiko tuottaja poistaa/muokkaa vain omia tuotteitaan.
+
+## käyttöehdot
+
+## Myyjän etusivu pysyy näyteikkunana
 
 # 07.06.21
 
@@ -148,33 +175,7 @@ Tarkoituksena on luoda käyttöliittymä, joka näyttää samalta kaikissa selai
 
 Tehdäksemme mahdollisimman yhtenäisen ja toimivan kokonaisuuden, päätimme käyttää apunamme [Bootstrap-sovelluskehystöä](https://getbootstrap.com/docs/5.0/getting-started/introduction/).
 
-# 14.06.21
 
-- Sähköposti - Ei kriittinen asia - mutta hyvä saada jos pystyy mukaan
-- Priorisointi tärkeä, ydin toiminnallisuudet kuntoon ja viilattu.
-
-## Tuotelistaus. 
-
-- Kaksi erilaista tuotenäkymää lihoille ja muille, avautuva kortti komponentti menee epäselvän näköiseksi jos kaikki samassa klikattavassa komponentissa
-- Eli +/- jos samaa tuotekokoa on useampi kuin 1, muuten omalle sivulle missä jokainen “lihakimpale” näkyy erikseen.
-- listauksessa ostajat/tuotteet aakkosjärjestys alkajaisiksi. muut sorttaukset (low priority)
-
-## Tuotteet
-- Tuotteen muokkaus - kriittinen asia, minimissään admin voi muokata.
-- Tekstin muokkaus helppo
-- Luodaan uusi tuote jos hinta vaihtuu
-- Luomutietoa ei voi muokata vielä
-
-## tekninen 
-
-- web socket ensi version ongelma, ei kosketa siihen nytten
-- tekninen keskustelu Redux Viljamin kanssa. (perjantai)
-- EI IKINÄ REFRESH BUTTON
-- autorisointi, voiko tuottaja poistaa/muokkaa vain omia tuotteitaan.
-
-## käyttöehdot
-
-## Myyjän etusivu pysyy näyteikkunana
 
 - yrityksen oma outlet jossa voi kertoa yrityksen tietoja etc...
 
