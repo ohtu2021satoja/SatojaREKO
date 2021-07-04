@@ -6,35 +6,47 @@ import EventList from "./EventList"
 import BackButtonHeader from "./BackButtonHeader"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveSellerEvents } from "../actions/sellerEvents"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { getSeller } from "../services/sellers"
 
 const SellerPage = (props) => {
   const { sellerID } = useParams()
 
   const dispatch = useDispatch()
   const sellerEvents = useSelector((state) => state.sellerEvents)
-  const sellers = useSelector((state) => state.mapPoints.Sellers)
 
-  const seller = props.location.state.seller
-    ? props.location.state.seller
-    : sellers.find((seller) => Number(seller.id) === Number(sellerID))
-  const linkTo = props.location.state.linkTo
+  const [seller, setSeller] = useState(
+    props.location.state ? props.location.state.seller : null
+  )
+
+  const [events, setEvents] = useState(sellerEvents)
+
+  useEffect(() => {
+    if (!seller) {
+      const fetchSeller = async () => {
+        const res = await getSeller(sellerID)
+        console.log(res)
+        setSeller(res)
+        setEvents(res.events)
+      }
+      fetchSeller()
+    }
+    dispatch(receiveSellerEvents(sellerID))
+  }, [dispatch, sellerID, seller])
+
+  const linkTo = props.location.state
     ? props.location.state.linkTo
     : {
         pathname: "/map",
       }
 
-  useEffect(() => {
-    dispatch(receiveSellerEvents(seller.id))
-  }, [dispatch, seller])
-
   return seller ? (
-    <Row className={sellerEvents.length > 0 ? "bg-light-blue" : "bg-light-blue vh-100"}>
+    <Row className="bg-light-blue h-100">
       <BackButtonHeader linkTo={linkTo} />
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
         <Image
-          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_80/${seller.image_url}`}
+          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_200/${seller.image_url}`}
           alt="Generic placeholder"
           fluid
         />
@@ -49,16 +61,16 @@ const SellerPage = (props) => {
           {seller.phonenumber && <p>{seller.phonenumber}</p>}
           {seller.business_id && <p>Y-tunnus: {seller.business_id}</p>}
           {seller.homepage && (
-            <a href={seller.homepage} className="mb-4">
+            <a href={seller.homepage} target="_blank" rel="noreferrer" className="mb-4">
               {seller.homepage}
             </a>
           )}
-          {sellerEvents.length > 0 && <h4>Myyntipisteet</h4>}
+          {events.length > 0 && <h4>Myyntipisteet</h4>}
         </div>
       </Col>
       <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
         <EventList
-          events={sellerEvents}
+          events={events}
           linkTo={{
             pathname: `/sellers/${seller.id}`,
             state: {

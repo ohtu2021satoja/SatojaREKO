@@ -67,7 +67,6 @@ const MapPage = () => {
               return mapBounds.contains(location)
             })
           : []
-
         const visibleSellers = mapPoints.Sellers
           ? mapPoints.Sellers.filter((seller) => {
               if (!seller.location || !seller.location.lat || !seller.location.lon)

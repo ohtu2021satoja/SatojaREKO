@@ -14,8 +14,6 @@ const EventPage = (props) => {
   const { eventID } = useParams()
 
   const dispatch = useDispatch()
-  console.log(props.location.state)
-
   const eventProducts = useSelector((state) => state.eventProducts[eventID])
   const events = useSelector((state) => state.events)
 
@@ -44,7 +42,7 @@ const EventPage = (props) => {
       }
     }
     dispatch(receiveEventProducts(eventID))
-  }, [dispatch, eventID, props.location.state, events, event, market])
+  }, [dispatch, eventID, events, event, market])
 
   const linkTo = props.location.state
     ? props.location.state.linkTo

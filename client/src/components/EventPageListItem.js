@@ -54,7 +54,7 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
         <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
           <div style={{ position: "relative " }}>
             <Card.Img
-              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.image_url}`}
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.image_url}`}
               alt="Generic placeholder"
             />
             {product.organic && <OrganicLabel />}
