@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row"
 import OrdersBuyerNav from "./OrdersBuyerNav"
 import EventInfoLabel from "./EventInfoLabel"
 import OrganicLabel from "./OrganicLabel"
+import { Link } from "react-router-dom"
 
 const OrdersBuyerProducts = (props) => {
   const event = props.location.state.event
@@ -14,14 +15,26 @@ const OrdersBuyerProducts = (props) => {
         <Row className="align-items-center">
           <Col xs={4}>
             <Card.Img
-              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_50/${product.product_image_url}`}
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.product_image_url}`}
               alt="Generic placeholder"
               rounded="true"
             />
             {product.organic && <OrganicLabel onOrdersPage={true} />}
           </Col>
-          <Col xs={8} className="mb-3 text-left">
-            <Card.Subtitle className="mb-2 text-muted">
+          <Col xs={8} className="mb-3 pt-2 text-start">
+            <Card.Subtitle
+              className="d-flex justify-content-between text-muted unstyled-link"
+              as={Link}
+              to={{
+                pathname: `/sellers/${product.seller_id}`,
+                state: {
+                  linkTo: {
+                    pathname: `/orders/buyer/${event.id ? event.id : event.event_id}`,
+                    state: { event: event },
+                  },
+                },
+              }}
+            >
               {(() => {
                 let sellerName = ""
                 if (product.seller_name) {
@@ -30,22 +43,18 @@ const OrdersBuyerProducts = (props) => {
                   sellerName = product.seller_firstname + " " + product.seller_lastname
                 }
                 if (!product.removed) {
-                  return sellerName
+                  return <p>{sellerName}</p>
                 } else return <del>{sellerName}</del>
               })()}
+              <i className="bi bi-chevron-right"></i>
             </Card.Subtitle>
-            <Card.Title className="mb-0">
-              {product.removed ? <del>{product.product_name}</del> : product.product_name}
-            </Card.Title>
-          </Col>
-          <Col xs={10} className="mb-1 text-end">
-            <Card.Subtitle className="text-muted">
+            <Card.Title className="mb-1">
               {product.removed ? (
-                <div style={{ color: "red" }}>TILAUS PERUTTU</div>
+                <del>{product.product_name}</del>
               ) : (
-                product.description
+                product.product_name + " " + product.size + " " + product.type
               )}
-            </Card.Subtitle>
+            </Card.Title>
           </Col>
           <Col xs={{ span: 4, offset: 4 }}>
             <p>
@@ -55,13 +64,18 @@ const OrdersBuyerProducts = (props) => {
                   {product.size} {product.type}
                 </del>
               ) : (
-                product.size + " " + product.type
+                product.quantity + " kpl"
               )}
             </p>
           </Col>
           <Col>
             <h5>
-              {product.removed ? <del>{product.price / 100}</del> : product.price / 100}€
+              {product.removed ? (
+                <del>{(product.price * product.quantity) / 100}</del>
+              ) : (
+                (product.price * product.quantity) / 100
+              )}
+              €
             </h5>
           </Col>
         </Row>
@@ -74,7 +88,7 @@ const OrdersBuyerProducts = (props) => {
       <OrdersBuyerNav
         navLink="/orders/buyer"
         altText="Takaisin tilauksiin"
-        navHeader="Noutotilaus"
+        navHeader="Noudot"
       />
       <Col xs={12} className="mb-3 pb-0 mt-3 text-center " styles={{ marginBottom: 0 }}>
         <EventInfoLabel
@@ -91,7 +105,7 @@ const OrdersBuyerProducts = (props) => {
           {Math.round(
             event.orders.reduce((acc, product) => {
               if (!product.removed) {
-                return acc + product.price
+                return acc + product.price * product.quantity
               }
               return acc
             }, 0) * 100

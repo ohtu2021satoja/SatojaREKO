@@ -6,28 +6,55 @@ import EventPageListItem from "./EventPageListItem"
 import TemplateTopNav from "./TemplateTopNav"
 import { useDispatch, useSelector } from "react-redux"
 import { receiveEventProducts } from "../actions/eventProducts"
-import { useEffect } from "react"
+import { receiveEvents } from "../actions/events"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 const EventPage = (props) => {
   const { eventID } = useParams()
 
-  const event = props.location.state.event
-  const market = props.location.state.market
-  const linkTo = props.location.state.linkTo
+  const dispatch = useDispatch()
+  const eventProducts = useSelector((state) => state.eventProducts[eventID])
+  const events = useSelector((state) => state.events)
+
+  const [event, setEvent] = useState(
+    props.location.state ? props.location.state.event : null
+  )
+  const [market, setMarket] = useState(
+    props.location.state ? props.location.state.market : null
+  )
+
+  useEffect(() => {
+    if (!event || !market) {
+      if (events.length === 0) {
+        dispatch(receiveEvents())
+      }
+      const foundEvent = events.find((e) => Number(e.id) === Number(eventID))
+      if (foundEvent) {
+        setEvent(foundEvent)
+        setMarket({
+          id: foundEvent.market_id,
+          start: foundEvent.start,
+          endtime: foundEvent.endtime,
+          address: foundEvent.address,
+          type: foundEvent.type,
+        })
+      }
+    }
+    dispatch(receiveEventProducts(eventID))
+  }, [dispatch, eventID, events, event, market])
+
+  const linkTo = props.location.state
     ? props.location.state.linkTo
+      ? props.location.state.linkTo
+      : {
+          pathname: "/map",
+        }
     : {
         pathname: "/map",
       }
 
-  const dispatch = useDispatch()
-  const eventProducts = useSelector((state) => state.eventProducts[eventID])
-
-  useEffect(() => {
-    dispatch(receiveEventProducts(eventID))
-  }, [dispatch, eventID])
-
-  return eventProducts ? (
+  return eventProducts && event ? (
     <Row className="bg-light-yellow event-row">
       <TemplateTopNav
         navHeader="Noutotilaisuus"

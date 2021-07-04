@@ -7,15 +7,53 @@ import OrganicLabel from "./OrganicLabel"
 import { useDispatch } from "react-redux"
 import { addProductToCart, removeProductFromCart } from "../actions/shoppingCart"
 import { Link } from "react-router-dom"
+import { getEventProduct } from "../services/events"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 const ProductPage = (props) => {
+  const { eventID } = useParams()
+  const { productID } = useParams()
+  /*
+
+  const [event, setEvent] = useState(
+    props.location.state ? props.location.state.event : null
+  )
+  const [market, setMarket] = useState(
+    props.location.state ? props.location.state.market : null
+  )
+  const [product, setProduct] = useState(
+    props.location.state ? props.location.state.market : null
+  )
+*/
   const product = props.location.state.product
   const event = props.location.state.event
   const market = props.location.state.market
   const linkTo = props.location.state.linkTo
   const singleSize = product.sizes.length === 1
-  console.log(product)
+
   const dispatch = useDispatch()
+  /*
+  useEffect(() => {
+    if (!event || !market || !product) {
+      if (events.length === 0) {
+        dispatch(receiveEvents())
+      }
+      const foundEvent = events.find((e) => Number(e.id) === Number(eventID))
+      if (foundEvent) {
+        setEvent(foundEvent)
+        setMarket({
+          id: foundEvent.market_id,
+          start: foundEvent.start,
+          endtime: foundEvent.endtime,
+          address: foundEvent.address,
+          type: foundEvent.type,
+        })
+      }
+    }
+    dispatch(receiveEventProducts(eventID))
+  }, [dispatch, eventID, props.location.state, events, event, market])
+*/
 
   const handleAddToCart = (size) => {
     dispatch(
@@ -88,7 +126,7 @@ const ProductPage = (props) => {
           <ProductPageListButtons
             addToCart={handleAddToCart}
             removeFromCart={handleRemoveFromCart}
-            eventID={event.id ? event.id : event.event_id}
+            eventID={eventID}
             size={size}
             unit={product.type}
             singleSize={singleSize}
