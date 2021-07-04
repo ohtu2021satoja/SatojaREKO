@@ -84,7 +84,7 @@ const OrdersBuyerProducts = (props) => {
   }
 
   return (
-    <Row className="mb-5 pb-5 bg-light-blue">
+    <Row className="mb-5 pb-5 h-100 bg-light-blue">
       <OrdersBuyerNav
         navLink="/orders/buyer"
         altText="Takaisin tilauksiin"
