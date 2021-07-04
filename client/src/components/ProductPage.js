@@ -126,7 +126,7 @@ const ProductPage = (props) => {
           <ProductPageListButtons
             addToCart={handleAddToCart}
             removeFromCart={handleRemoveFromCart}
-            eventID={event.id ? event.id : event.event_id}
+            eventID={eventID}
             size={size}
             unit={product.type}
             singleSize={singleSize}

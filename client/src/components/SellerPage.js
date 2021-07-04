@@ -4,8 +4,7 @@ import Image from "react-bootstrap/Image"
 import Spinner from "react-bootstrap/Spinner"
 import EventList from "./EventList"
 import BackButtonHeader from "./BackButtonHeader"
-import { useDispatch, useSelector } from "react-redux"
-import { receiveSellerEvents } from "../actions/sellerEvents"
+import { getSellersUpcomingEventsWithProducts } from "../services/events"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getSeller } from "../services/sellers"
@@ -13,27 +12,29 @@ import { getSeller } from "../services/sellers"
 const SellerPage = (props) => {
   const { sellerID } = useParams()
 
-  const dispatch = useDispatch()
-  const sellerEvents = useSelector((state) => state.sellerEvents[sellerID])
-
   const [seller, setSeller] = useState(
     props.location.state ? props.location.state.seller : null
   )
 
-  const [events, setEvents] = useState(sellerEvents ? sellerEvents : [])
+  const [events, setEvents] = useState(null)
 
   useEffect(() => {
     if (!seller) {
       const fetchSeller = async () => {
         const res = await getSeller(sellerID)
-        console.log(res)
         setSeller(res)
         setEvents(res.events)
       }
       fetchSeller()
     }
-    dispatch(receiveSellerEvents(sellerID))
-  }, [dispatch, sellerID, seller])
+    if (seller && !events) {
+      const fetchEvents = async () => {
+        const res = await getSellersUpcomingEventsWithProducts(sellerID)
+        setEvents(res)
+      }
+      fetchEvents()
+    }
+  }, [sellerID, seller, events])
 
   const linkTo = props.location.state
     ? props.location.state.linkTo
@@ -69,13 +70,13 @@ const SellerPage = (props) => {
               {seller.homepage}
             </a>
           )}
-          {events.length > 0 && <h4>Myyntipisteet</h4>}
+          {events && events.length > 0 && <h4>Myyntipisteet</h4>}
         </div>
       </Col>
-      {(events.length > 0 || sellerEvents) && (
+      {events && events.length > 0 && (
         <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
           <EventList
-            events={events.length > 0 ? events : sellerEvents && sellerEvents}
+            events={events}
             linkTo={{
               pathname: `/sellers/${seller.id}`,
               state: {

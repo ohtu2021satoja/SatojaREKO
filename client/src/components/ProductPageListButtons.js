@@ -16,7 +16,7 @@ const ProductPageListButtons = ({
   const [inCart, setInCart] = useState(0)
   useEffect(() => {
     const updateCart = () => {
-      const eventOrders = cart.find((order) => order.event_id === eventID)
+      const eventOrders = cart.find((order) => Number(order.event_id) === Number(eventID))
       if (eventOrders) {
         const batch = eventOrders.batches.find((batch) => batch.size_id === size.size_id)
         if (batch) setInCart(batch.order_quantity)
