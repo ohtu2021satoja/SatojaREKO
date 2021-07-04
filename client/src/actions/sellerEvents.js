@@ -6,7 +6,7 @@ export const receiveSellerEvents = (id) => {
   return async (dispatch) => {
     try {
       const events = await getSellersUpcomingEventsWithProducts(id)
-      dispatch({ type: "RECEIVE_SELLER_EVENTS", events: events })
+      dispatch({ type: "RECEIVE_SELLER_EVENTS", events: events, sellerID: id })
     } catch (e) {
       console.log(e)
     }

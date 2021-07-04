@@ -14,13 +14,13 @@ const SellerPage = (props) => {
   const { sellerID } = useParams()
 
   const dispatch = useDispatch()
-  const sellerEvents = useSelector((state) => state.sellerEvents)
+  const sellerEvents = useSelector((state) => state.sellerEvents[sellerID])
 
   const [seller, setSeller] = useState(
     props.location.state ? props.location.state.seller : null
   )
 
-  const [events, setEvents] = useState(sellerEvents)
+  const [events, setEvents] = useState(sellerEvents ? sellerEvents : [])
 
   useEffect(() => {
     if (!seller) {
@@ -37,6 +37,10 @@ const SellerPage = (props) => {
 
   const linkTo = props.location.state
     ? props.location.state.linkTo
+      ? props.location.state.linkTo
+      : {
+          pathname: "/map",
+        }
     : {
         pathname: "/map",
       }
@@ -68,17 +72,19 @@ const SellerPage = (props) => {
           {events.length > 0 && <h4>Myyntipisteet</h4>}
         </div>
       </Col>
-      <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
-        <EventList
-          events={events}
-          linkTo={{
-            pathname: `/sellers/${seller.id}`,
-            state: {
-              seller: seller,
-            },
-          }}
-        />
-      </Col>
+      {(events.length > 0 || sellerEvents) && (
+        <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
+          <EventList
+            events={events.length > 0 ? events : sellerEvents && sellerEvents}
+            linkTo={{
+              pathname: `/sellers/${seller.id}`,
+              state: {
+                seller: seller,
+              },
+            }}
+          />
+        </Col>
+      )}
       {seller.description && (
         <Col xs={12} className="mb-5 mx-3">
           <h4>Kuka olemme?</h4>
