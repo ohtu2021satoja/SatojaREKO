@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
@@ -70,6 +70,11 @@ const Preview = ({
   Reset,
 }) => {
   const [published, setPublished] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const user = useSelector((state) => state.authedUser)
   console.log(user)
   console.log("productType", productType)
@@ -176,7 +181,7 @@ const Preview = ({
           </Nav.Item>
         </Nav>
       </Col>
-      <Col xs={12} className="pt-2 mb-2 text-center">
+      <Col xs={12} className="pt-2 mb-3 text-center">
         {imageID ? (
           <Image
             src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${imageID}`}
@@ -187,19 +192,17 @@ const Preview = ({
           <p>Ei kuvaa</p>
         )}
       </Col>
-      <Col xs={{ span: 10, offset: 1 }} className="mb-4 text-center">
-        <Button variant={organic ? "success" : "danger"} className="w-75">
-          {organic ? "Luomua" : "Ei luomua"}
-        </Button>
-      </Col>
       <Col xs={12} className="mb-4 text-center">
+        <div className="pb-2">
+          {organic && <span className="py-1 px-2 organic-label-pp">Luomu</span>}
+        </div>
         <h3>{title}</h3>
         <p>{description}</p>
         <h4>
           {price}/{parseType(productType)}
         </h4>
         <p className="mb-1">Alv: {alv}</p>
-        <p>Varastoarvo {batch_quantity}</p>
+        <p>Varastoarvo: {batch_quantity}</p>
         {isPackage ? (
           <p>Hinta: {priceFloat * parseFloat(productSizes[0].size.replace(",", "."))}€</p>
         ) : null}

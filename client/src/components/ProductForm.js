@@ -34,23 +34,17 @@ const ProductForm = ({
 }) => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Vaadittu"),
-
     description: yup.string().required("Vaadittu"),
-
     productType: yup.string().notOneOf([""], "Valitse yksikkö"),
-
     price: yup.string().notOneOf(["00,00€", "", "€"], "Aseta hinta"),
-
     sizes: yup
       .array()
       .required()
       .of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
-
     quantities: yup
       .array()
       .required()
       .of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
-
     category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
   })
   return (
@@ -72,17 +66,7 @@ const ProductForm = ({
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({
-            values,
-            handleChange,
-            handleSubmit,
-            handleBlur,
-            setFieldValue,
-            isValid,
-            validationSchema,
-            errors,
-            touched,
-          }) => (
+          {({ values, handleChange, handleSubmit, setFieldValue, errors, touched }) => (
             <Form onSubmit={handleSubmit} className="mx-3">
               <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
               {touched.category && errors.category ? <div>{errors.category}</div> : null}
@@ -189,7 +173,7 @@ const ProductForm = ({
                 </Form.Row>
               </Form.Group>
               <Form.Row>
-                <Col>
+                <Col className="mb-3 text-center">
                   {eventChoiceError && (
                     <p className="mb-3" style={{ color: "red" }}>
                       Valitse myyntipiste(et) ensin.

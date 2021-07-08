@@ -1,48 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react"
-//import Form from "react-bootstrap/Form"
-//import Button from "react-bootstrap/Button"
-//import Col from "react-bootstrap/Col"
 import { useSelector, useDispatch } from "react-redux"
 import { resetPrice } from "../reducers/priceReducer"
 import { setAlv } from "../reducers/alvReducer.js"
 import { resetProductSizes } from "../reducers/productSizesReducer"
-//import { Image } from "cloudinary-react"
 import imageService from "../services/images"
 import eventService from "../services/events"
-// import ChooseCategory from "./ChooseCategory"
-// import ChooseProductType from "./ChooseProductType"
-// import Events from "./Events"
-// import UnitPrices from "./UnitPrices"
 import Preview from "./Preview"
-// import { Formik } from "formik"
-// import * as yup from "yup"
 import "./App.css"
 import ProductForm from "./ProductForm"
 import { setProductType } from "../reducers/currentProduct"
-
-/*
-const validationSchema = yup.object().shape({
-  title: yup.string().required("Vaadittu"),
-
-  description: yup.string().required("Vaadittu"),
-
-  productType: yup.string().notOneOf(["Valitse yksikkö"], "Valitse yksikkö"),
-
-  price: yup.string().notOneOf(["00,00€"], "Aseta hinta"),
-
-  sizes: yup
-    .array()
-    .required()
-    .of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
-
-  quantities: yup
-    .array()
-    .required()
-    .of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
-
-  category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
-})
-*/
 
 const AddProducts = () => {
   const dispatch = useDispatch()
