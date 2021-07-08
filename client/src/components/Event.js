@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col"
 import { addID, deleteID } from "../reducers/eventChoicesReducer"
 import { useSelector, useDispatch } from "react-redux"
 
-const Event = ({ event, isChoice }) => {
+const Event = ({ event, isChoice, setEventChoiceError }) => {
   const dispatch = useDispatch()
   const eventChoices = useSelector((state) => state.eventChoices)
   const isChosen = eventChoices.includes(event.id)
@@ -49,7 +49,10 @@ const Event = ({ event, isChoice }) => {
             <Form.Check
               type="switch"
               id={`event-switch-${event.id}`}
-              onChange={() => addEvent(event.id)}
+              onChange={() => {
+                addEvent(event.id)
+                setEventChoiceError(false)
+              }}
               checked={eventChoices.includes(event.id)}
             />
           ) : null}

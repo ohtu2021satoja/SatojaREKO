@@ -28,6 +28,9 @@ const ProductForm = ({
   productSizes,
   FormTitle,
   submitButtonText,
+  eventChoices,
+  eventChoiceError,
+  setEventChoiceError,
 }) => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Vaadittu"),
@@ -168,11 +171,15 @@ const ProductForm = ({
                       Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen tilaisuuden alkua
                     </p>
                     {events.length > 0 ? (
-                      <Events events={events} isChoice={true} />
+                      <Events
+                        events={events}
+                        isChoice={true}
+                        setEventChoiceError={setEventChoiceError}
+                      />
                     ) : (
                       <>
                         <p className="mb-3">
-                          Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryh-mään.
+                          Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryhmään.
                           Päivitä tietoja <Link to="/profile/buyer">profiili-sivun</Link>{" "}
                           lopussa. Valitettavasti joudut tämän jälkeen aloittamaan
                           ilmoituksen luonnin alusta.
@@ -184,6 +191,11 @@ const ProductForm = ({
               </Form.Group>
               <Form.Row>
                 <Col>
+                  {eventChoiceError && (
+                    <p className="mb-3" style={{ color: "red" }}>
+                      Valitse myyntipiste(et) ensin.
+                    </p>
+                  )}
                   <Button variant="success" size="lg" className="w-100" type="submit">
                     {submitButtonText}
                   </Button>

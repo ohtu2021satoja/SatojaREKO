@@ -59,6 +59,7 @@ const AddProducts = () => {
   const [description, setDescription] = useState("")
   const [preview, setPreview] = useState(false)
   const [imageID, setImageID] = useState(null)
+  const [eventChoiceError, setEventChoiceError] = useState(false)
   const handleImage = async (image) => {
     const response = await imageService.addImage(image)
     setImageID(response.data.public_id)
@@ -84,14 +85,16 @@ const AddProducts = () => {
       Reset()
     }
     fetchData()
-  }, [Reset, user.id])
+  }, [Reset, user.id, eventChoiceError])
 
   const goToPreview = ({ title, description, productType, category }) => {
-    setTitle(title)
-    setDescription(description)
-    setProductType(productType)
-    setCategory(category)
-    setPreview(true)
+    if (eventChoices.length > 0) {
+      setTitle(title)
+      setDescription(description)
+      setProductType(productType)
+      setCategory(category)
+      setPreview(true)
+    } else setEventChoiceError(true)
   }
 
   if (preview) {
@@ -128,6 +131,9 @@ const AddProducts = () => {
       productSizes={productSizes}
       FormTitle="Uusi ilmoitus"
       submitButtonText="Esikatselu"
+      eventChoices={eventChoices}
+      eventChoiceError={eventChoiceError}
+      setEventChoiceError={setEventChoiceError}
     />
   )
 }
