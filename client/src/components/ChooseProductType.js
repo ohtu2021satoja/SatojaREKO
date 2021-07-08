@@ -23,6 +23,15 @@ const ChooseProductType = ({ setFieldValue }) => {
         <Dropdown.Menu className="w-100">
           <Dropdown.Item
             onClick={() => {
+              setFieldValue("productType", "Kappale")
+              dispatch(setProductType("Kappale"))
+            }}
+          >
+            {" "}
+            Kpl{" "}
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
               setFieldValue("productType", "Kg")
               dispatch(setProductType("Kg"))
             }}
@@ -65,15 +74,6 @@ const ChooseProductType = ({ setFieldValue }) => {
           >
             {" "}
             Kuutio{" "}
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => {
-              setFieldValue("productType", "Kappale")
-              dispatch(setProductType("Kappale"))
-            }}
-          >
-            {" "}
-            Kpl{" "}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

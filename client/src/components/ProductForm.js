@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
+import { Link } from "react-router-dom"
 
 const ProductForm = ({
   organic,
@@ -27,6 +28,9 @@ const ProductForm = ({
   productSizes,
   FormTitle,
   submitButtonText,
+  eventChoices,
+  eventChoiceError,
+  setEventChoiceError,
 }) => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Vaadittu"),
@@ -49,7 +53,6 @@ const ProductForm = ({
 
     category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
   })
-  console.log("PRICE", price)
   return (
     <Row className="h-100 mb-5 bg-light-yellow flex-column">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
@@ -167,13 +170,19 @@ const ProductForm = ({
                       Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen tilaisuuden alkua
                     </p>
                     {events.length > 0 ? (
-                      <Events events={events} isChoice={true} />
+                      <Events
+                        events={events}
+                        isChoice={true}
+                        setEventChoiceError={setEventChoiceError}
+                      />
                     ) : (
                       <>
                         <p className="mb-3">
-                          Valisemillasi Reko-alueilla ei ole uusia tapahtumia
+                          Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryhmään.
+                          Päivitä tietoja <Link to="/profile/buyer">profiili-sivun</Link>{" "}
+                          lopussa. Valitettavasti joudut tämän jälkeen aloittamaan
+                          ilmoituksen luonnin alusta.
                         </p>
-                        <p>Voit valita uusia Reko-alueita profiilisivulla</p>
                       </>
                     )}
                   </Col>
@@ -181,6 +190,11 @@ const ProductForm = ({
               </Form.Group>
               <Form.Row>
                 <Col>
+                  {eventChoiceError && (
+                    <p className="mb-3" style={{ color: "red" }}>
+                      Valitse myyntipiste(et) ensin.
+                    </p>
+                  )}
                   <Button variant="success" size="lg" className="w-100" type="submit">
                     {submitButtonText}
                   </Button>
