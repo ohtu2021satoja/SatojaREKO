@@ -57,7 +57,7 @@ const Products = () => {
                     size="lg"
                     className="w-100"
                   >
-                    Muokkaa tuotetta
+                    Muokkaa ilmoitusta
                   </Button>
                 </Nav>
               </Card.Body>

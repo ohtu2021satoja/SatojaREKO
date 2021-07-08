@@ -1,5 +1,6 @@
 import React from "react"
 import Event from "./Event"
+import Row from "react-bootstrap/esm/Row"
 
 const Events = ({
   events,
@@ -18,7 +19,7 @@ const Events = ({
       setEventChoiceError={setEventChoiceError}
     />
   ))
-  return <div className="pb-4">{displayEvents}</div>
+  return <Row className="mb-4 flex-column">{displayEvents}</Row>
 }
 
 export default Events
