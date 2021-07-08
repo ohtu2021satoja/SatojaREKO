@@ -22,6 +22,7 @@ import AdminPage from "../AdminPage"
 
 const Routes = ({ user, handleLogOut, handleUserUpdate }) => (
   <Switch>
+    <Redirect from="/login" to="/" />
     <Route exact path="/">
       <HomePage handleLogOut={handleLogOut} />
     </Route>

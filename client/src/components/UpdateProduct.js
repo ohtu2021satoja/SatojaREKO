@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { useParams } from "react-router-dom"
-
 import { useSelector, useDispatch } from "react-redux"
 import { changePrice } from "../reducers/priceReducer"
 import { setAlv } from "../reducers/alvReducer.js"
@@ -9,9 +8,7 @@ import { initializeEvents } from "../reducers/eventChoicesReducer"
 import imageService from "../services/images"
 import eventService from "../services/events"
 import productService from "../services/products"
-
 import ProductForm from "./ProductForm"
-import "./App.css"
 import { setProductType } from "../reducers/currentProduct"
 
 const UpdateProduct = () => {

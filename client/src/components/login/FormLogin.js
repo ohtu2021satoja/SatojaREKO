@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { loginUser } from "../../services/auth"
@@ -20,24 +21,31 @@ const LoginSchema = Yup.object().shape({
 })
 
 const FormLogin = ({ handleLogin }) => {
+  const history = useHistory()
   const [fail, setFail] = useState(false)
 
   const checkCredentials = async (obj) => {
     const response = await loginUser(obj)
-    console.log("RESPONSE", response)
-    response === "error" ? setFail(true) : handleLogin()
-    // TODO: instead of setTimeout
-    // remove error message when input value changes
-    setTimeout(() => {
-      setFail(false)
-    }, 4000)
+
+    if (response === "error") {
+      setFail(true)
+
+      // TODO: instead of setTimeout
+      // remove error message when input value changes
+      setTimeout(() => {
+        setFail(false)
+      }, 4000)
+    } else {
+      handleLogin()
+      history.push("/")
+    }
   }
 
   return (
     <Row>
       <Col xs={12}>
         <div className="text-center">
-          <h4>Tai kirjaudu sähköpostilla:</h4>
+          <h4>Tai sähköpostilla:</h4>
         </div>
         <Formik
           initialValues={{

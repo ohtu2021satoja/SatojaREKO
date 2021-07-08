@@ -6,13 +6,12 @@ import { resetProductSizes } from "../reducers/productSizesReducer"
 import imageService from "../services/images"
 import eventService from "../services/events"
 import Preview from "./Preview"
-import "./App.css"
 import ProductForm from "./ProductForm"
 import { setProductType } from "../reducers/currentProduct"
 
 const AddProducts = () => {
   const dispatch = useDispatch()
-  const price = useSelector((state) => state.price)
+  // const price = useSelector((state) => state.price)
   const [events, setEvents] = useState([])
   const user = useSelector((state) => state.authedUser)
   const [deleteBeforeEvent, setDeleteBeforeEvent] = useState(24)

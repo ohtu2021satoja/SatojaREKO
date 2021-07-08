@@ -1,25 +1,16 @@
-import { useEffect /*, useState*/ } from "react"
+import { useEffect } from "react"
+import "../App.scss"
 import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
 import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
-import "../App.scss"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
-import { isEqual } from "lodash"
 
 const App = (props) => {
-  const func = async () => {
-    const bool = await isEqual(
-      { name: "lol", objects: [{ name: "lol" }] },
-      { name: "lol", objects: [{ name: "lol" }] }
-    )
-    console.log("BOOL", bool)
-  }
-  func()
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
@@ -39,7 +30,7 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  // Remove current user form API and update state
+  // Remove current user and update state
   const logOut = () => {
     logoutUser()
     setAuthedUser(null)

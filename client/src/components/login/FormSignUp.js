@@ -1,4 +1,5 @@
 import * as Yup from "yup"
+import { useHistory } from "react-router-dom"
 import { Formik, Form } from "formik"
 import { createNewFacebookUser } from "../../services/users"
 import { createNewUser } from "../../services/auth"
@@ -7,7 +8,6 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import FormUserDetails from "./FormUserDetails"
 import FormSignUpTerms from "./FormSignUpTerms"
-import { useHistory } from "react-router-dom"
 
 // Yup
 const SharedSchema = {
@@ -100,7 +100,7 @@ const FormSignUp = ({ user, facebookUser, handleLoginWithFacebook }) => {
               <Button variant="success" size="lg" type="submit" className="w-100 mb-3">
                 {facebookUser === false
                   ? "Rekisteröidy"
-                  : "Viimeistele Rekisteröityminen"}
+                  : "Viimeistele rekisteröityminen"}
               </Button>
             </Form>
           )}
