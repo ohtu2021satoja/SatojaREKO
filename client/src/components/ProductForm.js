@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
+import { Link } from "react-router-dom"
 
 const ProductForm = ({
   organic,
@@ -171,9 +172,11 @@ const ProductForm = ({
                     ) : (
                       <>
                         <p className="mb-3">
-                          Valisemillasi Reko-alueilla ei ole uusia tapahtumia
+                          Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryh-mään.
+                          Päivitä tietoja <Link to="/profile/buyer">profiili-sivun</Link>{" "}
+                          lopussa. Valitettavasti joudut tämän jälkeen aloittamaan
+                          ilmoituksen luonnin alusta.
                         </p>
-                        <p>Voit valita uusia Reko-alueita profiilisivulla</p>
                       </>
                     )}
                   </Col>
