@@ -49,7 +49,12 @@ const AutoSubmitForm = ({ user }) => {
 
 const FormBuyer = ({ user, handleUserUpdate, handleError }) => {
   return (
-    <Col xs={12}>
+    <Col
+      xs={12}
+      sm={{ span: 10, offset: 1 }}
+      md={{ span: 8, offset: 2 }}
+      lg={{ span: 6, offset: 3 }}
+    >
       <Formik
         initialValues={{
           firstname: user.firstname || "",

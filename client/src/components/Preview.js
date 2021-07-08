@@ -155,12 +155,12 @@ const Preview = ({
   }
   return (
     <Row className="h-100 bg-light-yellow flex-column">
-      <Col xs={12}>
+      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
         <Nav className="mt-2 py-2 flex-nowrap align-items-center">
           <Nav.Item>
             <Nav.Link
               as={Link}
-              to="./add"
+              to="/add"
               aria-label="Palaa lisää tuote sivulle"
               onClick={() => setPreview(false)}
             >
@@ -181,7 +181,13 @@ const Preview = ({
           </Nav.Item>
         </Nav>
       </Col>
-      <Col xs={12} className="pt-2 mb-3 text-center">
+      <Col
+        xs={12}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+        className="pt-2 mb-3 text-center"
+      >
         {imageID ? (
           <Image
             src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${imageID}`}
@@ -208,7 +214,12 @@ const Preview = ({
         ) : null}
         {isPackage ? null : <PreviewSizes sizes={sizes} />}
       </Col>
-      <Col xs={12} className="text-center">
+      <Col
+        xs={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+        className="text-center"
+      >
         <h4>Noutotapahtumat:</h4>
         <Events events={previewEvents} isChoice={false} />
         {published ? null : (

@@ -1,4 +1,3 @@
-// import Button from "react-bootstrap/Button"
 import { Link } from "react-router-dom"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
