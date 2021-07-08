@@ -85,7 +85,7 @@ const AddProducts = () => {
       Reset()
     }
     fetchData()
-  }, [Reset, user.id, eventChoiceError])
+  }, [Reset, user.id])
 
   const goToPreview = ({ title, description, productType, category }) => {
     if (eventChoices.length > 0) {
