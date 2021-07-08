@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
+import { Link } from "react-router-dom"
 
 const ProductForm = ({
   organic,
@@ -27,29 +28,25 @@ const ProductForm = ({
   productSizes,
   FormTitle,
   submitButtonText,
+  eventChoices,
+  eventChoiceError,
+  setEventChoiceError,
 }) => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Vaadittu"),
-
     description: yup.string().required("Vaadittu"),
-
     productType: yup.string().notOneOf([""], "Valitse yksikkö"),
-
     price: yup.string().notOneOf(["00,00€", "", "€"], "Aseta hinta"),
-
     sizes: yup
       .array()
       .required()
       .of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
-
     quantities: yup
       .array()
       .required()
       .of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
-
     category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
   })
-  console.log("PRICE", price)
   return (
     <Row className="h-100 mb-5 bg-light-yellow flex-column">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
@@ -69,17 +66,7 @@ const ProductForm = ({
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({
-            values,
-            handleChange,
-            handleSubmit,
-            handleBlur,
-            setFieldValue,
-            isValid,
-            validationSchema,
-            errors,
-            touched,
-          }) => (
+          {({ values, handleChange, handleSubmit, setFieldValue, errors, touched }) => (
             <Form onSubmit={handleSubmit} className="mx-3">
               <ChooseCategory category={values.category} setFieldValue={setFieldValue} />
               {touched.category && errors.category ? <div>{errors.category}</div> : null}
@@ -167,20 +154,31 @@ const ProductForm = ({
                       Tilaus sulkeutuu {deleteBeforeEvent} tuntia ennen tilaisuuden alkua
                     </p>
                     {events.length > 0 ? (
-                      <Events events={events} isChoice={true} />
+                      <Events
+                        events={events}
+                        isChoice={true}
+                        setEventChoiceError={setEventChoiceError}
+                      />
                     ) : (
                       <>
                         <p className="mb-3">
-                          Valisemillasi Reko-alueilla ei ole uusia tapahtumia
+                          Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryhmään.
+                          Päivitä tietoja <Link to="/profile/buyer">profiili-sivun</Link>{" "}
+                          lopussa. Valitettavasti joudut tämän jälkeen aloittamaan
+                          ilmoituksen luonnin alusta.
                         </p>
-                        <p>Voit valita uusia Reko-alueita profiilisivulla</p>
                       </>
                     )}
                   </Col>
                 </Form.Row>
               </Form.Group>
               <Form.Row>
-                <Col>
+                <Col className="mb-3 text-center">
+                  {eventChoiceError && (
+                    <p className="mb-3" style={{ color: "red" }}>
+                      Valitse myyntipiste(et) ensin.
+                    </p>
+                  )}
                   <Button variant="success" size="lg" className="w-100" type="submit">
                     {submitButtonText}
                   </Button>

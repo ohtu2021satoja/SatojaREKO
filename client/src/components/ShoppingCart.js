@@ -7,6 +7,8 @@ import { useState, useEffect } from "react"
 import ShoppingCartListItem from "./ShoppingCartListItem"
 import EventInfoLabel from "./EventInfoLabel"
 import { Link } from "react-router-dom"
+import ShoppingCartNotification from "./ShoppingCartNotification"
+import ShoppingCartPanel from "./ShoppingCartPanel"
 
 const ShoppingCart = () => {
   const dispatch = useDispatch()
@@ -14,6 +16,7 @@ const ShoppingCart = () => {
   const user = useSelector((state) => state.authedUser)
 
   const [totalPrice, setTotalPrice] = useState(0)
+  const [orderSent, setOrderSent] = useState(false)
 
   useEffect(() => {
     const getTotalPrice = () => {
@@ -53,6 +56,7 @@ const ShoppingCart = () => {
     })
     if (orders.length > 0) {
       dispatch(submitOrders({ orders: orders }, user.id))
+      setOrderSent(true)
     }
   }
 
@@ -82,11 +86,7 @@ const ShoppingCart = () => {
 
   return (
     <>
-      <Row
-        className={
-          totalPrice === 0 ? "mb-0 pb-0 bg-light-blue vh-100" : "mb-0 pb-0 bg-light-blue"
-        }
-      >
+      <Row className="mb-0 pb-0 bg-light-blue h-100">
         <Col xs={12} className="mb-3 pb-0 mt-5 text-center " styles={{ marginBottom: 0 }}>
           <h2 className="mb-4">Ostoskori</h2>
           {cart.map((order, index) => {
@@ -156,24 +156,22 @@ const ShoppingCart = () => {
               )
             } else return null
           })}
-          {!(totalPrice > 0) && <p>Ostoskorisi on tyhjä</p>}
+          {!(totalPrice > 0) && (
+            <>
+              <p>Ostoskorisi on tyhjä.</p>
+              <p>
+                Löydät noutotilaisuuksia <Link to="/map">karttasivulta.</Link>
+              </p>
+            </>
+          )}
         </Col>
         {totalPrice > 0 && (
-          <div className="card sticky-top pt-1 pb-3 px-0 mb-0 light-yellow cart-panel">
-            <Col xs={12} className="d-flex justify-content-start">
-              <h4>Varauskori</h4>
-            </Col>
-            <Col xs={12} className="d-flex justify-content-between">
-              <h5>YHTEENSÄ</h5>
-              <h5> {totalPrice}e</h5>
-            </Col>
-            <Col xs={12} className="mb-0 pb-0 justify-content-center">
-              <Button variant="success" onClick={handleSubmitOrders} block>
-                Lähetä varaus
-              </Button>
-            </Col>
-          </div>
+          <ShoppingCartPanel
+            totalPrice={totalPrice}
+            handleSubmitOrders={handleSubmitOrders}
+          />
         )}
+        {orderSent ? <ShoppingCartNotification /> : null}
       </Row>
     </>
   )

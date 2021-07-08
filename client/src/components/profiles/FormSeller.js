@@ -13,6 +13,9 @@ import { isEqual } from "lodash"
 
 let timer
 
+const re =
+  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
+
 // Yup
 const SellerSchema = Yup.object().shape({
   name: Yup.string().max(25, "Maksimipituus 25 kirjainta"),
@@ -33,7 +36,7 @@ const SellerSchema = Yup.object().shape({
   zipcode: Yup.string().max(7, "Maksimipituus 7 merkkiä"),
   city: Yup.string().max(30, "Maksimipituus 30 merkkiä"),
   business_id: Yup.string().max(14, "Maksimipituus 14 numeroa"),
-  homepage: Yup.string().url("Täytyy olla URL-osoite"),
+  homepage: Yup.string().matches(re, "Täytyy olla URL-osoite"),
   description: Yup.string().max(400, "Maksimipituus 400 merkkiä"),
   reko_areas: Yup.array().of(
     Yup.object().shape({
@@ -83,7 +86,7 @@ const AutoSubmitForm = ({ user }) => {
         console.log("NOT THE SAME")
         timer = setTimeout(() => {
           submitForm()
-        }, 5000)
+        }, 500)
       }
     }
     doStuff()

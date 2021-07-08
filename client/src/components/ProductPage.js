@@ -83,7 +83,7 @@ const ProductPage = (props) => {
       <BackButtonHeader linkTo={linkTo} />
       <Col
         xs={12}
-        className="d-flex justify-content-start align-items-center mb-4 seller-link"
+        className="d-flex justify-content-start align-items-center mb-5 seller-link"
         as={Link}
         to={sellerPageLink}
       >

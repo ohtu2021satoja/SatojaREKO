@@ -75,7 +75,7 @@ const UpdateProduct = () => {
       return "gm"
     }
     if (productType === "Kappale") {
-      return "pc"
+      return "kpl"
     }
   }
   const initialSetUp = useCallback(
@@ -159,8 +159,8 @@ const UpdateProduct = () => {
         description={description}
         productSizes={productSizes}
         productId={product.id}
-        FormTitle="Muokkaa ilm."
-        submitButtonText="Muokkaa ilmoitusta"
+        FormTitle="Muokkaa ilmoitusta"
+        submitButtonText="Tallenna muutokset"
       />
     )
   }

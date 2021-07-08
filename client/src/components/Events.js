@@ -1,7 +1,14 @@
 import React from "react"
 import Event from "./Event"
+import Row from "react-bootstrap/esm/Row"
 
-const Events = ({ events, setEventChoices, eventChoices, isChoice }) => {
+const Events = ({
+  events,
+  setEventChoices,
+  eventChoices,
+  isChoice,
+  setEventChoiceError,
+}) => {
   const displayEvents = events.map((event) => (
     <Event
       key={event.id}
@@ -9,9 +16,10 @@ const Events = ({ events, setEventChoices, eventChoices, isChoice }) => {
       eventChoices={eventChoices}
       setEventChoices={setEventChoices}
       isChoice={isChoice}
+      setEventChoiceError={setEventChoiceError}
     />
   ))
-  return <div className="pb-4">{displayEvents}</div>
+  return <Row className="mb-4 flex-column">{displayEvents}</Row>
 }
 
 export default Events
