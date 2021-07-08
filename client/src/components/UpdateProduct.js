@@ -160,7 +160,7 @@ const UpdateProduct = () => {
         productSizes={productSizes}
         productId={product.id}
         FormTitle="Muokkaa ilm."
-        submitButtonText="Muokkaa ilmoitusta"
+        submitButtonText="Tallenna muutokset"
       />
     )
   }

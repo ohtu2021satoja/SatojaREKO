@@ -51,7 +51,7 @@ const Event = ({ event, isChoice, setEventChoiceError }) => {
               id={`event-switch-${event.id}`}
               onChange={() => {
                 addEvent(event.id)
-                setEventChoiceError(false)
+                setEventChoiceError && setEventChoiceError(false)
               }}
               checked={eventChoices.includes(event.id)}
             />
