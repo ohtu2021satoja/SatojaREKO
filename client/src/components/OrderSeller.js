@@ -84,7 +84,7 @@ const OrderSeller = () => {
             navLink="/orders/seller"
             navHeader=""
             altText="Palaa tilaajalistalle"
-            HandleBackButton={HandleBackButton}
+            HandleBackButton={setBuyerInfo}
           />
           <BuyerInfo setBuyerInfo={setBuyerInfo} buyerIndexi={buyerIndexi} user={user} />
         </Row>

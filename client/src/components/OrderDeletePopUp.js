@@ -7,9 +7,11 @@ const DeleteOrderPopUp = (props) => {
   const handleDeleteButton = () => {
     if (props.deleteProductPopUp) {
       props.DeleteProductOrder()
+      props.setPopUp(false)
     }
     if (props.deleteOrderPopUp) {
       props.DeleteOrder()
+      props.setPopUp(false)
     }
   }
   return (
