@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect /*, useState*/ } from "react"
 import { connect } from "react-redux"
 import { getAuthedUser } from "../services/users"
 import { logoutUser } from "../services/auth"
@@ -7,8 +7,6 @@ import "../App.scss"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import SignUpPage from "./login/SignUpPage"
-// import AdminPage from "./AdminPage"
 import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
 import { isEqual } from "lodash"
@@ -22,11 +20,10 @@ const App = (props) => {
     console.log("BOOL", bool)
   }
   func()
-  const [signUp, setSignUp] = useState(false)
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
-  // promise returns null if no user is found
+  // returns null if no user is found
   useEffect(() => {
     const fetchData = async () => {
       const user = await getAuthedUser()
@@ -42,52 +39,31 @@ const App = (props) => {
     setAuthedUser(user)
   }
 
-  const registerUser = () => {
-    getUser()
-    setSignUp(false)
-  }
-
   // Remove current user form API and update state
   const logOut = () => {
     logoutUser()
     setAuthedUser(null)
   }
 
+  const registerWithFacebook = async () => {
+    await getUser()
+    await logOut()
+  }
+
   return (
     <Container fluid>
       <Row className="vh-100">
-        <Col xs={12} sm={{ span: 8, offset: 2 }}>
-          {(() => {
-            if (!authedUser && !signUp) {
-              return (
-                <>
-                  <RoutesB handleLogin={getUser} handleSigned={() => setSignUp(true)} />
-                </>
-              )
-            }
-
-            if ((authedUser && !authedUser.phonenumber) || (!authedUser && signUp)) {
-              return (
-                <SignUpPage
-                  user={authedUser}
-                  handleSigned={() => setSignUp(false)}
-                  handleFacebookSignUp={async () => {
-                    await getUser()
-                    await logOut()
-                  }}
-                  handleRegisterUser={registerUser}
-                />
-              )
-            }
-
-            if (authedUser) {
-              return (
-                <>
-                  <Routes user={authedUser} logOut={logOut} handleUserUpdate={getUser} />
-                </>
-              )
-            }
-          })()}
+        <Col xs={12}>
+          {((authedUser && !authedUser.phonenumber) || !authedUser) && (
+            <RoutesB
+              user={authedUser}
+              handleLogin={getUser}
+              handleRegisterWithFacebook={registerWithFacebook}
+            />
+          )}
+          {authedUser && (
+            <Routes user={authedUser} handleLogOut={logOut} handleUserUpdate={getUser} />
+          )}
         </Col>
       </Row>
     </Container>

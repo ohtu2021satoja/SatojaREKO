@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
 
 const TemplateTopNav = ({ navLink, altText, navHeader }) => (
-  <Col xs={12}>
+  <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
     <Nav className="mt-2 py-2 flex-nowrap align-items-center">
       <Nav.Item>
         <Nav.Link as={Link} to={navLink} aria-label={altText}>

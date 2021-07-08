@@ -7,7 +7,7 @@ const FacebookLoginButton = ({ handleLogin }) => (
       variant="facebook"
       size="lg"
       type="button"
-      className="w-100 mb-3"
+      className="mb-3 w-100"
     >
       Kirjaudu Facebookilla
     </Button>

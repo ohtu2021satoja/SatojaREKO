@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button"
 const PasswordResetButton = () => (
   <Link to="/passwordreset">
     <Button
+      as={Link}
+      to="/new-password"
       variant="link"
       type="button"
       size="lg"

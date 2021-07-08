@@ -1,16 +1,28 @@
 import PasswordResetForm from "../PasswordResetForm"
 import { Switch, Route } from "react-router-dom"
 import LoginPage from "../login/LoginPage"
+import SignUpPage from "../login/SignUpPage"
+import LandingPage from "../LandingPage"
 
-const RoutesB = ({ handleLogin, handleSigned }) => {
+const RoutesB = ({ user, handleLogin, handleRegisterWithFacebook }) => {
   console.log("handleLogin", handleLogin)
   return (
     <Switch>
-      <Route exact path="/">
-        <LoginPage handleLogin={handleLogin} handleSigned={handleSigned} />
+      <Route path="/login">
+        <LoginPage handleLogin={handleLogin} />
       </Route>
-      <Route path="/passwordreset">
+      <Route path="/register">
+        <SignUpPage
+          user={user}
+          handleLogin={handleLogin}
+          handleRegisterWithFacebook={handleRegisterWithFacebook}
+        />
+      </Route>
+      <Route path="/new-password">
         <PasswordResetForm />
+      </Route>
+      <Route exact path="/">
+        <LandingPage />
       </Route>
     </Switch>
   )

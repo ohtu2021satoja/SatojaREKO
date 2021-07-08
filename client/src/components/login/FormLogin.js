@@ -19,7 +19,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Salasana edellytetään"),
 })
 
-const FormLogin = ({ handleSigned, handleLogin }) => {
+const FormLogin = ({ handleLogin }) => {
   const [fail, setFail] = useState(false)
 
   const checkCredentials = async (obj) => {
@@ -34,11 +34,11 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
   }
 
   return (
-    <Row className="mb-3 py-3 px-1 bg-white border border-1 border-secondary rounded">
-      <Col xs={12} className="mb-2 text-center">
-        <h3>Kirjaudu palveluun</h3>
-      </Col>
+    <Row>
       <Col xs={12}>
+        <div className="text-center">
+          <h4>Tai kirjaudu sähköpostilla:</h4>
+        </div>
         <Formik
           initialValues={{
             email: "",
@@ -85,7 +85,7 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
               >
                 Kirjaudu
               </Button>
-              <SignUpButton handleSigned={handleSigned} />
+              <SignUpButton />
             </Form>
           )}
         </Formik>

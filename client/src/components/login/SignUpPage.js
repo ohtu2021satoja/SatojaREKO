@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import Row from "react-bootstrap/Row"
-import SignUpNav from "./SignUpNav"
+import Col from "react-bootstrap/Col"
+import TemplateTopNav from "../TemplateTopNav"
+import FacebookSignUpButton from "./FacebookSignUpButton"
 import FormSignUp from "./FormSignUp"
-// import PasswordResetButton from "./PasswordResetButton"
 
-const SignUpPage = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUser }) => {
+const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
   const [facebookUser, setFacebookUser] = useState(false)
 
   useEffect(() => {
@@ -15,14 +16,27 @@ const SignUpPage = ({ user, handleSigned, handleFacebookSignUp, handleRegisterUs
 
   return (
     <Row className="h-100">
-      <SignUpNav facebookUser={facebookUser} handleSigned={handleSigned} />
-      <FormSignUp
-        user={user}
-        facebookUser={facebookUser}
-        handleSigned={handleSigned}
-        handleFacebookSignUp={handleFacebookSignUp}
-        handleRegisterUser={handleRegisterUser}
+      <TemplateTopNav
+        navLink="/login"
+        altText="Palaa kirjautumissivulle"
+        navHeader="Luo tili"
       />
+      <Col
+        xs={12}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 6, offset: 3 }}
+        lg={{ span: 4, offset: 4 }}
+      >
+        {facebookUser === false && (
+          <FacebookSignUpButton handleRegisterWithFacebook={handleRegisterWithFacebook} />
+        )}
+        <FormSignUp
+          user={user}
+          facebookUser={facebookUser}
+          handleLogin={handleLogin}
+          handleRegisterWithFacebook={handleRegisterWithFacebook}
+        />
+      </Col>
     </Row>
   )
 }

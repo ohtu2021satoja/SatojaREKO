@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import { Link } from "react-router-dom"
 
-const HomePage = ({ logOut }) => (
+const HomePage = ({ handleLogOut }) => (
   <Row className="h-100 bg-field align-content-center text-center">
     <Col xs={12} className="mb-4 mx-auto pt-4 pb-2 home-sign">
       <p className="mb-0">Kun on satoja</p>
@@ -35,9 +35,9 @@ const HomePage = ({ logOut }) => (
         Ota yhteyttä
       </Button>
     </Col>
-    {/*<Col xs={12} className="mt-auto mb-4">
+    <Col xs={12} className="mt-auto mb-4">
       <Button
-        onClick={logOut}
+        onClick={handleLogOut}
         variant="outline-danger"
         size="lg"
         type="button"
@@ -46,7 +46,7 @@ const HomePage = ({ logOut }) => (
       >
         Kirjaudu ulos
       </Button>
-    </Col>*/}
+    </Col>
   </Row>
 )
 

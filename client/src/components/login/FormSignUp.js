@@ -2,14 +2,11 @@ import * as Yup from "yup"
 import { Formik, Form } from "formik"
 import { createNewFacebookUser } from "../../services/users"
 import { createNewUser } from "../../services/auth"
+import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import FormUserDetails from "./FormUserDetails"
 import FormSignUpTerms from "./FormSignUpTerms"
-import FacebookSignUpButton from "./FacebookSignUpButton"
-import { useSelector } from "react-redux"
-import { logoutUser } from "../../services/auth"
-import { setAuthedUser } from "../../actions/authedUser"
 import { useHistory } from "react-router-dom"
 
 // Yup
@@ -45,73 +42,71 @@ const FacebookSignUpSchema = Yup.object().shape({
   password: Yup.string(),
 })
 
-const FormSignUp = ({
-  facebookUser,
-  handleSigned,
-  handleFacebookSignUp,
-  handleRegisterUser,
-}) => {
+const FormSignUp = ({ user, facebookUser, handleLoginWithFacebook }) => {
   const history = useHistory()
 
-  const createNewFacebook = async (user) => {
-    await createNewFacebookUser(user)
-    await logoutUser()
-    await setAuthedUser(null)
-    await history.push("/")
-    await window.location.reload()
-  }
-  let user = useSelector((state) => state.authedUser)
   // if user is null, importing values from user data don't work unless...
   // they are conditional ie. user ? user.name : ""
   if (!user) {
     user = {}
   }
 
+  const createFacebookUser = () => {
+    handleLoginWithFacebook()
+    history.push("/register")
+  }
+
   return (
-    <Col xs={12} md={{ span: 8, offset: 2 }} className="mt-4">
-      <Formik
-        initialValues={{
-          firstname: user.firstname || "",
-          lastname: user.lastname || "",
-          email: user.email || "",
-          phonenumber: "",
-          password: "",
-          terms_ok: false,
-        }}
-        enableReinitialize={true}
-        validationSchema={facebookUser === false ? SignUpSchema : FacebookSignUpSchema}
-        onSubmit={(values) => {
-          const newUser = {
-            firstname: values.firstname,
-            lastname: values.lastname,
-            email: values.email,
-            phonenumber: values.phonenumber,
-          }
+    <Row>
+      <Col xs={12}>
+        <div className="text-center">
+          {facebookUser === false ? (
+            <h4>Tai täydennä tiedot:</h4>
+          ) : (
+            <h4>Tarkista ja täydennä tietosi</h4>
+          )}
+        </div>
+        <Formik
+          initialValues={{
+            firstname: user.firstname || "",
+            lastname: user.lastname || "",
+            email: user.email || "",
+            phonenumber: "",
+            password: "",
+            terms_ok: false,
+          }}
+          enableReinitialize={true}
+          validationSchema={facebookUser === false ? SignUpSchema : FacebookSignUpSchema}
+          onSubmit={(values) => {
+            const newUser = {
+              firstname: values.firstname,
+              lastname: values.lastname,
+              email: values.email,
+              phonenumber: values.phonenumber,
+            }
 
-          user = { ...user, ...newUser }
-          facebookUser === false
-            ? createNewUser({ password: values.password, ...newUser })
-            : createNewFacebook(user)
+            user = { ...user, ...newUser }
+            facebookUser === false
+              ? createNewUser({ password: values.password, ...newUser })
+              : createNewFacebookUser(user)
 
-          facebookUser === false ? handleSigned() : handleRegisterUser()
-        }}
-      >
-        {() => (
-          <Form>
-            <FormUserDetails facebookUser={facebookUser} />
-            <FormSignUpTerms />
-            <Button variant="success" size="lg" type="submit" className="w-100 mb-3">
-              {facebookUser === false
-                ? "Rekisteröidy Sähköpostilla"
-                : "Viimeistele Rekisteröityminen"}
-            </Button>
-            {facebookUser === false && (
-              <FacebookSignUpButton handleFacebookSignUp={handleFacebookSignUp} />
-            )}
-          </Form>
-        )}
-      </Formik>
-    </Col>
+            facebookUser === false ? history.push("/") : createFacebookUser()
+          }}
+        >
+          {() => (
+            <Form>
+              <FormUserDetails facebookUser={facebookUser} />
+              <FormSignUpTerms />
+              <Button variant="success" size="lg" type="submit" className="w-100 mb-3">
+                {facebookUser === false
+                  ? "Rekisteröidy"
+                  : "Viimeistele Rekisteröityminen"}
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Col>
+    </Row>
   )
 }
 

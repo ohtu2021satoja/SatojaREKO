@@ -1,11 +1,12 @@
+import { Link } from "react-router-dom"
 import Button from "react-bootstrap/Button"
 
-const SignUpButton = ({ handleSigned }) => (
+const SignUpButton = () => (
   <Button
-    onClick={handleSigned}
+    as={Link}
+    to="/register"
     variant="outline-success"
     size="lg"
-    type="button"
     className="w-100 mb-3"
   >
     Rekisteröidy

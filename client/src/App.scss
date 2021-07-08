@@ -1,6 +1,8 @@
 @import "custom";
 
 body {
+  max-width: 1400px;
+  margin: 0 auto;
   font-family: "Work Sans", sans-serif;
   color: #4b4b4b;
   font-size: 100%; /* 16px on default browser settings */
@@ -151,127 +153,48 @@ p {
   background-color: rgb(255, 255, 255);
 }
 */
+
 /**
 * HOME PAGE
 */
 
 .bg-field {
   background-color: rgb(217, 217, 217);
-  background-image: url("./media/bg-image.jpg");
+  background-image: url("./media/landing-page-image-web-sm.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.home-sign {
-  max-width: 14rem;
-  background-color: rgb(93, 64, 55);
-  color: #fff;
-  border: 0.5rem solid #fff;
-  border-radius: 0.5rem;
-}
-
-/* custom home signs */
-.point-left {
-  display: inline-block;
-  width: 16rem;
-  height: 4rem;
-  padding-top: 0.5rem;
-  padding-left: 0.25rem;
   position: relative;
-  background: #fff;
-  cursor: pointer;
 }
 
-.point-left::before {
-  content: "";
+.sign-base {
+  position: relative;
+}
+
+.sign {
+  position: relative;
+  z-index: 40;
+}
+
+.sign-right {
+  margin-left: -1.8rem;
+}
+
+.sign-left {
+  margin-right: -1.8rem;
+}
+
+.vertical-line {
+  border-left: 14px solid #000;
+  height: 100%;
   position: absolute;
-  left: -2rem;
+  left: 50%;
+  margin-left: -7px;
   bottom: 0;
-  width: 0;
-  height: 0;
-  border-right: 2rem solid #fff;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
+  z-index: 30;
 }
 
-.point-left-inner {
-  display: inline-block;
-  width: 15.25rem;
-  height: 3rem;
-  position: relative;
-  background: rgb(57, 73, 171);
-}
-
-.point-left-inner::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  left: -1.5rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-right: 1.5rem solid rgb(57, 73, 171);
-  border-top: 1.5rem solid transparent;
-  border-bottom: 1.5rem solid transparent;
-}
-
-.point-right {
-  display: inline-block;
-  width: 16rem;
-  height: 4rem;
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
-  position: relative;
-  background: #fff;
-}
-
-.point-right::after {
-  content: "";
-  position: absolute;
-  right: -2rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid #fff;
-  border-top: 2rem solid transparent;
-  border-bottom: 2em solid transparent;
-}
-
-.point-right-inner {
-  display: inline-block;
-  width: 15.25rem;
-  height: 3rem;
-  position: relative;
-  background: rgb(57, 73, 171);
-}
-
-.point-right-inner::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  right: -1.5rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 1.5rem solid rgb(57, 73, 171);
-  border-top: 1.5rem solid transparent;
-  border-bottom: 1.5rem solid transparent;
-}
-
-.point-content {
-  position: relative;
-  color: #fff;
-  top: 0.5rem;
-}
-
-.btn.point-left,
-.btn.point-right {
-  border: none;
-}
-
-.point-left:hover,
-.point-right:hover {
-  background: rgb(57, 73, 171);
+.vertical-line-bottom {
+  height: 50%;
 }
 
 /* PRODUCT LISTS */

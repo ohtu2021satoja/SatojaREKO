@@ -1,12 +1,11 @@
 import { Field, ErrorMessage } from "formik"
-import Col from "react-bootstrap/Col"
 import FormFieldText from "../FormFieldText"
 import FormFieldEmail from "../FormFieldEmail"
 import FormFieldPassword from "../FormFieldPassword"
 import FormErrorMessage from "../FormErrorMessage"
 
 const FormUserDetails = ({ facebookUser }) => (
-  <Col xs={12}>
+  <>
     <Field name="firstname" id="user-name" label="Etunimi" component={FormFieldText} />
     <ErrorMessage name="firstname" component={FormErrorMessage} />
     <Field name="lastname" id="user-surname" label="Sukunimi" component={FormFieldText} />
@@ -31,7 +30,7 @@ const FormUserDetails = ({ facebookUser }) => (
         <ErrorMessage name="password" component={FormErrorMessage} />
       </>
     )}
-  </Col>
+  </>
 )
 
 export default FormUserDetails
