@@ -2,9 +2,8 @@ import { Link } from "react-router-dom"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
-import Button from "react-bootstrap/Button"
 
-const HomePage = ({ handleLogOut }) => (
+const LandingPage = ({ user }) => (
   <Row className="h-100 bg-field align-content-center text-center">
     <Col xs={12} className="sign-base">
       <div className="mb-4 sign" aria-label="Kun on satoja saa aikaan">
@@ -43,7 +42,7 @@ const HomePage = ({ handleLogOut }) => (
         <Nav.Item>
           <Nav.Link
             as={Link}
-            to={"/map"}
+            to={user && !user.phonenumber ? "/register" : "/login"}
             aria-label="Ostan lähiruokaa"
             className="sign sign-right"
           >
@@ -97,10 +96,10 @@ const HomePage = ({ handleLogOut }) => (
             </svg>
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item className="mb-4">
+        <Nav.Item>
           <Nav.Link
             as={Link}
-            to={"/home"}
+            to={user && !user.phonenumber ? "/register" : "/login"}
             aria-label="Myyn lähiruokaa"
             className="sign sign-left"
           >
@@ -154,32 +153,6 @@ const HomePage = ({ handleLogOut }) => (
             </svg>
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Button
-            as={Link}
-            to="/contact"
-            variant="success"
-            size="lg"
-            type="button"
-            className="mb-3 sign"
-            style={{ width: 200 }}
-          >
-            Ota yhteyttä
-          </Button>
-        </Nav.Item>
-        <Nav.Item>
-          <Button
-            onClick={handleLogOut}
-            variant="danger"
-            size="lg"
-            type="button"
-            className="sign"
-            style={{ width: 200 }}
-            id="logout-button"
-          >
-            Kirjaudu ulos
-          </Button>
-        </Nav.Item>
       </Nav>
       <div className="vertical-line"></div>
     </Col>
@@ -187,4 +160,4 @@ const HomePage = ({ handleLogOut }) => (
   </Row>
 )
 
-export default HomePage
+export default LandingPage

@@ -1,24 +1,15 @@
 import { useState } from "react"
 import imageService from "../../services/images"
 import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Button from "react-bootstrap/Button"
 import NotificationError from "../NotificationError"
 import FormSellerImage from "./FormSellerImage"
 import ProfileHeaderSeller from "./ProfileHeaderSeller"
 import FormSeller from "./FormSeller"
-import { useHistory } from "react-router-dom"
 
-const ProfilePageSeller = ({ user, handleUserUpdate, logOut }) => {
+const ProfilePageSeller = ({ user, handleUserUpdate }) => {
   const [showModal, setShowModal] = useState(false)
   const [showError, setShowError] = useState(false)
   const [showUpdateError, setShowUpdateError] = useState(false)
-  const history = useHistory()
-
-  const logOutProfile = async () => {
-    await logOut()
-    await history.push("/")
-  }
 
   // uploads the image to Cloudinary
   // returns image path
@@ -60,18 +51,6 @@ const ProfilePageSeller = ({ user, handleUserUpdate, logOut }) => {
           handleUserUpdate={handleUserUpdate}
           handleError={() => setShowUpdateError(true)}
         />
-        <Col xs={12} className="py-3">
-          <Button
-            onClick={logOutProfile}
-            variant="outline-danger"
-            size="lg"
-            type="button"
-            className="w-100"
-            id="logout-button"
-          >
-            Kirjaudu ulos
-          </Button>
-        </Col>
       </Row>
     </>
   )

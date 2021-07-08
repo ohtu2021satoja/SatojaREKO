@@ -1,20 +1,25 @@
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
-import Image from "react-bootstrap/Image"
-import AppIcon from "../../media/satoja-logo.png"
+import TemplateTopNav from "../TemplateTopNav"
 import FormLogin from "./FormLogin"
 import FacebookLoginButton from "./FacebookLoginButton"
 
-const LoginPage = ({ handleLogin, handleSigned }) => (
-  <Row className="h-100 bg-light-yellow px-2 align-items-end">
-    <Col xs={12} md={{ span: 8, offset: 2 }}>
-      <div className="my-3 text-center">
-        <Image src={AppIcon} alt="Satoja" className="mb-2" fluid />
-        <h3>Tunne tuottaja!</h3>
-      </div>
-      <FormLogin handleSigned={handleSigned} handleLogin={handleLogin} />
+const LoginPage = ({ handleLogin }) => (
+  <Row className="h-100">
+    <TemplateTopNav
+      navLink="/"
+      altText="Palaa kotisivulle"
+      navHeader="Kirjaudu palveluun"
+    />
+    <Col
+      xs={12}
+      sm={{ span: 10, offset: 1 }}
+      md={{ span: 6, offset: 3 }}
+      lg={{ span: 4, offset: 4 }}
+    >
       <FacebookLoginButton handleLogin={handleLogin} />
+      <FormLogin handleLogin={handleLogin} />
     </Col>
 
     <Col xs={12} className="mt-auto text-center">

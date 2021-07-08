@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { loginUser } from "../../services/auth"
@@ -19,26 +20,33 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Salasana edellytetään"),
 })
 
-const FormLogin = ({ handleSigned, handleLogin }) => {
+const FormLogin = ({ handleLogin }) => {
+  const history = useHistory()
   const [fail, setFail] = useState(false)
 
   const checkCredentials = async (obj) => {
     const response = await loginUser(obj)
-    console.log("RESPONSE", response)
-    response === "error" ? setFail(true) : handleLogin()
-    // TODO: instead of setTimeout
-    // remove error message when input value changes
-    setTimeout(() => {
-      setFail(false)
-    }, 4000)
+
+    if (response === "error") {
+      setFail(true)
+
+      // TODO: instead of setTimeout
+      // remove error message when input value changes
+      setTimeout(() => {
+        setFail(false)
+      }, 4000)
+    } else {
+      handleLogin()
+      history.push("/")
+    }
   }
 
   return (
-    <Row className="mb-3 py-3 px-1 bg-white border border-1 border-secondary rounded">
-      <Col xs={12} className="mb-2 text-center">
-        <h3>Kirjaudu palveluun</h3>
-      </Col>
+    <Row>
       <Col xs={12}>
+        <div className="text-center">
+          <h4>Tai sähköpostilla:</h4>
+        </div>
         <Formik
           initialValues={{
             email: "",
@@ -85,7 +93,7 @@ const FormLogin = ({ handleSigned, handleLogin }) => {
               >
                 Kirjaudu
               </Button>
-              <SignUpButton handleSigned={handleSigned} />
+              <SignUpButton />
             </Form>
           )}
         </Formik>

@@ -8,7 +8,6 @@ const HomePageSeller = () => (
       sm={{ span: 10, offset: 1 }}
       md={{ span: 8, offset: 2 }}
       lg={{ span: 6, offset: 3 }}
-      xl={{ span: 4, offset: 4 }}
       className="pt-4"
     >
       <Row>
@@ -37,7 +36,7 @@ const HomePageSeller = () => (
             <a href="mailto:​asiakaspalvelu@satoja.fi">asiakaspalvelu@satoja.fi</a>
           </p>
 
-          <p classNAme="mb-0">Kesäisin terveisin!</p>
+          <p>Kesäisin terveisin!</p>
           <p>Team Satoja</p>
         </Col>
       </Row>

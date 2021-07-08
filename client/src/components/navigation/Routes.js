@@ -20,10 +20,11 @@ import NavigationBarBuyer from "./NavigationBarBuyer"
 import NavigationBarSeller from "./NavigationBarSeller"
 import AdminPage from "../AdminPage"
 
-const Routes = ({ user, logOut, handleUserUpdate }) => (
+const Routes = ({ user, handleLogOut, handleUserUpdate }) => (
   <Switch>
+    <Redirect from="/login" to="/" />
     <Route exact path="/">
-      <HomePage />
+      <HomePage handleLogOut={handleLogOut} />
     </Route>
     {/* ADMIN ROUTES */}
     <Route path="/admin">{user.is_admin ? <AdminPage /> : <Redirect to="/" />}</Route>
@@ -54,11 +55,7 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
     </Route>
     <Route path="/profile/seller">
       <NavigationBarSeller />
-      <ProfilePageSeller
-        user={user}
-        handleUserUpdate={handleUserUpdate}
-        logOut={logOut}
-      />
+      <ProfilePageSeller user={user} handleUserUpdate={handleUserUpdate} />
     </Route>
     <Route exact path="/contact">
       <NavigationBarSeller />
@@ -79,7 +76,7 @@ const Routes = ({ user, logOut, handleUserUpdate }) => (
     </Route>
     <Route exact path="/profile/buyer">
       <NavigationBarBuyer />
-      <ProfilePageBuyer user={user} handleUserUpdate={handleUserUpdate} logOut={logOut} />
+      <ProfilePageBuyer user={user} handleUserUpdate={handleUserUpdate} />
     </Route>
     <Route
       path="/events/:eventID"

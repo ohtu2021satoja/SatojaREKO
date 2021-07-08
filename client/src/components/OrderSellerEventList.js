@@ -24,7 +24,6 @@ const OrderSellerEventList = (props) => {
           sm={{ span: 10, offset: 1 }}
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
-          xl={{ span: 4, offset: 4 }}
         >
           <h4 className="mb-0 pt-3">
             {date.getDate()}.{date.getMonth() + 1}.

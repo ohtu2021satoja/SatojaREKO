@@ -1,13 +1,13 @@
 import Button from "react-bootstrap/Button"
 
-const FacebookSignUpButton = ({ handleFacebookSignUp }) => (
+const FacebookSignUpButton = ({ handleLoginWithFacebook }) => (
   <a href="api/auth/facebook">
     <Button
-      onClick={handleFacebookSignUp}
+      onClick={handleLoginWithFacebook}
       variant="facebook"
       size="lg"
       type="button"
-      className="w-100 mb-3"
+      className="mb-3 w-100"
     >
       Rekisteröidy Facebookilla
     </Button>

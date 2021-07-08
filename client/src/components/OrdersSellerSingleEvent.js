@@ -75,7 +75,7 @@ const OrdersSellerSingleEvent = (props) => {
             thisDate={thisDate}
             Order={foundEvent}
           />
-          <Col xs={12}>
+          <Col xs={12} sm={{ span: 10, offset: 1 }} md={{ span: 8, offset: 2 }}>
             <OrderSellerNavigationBar
               HandleProductButton={props.HandleProductButton}
               HandleOrderButton={props.HandleOrderButton}
@@ -108,7 +108,7 @@ const OrdersSellerSingleEvent = (props) => {
             thisDate={thisDate}
             Order={foundEvent}
           />
-          <Col xs={12}>
+          <Col xs={12} sm={{ span: 10, offset: 1 }} md={{ span: 8, offset: 2 }}>
             <OrderSellerNavigationBar
               HandleProductButton={props.HandleProductButton}
               HandleOrderButton={props.HandleOrderButton}

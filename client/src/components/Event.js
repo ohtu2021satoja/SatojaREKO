@@ -31,8 +31,6 @@ const Event = ({ event, isChoice, setEventChoiceError }) => {
       xs={12}
       sm={{ span: 10, offset: 1 }}
       md={{ span: 8, offset: 2 }}
-      lg={{ span: 6, offset: 3 }}
-      xl={{ span: 4, offset: 4 }}
       className="text-left"
     >
       <h4 className="mb-0 pt-3">

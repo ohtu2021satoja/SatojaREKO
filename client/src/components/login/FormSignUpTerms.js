@@ -5,7 +5,7 @@ import FormFieldCheckboxInline from "../FormFieldCheckboxInline"
 import FormErrorMessage from "../FormErrorMessage"
 
 const FormSignUpTerms = () => (
-  <Col xs={12} className="mb-2">
+  <Col xs={12} className="pl-0 mb-2">
     <Field
       name="terms_ok"
       id="user-terms"

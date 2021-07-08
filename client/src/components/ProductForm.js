@@ -52,7 +52,12 @@ const ProductForm = ({
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
         <h2>{FormTitle}</h2>
       </Col>
-      <Col xs={12}>
+      <Col
+        xs={12}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+      >
         <Formik
           initialValues={{
             category: category,
