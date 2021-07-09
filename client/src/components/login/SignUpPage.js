@@ -4,9 +4,11 @@ import Col from "react-bootstrap/Col"
 import TemplateTopNav from "../TemplateTopNav"
 import FacebookSignUpButton from "./FacebookSignUpButton"
 import FormSignUp from "./FormSignUp"
+import NotificationSuccess from "../NotificationSuccess"
 
 const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
   const [facebookUser, setFacebookUser] = useState(false)
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     // if user registered via Facebook
@@ -15,29 +17,39 @@ const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
   }, [user, facebookUser])
 
   return (
-    <Row className="h-100">
-      <TemplateTopNav
-        navLink="/login"
-        altText="Palaa kirjautumissivulle"
-        navHeader="Luo tili"
+    <>
+      <NotificationSuccess
+        show={show}
+        handleClose={() => setShow(false)}
+        delay={5000}
+        message="Tarkista sähköpostisi. Lähetimme sinulle vahvistusviestin."
       />
-      <Col
-        xs={12}
-        sm={{ span: 10, offset: 1 }}
-        md={{ span: 6, offset: 3 }}
-        lg={{ span: 4, offset: 4 }}
-      >
-        {facebookUser === false && (
-          <FacebookSignUpButton handleRegisterWithFacebook={handleRegisterWithFacebook} />
-        )}
-        <FormSignUp
-          user={user}
-          facebookUser={facebookUser}
-          handleLogin={handleLogin}
-          handleRegisterWithFacebook={handleRegisterWithFacebook}
+      <Row className="h-100">
+        <TemplateTopNav
+          navLink="/login"
+          altText="Palaa kirjautumissivulle"
+          navHeader="Luo tili"
         />
-      </Col>
-    </Row>
+        <Col
+          xs={12}
+          sm={{ span: 10, offset: 1 }}
+          md={{ span: 6, offset: 3 }}
+          lg={{ span: 4, offset: 4 }}
+        >
+          {facebookUser === false && (
+            <FacebookSignUpButton
+              handleRegisterWithFacebook={handleRegisterWithFacebook}
+            />
+          )}
+          <FormSignUp
+            user={user}
+            handleLogin={handleLogin}
+            facebookUser={facebookUser}
+            handleNotification={() => setShow(true)}
+          />
+        </Col>
+      </Row>
+    </>
   )
 }
 

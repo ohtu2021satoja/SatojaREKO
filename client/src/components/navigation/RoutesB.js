@@ -7,7 +7,7 @@ import LandingPage from "../LandingPage"
 const RoutesB = ({ user, handleLogin, handleRegisterWithFacebook }) => (
   <Switch>
     <Route path="/login">
-      <LoginPage handleLogin={handleLogin} />
+      <LoginPage user={user} handleLogin={handleLogin} />
     </Route>
     <Route path="/register">
       <SignUpPage
