@@ -42,7 +42,7 @@ const FacebookSignUpSchema = Yup.object().shape({
   password: Yup.string(),
 })
 
-const FormSignUp = ({ user, facebookUser, handleLoginWithFacebook }) => {
+const FormSignUp = ({ user, handleLogin, facebookUser, handleNotification }) => {
   const history = useHistory()
 
   // if user is null, importing values from user data don't work unless...
@@ -51,8 +51,15 @@ const FormSignUp = ({ user, facebookUser, handleLoginWithFacebook }) => {
     user = {}
   }
 
-  const createFacebookUser = () => {
-    handleLoginWithFacebook()
+  const createUser = () => {
+    handleNotification()
+    setTimeout(() => {
+      history.push("/login")
+    }, 5000)
+  }
+
+  const createFacebookUser = async () => {
+    await handleLogin()
     history.push("/register")
   }
 
@@ -90,7 +97,7 @@ const FormSignUp = ({ user, facebookUser, handleLoginWithFacebook }) => {
               ? createNewUser({ password: values.password, ...newUser })
               : createNewFacebookUser(user)
 
-            facebookUser === false ? history.push("/") : createFacebookUser()
+            facebookUser === false ? createUser() : createFacebookUser()
           }}
         >
           {() => (

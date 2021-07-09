@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import * as Yup from "yup"
 import { Formik, Form, Field, ErrorMessage } from "formik"
@@ -20,25 +19,17 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Salasana edellytetään"),
 })
 
-const FormLogin = ({ handleLogin }) => {
+const FormLogin = ({ user, handleLogin, handleError }) => {
   const history = useHistory()
-  const [fail, setFail] = useState(false)
 
+  const authoriseLogin = async () => {
+    await handleLogin()
+    user !== "" ? history.push("/") : handleError()
+  }
   const checkCredentials = async (obj) => {
     const response = await loginUser(obj)
 
-    if (response === "error") {
-      setFail(true)
-
-      // TODO: instead of setTimeout
-      // remove error message when input value changes
-      setTimeout(() => {
-        setFail(false)
-      }, 4000)
-    } else {
-      handleLogin()
-      history.push("/")
-    }
+    response === "error" ? handleError() : authoriseLogin()
   }
 
   return (
@@ -79,11 +70,6 @@ const FormLogin = ({ handleLogin }) => {
               />
               <ErrorMessage name="password" component={FormErrorMessage} />
               <PasswordResetButton />
-              {fail === true && (
-                <p className="text-center text-danger">
-                  Virheellinen sähköposti tai salasana
-                </p>
-              )}
               <Button
                 type="submit"
                 variant="success"
