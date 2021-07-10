@@ -23,10 +23,7 @@ const EventForm = ({ setAddingEvent }) => {
     end_time: Yup.string().required("Vaadittu"),
     date: Yup.string().required("Vaadittu"),
   })
-  const [markets, setMarkets] = useState([
-    { id: 10, address: "Ståhlentie 14, espoo", type: "reko_market" },
-    { id: 21, address: "Hämeentie 1", type: "reko_market" },
-  ])
+  const [markets, setMarkets] = useState([])
   const [market, setMarket] = useState(null)
 
   useEffect(() => {
@@ -208,10 +205,7 @@ const RekoAreas = ({ setRekoChoices, rekoAreas, rekoChoices }) => {
 }
 
 const MarketForm = ({ setAddingMarket }) => {
-  const [rekoAreas, setRekoAreas] = useState([
-    { id: 1, name: "Ristiina" },
-    { id: 2, name: "Mikkeli" },
-  ])
+  const [rekoAreas, setRekoAreas] = useState([])
   const [rekoChoices, setRekoChoices] = useState([])
   useEffect(() => {
     const fetchData = async () => {
@@ -220,9 +214,9 @@ const MarketForm = ({ setAddingMarket }) => {
     }
     fetchData()
   }, [])
-  const handleSubmit = async ({ address }) => {
+  const handleSubmit = async ({ address, city }) => {
     console.log(address)
-    await marketService.addMarket(address, rekoChoices)
+    await marketService.addMarket(address, city, rekoChoices)
   }
   const validationSchema = Yup.object().shape({
     address: Yup.string().required("Vaadittu"),
@@ -232,6 +226,7 @@ const MarketForm = ({ setAddingMarket }) => {
       <Formik
         initialValues={{
           address: "",
+          city: "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -261,6 +256,7 @@ const MarketFormDetails = () => {
   return (
     <Col xs={12} className="mb-5">
       <Field name="address" id="address" label="address" component={FormFieldText} />
+      <Field name="city" id="city" label="city" component={FormFieldText} />
       <ErrorMessage name="address" component={FormErrorMessage} />
     </Col>
   )
