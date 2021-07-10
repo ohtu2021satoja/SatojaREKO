@@ -40,7 +40,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
           className="w-100"
         />
         {unitSizeFloat === 0.0 && errors.sizes && touched.sizes ? (
-          <div className="text-danger">{errors.sizes}</div>
+          <div>{errors.sizes}</div>
         ) : null}
       </Form.Group>
       <Form.Group className="mb-3 text-center">
@@ -53,7 +53,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
           size="lg"
         />
         {storageQuantity < 1 && errors.quantities && touched.quantities ? (
-          <div className="text-danger">{errors.quantities}</div>
+          <div>{errors.quantities}</div>
         ) : null}
       </Form.Group>
       <div className="w-100 mb-3 text-center">

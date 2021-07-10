@@ -40,7 +40,7 @@ const AutoSubmitForm = ({ user }) => {
     if (!isSame) {
       timer = setTimeout(() => {
         submitForm()
-      }, 500)
+      }, 5000)
     }
   }, [user, values, submitForm])
 
