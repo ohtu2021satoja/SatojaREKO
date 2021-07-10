@@ -19,9 +19,10 @@ const addRekoMarket = async (
   rekoAreasRepository
 ) => {
   const location = await geoap.getAddressInfo(market.address, market.city)
+  console.log(location)
   const newMarket = await marketsRepository.addRekoMarket(market, location)
   console.log(reko_areas)
-  const newRekoMarket = await rekoAreasRepository.fToRekoAreas(
+  const newRekoMarket = await rekoAreasRepository.addMarketToRekoAreas(
     reko_areas,
     newMarket
   )
