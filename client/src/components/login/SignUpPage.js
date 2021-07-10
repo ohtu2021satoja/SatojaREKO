@@ -6,7 +6,7 @@ import FacebookSignUpButton from "./FacebookSignUpButton"
 import FormSignUp from "./FormSignUp"
 import NotificationSuccess from "../NotificationSuccess"
 
-const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
+const SignUpPage = ({ user, handleLogin }) => {
   const [facebookUser, setFacebookUser] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -36,11 +36,7 @@ const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
           md={{ span: 6, offset: 3 }}
           lg={{ span: 4, offset: 4 }}
         >
-          {facebookUser === false && (
-            <FacebookSignUpButton
-              handleRegisterWithFacebook={handleRegisterWithFacebook}
-            />
-          )}
+          {facebookUser === false && <FacebookSignUpButton handleLogin={handleLogin} />}
           <FormSignUp
             user={user}
             handleLogin={handleLogin}
