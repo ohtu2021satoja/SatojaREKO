@@ -60,7 +60,7 @@ const FormSignUp = ({ user, handleLogin, facebookUser, handleNotification }) => 
 
   const createFacebookUser = async () => {
     await handleLogin()
-    history.push("/register")
+    history.push("/")
   }
 
   return (
