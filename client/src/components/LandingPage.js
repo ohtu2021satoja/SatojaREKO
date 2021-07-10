@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
 
-const LandingPage = ({ user }) => (
+const LandingPage = () => (
   <Row className="h-100 bg-field align-content-center text-center">
     <Col xs={12} className="sign-base">
       <div className="mb-4 sign" aria-label="Kun on satoja saa aikaan">
@@ -42,7 +42,7 @@ const LandingPage = ({ user }) => (
         <Nav.Item>
           <Nav.Link
             as={Link}
-            to={user && !user.phonenumber ? "/register" : "/login"}
+            to={"/login"}
             aria-label="Ostan lähiruokaa"
             className="sign sign-right"
           >
@@ -99,7 +99,7 @@ const LandingPage = ({ user }) => (
         <Nav.Item>
           <Nav.Link
             as={Link}
-            to={user && !user.phonenumber ? "/register" : "/login"}
+            to={"/login"}
             aria-label="Myyn lähiruokaa"
             className="sign sign-left"
           >

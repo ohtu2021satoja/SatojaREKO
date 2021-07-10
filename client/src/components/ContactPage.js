@@ -10,7 +10,7 @@ const ContactPage = ({ user }) => {
   const [notification, setNotification] = useState(undefined)
 
   return (
-    <div>
+    <>
       <NotificationSuccess
         show={notification === "success"}
         handleClose={() => setNotification(undefined)}
@@ -24,10 +24,10 @@ const ContactPage = ({ user }) => {
         message="Viestin lähettäminen epäonnistui"
       />
       <TemplateTopNav navLink="/" altText="Palaa kotisivulle" navHeader="Ota yhteyttä" />
-      <Row className="mx-2 pt-4">
+      <Row className="pt-4">
         <ContactForm user={user} setNotification={setNotification} />
       </Row>
-    </div>
+    </>
   )
 }
 
