@@ -168,7 +168,7 @@ const ProductForm = ({
                       <>
                         <p className="mb-3">
                           Et ole lisännyt itseäsi tuottajana yhteenkään Reko-ryhmään.
-                          Päivitä tietoja <Link to="/profile/buyer">profiili-sivun</Link>{" "}
+                          Päivitä tietoja <Link to="/profile/seller">profiili-sivun</Link>{" "}
                           lopussa. Valitettavasti joudut tämän jälkeen aloittamaan
                           ilmoituksen luonnin alusta.
                         </p>
