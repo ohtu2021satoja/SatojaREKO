@@ -55,7 +55,7 @@ const FormSignUp = ({ user, handleLogin, facebookUser, handleNotification }) => 
     handleNotification()
     setTimeout(() => {
       history.push("/login")
-    }, 5000)
+    }, 3000)
   }
 
   const createFacebookUser = async () => {

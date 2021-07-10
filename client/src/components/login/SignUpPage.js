@@ -21,7 +21,7 @@ const SignUpPage = ({ user, handleLogin, handleRegisterWithFacebook }) => {
       <NotificationSuccess
         show={show}
         handleClose={() => setShow(false)}
-        delay={5000}
+        delay={3000}
         message="Tarkista sähköpostisi. Lähetimme sinulle vahvistusviestin."
       />
       <Row className="h-100">
