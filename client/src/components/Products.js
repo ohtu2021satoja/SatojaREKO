@@ -46,9 +46,11 @@ const Products = () => {
                   Luomua: {product.organic ? "kyllä" : "ei"}
                 </Card.Text>
                 <Card.Text className="mb-1">
-                  myyty {product.quantity_left}/{product.batch_quantity}
+                  Jäljellä {product.quantity_left}/{product.batch_quantity}
                 </Card.Text>
-                <Card.Text className="mb-4">Kappalehinta {product.unit_price}€</Card.Text>
+                <Card.Text className="mb-4">
+                  Hinta {product.unit_price / 100}€ / {product.type}{" "}
+                </Card.Text>
                 <Nav>
                   <Button
                     as={Link}
