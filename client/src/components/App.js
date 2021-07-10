@@ -27,10 +27,16 @@ const App = (props) => {
     fetchData()
   }, [setAuthedUser])
 
+  useEffect(() => {
+    console.log("AUTHED_USER", authedUser)
+    if (authedUser && !authedUser.phonenumber) {
+      history.push("/register")
+    }
+  }, [history, authedUser])
+
   const getUser = async () => {
     const user = await getAuthedUser()
     setAuthedUser(user)
-    history.push("/")
   }
 
   // Remove current user and update state
@@ -39,9 +45,9 @@ const App = (props) => {
     setAuthedUser(null)
   }
 
-  const registerWithFacebook = async () => {
-    await getUser()
-    history.push("/register")
+  const registerWithFacebook = () => {
+    getUser()
+    //history.push("/register")
     // await logOut()
   }
 
@@ -56,7 +62,7 @@ const App = (props) => {
               handleRegisterWithFacebook={registerWithFacebook}
             />
           )}
-          {authedUser && (
+          {authedUser && authedUser.phonenumber && (
             <Routes user={authedUser} handleLogOut={logOut} handleUserUpdate={getUser} />
           )}
         </Col>
