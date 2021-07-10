@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button"
 
-const FacebookSignUpButton = ({ handleLoginWithFacebook }) => (
+const FacebookSignUpButton = ({ handleRegisterWithFacebook }) => (
   <a href="api/auth/facebook">
     <Button
-      onClick={handleLoginWithFacebook}
+      onClick={handleRegisterWithFacebook}
       variant="facebook"
       size="lg"
       type="button"

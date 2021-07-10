@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import "../App.scss"
 import { connect } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { getAuthedUser } from "../services/users"
 import { logoutUser } from "../services/auth"
 import { setAuthedUser } from "../actions/authedUser"
@@ -11,6 +12,7 @@ import Routes from "./navigation/Routes"
 import RoutesB from "./navigation/RoutesB"
 
 const App = (props) => {
+  const history = useHistory()
   const { authedUser, setAuthedUser } = props
 
   // Get user form API
@@ -28,6 +30,7 @@ const App = (props) => {
   const getUser = async () => {
     const user = await getAuthedUser()
     setAuthedUser(user)
+    history.push("/")
   }
 
   // Remove current user and update state
@@ -38,7 +41,8 @@ const App = (props) => {
 
   const registerWithFacebook = async () => {
     await getUser()
-    await logOut()
+    history.push("/register")
+    // await logOut()
   }
 
   return (
