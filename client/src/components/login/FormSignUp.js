@@ -58,11 +58,6 @@ const FormSignUp = ({ user, handleLogin, facebookUser, handleNotification }) => 
     }, 3000)
   }
 
-  const createFacebookUser = async () => {
-    await handleLogin()
-    history.push("/")
-  }
-
   return (
     <Row>
       <Col xs={12}>
@@ -97,7 +92,7 @@ const FormSignUp = ({ user, handleLogin, facebookUser, handleNotification }) => 
               ? createNewUser({ password: values.password, ...newUser })
               : createNewFacebookUser(user)
 
-            facebookUser === false ? createUser() : createFacebookUser()
+            facebookUser === false ? createUser() : handleLogin()
           }}
         >
           {() => (

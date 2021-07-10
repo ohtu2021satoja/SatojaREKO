@@ -27,8 +27,9 @@ const App = (props) => {
     fetchData()
   }, [setAuthedUser])
 
+  // Check if Facebook sign up
+  // has been completed
   useEffect(() => {
-    console.log("AUTHED_USER", authedUser)
     if (authedUser && !authedUser.phonenumber) {
       history.push("/register")
     }
@@ -45,22 +46,12 @@ const App = (props) => {
     setAuthedUser(null)
   }
 
-  const registerWithFacebook = () => {
-    getUser()
-    //history.push("/register")
-    // await logOut()
-  }
-
   return (
     <Container fluid>
       <Row className="vh-100">
         <Col xs={12}>
           {((authedUser && !authedUser.phonenumber) || !authedUser) && (
-            <RoutesB
-              user={authedUser}
-              handleLogin={getUser}
-              handleRegisterWithFacebook={registerWithFacebook}
-            />
+            <RoutesB user={authedUser} handleLogin={getUser} />
           )}
           {authedUser && authedUser.phonenumber && (
             <Routes user={authedUser} handleLogOut={logOut} handleUserUpdate={getUser} />
