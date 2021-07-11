@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 
 const HomePageSeller = () => (
   <Row className="h-100 bg-light-yellow">
@@ -12,7 +14,7 @@ const HomePageSeller = () => (
     >
       <Row>
         <Col xs={12} className="mb-4 text-start">
-          <h3>Tervetuloa!</h3>
+          <h3 className="mb-3">Tervetuloa!</h3>
 
           <p>Satoja.fi on palvelu, jonka avulla voit ostaa ja myydä lähiruokaa.</p>
 
@@ -32,10 +34,18 @@ const HomePageSeller = () => (
 
           <p>
             Jos tarvitset apua tai lisätietoa liittyen palvelun toimintaan tai
-            Reko-tilaisuuksiin, niin ota yhteyttä:{" "}
-            <a href="mailto:​asiakaspalvelu@satoja.fi">asiakaspalvelu@satoja.fi</a>
+            Reko-tilaisuuksiin, niin
+            <Button
+              as={Link}
+              to="/contact"
+              variant="link"
+              size="lg"
+              className="pt-1 pr-0 pl-1"
+            >
+              ota yhteyttä
+            </Button>
+            .
           </p>
-
           <p>Kesäisin terveisin!</p>
           <p>Team Satoja</p>
         </Col>

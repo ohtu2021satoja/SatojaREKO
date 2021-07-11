@@ -20,7 +20,7 @@ const SharedSchema = {
   email: Yup.string()
     .email("Virheellinen sähköposti")
     .required("Sähköposti edellytetään"),
-  phonenumber: Yup.string().required(),
+  phonenumber: Yup.string().required("Puhelinnumero edellytetään"),
   terms_ok: Yup.boolean()
     .test(
       "consent",
