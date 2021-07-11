@@ -9,10 +9,10 @@ import FormFieldEmail from "./FormFieldEmail"
 import FormErrorMessage from "./FormErrorMessage"
 
 const mailSchema = Yup.object().shape({
-  firstname: Yup.string().required("Nimi edellytetään"),
-  email: Yup.string().email("Virhellinen sähköposti").required("Sähköposti edellytetään"),
-  subject: Yup.string().required("Aihe edellytetään"),
-  message: Yup.string().required("Viesti edellytetään"),
+  firstname: Yup.string().required("Nimi pakollinen"),
+  email: Yup.string().email("invalid email address").required("Sähköposti on pakollinen"),
+  subject: Yup.string().required("Aihe on pakollinen"),
+  message: Yup.string().required("Viesti on pakollinen"),
 })
 
 const ContactForm = ({ user, setNotification }) => {
@@ -22,12 +22,7 @@ const ContactForm = ({ user, setNotification }) => {
     return response
   }
   return (
-    <Col
-      xs={12}
-      sm={{ span: 10, offset: 1 }}
-      md={{ span: 8, offset: 2 }}
-      lg={{ span: 6, offset: 3 }}
-    >
+    <Col xs={12}>
       <Formik
         initialValues={{
           firstname: user.firstname || "",

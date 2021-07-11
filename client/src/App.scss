@@ -73,6 +73,7 @@ p {
   background-color: rgb(194, 183, 255);
 }
 
+// do not add padding
 .bg-light-gray {
   padding-bottom: 50px;
   background-color: rgb(217, 217, 217);
@@ -86,10 +87,8 @@ p {
 */
 
 .btn-success,
-.btn-danger,
-.btn-success:hover,
-.btn-danger:hover,
-.btn-outline-success:hover {
+.btn-danger {
+  color: #fff;
   border: 1px solid #4b4b4b;
 }
 
@@ -99,6 +98,13 @@ p {
 
 .btn-outline-secondary {
   color: #4b4b4b;
+}
+
+.btn-success:hover,
+.btn-danger:hover,
+.btn-outline-success:hover {
+  color: #fff;
+  border: 1px solid #4b4b4b;
 }
 
 /* TODO: add the same to focus */
