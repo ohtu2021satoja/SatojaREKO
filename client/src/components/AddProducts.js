@@ -59,9 +59,7 @@ const AddProducts = () => {
       setProductType(productType)
       setCategory(category)
       setPreview(true)
-    } else {
-      setEventChoiceError(true)
-    }
+    } else setEventChoiceError(true)
   }
 
   if (preview) {

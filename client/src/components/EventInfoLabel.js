@@ -33,15 +33,18 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
     market && (
       <Card.Body>
         <Card.Text className={classes} style={styles}>
-          {(() => {
-            let marketType = ""
-            if (market.type === "reko_market") marketType = " (REKO)"
-            if (market.reko_name) return market.reko_name + marketType
-            if (market.name) return market.name + marketType
-            else return "Noutotilaisuus" + marketType
-          })()}
+          <p className={classes} style={styles}>
+            Noutotilaisuus
+          </p>
+          {market.city && (
+            <p className={classes} style={styles}>
+              {market.city}
+            </p>
+          )}
+          <p className={classes} style={styles}>
         </Card.Text>
         <Card.Text className={classes} style={styles}>
+
           {" "}
           {market.address}
         </Card.Text>

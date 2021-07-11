@@ -1,7 +1,7 @@
 const db = require("../db")
 
 const getAllMarketsThatHaveEvents = async () => {
-    const markets = await db.query("SELECT m.id, m.address, m.location, (SELECT jsonb_agg(jsonb_build_object('id', res.id, 'start', res.start, 'endtime', res.endtime)) FROM (select DISTINCT events.id AS id, events.start AS start, events.endtime AS endtime FROM   events INNER JOIN products_events ON products_events.id_event = events.id WHERE events.market_id = m.id ORDER BY events.start) AS res) AS market_events FROM markets m INNER JOIN events ON events.market_id = m.id INNER JOIN products_events ON products_events.id_event=events.id GROUP BY(m.id)")
+    const markets = await db.query("SELECT m.id, m.address, m.location, m.city, (SELECT jsonb_agg(jsonb_build_object('id', res.id, 'start', res.start, 'endtime', res.endtime)) FROM (select DISTINCT events.id AS id, events.start AS start, events.endtime AS endtime FROM   events INNER JOIN products_events ON products_events.id_event = events.id WHERE events.market_id = m.id ORDER BY events.start) AS res) AS market_events FROM markets m INNER JOIN events ON events.market_id = m.id INNER JOIN products_events ON products_events.id_event=events.id GROUP BY(m.id)")
     return markets
 }
 
@@ -10,8 +10,8 @@ const getAllMarkets = async () => {
     return markets
 }
 const addRekoMarket = async (market, location) => {
-    const dbParams = [market.address, `{"lat":"${location[0]}","lon":"${location[1]}"}`]
-    const result = await db.query("INSERT INTO markets VALUES(Default, $1, $2) RETURNING id", dbParams)
+    const dbParams = [market.address, `{"lat":"${location[0]}","lon":"${location[1]}"}`, market.city]
+    const result = await db.query("INSERT INTO markets VALUES(Default, $1, $2, $3) RETURNING id", dbParams)
     return result[0].id
 }
 
