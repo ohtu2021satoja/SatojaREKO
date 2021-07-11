@@ -1,7 +1,9 @@
 import { forwardRef } from "react"
 import { Link } from "react-router-dom"
-import Button from "react-bootstrap/Button"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button"
 import EventInfoLabel from "./EventInfoLabel"
 
 const MapBottomPanel = forwardRef((props, ref) => {
@@ -18,28 +20,30 @@ const MapBottomPanel = forwardRef((props, ref) => {
   events.sort((a, b) => new Date(a.start) - new Date(b.start))
 
   const printEvents = events.map((event, index) => (
-    <div key={index}>
-      <Card className="mb-3 light-yellow">
+    <Col key={index}>
+      <Card className="mx-0 mb-3 light-yellow">
         <EventInfoLabel market={event.market} event={event} classes="mb-0" />
-        <Button
-          className="btn btn-primary btn-sm popup-button mt-1"
-          variant="success"
-          as={Link}
-          to={{
-            pathname: `/events/${event.event_id ? event.event_id : event.id}`,
-            state: { market: event.market, event: event },
-          }}
-        >
-          Siirry tilaisuuteen
-        </Button>
+        <Card.Link className="pb-4">
+          <Button
+            className="w-75"
+            variant="success"
+            as={Link}
+            to={{
+              pathname: `/events/${event.event_id ? event.event_id : event.id}`,
+              state: { market: event.market, event: event },
+            }}
+          >
+            Siirry tilaisuuteen
+          </Button>
+        </Card.Link>
       </Card>
-    </div>
+    </Col>
   ))
 
   return (
-    <div className="bottom-panel" ref={ref} style={{ paddingBottom: 50 }}>
+    <Row className="flex-column bg-basic" ref={ref}>
       {printEvents}
-    </div>
+    </Row>
   )
 })
 

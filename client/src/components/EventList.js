@@ -1,3 +1,4 @@
+import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import EventListItem from "./EventListItem"
 
@@ -46,11 +47,11 @@ const EventList = ({ events, linkTo }) => {
   }
 
   return (
-    <Col xs={12} className="text-left mb-4">
+    <Row>
       {Object.keys(eventsByDate).map((day, index) => {
         return (
-          <div key={index}>
-            <p className="mt-4">{getDateString(eventsByDate[day][0])}</p>
+          <Col xs={12} key={index} className="mb-4">
+            <p className="mb-1">{getDateString(eventsByDate[day][0])}</p>
             {eventsByDate[day].map((event, index) => (
               <EventListItem
                 market={event.market}
@@ -59,10 +60,10 @@ const EventList = ({ events, linkTo }) => {
                 key={index}
               />
             ))}
-          </div>
+          </Col>
         )
       })}
-    </Col>
+    </Row>
   )
 }
 

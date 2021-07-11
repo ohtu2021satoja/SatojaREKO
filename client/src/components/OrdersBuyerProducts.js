@@ -11,8 +11,8 @@ const OrdersBuyerProducts = (props) => {
 
   const RenderProducts = (product, index) => {
     return (
-      <Card key={index} className="mb-2 p-1">
-        <Row className="align-items-center">
+      <Card key={index} className="mb-2 p-2">
+        <Row>
           <Col xs={4}>
             <Card.Img
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.product_image_url}`}
@@ -23,7 +23,7 @@ const OrdersBuyerProducts = (props) => {
           </Col>
           <Col xs={8} className="mb-3 pt-2 text-start">
             <Card.Subtitle
-              className="d-flex justify-content-between text-muted unstyled-link"
+              className="d-flex justify-content-between text-decoration-none text-muted"
               as={Link}
               to={{
                 pathname: `/sellers/${product.seller_id}`,
@@ -90,7 +90,7 @@ const OrdersBuyerProducts = (props) => {
         altText="Takaisin tilauksiin"
         navHeader="Noudot"
       />
-      <Col xs={12} className="mb-3 pb-0 mt-3 text-center " styles={{ marginBottom: 0 }}>
+      <Col xs={12} className="mb-3 pb-0 mt-3 text-center">
         <EventInfoLabel
           market={event.market}
           event={event}
@@ -98,20 +98,24 @@ const OrdersBuyerProducts = (props) => {
           styles={{ fontSize: 16 }}
         />
       </Col>
-      {event.orders.map(RenderProducts)}
-      <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
-        <h5>YHTEENSÄ</h5>{" "}
-        <h5>
-          {Math.round(
-            event.orders.reduce((acc, product) => {
-              if (!product.removed) {
-                return acc + product.price * product.quantity
-              }
-              return acc
-            }, 0) * 100
-          ) / 10000}
-          e
-        </h5>
+      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+        {event.orders.map(RenderProducts)}
+      </Col>
+      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+        <Row className="mx-2 justify-content-between">
+          <h5>YHTEENSÄ</h5>{" "}
+          <h5>
+            {Math.round(
+              event.orders.reduce((acc, product) => {
+                if (!product.removed) {
+                  return acc + product.price * product.quantity
+                }
+                return acc
+              }, 0) * 100
+            ) / 10000}
+            e
+          </h5>
+        </Row>
       </Col>
     </Row>
   )

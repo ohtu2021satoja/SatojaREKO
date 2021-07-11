@@ -1,3 +1,4 @@
+import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
 import { useSelector } from "react-redux"
@@ -20,38 +21,46 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
   }, [cart, eventID, size.size_id])
 
   return (
-    <>
-      <Col xs={6} className="d-flex justify-content-center align-items-center">
+    <Row className="align-items-center">
+      <Col xs={4} className="text-right">
         <b>{size.price / 100}e / kpl</b>
       </Col>
-      <Col xs={6} className="d-flex justify-content-around align-items-center">
-        <Button
-          size="sm"
-          variant="light"
-          onClick={(e) => {
-            e.stopPropagation()
-            removeFromCart(size)
-          }}
-        >
-          <h4>
-            <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
-          </h4>
-        </Button>{" "}
-        <h5>{inCart} </h5>
-        <Button
-          size="sm"
-          variant="light"
-          onClick={(e) => {
-            e.stopPropagation()
-            if (inCart < size.quantity) addToCart(size)
-          }}
-        >
-          <h4>
-            <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
-          </h4>
-        </Button>
+      <Col xs={{ span: 6, offset: 2 }}>
+        <Row className="pr-2 justify-content-center align-items-center">
+          <Col className="text-right">
+            <Button
+              size="sm"
+              variant="light"
+              onClick={(e) => {
+                e.stopPropagation()
+                removeFromCart(size)
+              }}
+            >
+              <h4>
+                <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
+              </h4>
+            </Button>{" "}
+          </Col>
+          <Col className="text-center">
+            <h5>{inCart}</h5>
+          </Col>
+          <Col className="text-left">
+            <Button
+              size="sm"
+              variant="light"
+              onClick={(e) => {
+                e.stopPropagation()
+                if (inCart < size.quantity) addToCart(size)
+              }}
+            >
+              <h4>
+                <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
+              </h4>
+            </Button>
+          </Col>
+        </Row>
       </Col>
-    </>
+    </Row>
   )
 }
 

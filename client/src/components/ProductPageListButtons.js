@@ -1,5 +1,6 @@
-import Button from "react-bootstrap/Button"
+import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
@@ -27,40 +28,42 @@ const ProductPageListButtons = ({
   }, [cart, eventID, size.size_id])
 
   return (
-    <>
-      <Col xs={6} className="d-flex justify-content-center align-items-center">
+    <Row className="align-items-center">
+      <Col xs={6} sm={5} md={{ span: 3, offset: 2 }}>
         <b>
           {singleSize
             ? size.price / 100 + "e / kpl"
             : size.unit + unit + " / " + size.price / 100 + "e"}
         </b>
       </Col>
-      <Col xs={6} className="d-flex justify-content-between align-items-center">
-        <Button
-          size="sm"
-          variant="light"
-          onClick={(e) => {
-            removeFromCart(size)
-          }}
-        >
-          <h4>
-            <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
-          </h4>
-        </Button>{" "}
-        <h5>{inCart} </h5>
-        <Button
-          size="sm"
-          variant="light"
-          onClick={(e) => {
-            if (inCart < size.quantity) addToCart(size)
-          }}
-        >
-          <h4>
-            <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
-          </h4>
-        </Button>
+      <Col xs={6} sm={5} md={5}>
+        <Row className="justify-content-around">
+          <Button
+            size="sm"
+            variant="light"
+            onClick={(e) => {
+              removeFromCart(size)
+            }}
+          >
+            <h4>
+              <i className="bi bi-dash-circle-fill" style={{ fontSize: 28 }} />
+            </h4>
+          </Button>{" "}
+          <h5>{inCart} </h5>
+          <Button
+            size="sm"
+            variant="light"
+            onClick={(e) => {
+              if (inCart < size.quantity) addToCart(size)
+            }}
+          >
+            <h4>
+              <i className="bi bi-plus-circle-fill" style={{ fontSize: 28 }} />
+            </h4>
+          </Button>
+        </Row>
       </Col>
-    </>
+    </Row>
   )
 }
 

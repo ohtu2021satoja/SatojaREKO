@@ -118,52 +118,67 @@ const MapPage = () => {
   ))
 
   return mapPoints ? (
-    <>
-      <div className="map-container">
-        <MapContainer
-          scrollWheelZoom={true}
-          zoom={9}
-          center={defaultLocation}
-          whenCreated={(map) => {
-            try {
-              //map.locate({ setView: true, enableHighAccuracy: true, maxZoom: 12 })
-              map.locate()
-              setMapBounds(map.getBounds())
-              //map.setZoom(9)
-            } catch (e) {
-              console.log(e)
-            }
-          }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <MapInstance
-            setMapBounds={handleBoundsChange}
-            setMapInstance={getMapInstance}
-          />
-          {markMarkets}
-          {markSellers}
-        </MapContainer>
-      </div>
-      <Row className="mt-0 mb-0 mx-0 px-0">
-        <Col xs={12} className="mb-0 text-center px-0">
-          <Button className="btn btn-sm list-button" onClick={scrollIntoPanel}>
-            Näytä lista
-          </Button>
-          <p className="py-1 p-visible-locations">
-            Kartan alueelta löytyi{" "}
-            {totalVisible === 1
-              ? totalVisible + " noutopiste"
-              : totalVisible + " noutopistettä"}
-          </p>
-        </Col>
-        <Col xs={12} className="mb-4 mt-0 pt-0 text-center">
-          <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col
+        xs={12}
+        md={{ span: 10, offset: 1 }}
+        lg={{ span: 8, offset: 2 }}
+        className="px-0"
+      >
+        <div className="map-container">
+          <MapContainer
+            scrollWheelZoom={true}
+            zoom={9}
+            center={defaultLocation}
+            whenCreated={(map) => {
+              try {
+                //map.locate({ setView: true, enableHighAccuracy: true, maxZoom: 12 })
+                map.locate()
+                setMapBounds(map.getBounds())
+                //map.setZoom(9)
+              } catch (e) {
+                console.log(e)
+              }
+            }}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <MapInstance
+              setMapBounds={handleBoundsChange}
+              setMapInstance={getMapInstance}
+            />
+            {markMarkets}
+            {markSellers}
+          </MapContainer>
+        </div>
+      </Col>
+      <Col
+        xs={12}
+        md={{ span: 10, offset: 1 }}
+        lg={{ span: 8, offset: 2 }}
+        className="px-0"
+        style={{ marginTop: -40, zIndex: 1000 }}
+      >
+        <Row className="m-0 px-0">
+          <Col xs={12} className="mb-0 px-0 text-center">
+            <Button variant="dark" className="btn-rounded-top" onClick={scrollIntoPanel}>
+              Näytä lista
+            </Button>
+            <p className="mb-0 py-2 bg-dark text-white" style={{ fontSize: "0.75rem" }}>
+              Kartan alueelta löytyi{" "}
+              {totalVisible === 1
+                ? totalVisible + " noutopiste"
+                : totalVisible + " noutopistettä"}
+            </p>
+          </Col>
+          <Col xs={12} className="mb-4 px-0 text-center">
+            <MapBottomPanel ref={bottomPanelRef} visibleMarkets={visibleMarkets} />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   ) : (
     <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>

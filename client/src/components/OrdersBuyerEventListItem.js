@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const OrdersBuyerEventListItem = ({ event }) => {
   return (
     <Card
-      className="mb-1 py-2 px-2 unstyled-link"
+      className="mb-2 p-2 text-decoration-none text-body"
       as={Link}
       to={{
         pathname: `/orders/buyer/${event.event_id}`,
