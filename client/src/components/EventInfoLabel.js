@@ -34,8 +34,12 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
       <Card.Body>
         <Card.Text className={classes} style={styles}>
           Noutotilaisuus
-          {market.city && {market.city}}
         </Card.Text>
+        {market.city && (
+          <Card.Text className={classes} style={styles}>
+            {market.city}
+          </Card.Text>
+        )}
         <Card.Text className={classes} style={styles}>
           {" "}
           {market.address}
