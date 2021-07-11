@@ -10,8 +10,8 @@ const getAllMarkets = async () => {
     return markets
 }
 const addRekoMarket = async (market, location) => {
-    const dbParams = [market.address, `{"lat":"${location[0]}","lon":"${location[1]}"}`]
-    const result = await db.query("INSERT INTO markets VALUES(Default, $1, $2) RETURNING id", dbParams)
+    const dbParams = [market.address, `{"lat":"${location[0]}","lon":"${location[1]}"}`, market.city]
+    const result = await db.query("INSERT INTO markets VALUES(Default, $1, $2, $3) RETURNING id", dbParams)
     return result[0].id
 }
 
