@@ -38,7 +38,7 @@ const LoginPage = ({ user, handleLogin }) => {
           />
         </Col>
 
-        <Col xs={12} className="mt-auto text-center">
+        <Col xs={12} className="mt-auto pb-2 text-center">
           <a
             href="https://satoja.fi/dokumentit/tietosuojaseloste.html"
             target="_blank"

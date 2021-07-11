@@ -51,7 +51,9 @@ const Price = ({ setFieldValue, errors, touched }) => {
         size="lg"
         className="w-100"
       />
-      {touched.price && errors.price ? <div>{errors.price}</div> : null}
+      {touched.price && errors.price ? (
+        <div className="text-danger">{errors.price}</div>
+      ) : null}
     </Form.Group>
   )
 }

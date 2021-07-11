@@ -1,16 +1,28 @@
 /* customizations */
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+
 $body-bg: transparent;
 $body-color: #4b4b4b;
 
-$theme-colors: (
-	"primary": rgb(0,93,184),
-	"secondary": rgb(206,212,218), /* same as form input borders */
-	"success": rgb(57,201,74),
-	"danger": rgb(255,72,39),
-	"dark": rgb(16,25,32),
-	"facebook": rgb(66,103,178),
-	"blue": rgb(57,73,171)
+$primary: rgb(0,93,184);
+$secondary: rgb(206,212,218); /* same as form input borders */
+$dark: rgb(16,25,32);
+$danger: rgb(255,72,39);
+
+$custom-colors: (
+	"facebook": rgb(66,103,178)
 );
 
-/* import bootstrap to set changes */
-@import "../node_modules/bootstrap/scss/bootstrap";
+$theme-colors: (
+  "primary": $primary,
+  "secondaryr": $secondary,
+  "dark": $dark,
+  "danger": $danger
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// Required
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
