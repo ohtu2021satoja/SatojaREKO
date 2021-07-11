@@ -55,21 +55,27 @@ const EventPage = (props) => {
       }
 
   return eventProducts && event ? (
-    <Row className="bg-light-yellow event-row">
+    <Row className="h-100 bg-light-yellow">
       <TemplateTopNav
         navHeader="Noutotilaisuus"
         navLink={linkTo}
-        aria-label="Takaisin karttaan"
+        aria-label="Palaa kartasivulle"
       />
       <Col xs={12} className="text-center mb-4">
         <EventInfoLabel
           market={market}
           event={event}
           classes="mb-0"
-          styles={{ fontSize: 16 }}
+          styles={{ fontSize: "1rem" }}
         />
       </Col>
-      <Col xs={12} className="mb-5">
+      <Col
+        xs={12}
+        sm={{ span: 10, offset: 1 }}
+        md={{ span: 8, offset: 2 }}
+        lg={{ span: 6, offset: 3 }}
+        className="mb-5"
+      >
         {eventProducts.map((product, index) => (
           <EventPageListItem
             product={product}

@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
 import Spinner from "react-bootstrap/Spinner"
 import EventList from "./EventList"
-import BackButtonHeader from "./BackButtonHeader"
+import TemplateTopNav from "./TemplateTopNav"
 import { getSellersUpcomingEventsWithProducts } from "../services/events"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -47,51 +47,62 @@ const SellerPage = (props) => {
       }
 
   return seller ? (
-    <Row className="bg-light-blue h-100">
-      <BackButtonHeader linkTo={linkTo} />
-      <Col xs={12} className="d-flex justify-content-center align-items-center mb-4">
-        <Image
-          src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_200/${seller.image_url}`}
-          alt="Generic placeholder"
-          fluid
-        />
+    <Row className="h-100 bg-light-blue">
+      <TemplateTopNav
+        navLink={linkTo}
+        altText="Palaa noutotilaisuuksiin"
+        navHeader={seller.name ? seller.name : seller.firstname + " " + seller.lastname}
+      />
+      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+        <Row className="align-items-center">
+          <Col xs={{ span: 6, offset: 3 }}>
+            <Image
+              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${seller.image_url}`}
+              alt="Generic placeholder"
+              fluid
+            />
+          </Col>
+          <Col xs={12} className="mb-4 text-center">
+            <h4 className="mb-0">{seller.address}</h4>
+            <p className="mb-0">
+              {seller.city} {seller.zipcode}
+            </p>
+            {seller.phonenumber && <p>{seller.phonenumber}</p>}
+            {seller.business_id && <p>Y-tunnus: {seller.business_id}</p>}
+            {seller.homepage && (
+              <a href={seller.homepage} target="_blank" rel="noreferrer">
+                {seller.homepage}
+              </a>
+            )}
+          </Col>
+        </Row>
       </Col>
-      <Col xs={12} className="d-flex justify-content-center align-items-center mb-0">
-        <div className="d-flex flex-column text-center mb-0">
-          <h4>{seller.name ? seller.name : seller.firstname + " " + seller.lastname}</h4>
-          <p className="mb-0">{seller.address}</p>
-          <p className="mb-0">
-            {seller.city} {seller.zipcode}
-          </p>
-          {seller.phonenumber && <p>{seller.phonenumber}</p>}
-          {seller.business_id && <p>Y-tunnus: {seller.business_id}</p>}
-          {seller.homepage && (
-            <a href={seller.homepage} target="_blank" rel="noreferrer" className="mb-4">
-              {seller.homepage}
-            </a>
+      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+        <Row>
+          <Col className="text-center">
+            {events && events.length > 0 && <h3 className="mb-0">Myyntipisteet</h3>}
+          </Col>
+          {events && events.length > 0 && (
+            <Col xs={12}>
+              <EventList
+                events={events}
+                linkTo={{
+                  pathname: `/sellers/${seller.id}`,
+                  state: {
+                    seller: seller,
+                  },
+                }}
+              />
+            </Col>
           )}
-          {events && events.length > 0 && <h4>Myyntipisteet</h4>}
-        </div>
+          {seller.description && (
+            <Col xs={12} className="mb-5 pt-4">
+              <h4>Kuka olemme?</h4>
+              <div>{seller.description}</div>
+            </Col>
+          )}
+        </Row>
       </Col>
-      {events && events.length > 0 && (
-        <Col xs={12} className="d-flex justify-content-center align-items-center mb-3">
-          <EventList
-            events={events}
-            linkTo={{
-              pathname: `/sellers/${seller.id}`,
-              state: {
-                seller: seller,
-              },
-            }}
-          />
-        </Col>
-      )}
-      {seller.description && (
-        <Col xs={12} className="mb-5 mx-3">
-          <h4>Kuka olemme?</h4>
-          <div>{seller.description}</div>
-        </Col>
-      )}
     </Row>
   ) : (
     <Spinner animation="border" role="status">

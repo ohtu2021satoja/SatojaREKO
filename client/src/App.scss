@@ -79,6 +79,9 @@ p {
   background-color: rgb(217, 217, 217);
 }
 
+.bg-dark {
+  background-color: rgb(255,72,39);
+}
 /**
 * BUTTONS
 */
@@ -108,7 +111,8 @@ p {
 .btn-rounded-top {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: #fff;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 /**
@@ -205,23 +209,8 @@ p {
   background-color: rgb(190, 230, 255);
 }
 
-.unstyled-link {
-  text-decoration: none !important;
-  color: rgb(75, 75, 75);
-}
-
-.product-title {
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.5rem;
-}
-
 .light-blue {
   background-color: rgb(190, 230, 255);
-}
-
-.event-row {
-  height: 100%;
 }
 
 /* CART */
@@ -233,10 +222,6 @@ p {
 }
 
 /* PRODUCT PAGE */
-
-.seller-link {
-  color: rgb(75, 75, 75);
-}
 
 .product-page-row {
   height: 100%;
@@ -259,7 +244,6 @@ p {
 }
 
 .map-container {
-  padding-top: 10px;
   margin-bottom: 0px;
   height: 80vh;
 }
@@ -293,18 +277,6 @@ p {
 .popup-text {
   font-family: "Work Sans", sans-serif;
   font-size: 14px;
-}
-
-.list-button {
-  background-color: rgb(75, 75, 75);
-  color: #fff;
-}
-
-.p-visible-locations {
-  background-color: rgb(75, 75, 75);
-  color: #fff;
-  width: "100%";
-  font-size: 12px;
 }
 
 .market-popup {

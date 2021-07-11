@@ -1,3 +1,5 @@
+import Card from "react-bootstrap/Card"
+
 const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
   const startDate = new Date(event.start ? event.start : event.event_start)
   const endDate = new Date(event.endtime ? event.endtime : event.event_endtime)
@@ -29,28 +31,28 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
 
   return (
     market && (
-      <div className="d-flex flex-column">
-        <p className={classes} style={styles}>
+      <Card.Body>
+        <Card.Text className={classes} style={styles}>
           Noutotilaisuus
-        </p>
+        </Card.Text>
         {market.city && (
-          <p className={classes} style={styles}>
+          <Card.Text className={classes} style={styles}>
             {market.city}
-          </p>
+          </Card.Text>
         )}
-        <p className={classes} style={styles}>
+        <Card.Text className={classes} style={styles}>
           {" "}
           {market.address}
-        </p>
+        </Card.Text>
         {!omitDate && (
-          <p className={classes} style={styles}>
+          <Card.Text className={classes} style={styles}>
             {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
-          </p>
+          </Card.Text>
         )}
-        <p className={classes} style={styles}>
+        <Card.Text className={classes} style={styles}>
           {startTime}-{endTime}
-        </p>
-      </div>
+        </Card.Text>
+      </Card.Body>
     )
   )
 }

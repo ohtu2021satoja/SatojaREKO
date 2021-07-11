@@ -49,10 +49,10 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
   }
 
   return (
-    <Card className="mb-1 pt-2 px-2 ">
+    <Card className="mb-2 p-2">
       <Row>
-        <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
-          <div style={{ position: "relative " }}>
+        <Col xs={4} as={Link} to={productPageLink}>
+          <div style={{ position: "relative" }}>
             <Card.Img
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.image_url}`}
               alt="Generic placeholder"
@@ -60,52 +60,60 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
             {product.organic && <OrganicLabel />}
           </div>
         </Col>
-        <Col xs={8} className="text-left">
-          <Card.Subtitle
-            className="d-flex justify-content-between text-muted unstyled-link"
+        <Col xs={8} className="pt-2 text-left">
+          <Row
             as={Link}
             to={sellerPageLink}
+            className="mb-2 pr-3 justify-content-between text-decoration-none text-muted"
           >
-            <p>
+            <Card.Subtitle>
               {product.seller_name
                 ? product.seller_name
                 : product.seller_firstname + " " + product.seller_lastname}
-            </p>
-            <i className="bi bi-chevron-right"></i>
-          </Card.Subtitle>
-          <Card.Title
+            </Card.Subtitle>
+            <Card.Subtitle>
+              <i className="bi bi-chevron-right"></i>
+            </Card.Subtitle>
+          </Row>
+          <Row
             as={Link}
             to={productPageLink}
-            className="unstyled-link product-title"
+            className="pr-5 flex-column text-decoration-none text-body"
           >
-            {singleSize
-              ? product.name + " " + product.sizes[0].unit + " " + product.type
-              : product.name}
-          </Card.Title>
-          {!singleSize && (
-            <Card.Title
-              as={Link}
-              to={productPageLink}
-              className="unstyled-link product-title"
-            >
-              {" "}
-              {product.unit_price / 100 + "e / " + product.type}{" "}
+            <Card.Title className="mb-0">
+              {singleSize
+                ? product.name + " " + product.sizes[0].unit + " " + product.type
+                : product.name}
             </Card.Title>
-          )}
+            {!singleSize && (
+              <Card.Title>
+                {" "}
+                {product.unit_price / 100 + "e / " + product.type}{" "}
+              </Card.Title>
+            )}
+          </Row>
         </Col>
       </Row>
       <Row>
         {singleSize ? (
-          <EventPageListButtons
-            addToCart={handleAddToCart}
-            removeFromCart={handleRemoveFromCart}
-            eventID={event.id ? event.id : event.event_id}
-            size={product.sizes[0]}
-            unit={product.type}
-          />
+          <Col xs={12}>
+            <EventPageListButtons
+              addToCart={handleAddToCart}
+              removeFromCart={handleRemoveFromCart}
+              eventID={event.id ? event.id : event.event_id}
+              size={product.sizes[0]}
+              unit={product.type}
+            />
+          </Col>
         ) : (
-          <Col xs={12} className="d-flex justify-content-end">
-            <Button size="lg" variant="light" as={Link} to={productPageLink}>
+          <Col xs={12} className="text-right">
+            <Button
+              size="lg"
+              variant="light"
+              as={Link}
+              to={productPageLink}
+              className="text-decoration-none"
+            >
               <i className="bi bi-card-list"></i> Eri kokoja
             </Button>
           </Col>

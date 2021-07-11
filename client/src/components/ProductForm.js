@@ -11,6 +11,22 @@ import Col from "react-bootstrap/Col"
 import Image from "react-bootstrap/Image"
 import { Link } from "react-router-dom"
 
+const ProductSchema = yup.object().shape({
+  category: yup
+    .string()
+    .notOneOf(["Valitse kategoria"], "Kategoria edellytetään")
+    .required("Kategoria edellytetään"),
+  title: yup.string().required("Otsikko edellytetään"),
+  description: yup.string().required("Tuotekuvaus edellytetään"),
+  productType: yup.string().notOneOf([""], "Valitse yksikkö"),
+  price: yup.string().notOneOf(["00,00€", "", "€"], "Hinta edellytetään"),
+  sizes: yup.array().ensure().of(yup.number().positive("Koko ei voi olla negatiivinen")),
+  quantities: yup
+    .array()
+    .ensure()
+    .of(yup.number().moreThan(1, "Määrä ei voi olla negatiivinen")),
+})
+
 const ProductForm = ({
   organic,
   imageID,
@@ -32,21 +48,6 @@ const ProductForm = ({
   eventChoiceError,
   setEventChoiceError,
 }) => {
-  const validationSchema = yup.object().shape({
-    title: yup.string().required("Vaadittu"),
-    description: yup.string().required("Vaadittu"),
-    productType: yup.string().notOneOf([""], "Valitse yksikkö"),
-    price: yup.string().notOneOf(["00,00€", "", "€"], "Aseta hinta"),
-    sizes: yup
-      .array()
-      .required()
-      .of(yup.number().min(0.000001, "Pakettikoko ei voi olla nolla")),
-    quantities: yup
-      .array()
-      .required()
-      .of(yup.number().min(1, "Pakettimäärä ei voi olla nolla")),
-    category: yup.string().notOneOf(["Valitse kategoria"], "Valitse kategoria"),
-  })
   return (
     <Row className="h-100 mb-5 bg-light-yellow flex-column">
       <Col xs={12} className="mt-5 mb-4 py-2 text-center">
@@ -69,7 +70,7 @@ const ProductForm = ({
             quantities: productSizes.map((size) => size.quantity),
           }}
           onSubmit={onSubmit}
-          validationSchema={validationSchema}
+          validationSchema={ProductSchema}
         >
           {({ values, handleChange, handleSubmit, setFieldValue, errors, touched }) => (
             <Form onSubmit={handleSubmit} className="mx-3">

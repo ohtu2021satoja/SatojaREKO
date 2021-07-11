@@ -46,9 +46,9 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
   }
 
   return (
-    <Card className="mb-3 py-2 px-2 light-blue border-0">
+    <Card className="mb-3 py-2 px-2  bg-white border-0">
       <Row>
-        <Col xs={4} as={Link} to={productPageLink} className="unstyled-link">
+        <Col xs={4} as={Link} to={productPageLink}>
           <div style={{ position: "relative" }}>
             <Card.Img
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.image_url}`}
@@ -57,28 +57,33 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
             {product.organic && <OrganicLabel />}
           </div>
         </Col>
-        <Col xs={8} className="text-left">
-          <Card.Subtitle
-            className="d-flex justify-content-between text-muted unstyled-link"
+        <Col xs={8}>
+          <Row
+            className="pr-3 pt-2 justify-content-between text-muted text-decoration-none"
             as={Link}
             to={sellerPageLink}
           >
-            <p>
+            <Card.Subtitle>
               {product.seller_name
                 ? product.seller_name
                 : product.seller_firstname + " " + product.seller_lastname}
-            </p>
-            <i className="bi bi-chevron-right"></i>
-          </Card.Subtitle>
-          <Card.Title
+            </Card.Subtitle>
+            <Card.Subtitle>
+              <i className="bi bi-chevron-right"></i>
+            </Card.Subtitle>
+          </Row>
+          <Row
             as={Link}
             to={productPageLink}
-            className="unstyled-link product-title"
+            className="text-decoration-none text-body"
+            styles={{ fontSize: "1.5rem" }}
           >
-            {singleSize
-              ? product.name + " " + product.sizes[0].unit + " " + product.type
-              : product.name + " " + product.unit_price / 100 + "e / " + product.type}
-          </Card.Title>
+            <Card.Title>
+              {singleSize
+                ? product.name + " " + product.sizes[0].unit + " " + product.type
+                : product.name + " " + product.unit_price / 100 + "e / " + product.type}
+            </Card.Title>
+          </Row>
         </Col>
       </Row>
       <Row>
