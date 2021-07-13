@@ -21,7 +21,9 @@ const ProductSchema = yup.object().shape({
   productType: yup.string().notOneOf([""], "Valitse yksikkö"),
   price: yup.string().notOneOf(["00,00€", "", "€"], "Hinta edellytetään"),
   sizes: yup.array().of(yup.number().positive("Koko ei voi olla negatiivinen")),
-  quantities: yup.array().of(yup.number().moreThan(1, "Määrä ei voi olla negatiivinen")),
+  quantities: yup
+    .array()
+    .of(yup.number().moreThan(0, "Määrän on oltava suurempi kuin 0")),
 })
 
 const ProductForm = ({
