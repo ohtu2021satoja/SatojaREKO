@@ -70,7 +70,7 @@ const Products = () => {
     )
   }
   return (
-    <Row className="h-100 mb-5 flex-column bg-light-yellow">
+    <Row className="h-100 mb-5 bg-light-yellow">
       <Col xs={12} className="mt-5 mb-5 py-2 text-center">
         <h2>Tuotteet</h2>
       </Col>

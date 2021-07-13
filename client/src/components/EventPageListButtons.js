@@ -25,9 +25,9 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
       <Col xs={4} className="text-right">
         <b>{size.price / 100}e / kpl</b>
       </Col>
-      <Col xs={{ span: 6, offset: 2 }}>
+      <Col xs={8}>
         <Row className="pr-2 justify-content-center align-items-center">
-          <Col className="text-right">
+          <Col xs={4} className="text-right">
             <Button
               size="sm"
               variant="light"
@@ -41,10 +41,10 @@ const EventPageListButtons = ({ eventID, addToCart, removeFromCart, size, unit }
               </h4>
             </Button>{" "}
           </Col>
-          <Col className="text-center">
+          <Col xs={4} className="text-center">
             <h5>{inCart}</h5>
           </Col>
-          <Col className="text-left">
+          <Col xs={4} className="text-left">
             <Button
               size="sm"
               variant="light"

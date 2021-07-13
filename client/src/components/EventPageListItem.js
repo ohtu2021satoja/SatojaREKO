@@ -56,6 +56,7 @@ const EventPageListItem = ({ product, event, market, singleSize }) => {
             <Card.Img
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.image_url}`}
               alt="Generic placeholder"
+              rounded
             />
             {product.organic && <OrganicLabel />}
           </div>

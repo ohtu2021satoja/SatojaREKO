@@ -53,9 +53,14 @@ const SellerPage = (props) => {
         altText="Palaa noutotilaisuuksiin"
         navHeader={seller.name ? seller.name : seller.firstname + " " + seller.lastname}
       />
-      <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+      <Col
+        xs={12}
+        md={{ span: 10, offset: 1 }}
+        lg={{ span: 8, offset: 2 }}
+        className="pt-4"
+      >
         <Row className="align-items-center">
-          <Col xs={{ span: 6, offset: 3 }}>
+          <Col xs={{ span: 6, offset: 3 }} className="mb-2">
             <Image
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${seller.image_url}`}
               alt="Generic placeholder"
@@ -80,7 +85,7 @@ const SellerPage = (props) => {
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
         <Row>
           <Col className="text-center">
-            {events && events.length > 0 && <h3 className="mb-0">Myyntipisteet</h3>}
+            {events && events.length > 0 && <h3 className="mb-4">Myyntipisteet</h3>}
           </Col>
           {events && events.length > 0 && (
             <Col xs={12}>
