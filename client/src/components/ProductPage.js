@@ -80,7 +80,7 @@ const ProductPage = (props) => {
 
   return (
     <Row className="bg-light-yellow">
-      <TemplateTopNav navLink={linkTo} altText="Palaa noutotilaisuuksiin" />
+      <TemplateTopNav navLink={linkTo} altText="Palaa noutotilaisuuteen" />
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
         <Row
           as={Link}

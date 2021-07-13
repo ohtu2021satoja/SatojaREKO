@@ -109,14 +109,14 @@ const EventFormDetails = () => {
       <Field
         name="starting_time"
         id="staring_time"
-        label="Aloitus aika"
+        label="Aloitusaika"
         component={FormFieldText}
       />
       <ErrorMessage name="starting_time" component={FormErrorMessage} />
       <Field
         name="end_time"
         id="end_time"
-        label="Lopetus aika"
+        label="Lopetusaika"
         component={FormFieldText}
       />
       <ErrorMessage name="end_time" component={FormErrorMessage} />
@@ -201,7 +201,13 @@ const RekoAreas = ({ setRekoChoices, rekoAreas, rekoChoices }) => {
       />
     </div>
   ))
-  return <div> {checkboxes} </div>
+  return (
+    <>
+      <p>Valitse noutopaikan REKO-alue:</p>
+      <br />
+      <div> {checkboxes} </div>
+    </>
+  )
 }
 
 const MarketForm = ({ setAddingMarket }) => {
@@ -263,13 +269,7 @@ const MarketFormDetails = () => {
 }
 
 const ModifyEvents = ({ setModifyingEvents }) => {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      market_id: 2,
-      address: "Hämeentie 1",
-    },
-  ])
+  const [events, setEvents] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       const events = await axios.get("/api/events")

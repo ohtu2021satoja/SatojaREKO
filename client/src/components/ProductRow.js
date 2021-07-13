@@ -50,6 +50,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
           onChange={(event) => handleQuantityChange(parseInt(event.target.value))}
           type="number"
           placeholder="0"
+          min="0"
           size="lg"
         />
         {storageQuantity < 1 && errors.quantities && touched.quantities ? (

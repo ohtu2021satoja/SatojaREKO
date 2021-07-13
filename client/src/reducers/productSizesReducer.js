@@ -1,4 +1,4 @@
-const reducer = (state = [{ size: "", quantity: null }], action) => {
+const reducer = (state = [{ size: "", quantity: 0 }], action) => {
   switch (action.type) {
     case "CHANGESIZEQUANTITY":
       console.log(action.index)
@@ -21,7 +21,7 @@ const reducer = (state = [{ size: "", quantity: null }], action) => {
     case "ADDNEWSIZE":
       const newSize = {
         size: "",
-        quantity: null,
+        quantity: 0,
       }
       return state.concat(newSize)
 
@@ -32,7 +32,7 @@ const reducer = (state = [{ size: "", quantity: null }], action) => {
 
     case "RESETPRODUCTSIZES":
       console.log(action.sizes)
-      return [{ size: "", quantity: null }]
+      return [{ size: "", quantity: 0 }]
 
     case "INITIALIZESIZES":
       return action.sizes.map((size) => ({
