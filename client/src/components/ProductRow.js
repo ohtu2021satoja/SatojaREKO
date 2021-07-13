@@ -48,6 +48,7 @@ const ProductRow = ({ index, errors, touched, sizes, setFieldValue, quantities }
         <Form.Control
           value={storageQuantity}
           onChange={(event) => handleQuantityChange(parseInt(event.target.value))}
+          onWheel={(e) => e.target.blur()}
           type="number"
           placeholder="0"
           min="0"
