@@ -14,16 +14,17 @@ const OrdersBuyerProducts = (props) => {
       <Card key={index} className="mb-2 p-2">
         <Row>
           <Col xs={4}>
-            <Card.Img
-              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.product_image_url}`}
-              alt="Generic placeholder"
-              rounded="true"
-            />
-            {product.organic && <OrganicLabel onOrdersPage={true} />}
+            <div style={{ position: "relative" }}>
+              <Card.Img
+                src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.product_image_url}`}
+                alt="Product image"
+                rounded
+              />
+              {product.organic && <OrganicLabel onOrdersPage={true} />}
+            </div>
           </Col>
-          <Col xs={8} className="mb-3 pt-2 text-start">
-            <Card.Subtitle
-              className="d-flex justify-content-between text-decoration-none text-muted"
+          <Col xs={8} className="mb-3 pt-2 text-left">
+            <Row
               as={Link}
               to={{
                 pathname: `/sellers/${product.seller_id}`,
@@ -34,6 +35,7 @@ const OrdersBuyerProducts = (props) => {
                   },
                 },
               }}
+              className="mb-2 pr-3 justify-content-between text-decoration-none text-muted"
             >
               {(() => {
                 let sellerName = ""
@@ -43,20 +45,32 @@ const OrdersBuyerProducts = (props) => {
                   sellerName = product.seller_firstname + " " + product.seller_lastname
                 }
                 if (!product.removed) {
-                  return <p>{sellerName}</p>
-                } else return <del>{sellerName}</del>
+                  return <Card.Subtitle>{sellerName}</Card.Subtitle>
+                } else
+                  return (
+                    <Card.Subtitle className="text-decoration-line-through">
+                      {sellerName}
+                    </Card.Subtitle>
+                  )
               })()}
-              <i className="bi bi-chevron-right"></i>
-            </Card.Subtitle>
-            <Card.Title className="mb-1">
-              {product.removed ? (
-                <del>{product.product_name}</del>
-              ) : (
-                product.product_name + " " + product.size + " " + product.type
-              )}
-            </Card.Title>
+
+              <Card.Subtitle>
+                <i className="bi bi-chevron-right"></i>
+              </Card.Subtitle>
+            </Row>
+            <Row className="pr-5 flex-column text-decoration-none text-body">
+              <Card.Title>
+                {product.removed ? (
+                  <del>{product.product_name}</del>
+                ) : (
+                  product.product_name + " " + product.size + " " + product.type
+                )}
+              </Card.Title>
+            </Row>
           </Col>
-          <Col xs={{ span: 4, offset: 4 }}>
+        </Row>
+        <Row>
+          <Col xs={{ span: 4, offset: 4 }} className="pl-0">
             <p>
               {product.removed ? (
                 <del>
@@ -68,7 +82,7 @@ const OrdersBuyerProducts = (props) => {
               )}
             </p>
           </Col>
-          <Col>
+          <Col xs={4} className="text-right">
             <h5>
               {product.removed ? (
                 <del>{(product.price * product.quantity) / 100}</del>

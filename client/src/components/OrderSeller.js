@@ -64,7 +64,7 @@ const OrderSeller = () => {
 
   if (eventId === null) {
     return (
-      <Row className="h-100 mb-5 flex-column bg-light-purple">
+      <Row className="h-100 mb-5 bg-light-purple">
         <OrdersSellerTitle />
         <OrderSellerEventList
           paivamaarat={paivamaarat}
@@ -79,7 +79,7 @@ const OrderSeller = () => {
     const user = event.events_orders.find((x) => x.user_id === buyerIndexi)
     if (buyerInfo) {
       return (
-        <Row className="h-100 mb-5 flex-column">
+        <Row className="h-100 mb-5">
           <OrderSellerNav
             navLink="/orders/seller"
             navHeader=""
@@ -91,7 +91,7 @@ const OrderSeller = () => {
       )
     }
     return (
-      <Row className="h-100 mb-5 flex-column bg-light-purple">
+      <Row className="h-100 mb-5 bg-light-purple">
         <OrdersSellerSingleEvent
           setEventId={setEventId}
           eventId={eventId}

@@ -46,22 +46,23 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
   }
 
   return (
-    <Card className="mb-3 py-2 px-2  bg-white border-0">
+    <Card className="mb-2 p-2 bg-white">
       <Row>
         <Col xs={4} as={Link} to={productPageLink}>
           <div style={{ position: "relative" }}>
             <Card.Img
               src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_500/${product.image_url}`}
               alt="Generic placeholder"
+              rounded
             />
             {product.organic && <OrganicLabel />}
           </div>
         </Col>
-        <Col xs={8}>
+        <Col xs={8} className="pt-2 text-left">
           <Row
-            className="pr-3 pt-2 justify-content-between text-muted text-decoration-none"
             as={Link}
             to={sellerPageLink}
+            className="mb-2 pr-3 justify-content-between text-decoration-none text-muted"
           >
             <Card.Subtitle>
               {product.seller_name
@@ -75,8 +76,7 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
           <Row
             as={Link}
             to={productPageLink}
-            className="text-decoration-none text-body"
-            styles={{ fontSize: "1.5rem" }}
+            className="pr-5 flex-column text-decoration-none text-body"
           >
             <Card.Title>
               {singleSize
@@ -87,17 +87,19 @@ const ShoppingCartListItem = ({ event, sizes, product }) => {
         </Col>
       </Row>
       <Row>
-        {sizes.map((size, index) => (
-          <ShoppingCartListButtons
-            addToCart={handleAddToCart}
-            removeFromCart={handleRemoveFromCart}
-            eventID={event.id ? event.id : event.event_id}
-            size={size}
-            unit={product.type}
-            key={index}
-            singleSize={singleSize}
-          />
-        ))}
+        <Col xs={12}>
+          {sizes.map((size, index) => (
+            <ShoppingCartListButtons
+              addToCart={handleAddToCart}
+              removeFromCart={handleRemoveFromCart}
+              eventID={event.id ? event.id : event.event_id}
+              size={size}
+              unit={product.type}
+              key={index}
+              singleSize={singleSize}
+            />
+          ))}
+        </Col>
       </Row>
     </Card>
   )

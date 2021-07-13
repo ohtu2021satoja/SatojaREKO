@@ -91,7 +91,6 @@ const ShoppingCart = () => {
         md={{ span: 10, offset: 1 }}
         lg={{ span: 8, offset: 2 }}
         className="pt-5 text-center"
-        styles={{ marginBottom: 0 }}
       >
         <h2 className="mb-4">Ostoskori</h2>
         {cart.map((order, index) => {
@@ -106,7 +105,7 @@ const ShoppingCart = () => {
                     event={order.event}
                     market={order.event.market}
                     classes="mb-0 mt-0"
-                    styles={{ fontSize: 16 }}
+                    styles={{ fontSize: "1rem" }}
                   />
                 </div>
                 {
@@ -123,21 +122,22 @@ const ShoppingCart = () => {
                     )
                   })
                 }
-                <Col xs={12} className="d-flex justify-content-between mb-0 mt-2">
-                  <h5>YHTEENSÄ</h5>{" "}
-                  <h5>
-                    {Math.round(
-                      order.batches.reduce(
-                        (acc, size) =>
-                          acc + size.order_quantity * size.unit * size.product.unit_price,
-                        0
-                      ) * 100
-                    ) / 10000}
-                    e
-                  </h5>
-                </Col>
-                <Col xs={12} classname="mb-5 mt-1">
-                  <Row className="justify-content-end">
+                <Row className="pt-2 justify-content-between align-items-center">
+                  <Col xs={6} className="text-left">
+                    <h5>
+                      YHTEENSÄ{" "}
+                      {Math.round(
+                        order.batches.reduce(
+                          (acc, size) =>
+                            acc +
+                            size.order_quantity * size.unit * size.product.unit_price,
+                          0
+                        ) * 100
+                      ) / 10000}
+                      e
+                    </h5>
+                  </Col>
+                  <Col xs={6} className="text-right">
                     <Button
                       variant="success"
                       as={Link}
@@ -157,8 +157,8 @@ const ShoppingCart = () => {
                     >
                       + Lisää tuotteita
                     </Button>
-                  </Row>
-                </Col>
+                  </Col>
+                </Row>
               </div>
             )
           } else return null
@@ -172,15 +172,13 @@ const ShoppingCart = () => {
           </>
         )}
       </Col>
-      <Col xs={12}>
-        {totalPrice > 0 && (
-          <ShoppingCartPanel
-            totalPrice={totalPrice}
-            handleSubmitOrders={handleSubmitOrders}
-          />
-        )}
-        {orderSent ? <ShoppingCartNotification /> : null}
-      </Col>
+      {totalPrice > 0 && (
+        <ShoppingCartPanel
+          totalPrice={totalPrice}
+          handleSubmitOrders={handleSubmitOrders}
+        />
+      )}
+      {orderSent ? <ShoppingCartNotification /> : null}
     </Row>
   )
 }
