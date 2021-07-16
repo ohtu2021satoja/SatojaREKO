@@ -34,16 +34,10 @@ const HomePageSeller = () => (
 
           <p>
             Jos tarvitset apua tai lisätietoa liittyen palvelun toimintaan tai
-            Reko-tilaisuuksiin, niin
-            <Button
-              as={Link}
-              to="/contact"
-              variant="link"
-              size="lg"
-              className="pt-1 pr-0 pl-1"
-            >
+            Reko-tilaisuuksiin, niin{" "}
+            <Link to="/contact" className="text-primary text-decoration-underline">
               ota yhteyttä
-            </Button>
+            </Link>
             .
           </p>
           <p>Kesäisin terveisin!</p>

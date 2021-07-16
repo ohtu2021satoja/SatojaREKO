@@ -28,17 +28,22 @@ const Products = () => {
 
   const renderProducts = (product, index) => {
     return (
-      <Accordion className="mb-3" key={index}>
+      <Accordion className="mb-2 " key={index}>
         <Accordion.Toggle as={Button} className="p-0" variant="text" eventKey="0">
           <Card>
-            <Card.Header>
-              <h3>{product.name}</h3>
-            </Card.Header>
-            <Card.Img
-              src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${product.image_url}`}
-              alt="Tuotekuva"
-              className="mb-2"
-            />
+            <Row className="align-items-center">
+              <Col xs={4}>
+                <Card.Img
+                  src={`https://res.cloudinary.com/dpk81nwou/image/upload/w_600/${product.image_url}`}
+                  alt="Tuotekuva"
+                />
+              </Col>
+              <Col xs={8} className="pl-0 pr-3 text-left">
+                <Card.Title>
+                  <h3>{product.name}</h3>
+                </Card.Title>
+              </Col>
+            </Row>
             <Accordion.Collapse eventKey="0">
               <Card.Body className="text-left">
                 <Card.Text className="mb-1">{product.description}</Card.Text>

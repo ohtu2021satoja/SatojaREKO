@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
-import { Link } from "react-router-dom"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
 import Events from "./Events"
@@ -30,18 +30,31 @@ const PreviewSize = ({ size }) => {
 
 const PublishedHeader = ({ Reset }) => {
   return (
-    <Row className="bg-light-green show-topmost" style={{ marginTop: -25 }}>
-      <Col sm={{ span: 10, offset: 1 }} className="mt-3 text-center">
-        <h2>Julkaistu</h2>
-        <h4>Kerro kavereille!</h4>
-        <p>
-          Ilmoitusta ja noutotilaisuuksia voi muokata <b>Tuotteet</b> sivulta.
-        </p>
-        <Button onClick={() => Reset()} size="lg" variant="success" className="w-100">
-          Luo uusi ilmoitus
-        </Button>
-      </Col>
-    </Row>
+    <div className="card sticky-top w-100 light-green cart-panel">
+      <Row className="p-2">
+        <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+          <h3>Julkaistu</h3>
+          <h4>Kerro kavereille!</h4>
+          <p>
+            Ilmoitusta ja noutotilaisuuksia voi muokata{" "}
+            <Link to="/products" className="text-primary text-decoration-underline">
+              tuotteet
+            </Link>{" "}
+            sivulta.
+          </p>
+        </Col>
+        <Col
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 8, offset: 2 }}
+          className="mb-3 pb-0 justify-content-center"
+        >
+          <Button onClick={() => Reset()} size="lg" variant="success" className="w-100">
+            Luo uusi ilmoitus
+          </Button>
+        </Col>
+      </Row>
+    </div>
   )
 }
 
@@ -237,8 +250,8 @@ const Preview = ({
             </Button>
           </>
         )}
-        {published ? <PublishedHeader Reset={Reset} /> : null}
       </Col>
+      {published ? <PublishedHeader Reset={Reset} /> : null}
     </Row>
   )
 }

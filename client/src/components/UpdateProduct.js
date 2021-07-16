@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
+import { useHistory } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { changePrice } from "../reducers/priceReducer"
@@ -12,6 +13,7 @@ import ProductForm from "./ProductForm"
 import { setProductType } from "../reducers/currentProduct"
 
 const UpdateProduct = () => {
+  const history = useHistory()
   const productType = useSelector((state) => state.currentProduct.product.type)
   const handleImage = async (image) => {
     const response = await imageService.addImage(image)
@@ -138,6 +140,7 @@ const UpdateProduct = () => {
     console.log(product)
     console.log("choices", eventChoices)
     await productService.updateProduct(id, { product, eventChoices, sizes })
+    history.push("/products")
   }
   if (product) {
     return (
