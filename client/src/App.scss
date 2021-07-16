@@ -81,6 +81,11 @@ p {
 .bg-dark {
   background-color: rgb(255,72,39);
 }
+
+.light-green {
+  background-color: rgb(178, 255, 187);
+}
+
 /**
 * BUTTONS
 */
@@ -108,6 +113,15 @@ p {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+div.btn-rounded-top.btn-light-gray.nav-item a.nav-link {
+  background-color: rgb(217, 217, 217);
+}
+
+div.btn-rounded-top.btn-light-gray.nav-item a.nav-link.active {
+  background-color: #fff;
+}
+
 
 /**
 * ICON LINKS
