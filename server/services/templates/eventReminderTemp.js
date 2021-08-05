@@ -1,22 +1,26 @@
-const subject = 'Muistutus tulevasta noutotilaisuudesta'
+const subject =
+  process.env.MODE === "production"
+    ? "Muistutus tulevasta noutotilaisuudesta"
+    : "Muistutus tulevasta noutotilaisuudesta (TESTISERVERI)"
 
 const message = (parameters) => {
-    if(parameters.is_seller_message){
-        return sellerMessage(parameters)
-    } else{
-        return buyerMessage(parameters)
-    }
+  if (parameters.is_seller_message) {
+    return sellerMessage(parameters)
+  } else {
+    return buyerMessage(parameters)
+  }
 }
 
 const buyerMessage = (parameters) => {
-
-    return (`<p>Hei ${parameters.user.firstname} ${parameters.user.lastname},</p>\
+  return `<p>Hei ${parameters.user.firstname} ${parameters.user.lastname},</p>\
     \
-    <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilausuudesta</p>\
+    <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilaisuudesta</p>\
     \
     <p>Tilaisuus: </p>\
     \
-    <p>${parameters.event.reko_name}, ${new Date(parameters.event.start).getUTCHours()}:${ new Date(parameters.event.start).getUTCMinutes()}</p>\
+    <p>${parameters.event.reko_name}, ${new Date(
+    parameters.event.start
+  ).getUTCHours()}:${new Date(parameters.event.start).getUTCMinutes()}</p>\
     <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Erittely varatuista tuotteista löytyy osoitteesta:</p>\
@@ -30,18 +34,19 @@ const buyerMessage = (parameters) => {
     <p>Etkö halua saada muistutusta tulevista noutotilaisuuksista. Voit muokata sähköpostiasetuksia profiili-sivulta</p>\
     <p>kirjatumulalla palveluun osoitteesta:</p>
     <url>www.satoja.fi</url>
-`)
+`
 }
 
 const sellerMessage = (parameters) => {
-
-    return (`<p>Hei ${parameters.user.name},</p>\
+  return `<p>Hei ${parameters.user.name},</p>\
     \
-    <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilausuudesta</p>\
+    <p>Tämä on automaattisesti luotu muistutus tulevasta noutotilaisuudesta</p>\
     \
     <p>Tilaisuus: </p>\
     \
-    <<p>${parameters.event.reko_name}, ${new Date(parameters.event.start).getUTCHours()}:${ new Date(parameters.event.start).getUTCMinutes()}</p>\
+    <<p>${parameters.event.reko_name}, ${new Date(
+    parameters.event.start
+  ).getUTCHours()}:${new Date(parameters.event.start).getUTCMinutes()}</p>\
     <p>${parameters.event.address}, ${parameters.event.area}</p>\
     \
     <p>Tarkemmat tiedot varatuista tuotteista löydät osoitteesta:</p>\
@@ -56,10 +61,7 @@ const sellerMessage = (parameters) => {
     <p>kirjatumulalla palveluun osoitteesta:</p>
     <url>www.satoja.fi</url>
     
-`)
+`
 }
 
-module.exports = {subject, buyerMessage, sellerMessage, message}
-
-
-    
+module.exports = { subject, buyerMessage, sellerMessage, message }

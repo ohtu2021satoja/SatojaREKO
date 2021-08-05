@@ -1,14 +1,14 @@
-const subject = 'Salasanan palautus'
-const message = (parameters) => {
+const subject =
+  process.env.MODE === "production"
+    ? "Salasanan palautus"
+    : "Salasanan palautus (TESTISERVERI)"
 
-    return (`<p>Paina alla olevaa Vaihda salasana -nappia, vaihtaaksesi salasanan</p>\
+const message = (parameters) => {
+  return `<p>Paina alla olevaa Vaihda salasana -nappia vaihtaaksesi salasanan</p>\
     \
     <a href=${parameters.url}>\
         <button> Vahvista salasana </button>\
-    </a>`)
+    </a>`
 }
 
-module.exports = {subject, message}
-
-
-    
+module.exports = { subject, message }
