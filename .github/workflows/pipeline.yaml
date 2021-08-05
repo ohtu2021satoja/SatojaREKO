@@ -32,3 +32,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ github.ref == 'refs/heads/main' && 'satoja-reko' || github.ref == 'refs/heads/staging' && 'satoja-staging' }} 
           heroku_email: "satojareko@gmail.com"
+          branch: ${{ github.ref == 'refs/heads/main' && 'main' || github.ref == 'refs/heads/staging' && 'staging' }} 
