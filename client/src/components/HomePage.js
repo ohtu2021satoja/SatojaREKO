@@ -90,7 +90,7 @@ const HomePage = ({ handleLogOut }) => (
                   font-weight="500"
                 >
                   <tspan x="-104.3" y="0">
-                    Ostan lähiruokaa
+                    Ostan lähiruokaa testi
                   </tspan>
                 </text>
               </g>
