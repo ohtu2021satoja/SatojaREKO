@@ -1,7 +1,12 @@
-const subject = 'Tilattujen tuotteiden peruutus'
-const message = async (parameters) => {
+const subject =
+  process.env.MODE === "production"
+    ? "Tilattujen tuotteiden peruutus"
+    : "Tilattujen tuotteiden peruutus (TESTISERVERI)"
 
-    const text = (`<p>Hei ${parameters.user.firstname} ${parameters.user.lastname},</p>\
+const message = async (parameters) => {
+  const text = `<p>Hei ${parameters.user.firstname} ${
+    parameters.user.lastname
+  },</p>\
     \
     <p>Tämä on automaattisesti luotu ilmoitus</p>\
     \
@@ -10,11 +15,15 @@ const message = async (parameters) => {
     \
     <p>Tilaisuus: </p>\
     \
-    <p>${parameters.event.reko_name}, ${parameters.event.start.getUTCHours()}:${parameters.event.start.getUTCMinutes()}</p>\
+    <p>${
+      parameters.event.reko_name
+    }, ${parameters.event.start.getUTCHours()}:${parameters.event.start.getUTCMinutes()}</p>\
     <p>${parameters.event.address}</p>\
     \
     <p>Tilannimi: ${parameters.seller.seller_name}</p>\
-    <p>Myyjän nimi: ${parameters.seller.firstname} ${parameters.seller.lastname}</p>\ 
+    <p>Myyjän nimi: ${parameters.seller.firstname} ${
+    parameters.seller.lastname
+  }</p>\ 
     <p>${parameters.seller.email}</p>\
     <p>${parameters.seller.phonenumber}</p>\
     
@@ -33,20 +42,22 @@ const message = async (parameters) => {
     <p>Etkö halua saada muistutusta tulevista noutotilaisuuksista. Voit muokata sähköpostiasetuksia profiili-sivulta</p>\
     <p>kirjatumulalla palveluun osoitteesta:</p>
     <url>www.satoja.fi</url>
-`)
-    return text
+`
+  return text
 }
 
 const deletedProducts = async (parameters) => {
-    let products
-    parameters.batches.forEach((product) =>{
-        if(!products) {
-            products = `<li>Nimi: ${product.name} Määrä: ${product.quantity} Hinta: ${product.price}</li>\n`
-        } else {
-            products = products + `<li>Nimi: ${product.name} Määrä: ${product.quantity} Hinta: ${product.price}</li>\n`
-        }
-    })
-    return ("\n"+"<ul>\n"+products+"</ul>\n")
+  let products
+  parameters.batches.forEach((product) => {
+    if (!products) {
+      products = `<li>Nimi: ${product.name} Määrä: ${product.quantity} Hinta: ${product.price}</li>\n`
+    } else {
+      products =
+        products +
+        `<li>Nimi: ${product.name} Määrä: ${product.quantity} Hinta: ${product.price}</li>\n`
+    }
+  })
+  return "\n" + "<ul>\n" + products + "</ul>\n"
 }
 
-module.exports = {subject, message}
+module.exports = { subject, message }
