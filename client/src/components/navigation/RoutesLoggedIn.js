@@ -20,7 +20,7 @@ import NavigationBarBuyer from "./NavigationBarBuyer"
 import NavigationBarSeller from "./NavigationBarSeller"
 import AdminPage from "../AdminPage"
 
-const Routes = ({ user, handleLogOut, handleUserUpdate }) => (
+const RoutesLoggedIn = ({ user, handleLogOut, handleUserUpdate, fullyAuthorized }) => (
   <Switch>
     <Redirect from="/login" to="/" />
     <Redirect from="/register" to="/" />
@@ -73,7 +73,7 @@ const Routes = ({ user, handleLogOut, handleUserUpdate }) => (
     </Route>
     <Route exact path="/cart">
       <NavigationBarBuyer />
-      <ShoppingCart />
+      <ShoppingCart fullyAuthorized={fullyAuthorized} />
     </Route>
     <Route exact path="/profile/buyer">
       <NavigationBarBuyer />
@@ -133,4 +133,4 @@ const Routes = ({ user, handleLogOut, handleUserUpdate }) => (
   </Switch>
 )
 
-export default Routes
+export default RoutesLoggedIn

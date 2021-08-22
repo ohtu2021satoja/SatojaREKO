@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Nav from "react-bootstrap/Nav"
+import Button from "react-bootstrap/Button"
 
 const LandingPage = () => (
   <Row className="h-100 bg-field align-content-center text-center">
@@ -42,7 +43,7 @@ const LandingPage = () => (
         <Nav.Item>
           <Nav.Link
             as={Link}
-            to={"/login"}
+            to={"/map"}
             aria-label="Ostan lähiruokaa"
             className="sign sign-right"
           >
@@ -96,7 +97,7 @@ const LandingPage = () => (
             </svg>
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item className="mb-4">
           <Nav.Link
             as={Link}
             to={"/login"}
@@ -152,6 +153,21 @@ const LandingPage = () => (
               </g>
             </svg>
           </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Button
+            as={Link}
+            to={"/login"}
+            aria-label="Kirjaudu sisään"
+            variant="success"
+            size="lg"
+            type="button"
+            className="sign"
+            style={{ width: 200 }}
+            id="login-button"
+          >
+            Kirjaudu sisään
+          </Button>
         </Nav.Item>
       </Nav>
       <div className="vertical-line"></div>

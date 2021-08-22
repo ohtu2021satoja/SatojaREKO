@@ -9,9 +9,11 @@ import EventInfoLabel from "./EventInfoLabel"
 import { Link } from "react-router-dom"
 import ShoppingCartNotification from "./ShoppingCartNotification"
 import ShoppingCartPanel from "./ShoppingCartPanel"
+import { useHistory } from "react-router-dom"
 
-const ShoppingCart = () => {
+const ShoppingCart = ({ fullyAuthorized }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const cart = useSelector((state) => state.shoppingCart)
   const user = useSelector((state) => state.authedUser)
 
@@ -39,24 +41,28 @@ const ShoppingCart = () => {
   }, [cart])
 
   const handleSubmitOrders = () => {
-    const orders = []
-    cart.forEach((order) => {
-      const orderBatches = []
-      order.batches.forEach((batch) => {
-        if (batch.order_quantity > 0) {
-          orderBatches.push({
-            size_id: batch.size_id,
-            order_quantity: batch.order_quantity,
-          })
+    if (fullyAuthorized) {
+      const orders = []
+      cart.forEach((order) => {
+        const orderBatches = []
+        order.batches.forEach((batch) => {
+          if (batch.order_quantity > 0) {
+            orderBatches.push({
+              size_id: batch.size_id,
+              order_quantity: batch.order_quantity,
+            })
+          }
+        })
+        if (orderBatches.length > 0) {
+          orders.push({ event_id: order.event_id, batches: orderBatches })
         }
       })
-      if (orderBatches.length > 0) {
-        orders.push({ event_id: order.event_id, batches: orderBatches })
+      if (orders.length > 0) {
+        dispatch(submitOrders({ orders: orders }, user.id))
+        setOrderSent(true)
       }
-    })
-    if (orders.length > 0) {
-      dispatch(submitOrders({ orders: orders }, user.id))
-      setOrderSent(true)
+    } else {
+      history.push("/login")
     }
   }
 
