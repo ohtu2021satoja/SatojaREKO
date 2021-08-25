@@ -46,6 +46,7 @@ const OrdersBuyer = () => {
   }
 
   const eventsByDate = getEventsByDate(events)
+  console.log(eventsByDate)
 
   const getDateString = (event) => {
     const date = new Date(event.event_start)
