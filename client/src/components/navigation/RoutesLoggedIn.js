@@ -1,7 +1,7 @@
 import React from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import HomePage from "../HomePage"
-import HomePageSeller from "../HomePageSeller"
+import SellerHomePage from "../seller/SellerHomePage"
 import ProfilePageSeller from "../profiles/ProfilePageSeller"
 import Products from "../Products"
 import OrderSeller from "../OrderSeller"
@@ -32,7 +32,7 @@ const RoutesLoggedIn = ({ user, handleLogOut, handleUserUpdate, fullyAuthorized 
     {/* SELLER ROUTES */}
     <Route exact path="/home">
       <NavigationBarSeller />
-      <HomePageSeller />
+      <SellerHomePage user={user} handleUserUpdate={handleUserUpdate} />
     </Route>
     <Route path="/add">
       <NavigationBarSeller />
