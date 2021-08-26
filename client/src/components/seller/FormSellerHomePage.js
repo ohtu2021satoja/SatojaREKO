@@ -10,8 +10,6 @@ import FormSellerAreas from "../profiles/FormSellerAreas"
 import FormFieldCheckbox from "../FormFieldCheckbox"
 import { isEqual } from "lodash"
 
-let timer
-
 // Yup
 const SellerRekoSchema = Yup.object().shape({
   reko_areas: Yup.array().of(
@@ -29,22 +27,21 @@ const AutoSubmitForm = ({ user }) => {
   const { values, submitForm } = useFormikContext()
 
   useEffect(() => {
-    const doStuff = async () => {
-      const changedUser = { ...user, ...values }
-      changedUser.reko_areas =
-        changedUser.reko_areas === undefined ? null : changedUser.reko_areas
-      // submit the form imperatively 5 seconds after values have changed
+    const checkForChanges = async () => {
+      const changedUser = { ...user, reko_areas: values.reko_areas }
+      // if areas have changed, submit form
       const isSame = await isEqual(user, changedUser)
-      console.log("isSame", isSame)
-      clearTimeout(timer)
-      if (!isSame) {
-        console.log("NOT THE SAME")
-        timer = setTimeout(() => {
-          submitForm()
-        }, 500)
+      if (isSame === false) {
+        submitForm()
       }
     }
-    doStuff()
+
+    //check if areas have been slected
+    const selectedAraeas = values.reko_areas.filter((area) => area.belongs === true)
+
+    values.reko_areas_nil === true && selectedAraeas.length > 0
+      ? submitForm()
+      : checkForChanges()
   }, [user, values, submitForm])
 
   return null
@@ -58,22 +55,40 @@ const FormSellerHomePage = ({ user, handleUserUpdate, handleError }) => {
           reko_areas: user.reko_areas,
           reko_areas_nil: false,
         }}
-        enableReinitialize={true}
         validationSchema={SellerRekoSchema}
-        onSubmit={async (values) => {
-          // TODO: do this with a function
-          const resetValues = {
-            reko_areas: values.reko_areas,
+        onSubmit={(values, { resetForm }) => {
+          const clearAreas = async () => {
+            const clearedAreas = values.reko_areas.map((area) =>
+              area.belongs === true ? { ...area, belongs: false } : area
+            )
+            // push changes to the server
+            const response = await updateAuthedSeller({
+              ...user,
+              reko_areas: clearedAreas,
+            })
+
+            // if successful, update store, else show error
+            response !== "error" ? handleUserUpdate() : handleError()
+
+            resetForm({
+              values: {
+                reko_areas: user.reko_areas,
+                reko_areas_nil: true,
+              },
+            })
           }
 
-          const updatedUser = { ...user, ...resetValues }
-          console.log("UPDATED_USER", updatedUser)
+          const updateAreas = async () => {
+            // push changes to the server
+            const response = await updateAuthedSeller({
+              ...user,
+              reko_areas: values.reko_areas,
+            })
+            // if successful, update store, else show error
+            response !== "error" ? handleUserUpdate() : handleError()
+          }
 
-          // push updatedUser to the server
-          const response = await updateAuthedSeller(updatedUser)
-
-          // if successful, update store, else show error
-          response !== "error" ? handleUserUpdate() : handleError()
+          values.reko_areas_nil === true ? clearAreas() : updateAreas()
         }}
       >
         {({ values }) => (
@@ -101,14 +116,16 @@ const FormSellerHomePage = ({ user, handleUserUpdate, handleError }) => {
                   </a>
                 </Col>
               )}
-              <Col xs={12}>
-                <p style={{ fontSize: "1em" }}>
-                  Puuttuko ryhmä listalta?
-                  <Button as={Link} to="/contact" variant="link" className="px-1 pt-1">
-                    Ota yhteyttä
-                  </Button>
-                </p>
-              </Col>
+              {values.reko_areas_nil === false && (
+                <Col xs={12}>
+                  <p style={{ fontSize: "1em" }}>
+                    Puuttuko ryhmä listalta?
+                    <Button as={Link} to="/contact" variant="link" className="px-1 pt-1">
+                      Ota yhteyttä
+                    </Button>
+                  </p>
+                </Col>
+              )}
             </Row>
             <AutoSubmitForm user={user} />
           </Form>
