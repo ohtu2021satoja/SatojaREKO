@@ -10,7 +10,7 @@ const OrdersBuyer = () => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.authedUser)
-  const events = useSelector((state) => state.buyerOrders)
+  const orders = useSelector((state) => state.buyerOrders)
 
   useEffect(() => {
     dispatch(receiveBuyerOrders(user.id))
@@ -22,7 +22,7 @@ const OrdersBuyer = () => {
     })
   }
 
-  const getEventsByDate = (eventsArray) => {
+  const sortEventsByDate = (eventsArray) => {
     const sortedArray = sortByTime(eventsArray)
     const eventsByDate = {}
     sortedArray.forEach((event) => {
@@ -45,8 +45,21 @@ const OrdersBuyer = () => {
     return eventsByDate
   }
 
-  const eventsByDate = getEventsByDate(events)
-  console.log(eventsByDate)
+  const eventsByDate = sortEventsByDate(orders)
+
+  const combineOrdersPerEvent = (eventsSortedByDate) => {
+    let sorted = {}
+    Object.keys(eventsSortedByDate).forEach((key) => {
+      if (!sorted[key]) sorted[key] = {}
+      eventsSortedByDate[key].forEach((order) => {
+        if (!sorted[key][order.event_id]) sorted[key][order.event_id] = []
+        sorted[key][order.event_id].push(order)
+      })
+    })
+    return sorted
+  }
+
+  const ordersByDateAndEvent = combineOrdersPerEvent(eventsByDate)
 
   const getDateString = (event) => {
     const date = new Date(event.event_start)
@@ -67,19 +80,16 @@ const OrdersBuyer = () => {
         <h3>Tulevat noudot</h3>
       </Col>
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
-        {Object.keys(eventsByDate).map((day, index) => {
+        {Object.keys(ordersByDateAndEvent).map((date, index) => {
           return (
             <Row key={index} className="mb-2 px-2 flex-column">
               <Col className="pl-0">
-                <p className="mb-1">{getDateString(eventsByDate[day][0])}</p>
+                <p className="mb-1">{getDateString(eventsByDate[date][0])}</p>
               </Col>
-              {eventsByDate[day].map((event, index) => (
+              {Object.keys(ordersByDateAndEvent[date]).map((eventID, index) => (
                 <OrdersBuyerEventListItem
-                  event={event}
-                  linkTo={{
-                    pathname: `/orders/buyer/${event.event_id}`,
-                    state: { event: event },
-                  }}
+                  event={ordersByDateAndEvent[date][eventID][0]}
+                  orders={ordersByDateAndEvent[date][eventID]}
                   key={index}
                 />
               ))}
