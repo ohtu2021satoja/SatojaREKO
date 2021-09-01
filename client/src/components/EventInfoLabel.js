@@ -19,9 +19,6 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
     ":" +
     (startDate.getMinutes() < 10 ? "0" + startDate.getMinutes() : startDate.getMinutes())
 
-  console.log("EVENT IN EVENTINFOLABEL", event)
-  console.log("STARTTIME IN EVENTINFOLABEL", startTime)
-
   const endTime =
     endDate.getHours() +
     ":" +
