@@ -20,10 +20,10 @@ const Event = ({ event, isChoice, setEventChoiceError }) => {
   }
   const startTime = new Date(event.start)
   const startHour = startTime.getHours()
-  const startMinute = startTime.getMinutes()
+  const startMinute = startTime.getMinutes() === 0 ? "00" : startTime.getMinutes()
   const endTime = new Date(event.endtime)
   const endHour = endTime.getHours()
-  const endMinute = endTime.getMinutes()
+  const endMinute = endTime.getMinutes() === 0 ? "00" : endTime.getMinutes()
   const Month = startTime.getMonth() + 1
   const EventDate = startTime.getDate()
   return (
