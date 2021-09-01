@@ -15,19 +15,19 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
   ]
 
   const startTime =
-    startDate.getUTCHours() +
+    startDate.getHours() +
     ":" +
-    (startDate.getUTCMinutes() < 10
-      ? "0" + startDate.getUTCMinutes()
-      : startDate.getUTCMinutes())
-  const endTime =
-    endDate.getUTCHours() +
-    ":" +
-    (endDate.getUTCMinutes() < 10
-      ? "0" + endDate.getUTCMinutes()
-      : endDate.getUTCMinutes())
+    (startDate.getMinutes() < 10 ? "0" + startDate.getMinutes() : startDate.getMinutes())
 
-  const startDay = weekdays[startDate.getUTCDay()]
+  console.log("EVENT IN EVENTINFOLABEL", event)
+  console.log("STARTTIME IN EVENTINFOLABEL", startTime)
+
+  const endTime =
+    endDate.getHours() +
+    ":" +
+    (endDate.getMinutes() < 10 ? "0" + endDate.getMinutes() : endDate.getMinutes())
+
+  const startDay = weekdays[startDate.getDay()]
 
   return (
     market && (
@@ -46,7 +46,7 @@ const EventInfoLabel = ({ market, event, classes, styles, omitDate }) => {
         </Card.Text>
         {!omitDate && (
           <Card.Text className={classes} style={styles}>
-            {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+            {startDay} {startDate.getDate() + "." + (startDate.getMonth() + 1)}
           </Card.Text>
         )}
         <Card.Text className={classes} style={styles}>

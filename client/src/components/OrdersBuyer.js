@@ -30,13 +30,9 @@ const OrdersBuyer = () => {
 
       const dateKey =
         "" +
-        date.getUTCFullYear() +
-        (date.getUTCMonth() + 1 < 10
-          ? "0" + (date.getUTCMonth() + 1)
-          : date.getUTCMonth() + 1) +
-        (date.getUTCDate() + 1 < 10
-          ? "0" + (date.getUTCDate() + 1)
-          : date.getUTCDate() + 1)
+        date.getFullYear() +
+        (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
+        (date.getDate() + 1 < 10 ? "0" + (date.getDate() + 1) : date.getDate() + 1)
 
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
@@ -50,14 +46,7 @@ const OrdersBuyer = () => {
 
   const getDateString = (event) => {
     const date = new Date(event.event_start)
-    return (
-      "" +
-      date.getUTCDate() +
-      "." +
-      (date.getUTCMonth() + 1) +
-      "." +
-      date.getUTCFullYear()
-    )
+    return "" + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
   }
 
   return eventsByDate ? (
