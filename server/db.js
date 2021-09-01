@@ -1,5 +1,10 @@
-const pg = require('pg')
 require('dotenv').config()
+
+const pg = require('pg')
+let types = pg.types;
+types.setTypeParser(1114, function(stringValue) {
+return stringValue;
+});
 
 const connectionString =  process.env.NODE_ENV === 'test' 
   ? process.env.TEST_DATABASE_URL
