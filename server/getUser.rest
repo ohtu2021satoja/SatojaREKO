@@ -1,0 +1,1 @@
+GET https://satoja-reko.herokuapp.com/api/users/current/user
