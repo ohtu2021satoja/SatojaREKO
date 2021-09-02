@@ -15,9 +15,9 @@ const message = async (parameters) => {
     \
     <p>Tilaisuus: </p>\
     \
-    <p>${
-      parameters.event.reko_name
-    }, ${parameters.event.start.getUTCHours()}:${parameters.event.start.getUTCMinutes()}</p>\
+    <p>${parameters.event.reko_name}, ${new Date(
+    parameters.event.start
+  ).getHours()}:${new Date(parameters.event.start).getMinutes()}</p>\
     <p>${parameters.event.address}</p>\
     \
     <p>Tilannimi: ${parameters.seller.seller_name}</p>\
