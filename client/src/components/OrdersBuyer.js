@@ -10,7 +10,7 @@ const OrdersBuyer = () => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.authedUser)
-  const events = useSelector((state) => state.buyerOrders)
+  const orders = useSelector((state) => state.buyerOrders)
 
   useEffect(() => {
     dispatch(receiveBuyerOrders(user.id))
@@ -22,7 +22,7 @@ const OrdersBuyer = () => {
     })
   }
 
-  const getEventsByDate = (eventsArray) => {
+  const sortEventsByDate = (eventsArray) => {
     const sortedArray = sortByTime(eventsArray)
     const eventsByDate = {}
     sortedArray.forEach((event) => {
@@ -30,13 +30,9 @@ const OrdersBuyer = () => {
 
       const dateKey =
         "" +
-        date.getUTCFullYear() +
-        (date.getUTCMonth() + 1 < 10
-          ? "0" + (date.getUTCMonth() + 1)
-          : date.getUTCMonth() + 1) +
-        (date.getUTCDate() + 1 < 10
-          ? "0" + (date.getUTCDate() + 1)
-          : date.getUTCDate() + 1)
+        date.getFullYear() +
+        (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
+        (date.getDate() + 1 < 10 ? "0" + (date.getDate() + 1) : date.getDate() + 1)
 
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
@@ -45,19 +41,25 @@ const OrdersBuyer = () => {
     return eventsByDate
   }
 
-  const eventsByDate = getEventsByDate(events)
-  console.log(eventsByDate)
+  const eventsByDate = sortEventsByDate(orders)
+
+  const combineOrdersPerEvent = (eventsSortedByDate) => {
+    let sorted = {}
+    Object.keys(eventsSortedByDate).forEach((key) => {
+      if (!sorted[key]) sorted[key] = {}
+      eventsSortedByDate[key].forEach((order) => {
+        if (!sorted[key][order.event_id]) sorted[key][order.event_id] = []
+        sorted[key][order.event_id].push(order)
+      })
+    })
+    return sorted
+  }
+
+  const ordersByDateAndEvent = combineOrdersPerEvent(eventsByDate)
 
   const getDateString = (event) => {
     const date = new Date(event.event_start)
-    return (
-      "" +
-      date.getUTCDate() +
-      "." +
-      (date.getUTCMonth() + 1) +
-      "." +
-      date.getUTCFullYear()
-    )
+    return "" + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
   }
 
   return eventsByDate ? (
@@ -67,19 +69,16 @@ const OrdersBuyer = () => {
         <h3>Tulevat noudot</h3>
       </Col>
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
-        {Object.keys(eventsByDate).map((day, index) => {
+        {Object.keys(ordersByDateAndEvent).map((date, index) => {
           return (
             <Row key={index} className="mb-2 px-2 flex-column">
               <Col className="pl-0">
-                <p className="mb-1">{getDateString(eventsByDate[day][0])}</p>
+                <p className="mb-1">{getDateString(eventsByDate[date][0])}</p>
               </Col>
-              {eventsByDate[day].map((event, index) => (
+              {Object.keys(ordersByDateAndEvent[date]).map((eventID, index) => (
                 <OrdersBuyerEventListItem
-                  event={event}
-                  linkTo={{
-                    pathname: `/orders/buyer/${event.event_id}`,
-                    state: { event: event },
-                  }}
+                  event={ordersByDateAndEvent[date][eventID][0]}
+                  orders={ordersByDateAndEvent[date][eventID]}
                   key={index}
                 />
               ))}

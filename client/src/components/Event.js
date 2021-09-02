@@ -19,13 +19,13 @@ const Event = ({ event, isChoice, setEventChoiceError }) => {
     }
   }
   const startTime = new Date(event.start)
-  const startHour = startTime.getUTCHours()
-  const startMinute = startTime.getUTCMinutes()
+  const startHour = startTime.getHours()
+  const startMinute = startTime.getMinutes() === 0 ? "00" : startTime.getMinutes()
   const endTime = new Date(event.endtime)
-  const endHour = endTime.getUTCHours()
-  const endMinute = endTime.getUTCMinutes()
-  const Month = startTime.getUTCMonth() + 1
-  const EventDate = startTime.getUTCDate()
+  const endHour = endTime.getHours()
+  const endMinute = endTime.getMinutes() === 0 ? "00" : endTime.getMinutes()
+  const Month = startTime.getMonth() + 1
+  const EventDate = startTime.getDate()
   return (
     <Col
       xs={12}

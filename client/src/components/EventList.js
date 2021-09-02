@@ -3,6 +3,8 @@ import Col from "react-bootstrap/Col"
 import EventListItem from "./EventListItem"
 
 const EventList = ({ events, linkTo }) => {
+  console.log("EVENTS IN EVENTLIST", events)
+
   const sortByTime = (eventsArray) => {
     return eventsArray.sort((a, b) => {
       return new Date(a.start) - new Date(b.start)
@@ -14,16 +16,11 @@ const EventList = ({ events, linkTo }) => {
     const eventsByDate = {}
     sortedArray.forEach((event) => {
       const date = new Date(event.start)
-
       const dateKey =
         "" +
-        date.getUTCFullYear() +
-        (date.getUTCMonth() + 1 < 10
-          ? "0" + (date.getUTCMonth() + 1)
-          : date.getUTCMonth() + 1) +
-        (date.getUTCDate() + 1 < 10
-          ? "0" + (date.getUTCDate() + 1)
-          : date.getUTCDate() + 1)
+        date.getFullYear() +
+        (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
+        (date.getDate() + 1 < 10 ? "0" + (date.getDate() + 1) : date.getDate() + 1)
 
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
@@ -32,19 +29,12 @@ const EventList = ({ events, linkTo }) => {
     return eventsByDate
   }
 
-  const eventsByDate = getEventsByDate(events)
-
   const getDateString = (event) => {
     const date = new Date(event.start)
-    return (
-      "" +
-      date.getUTCDate() +
-      "." +
-      (date.getUTCMonth() + 1) +
-      "." +
-      date.getUTCFullYear()
-    )
+    return "" + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
   }
+
+  const eventsByDate = getEventsByDate(events)
 
   return (
     <Row>

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 
 const OrdersBuyerProducts = (props) => {
   const event = props.location.state.event
+  const orders = props.location.state.orders
 
   const RenderProducts = (product, index) => {
     return (
@@ -113,18 +114,34 @@ const OrdersBuyerProducts = (props) => {
         />
       </Col>
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
-        {event.orders.map(RenderProducts)}
+        {orders.map((order) => {
+          return (
+            <>
+              <p className="mt-4">
+                {order.products[0].seller_name} {order.order_date}
+              </p>
+              {order.products.map((product, index) => {
+                return RenderProducts(product, index)
+              })}
+            </>
+          )
+        })}
       </Col>
       <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
         <Row className="mx-2 justify-content-between">
           <h5>YHTEENSÄ</h5>{" "}
           <h5>
             {Math.round(
-              event.orders.reduce((acc, product) => {
-                if (!product.removed) {
-                  return acc + product.price * product.quantity
-                }
-                return acc
+              orders.reduce((acc, order) => {
+                return (
+                  acc +
+                  order.products.reduce((acc, product) => {
+                    if (!product.removed) {
+                      return acc + product.price * product.quantity
+                    }
+                    return acc
+                  }, 0)
+                )
               }, 0) * 100
             ) / 10000}
             e

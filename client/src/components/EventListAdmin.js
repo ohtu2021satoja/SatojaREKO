@@ -24,8 +24,7 @@ const EventListAdmin = ({ events }) => {
     const eventsByDate = {}
     sortedArray.forEach((event) => {
       const date = new Date(event.start)
-      const dateKey =
-        "" + date.getUTCFullYear() + (date.getUTCMonth() + 1) + date.getUTCDate()
+      const dateKey = "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate()
       eventsByDate[dateKey] = eventsByDate[dateKey]
         ? eventsByDate[dateKey].concat(event)
         : [event]
@@ -37,14 +36,7 @@ const EventListAdmin = ({ events }) => {
 
   const getDateString = (event) => {
     const date = new Date(event.start)
-    return (
-      "" +
-      date.getUTCDate() +
-      "." +
-      (date.getUTCMonth() + 1) +
-      "." +
-      date.getUTCFullYear()
-    )
+    return "" + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
   }
 
   return (
@@ -124,14 +116,14 @@ const EventForm = ({ setShow, event }) => {
     <Col xs={12}>
       <Formik
         initialValues={{
-          starting_time: `${new Date(event.start).getUTCHours()}:${new Date(
+          starting_time: `${new Date(event.start).getHours()}:${new Date(
             event.start
           ).getMinutes()}`,
-          end_time: `${new Date(event.endtime).getUTCHours()}:${new Date(
+          end_time: `${new Date(event.endtime).getHours()}:${new Date(
             event.endtime
           ).getMinutes()}`,
-          date: `${new Date(event.start).getUTCDate()}.${
-            new Date(event.start).getUTCMonth() + 1
+          date: `${new Date(event.start).getDate()}.${
+            new Date(event.start).getMonth() + 1
           }`,
           market_address: event.address,
         }}
@@ -199,24 +191,20 @@ const EventInfoLabelAdmin = ({ event }) => {
   ]
 
   const startTime =
-    startDate.getUTCHours() +
+    startDate.getHours() +
     ":" +
-    (startDate.getUTCMinutes() < 10
-      ? "0" + startDate.getUTCMinutes()
-      : startDate.getUTCMinutes())
+    (startDate.getMinutes() < 10 ? "0" + startDate.getMinutes() : startDate.getMinutes())
   const endTime =
-    endDate.getUTCHours() +
+    endDate.getHours() +
     ":" +
-    (endDate.getUTCMinutes() < 10
-      ? "0" + endDate.getUTCMinutes()
-      : endDate.getUTCMinutes())
+    (endDate.getMinutes() < 10 ? "0" + endDate.getMinutes() : endDate.getMinutes())
 
-  const startDay = weekdays[startDate.getUTCDay()]
+  const startDay = weekdays[startDate.getDay()]
 
   return (
     <div>
       <p>
-        {startDay} {startDate.getUTCDate() + "." + (startDate.getUTCMonth() + 1)}
+        {startDay} {startDate.getDate() + "." + (startDate.getMonth() + 1)}
       </p>
       <p>
         {startTime}-{endTime}
