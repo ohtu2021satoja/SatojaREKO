@@ -75,6 +75,7 @@ ordersRouter.delete("/seller/:seller_id/:order_id/product/:product_id", async (r
       res.send(200).end()
     }
     catch(error){
+      console.log(error)
       next(error)
     }
 
@@ -91,6 +92,7 @@ ordersRouter.delete("/seller/:seller_id/:order_id/size/:size_id", async (req, re
       await ordersService.removeSizeFromSellersOrder(seller_id, order_id, size_id, ordersRepository, productsRepository, usersRepository, eventsRepository, sellersRepository)
       res.send(200).end()
     } catch(error){
+      console.log(error)
       next(error)
     }
 
